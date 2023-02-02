@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import Instructions from '@/components/dom/Instructions'
+import Button from '@/components/dom/Button'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -14,6 +15,7 @@ export default function Page(props) {
       This is a minimal starter for Nextjs + React-three-fiber and Threejs. Click on the{' '}
       <span className='text-cyan-200'>atoms nucleus</span> to navigate to the{' '}
       <span className='text-green-200'>/blob</span> page. OrbitControls are enabled by default.
+      <Button>Test</Button>
     </Instructions>
   )
 }
