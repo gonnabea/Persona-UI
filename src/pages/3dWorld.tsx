@@ -1,6 +1,8 @@
 import dynamic from 'next/dynamic'
 import Instructions from '@/components/dom/Instructions'
 import CastelModel from '@/components/canvas/Castel'
+import Amy from "@/components/canvas/characters/Amy"
+import PositionTracker from '@/components/canvas/positionTracker'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -19,7 +21,16 @@ export default function Page(props) {
 
 // Canvas components go here
 // It will receive same props as the Page component (from getStaticProps, etc.)
-Page.canvas = (props) => <CastelModel />
+Page.canvas = (props) => {
+
+    return (
+        <>
+            <CastelModel />
+            <Amy scale={[0.005, 0.005, 0.005]} position={[-0.3, 0.75, 5]} />
+            <PositionTracker />
+        </>
+    )
+}
 
 export async function getStaticProps() {
     return { props: { title: '3dWorld' } }
