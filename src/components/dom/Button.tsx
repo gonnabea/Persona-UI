@@ -15,7 +15,7 @@ const Button = ({ children, className, ...props }: HTMLAttributes<HTMLButtonElem
         hover:bg-primary-100
         active:bg-primary-300
         disabled:bg-gray-300
-        disabled:text-gray-600
+        disabled:text-gray-700
         text-white
         ${overridedClassName}
       `}
