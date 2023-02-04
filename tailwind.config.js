@@ -4,11 +4,6 @@ module.exports = {
   darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {
-      // backgroundImage: {
-      // },
-      backgroundImage: (theme) => ({
-        check: "url('/icons/check-icon.svg')",
-      }),
       colors: {
         primary: {
           100: '#5531e4',

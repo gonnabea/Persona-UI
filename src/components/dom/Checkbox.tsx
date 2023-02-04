@@ -17,8 +17,12 @@ const Checkbox = ({ className, ...props }: InputHTMLAttributes<HTMLInputElement>
         hover:border-primary-100
         hover:border-[2px]
         checked:bg-primary-100
+        checked:disabled:bg-gray-100
+        checked:disabled:border-gray-200
         checked:border-none
-        checked:before:bg-check
+        checked:before:bg-white
+        disabled:checked:before:bg-gray-500
+        checked:before:[mask-image:url('/icons/check-icon.svg')]
         checked:before:absolute
         checked:before:top-0
         checked:before:left-0
