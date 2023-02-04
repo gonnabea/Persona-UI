@@ -2,8 +2,9 @@ import dynamic from 'next/dynamic'
 import Instructions from '@/components/dom/Instructions'
 import Button from '@/components/dom/Button'
 import Input from '@/components/dom/Input'
-import useInputEvent from '@/hooks/useInputEvent'
 import useInput from '@/hooks/useInputEvent'
+import Checkbox from '@/components/dom/Checkbox'
+import useToggle from '@/hooks/useToggle'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -14,6 +15,7 @@ const Logo = dynamic(() => import('@/components/canvas/Logo'), { ssr: false })
 // Dom components go here
 export default function Page(props) {
   const [value, setValue] = useInput('')
+  const [toggle, setToggle] = useToggle(false)
 
   return (
     <Instructions>
@@ -22,6 +24,7 @@ export default function Page(props) {
       <span className='text-green-200'>/blob</span> page. OrbitControls are enabled by default.
       <Button>Test</Button>
       <Input placeholder='입력' onChange={setValue} value={value} disabled />
+      <Checkbox onChange={setToggle} checked={toggle} />
     </Instructions>
   )
 }
