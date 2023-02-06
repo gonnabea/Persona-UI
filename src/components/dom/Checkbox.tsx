@@ -1,11 +1,27 @@
 import { InputHTMLAttributes } from 'react'
 
-const Checkbox = ({ className, ...props }: InputHTMLAttributes<HTMLInputElement>) => {
+interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string
+  labelPosition?: 'left' | 'right'
+}
+
+const Checkbox = ({ className, label, id, labelPosition = 'left', ...props }: CheckboxProps) => {
   const overridedClassName = className || ''
   return (
-    <input
-      type='checkbox'
-      className={`
+    <>
+      {label && labelPosition === 'left' ? (
+        <label className='inline-block text-xs mr-[8px]' htmlFor={id}>
+          {label}
+        </label>
+      ) : (
+        ''
+      )}
+      <input
+        type='checkbox'
+        id={id}
+        className={`
+        align-middle
+        bottom-[0.08em]
         relative
         appearance-none
         w-[22px]
@@ -30,8 +46,16 @@ const Checkbox = ({ className, ...props }: InputHTMLAttributes<HTMLInputElement>
         checked:before:h-[22px]
         ${overridedClassName}
         `}
-      {...props}
-    />
+        {...props}
+      />
+      {label && labelPosition === 'right' ? (
+        <label className='inline-block text-xs ml-[8px]' htmlFor={id}>
+          {label}
+        </label>
+      ) : (
+        ''
+      )}
+    </>
   )
 }
 
