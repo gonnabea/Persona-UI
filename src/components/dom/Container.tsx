@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react'
 
-const widthVariables = {
+export const widthVariables = {
   sm: 'w-[320px]',
   md: 'w-[900px]',
   full: 'w-full',
