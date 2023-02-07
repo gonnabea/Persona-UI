@@ -2,11 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('/public/fonts/pretendard/pretendard-subset.css');
+@import url('/public/fonts/pretendard/pretendard.css');
+
 @layer base {
   * {
     box-sizing: border-box;
+    font-family: 'Pretendard', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+      'Noto Color Emoji';
   }
-  
+
   html,
   body,
   #__next {
