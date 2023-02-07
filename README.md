@@ -9,13 +9,19 @@
 
 ### Web Graphics
 
-- [ ] React-Three-Fiber
+- [x] React-Three-Fiber
 - [ ] React-Three-Rapier
 
 ### Web UI
-- [ ] React.js
-- [ ] TailwindCSS
+
+- [x] React.js
+- [x] TailwindCSS
 
 ### Real Time Connection
+
 - [ ] Colyseus.js
 - [ ] WebRTC (MediaSoup)
+
+### Process Management
+
+- [ ] PM2
