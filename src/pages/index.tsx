@@ -1,10 +1,6 @@
 import dynamic from 'next/dynamic'
 import Instructions from '@/components/dom/Instructions'
 import Button from '@/components/dom/Button'
-import Input from '@/components/dom/Input'
-import useInput from '@/hooks/useInputEvent'
-import Checkbox from '@/components/dom/Checkbox'
-import useToggle from '@/hooks/useToggle'
 import { useRouter } from 'next/router'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
@@ -14,24 +10,25 @@ import { useRouter } from 'next/router'
 const Logo = dynamic(() => import('@/components/canvas/Logo'), { ssr: false })
 
 // Dom components go here
-export default function Page(props) {
-  const [value, setValue] = useInput('')
-  const [toggle, setToggle] = useToggle(false)
-  const router = useRouter();
+export default function Page() {
+  const router = useRouter()
 
   const moveToWorld = () => {
-    router.push("/3dWorld");
+    router.push('/3dWorld')
   }
 
   const moveToSignIn = () => {
-    router.push("/signin");
-
+    router.push('/signin')
   }
 
   return (
     <Instructions>
-      <Button onClick={moveToWorld}>3D World</Button>
-      <Button onClick={moveToSignIn}>인증 페이지</Button>
+      <Button color='primary' onClick={moveToWorld}>
+        3D World
+      </Button>
+      <Button color='primary' onClick={moveToSignIn}>
+        인증 페이지
+      </Button>
 
       {/* <Button>Test</Button> */}
       {/* <Input placeholder='입력' onChange={setValue} value={value} disabled /> */}

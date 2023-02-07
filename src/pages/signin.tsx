@@ -31,8 +31,12 @@ const SignIn = () => {
                   <Link href='/find-password'>비밀번호 찾기</Link>
                 </div>
               </div>
-              <Button className='w-full mb-[20px]'>로그인</Button>
-              <Button className='w-full'>Persona 가입</Button>
+              <Button color='primary' className='w-full mb-[20px]'>
+                로그인
+              </Button>
+              <Button color='secondary' className='w-full'>
+                Persona 가입
+              </Button>
             </form>
           </div>
         </div>
