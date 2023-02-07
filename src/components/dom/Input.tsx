@@ -43,8 +43,8 @@ const Input = ({ className, label, type, id, ...props }: InputProps) => {
           outline
           outline-offset-0
           outline-[1px]
-          outline-gray-400
-          text-gray-500
+          outline-gray-500
+          text-gray-700
           focus:outline-primary-100
           focus:outline-[2px]
           disabled:outline-gray-200
