@@ -18,9 +18,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     | 'week'
 }
 
-const Input = ({ className, label, type, id, ...props }: InputProps) => {
-  const overridedClassName = className || ''
-
+const Input = ({ className = '', label, type, id, ...props }: InputProps) => {
   return (
     <>
       {label ? (
@@ -50,7 +48,7 @@ const Input = ({ className, label, type, id, ...props }: InputProps) => {
           disabled:outline-gray-200
           disabled:bg-gray-100
           placeholder:focus:text-black
-          ${overridedClassName}
+          ${className}
         `}
         {...props}
       />

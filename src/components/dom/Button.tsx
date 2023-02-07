@@ -27,9 +27,8 @@ interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean
 }
 
-const Button = ({ children, color, className, ...props }: ButtonProps) => {
+const Button = ({ children, color, className = '', ...props }: ButtonProps) => {
   // Custom className for override styles or define className for tailwind
-  const overridedClassName = className || ''
 
   return (
     <button
@@ -38,8 +37,7 @@ const Button = ({ children, color, className, ...props }: ButtonProps) => {
         py-[13px]
         px-[46px]
         rounded-lg
-
-        ${overridedClassName}
+        ${className}
       `}
       {...props}>
       {children}
