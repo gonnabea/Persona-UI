@@ -13,9 +13,7 @@ const Logo = dynamic(() => import('@/components/canvas/Logo'), { ssr: false })
 // Dom components go here
 export default function Page(props) {
     return (
-        <Instructions>
-            3D World 페이지
-        </Instructions>
+        <>3D World 페이지</>
     )
 }
 

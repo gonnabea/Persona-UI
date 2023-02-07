@@ -5,7 +5,8 @@ export default function Instructions({ children }) {
       style={{ maxWidth: 'calc(100% - 28px)' }}>
       <p className='hidden mb-8 md:block'>{children}</p>
       <div className='tracking-wider'>
-        Update your header in <span className='text-green-200'> @/config </span>
+
+        {/* Update your header in <span className='text-green-200'> @/config </span>
         <br />
         The layout is set in <span className='text-green-200'>@/pages/_app</span>
         <br />
@@ -18,7 +19,7 @@ export default function Instructions({ children }) {
         Delete <span className='text-red-200'> @/components/dom/Instructions</span>
         <br />
         Delete <span className='text-red-200'> @/components/canvas/Blob</span> &{' '}
-        <span className='text-red-200'>/Logo</span>
+        <span className='text-red-200'>/Logo</span> */}
       </div>
     </div>
   )
