@@ -27,7 +27,7 @@ const SignIn = () => {
                 <div>
                   <Checkbox label='로그인 상태 유지' labelPosition='right' />
                 </div>
-                <div className='text-xs'>
+                <div className='text-xs underline'>
                   <Link href='/find-password'>비밀번호 찾기</Link>
                 </div>
               </div>
