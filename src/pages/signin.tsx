@@ -20,12 +20,12 @@ const SignIn = () => {
           </div>
           <div className='w-full'>
             <form>
-              <Input type='email' label='이메일' className='w-full' />
-              <Input type='password' label='비밀번호' className='w-full' />
+              <Input type='email' id='email' label='이메일' className='w-full' />
+              <Input type='password' id='password' label='비밀번호' className='w-full' />
               {/* Login options (Always login, find accounts) */}
               <div className='flex items-center justify-between w-full mb-[20px]'>
                 <div>
-                  <Checkbox label='로그인 상태 유지' labelPosition='right' />
+                  <Checkbox label='로그인 상태 유지' labelPosition='right' id='always-login' />
                 </div>
                 <div className='text-xs underline'>
                   <Link href='/find-password'>비밀번호 찾기</Link>
