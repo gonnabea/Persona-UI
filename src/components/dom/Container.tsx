@@ -18,7 +18,6 @@ const Container = ({ children, width, className = '', ...props }: ContainerProps
       className={`
         w-full
         h-full
-        d-flex
         ${className}
       `}
       {...props}>
