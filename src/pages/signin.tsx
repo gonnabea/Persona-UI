@@ -1,7 +1,6 @@
 import Container from '@/components/dom/Container'
 import PersonaBI from '@/assets/icons/persona-bi.svg'
-import Input from '@/components/dom/Input'
-import Checkbox from '@/components/dom/Checkbox'
+import { Input, Checkbox } from '@/components/dom/Forms'
 import Link from 'next/link'
 import Button from '@/components/dom/Button'
 import Image from 'next/image'
