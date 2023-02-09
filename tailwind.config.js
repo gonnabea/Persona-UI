@@ -23,7 +23,8 @@ module.exports = {
         },
         typo: {
           black: {
-            100: '#222222',
+            primary: '#222222',
+            secondary: '#444444',
           },
         },
       },
