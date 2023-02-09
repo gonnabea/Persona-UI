@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import Instructions from '@/components/dom/Instructions'
 import CastelModel from '@/components/canvas/Castel'
 import Amy from "@/components/canvas/characters/Amy"
-import PositionTracker from '@/components/canvas/positionTracker'
+import PositionTracker from '@/components/canvas/PositionTracker'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
