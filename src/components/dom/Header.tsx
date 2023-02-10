@@ -1,13 +1,13 @@
 import { HTMLAttributes } from 'react'
 import Container, { widthVariables } from './Container'
 
-interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
+interface HeaderProps extends HTMLAttributes<HTMLElement> {
   width: keyof typeof widthVariables
 }
 
 const Header = ({ children, width, className = '', ...props }: HeaderProps) => {
   return (
-    <div
+    <header
       className={`
         py-[20px]
         border-b
@@ -17,7 +17,7 @@ const Header = ({ children, width, className = '', ...props }: HeaderProps) => {
       `}
       {...props}>
       <Container width={width}>{children}</Container>
-    </div>
+    </header>
   )
 }
 
