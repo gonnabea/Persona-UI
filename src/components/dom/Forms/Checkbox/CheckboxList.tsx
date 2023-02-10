@@ -4,7 +4,7 @@ import ChevornRight from '@/assets/icons/chevron-right.svg'
 
 const StyleListVariables = {
   default: `[&:not(:last-of-type)]:border-b box-border mx-[20px] py-[20px] font-[600]`,
-  highlight: `p-[20px] border bg-[#D9D9D9] bg-opacity-10 font-[700]`,
+  highlight: `p-[20px] border bg-gray-100 font-[700]`,
 } as const
 
 type CheckboxListDict = {

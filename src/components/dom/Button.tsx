@@ -7,18 +7,18 @@ const buttonColorVariables = {
     active:bg-primary-300
     text-white
     font-[600]
-    disabled:bg-gray-400
-    disabled:text-gray-900
+    disabled:bg-gray-300
+    disabled:text-gray-400
   `,
   secondary: `
-    bg-gray-100
+    bg-gray-200
     font-[400]
     hover:text-primary-200
     hover:bg-gray-200
     active:text-primary-200
     active:bg-gray-300
-    disabled:text-gray-600
-    disabled:bg-gray-100
+    disabled:text-gray-400
+    disabled:bg-gray-200
   `,
 } as const
 

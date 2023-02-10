@@ -2,6 +2,7 @@ import { InputHTMLAttributes } from 'react'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
+  errorMessage?: string
   type:
     | 'button'
     | 'date'
@@ -18,11 +19,11 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     | 'week'
 }
 
-const Input = ({ className = '', label, type, id, ...props }: InputProps) => {
+const Input = ({ className = '', errorMessage, label, type, id, ...props }: InputProps) => {
   return (
     <>
       {label ? (
-        <label className='inline-block text-sm mb-[5px]' htmlFor={id}>
+        <label className='inline-block w-full text-sm mb-[5px]' htmlFor={id}>
           {label}
         </label>
       ) : (
@@ -34,7 +35,7 @@ const Input = ({ className = '', label, type, id, ...props }: InputProps) => {
         className={`
           pl-[12px]
           py-[12px]
-          mb-[20px]
+          ${errorMessage ? '' : 'mb-[20px]'}
           font-[600]
           text-base
           rounded-lg
@@ -42,16 +43,17 @@ const Input = ({ className = '', label, type, id, ...props }: InputProps) => {
           outline-offset-0
           outline-[1px]
           outline-gray-500
-          text-gray-700
+          text-gray-400
           focus:outline-primary-100
           focus:outline-[2px]
-          disabled:outline-gray-200
-          disabled:bg-gray-100
+          disabled:outline-gray-300
+          disabled:bg-gray-200
           placeholder:focus:text-black
           ${className}
         `}
         {...props}
       />
+      {errorMessage ? <p className='w-full mt-[5px] mb-[20px] text-[#FF4218] text-[0.813rem]'>{errorMessage}</p> : ''}
     </>
   )
 }
