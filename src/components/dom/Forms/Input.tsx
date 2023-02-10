@@ -37,7 +37,7 @@ const Input = ({ className = '', errorMessage, required, label, type, id, ...pro
           pl-[12px]
           py-[12px]
           ${errorMessage ? '' : 'mb-[20px]'}
-          font-[600]
+          font-semibold
           text-base
           rounded-lg
           outline

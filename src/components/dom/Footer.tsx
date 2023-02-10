@@ -12,7 +12,7 @@ const Footer = ({ children, className = '', ...props }: HTMLAttributes<HTMLEleme
         flex
         justify-center
         items-center
-        font-[600]
+        font-semibold
         text-[11px]
         text-gray-900
         ${className}

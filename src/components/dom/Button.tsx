@@ -6,13 +6,13 @@ const buttonColorVariables = {
     hover:bg-primary-100
     active:bg-primary-300
     text-white
-    font-[600]
+    font-semibold
     disabled:bg-gray-300
     disabled:text-gray-400
   `,
   secondary: `
     bg-gray-200
-    font-[400]
+    font-normal
     hover:text-primary-200
     hover:bg-gray-200
     active:text-primary-200

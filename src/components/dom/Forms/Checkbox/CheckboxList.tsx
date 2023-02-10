@@ -3,7 +3,7 @@ import Checkbox from './Checkbox'
 import ChevornRight from '@/assets/icons/chevron-right.svg'
 
 const StyleListVariables = {
-  default: `[&:not(:last-of-type)]:border-b box-border mx-[20px] py-[20px] font-[600]`,
+  default: `[&:not(:last-of-type)]:border-b box-border mx-[20px] py-[20px] font-semibold`,
   highlight: `p-[20px] border bg-gray-100 font-[700]`,
 } as const
 
