@@ -1,9 +1,11 @@
-import Header from '@/components/dom/Header'
-import PersonaBI from '@/assets/icons/persona-bi.svg'
 import Link from 'next/link'
+
+import PersonaBI from '@/assets/icons/persona-bi.svg'
+import { CheckboxList } from '@/components/dom/Forms'
+import Header from '@/components/dom/Header'
 import Container from '@/components/dom/Container'
 import Button from '@/components/dom/Button'
-import { CheckboxList } from '@/components/dom/Forms'
+import Footer from '@/components/dom/Footer'
 
 const SignUpTerms = () => {
   const termsCheckboxLists = [
@@ -39,7 +41,7 @@ const SignUpTerms = () => {
         </div>
       </Header>
       <Container width='md'>
-        <div className='flex flex-col items-center justify-center w-full h-full'>
+        <div className='flex flex-col items-center w-full h-full mt-[160px]'>
           <h2>약관동의</h2>
           <form className='grid w-[400px] justify-items-center'>
             <CheckboxList id='terms' className='w-full my-[40px]' items={termsCheckboxLists} />
@@ -47,6 +49,7 @@ const SignUpTerms = () => {
           </form>
         </div>
       </Container>
+      <Footer>© BIGINNING All Rights Reserved.</Footer>
     </div>
   )
 }

@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
+import PersonaBI from '@/assets/icons/persona-bi.svg'
 import Button from '@/components/dom/Button'
 import Footer from '@/components/dom/Footer'
 import Header from '@/components/dom/Header'
 import Container from '@/components/dom/Container'
-import PersonaBI from '@/assets/icons/persona-bi.svg'
 import { Input } from '@/components/dom/Forms'
 
 const SignUpCreate = () => {

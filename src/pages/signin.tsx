@@ -1,10 +1,11 @@
-import Container from '@/components/dom/Container'
-import PersonaBI from '@/assets/icons/persona-bi.svg'
-import { Input, Checkbox } from '@/components/dom/Forms'
 import Link from 'next/link'
-import Button from '@/components/dom/Button'
 import Image from 'next/image'
+
+import PersonaBI from '@/assets/icons/persona-bi.svg'
 import signinBg from '@/assets/images/signin-bg.png'
+import Container from '@/components/dom/Container'
+import Button from '@/components/dom/Button'
+import { Input, Checkbox } from '@/components/dom/Forms'
 
 const SignIn = () => {
   return (
