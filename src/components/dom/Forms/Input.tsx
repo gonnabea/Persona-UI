@@ -19,12 +19,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     | 'week'
 }
 
-const Input = ({ className = '', errorMessage, label, type, id, ...props }: InputProps) => {
+const Input = ({ className = '', errorMessage, required, label, type, id, ...props }: InputProps) => {
   return (
     <>
       {label ? (
         <label className='inline-block w-full text-sm mb-[5px]' htmlFor={id}>
-          {label}
+          {label} <span className='font-semibold'>{required ? '(필수)' : ''}</span>
         </label>
       ) : (
         ''
@@ -32,6 +32,7 @@ const Input = ({ className = '', errorMessage, label, type, id, ...props }: Inpu
       <input
         id={id}
         type={type}
+        required={required}
         className={`
           pl-[12px]
           py-[12px]
