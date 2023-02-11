@@ -6,16 +6,17 @@ import Header from '@/components/dom/Header'
 import Container from '@/components/dom/Container'
 import Button from '@/components/dom/Button'
 import Footer from '@/components/dom/Footer'
+import Modal from '@/components/dom/Modal'
+import useToggle from '@/hooks/useToggle'
 
 const SignUpTerms = () => {
+  const [isTermsToggled, toggleTerms] = useToggle(false)
   const termsCheckboxLists = [
     { title: '모두 동의', description: '', highlight: true },
     {
       title: '서비스 이용약관 동의(필수)',
       description: '',
-      onSideButtonClick: () => {
-        console.log('clicked 0')
-      },
+      onSideButtonClick: toggleTerms,
       highlight: false,
     },
     {
@@ -50,6 +51,12 @@ const SignUpTerms = () => {
         </div>
       </Container>
       <Footer>© BIGINNING All Rights Reserved.</Footer>
+      <Modal
+        active={isTermsToggled}
+        toggle={toggleTerms}
+        headerChildren={<>Title</>}
+        bodyChildren={<>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</>}
+      />
     </div>
   )
 }
