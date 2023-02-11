@@ -8,7 +8,7 @@ interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
 
 const Header = ({ children, className = '', toggle }: HeaderProps) => {
   return (
-    <div className='mx-[-30px] mt-[-30px] pb-[8px]'>
+    <div className='mx-[-30px] mt-[-30px]'>
       <div className='text-right px-[10px] pt-[10px]'>
         <button onClick={toggle}>
           <X />
