@@ -4,15 +4,17 @@ import Dim from './Dim'
 import Header from './Header'
 import Body from './Body'
 import Container from './Container'
+import Footer from './Footer'
 
 interface ModalProps {
   toggle: () => void
   active: boolean
-  headerChildren?: JSX.Element
+  headerChildren: JSX.Element
   bodyChildren: JSX.Element
+  footerChildren?: JSX.Element
 }
 
-const Modal = ({ headerChildren, bodyChildren, toggle, active }: ModalProps) => {
+const Modal = ({ headerChildren, bodyChildren, footerChildren, toggle, active }: ModalProps) => {
   const ref = useRef<Element | null>(null)
   const [mounted, setMounted] = useState<boolean>(false)
 
@@ -27,6 +29,7 @@ const Modal = ({ headerChildren, bodyChildren, toggle, active }: ModalProps) => 
         <Container>
           <Header toggle={toggle}>{headerChildren}</Header>
           <Body>{bodyChildren}</Body>
+          {footerChildren ? <Footer>{footerChildren}</Footer> : ''}
         </Container>
       </Dim>,
       ref.current,
