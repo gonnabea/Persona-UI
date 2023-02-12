@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+
 import Dim from './Dim'
+import Container from './Container'
 import Header from './Header'
 import Body from './Body'
-import Container from './Container'
 import Footer from './Footer'
 
 interface ModalProps {
@@ -39,6 +40,6 @@ const Modal = ({ headerChildren, bodyChildren, footerChildren, toggle, active }:
   return null
 }
 
-export { Header as ModalHeader, Body as ModalBody }
+export { Container as ModalContainer, Header as ModalHeader, Body as ModalBody, Footer as ModalFooter }
 
 export default Modal
