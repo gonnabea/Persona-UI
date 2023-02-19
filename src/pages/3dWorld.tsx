@@ -24,7 +24,7 @@ Page.canvas = (props) => {
     return (
         <>
             <CastelModel />
-            <Amy scale={[0.005, 0.005, 0.005]} position={[-0.3, 0.75, 5]} />
+            <Amy scale={[0.05, 0.05, 0.05]} position={[-0.3, 0.75, 5]} />
             <PositionTracker />
         </>
     )
