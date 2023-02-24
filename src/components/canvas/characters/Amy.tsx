@@ -11,7 +11,7 @@ import { useSphere } from '@react-three/cannon';
 
 function Amy(props) {
 
-    const characterRef = useRef();
+    const characterRef = useRef<any>(); // 타입 조사 필요
 
     // const glb = useGLTF("/models/characters/Amy.fbx");
     const group = useRef();
@@ -32,7 +32,7 @@ function Amy(props) {
     const sideVector = new Vector3(0, 0, 0)
     const direction = new Vector3(0, 0, 0)
 
-    let MOVESPEED = 20
+    let MOVESPEED = 30
 
     const [mesh, api] = useSphere(() => ({
         mass: 1,
@@ -106,7 +106,10 @@ function Amy(props) {
                 }}
             >
                 <primitive object={nodes.mixamorigHips} />
-                <skinnedMesh geometry={nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />
+
+                <skinnedMesh geometry={
+                    // @ts-ignore 
+                    nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />
             </group>
         </group>
     );

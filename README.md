@@ -10,7 +10,7 @@
 ### Web Graphics
 
 - [x] React-Three-Fiber
-- [ ] React-Three-Cannon
+- [x] React-Three-Cannon
 
 ### Web UI
 
