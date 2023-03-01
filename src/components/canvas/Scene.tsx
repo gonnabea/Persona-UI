@@ -1,7 +1,12 @@
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Preload } from '@react-three/drei'
 
-export default function Scene({ children, ...props }) {
+interface SceneProps {
+  children: JSX.Element
+  orbitControl?: boolean
+}
+
+export default function Scene({ children, orbitControl, ...props }: SceneProps) {
   // Everything defined in here will persist between route changes, only children are swapped
   return (
     <Canvas {...props}>
@@ -9,7 +14,7 @@ export default function Scene({ children, ...props }) {
       <ambientLight intensity={0.6} />
       {children}
       <Preload all />
-      <OrbitControls />
+      {orbitControl ? <OrbitControls /> : ''}
     </Canvas>
   )
 }
