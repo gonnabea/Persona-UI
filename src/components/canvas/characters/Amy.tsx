@@ -32,12 +32,13 @@ function Amy(props) {
     const sideVector = new Vector3(0, 0, 0)
     const direction = new Vector3(0, 0, 0)
 
-    let MOVESPEED = 20
+    let MOVESPEED = 30
 
     const [mesh, api] = useSphere(() => ({
         mass: 1,
         type: "Dynamic",
         args: [0.2],
+
 
         onCollideBegin: (e) => {
             if (e.body.name === "ground1") {
@@ -96,6 +97,7 @@ function Amy(props) {
                 ref={characterRef}
                 rotation={[Math.PI / 2, 0, 0]}
                 position={[-0.3, 6, 5]}
+
                 scale={0.1}
                 onPointerOver={() => {
                     document.body.style.cursor = "pointer"

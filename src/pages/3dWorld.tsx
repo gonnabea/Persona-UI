@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 import Instructions from '@/components/dom/Instructions'
 import CastelModel from '@/components/canvas/Castel'
+import Land from "@/components/canvas/Land";
 import Amy from "@/components/canvas/characters/Amy"
 import PositionTracker from '@/components/canvas/PositionTracker'
 import * as Colyseus from "colyseus.js";
@@ -35,7 +36,17 @@ Page.canvas = (props) => {
                 gravity={[0, -9.81, 0]}
                 size={1000}
             >
-                <CastelModel />
+                {/* <CastelModel /> */}
+                <Land position={[0, -1, 0]} rotation={[0, 0, 0]} />
+                {/* x
+                :
+                -4.01553024951554
+                y
+                :
+                -0.7347574932435966
+                z
+                :
+                -8.09126259150486 */}
                 <Amy scale={[0.05, 0.05, 0.05]} position={[-0.3, 0.8, 5]} />
                 <PositionTracker />
             </Physics>
