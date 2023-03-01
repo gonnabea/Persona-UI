@@ -4,7 +4,7 @@ const buttonColorVariables = {
   primary: `
     bg-primary-200
     hover:bg-primary-100
-    active:bg-primary-300
+    active:bg-primary-400
     text-white
     font-semibold
     disabled:bg-gray-300
