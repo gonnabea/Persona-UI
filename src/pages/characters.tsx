@@ -16,13 +16,13 @@ const Characters = () => {
           <h2 className='w-full font-black text-center mt-[22px]'>캐릭터 선택</h2>
           <div className='flex flex-col items-center justify-center h-full'>
             <div className='flex flex-col items-center justify-center'>
-              <div className='[&>*]:text-white px-[74px] pb-[93px] pt-[114px] bg-primary-300 rounded-[20px] hover:cursor-pointer'>
+              {/* <div className='[&>*]:text-white px-[74px] pb-[93px] pt-[114px] bg-primary-300 rounded-[20px] hover:cursor-pointer'>
                 <Plus className='mx-auto' />
                 <h6 className='text-[14px] mt-[44px]'>새로 만들기</h6>
-              </div>
+              </div> */}
               {/* 캐릭터 존재할 경우.. */}
-              {/* <CharactersList />
-              <Button color='primary'>시작하기</Button> */}
+              <CharactersList />
+              <Button color='primary'>시작하기</Button>
             </div>
           </div>
         </div>
