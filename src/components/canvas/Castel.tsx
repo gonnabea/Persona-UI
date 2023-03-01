@@ -10,7 +10,7 @@ function CastelModel(props) {
 
     return (
         <Suspense fallback={null}>
-            <primitive object={glb.scene} />
+            <primitive rotation={[0, 3.2, 0]} object={glb.scene} />
         </Suspense>
     );
 }

@@ -12,10 +12,12 @@ const ThirdPersonCamera = ({ positionX, positionY, positionZ, rotationZ }) => {
         controls.minDistance = 5;
         controls.maxDistance = 5;
 
-        camera.position.set(positionX - 2, positionY + 2, positionZ - 2);
-        camera.rotateZ = rotationZ;
+        camera.position.set(positionX - 2, positionY + 2, positionZ - 2)
+        camera.rotateZ = rotationZ
 
-        camera.lookAt(positionX + 3, positionY, positionZ + 3)
+
+        camera.lookAt(positionX + 2, positionY, positionZ + 20)
+        camera.zoom = 3
 
         return () => {
             controls.dispose();

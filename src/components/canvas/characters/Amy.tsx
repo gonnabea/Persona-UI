@@ -1,6 +1,6 @@
 import { useAnimations, useGLTF } from '@react-three/drei';
 import { useFrame, useLoader } from '@react-three/fiber'
-import { Suspense, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { FBXLoader } from 'three-stdlib';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import THREE from 'three';
@@ -18,7 +18,7 @@ function Amy(props) {
     const { nodes, materials, animations } = useGLTF('/models/characters/Amy.glb');
     const { actions } = useAnimations(animations, group);
 
-    console.log(nodes, materials, animations);
+
 
     // 캐릭터 이동 구현
     const { forward, backward, left, right, jump } = useCharacterControl();
@@ -32,7 +32,7 @@ function Amy(props) {
     const sideVector = new Vector3(0, 0, 0)
     const direction = new Vector3(0, 0, 0)
 
-    let MOVESPEED = 30
+    let MOVESPEED = 20
 
     const [mesh, api] = useSphere(() => ({
         mass: 1,
@@ -77,15 +77,14 @@ function Amy(props) {
 
         // setCharacterRotateZ(characterRef.current.rotation.z)
 
+
     })
 
+    useEffect(() => {
 
-    // ThirdPersonCamera({
-    //     positionX: props.position.x,
-    //     positionY: props.position.y,
-    //     positionZ: props.position.z,
-    //     rotationZ: 0
-    // })
+    }, [])
+
+
 
 
 
@@ -105,6 +104,12 @@ function Amy(props) {
                     document.body.style.cursor = "default"
                 }}
             >
+                <ThirdPersonCamera
+                    positionX={positionX / 20}
+                    positionY={positionY / 20}
+                    positionZ={positionZ / 20}
+                    rotationZ={rotationZ}
+                />
                 <primitive object={nodes.mixamorigHips} />
 
                 <skinnedMesh geometry={
