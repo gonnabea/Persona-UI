@@ -1,14 +1,35 @@
+import { useCallback, useState } from 'react'
+
+import ArrowLeft from '@/assets/icons/arrow-left.svg'
+import ArrowRight from '@/assets/icons/arrow-right.svg'
 import Scene from '@/components/canvas/Scene'
 import useEmblaCarousel from 'embla-carousel-react'
-import dynamic from 'next/dynamic'
-
-const CastelModel = dynamic(() => import('@/components/canvas/Castel'), { ssr: false })
+import Button from '../Button'
 
 const CharactersList = () => {
-  const [emblaRef] = useEmblaCarousel()
+  const [emblaRef, embla] = useEmblaCarousel()
+  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
+  const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
+
+  const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla])
+  const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla])
 
   return (
-    <>
+    <div className='flex'>
+      <div className='flex items-center justify-center'>
+        <Button
+          color='transparent'
+          useIcon={true}
+          onClick={scrollPrev}
+          className={`
+            bg-black
+            bg-opacity-20
+            rounded-full
+            py-[18px]
+          `}>
+          <ArrowLeft />
+        </Button>
+      </div>
       <div ref={emblaRef} className=' overflow-hidden'>
         <div className='flex h-full'>
           <div className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%]'>
@@ -58,7 +79,21 @@ const CharactersList = () => {
           </div>
         </div>
       </div>
-    </>
+      <div className='flex items-center justify-center'>
+        <Button
+          color='transparent'
+          useIcon={true}
+          onClick={scrollNext}
+          className={`
+          bg-black
+          bg-opacity-20
+          rounded-full
+          py-[18px]
+        `}>
+          <ArrowRight />
+        </Button>
+      </div>
+    </div>
   )
 }
 
