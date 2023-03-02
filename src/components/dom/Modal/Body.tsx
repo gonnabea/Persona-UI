@@ -1,7 +1,8 @@
 import { HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-const Body = ({ children }: HTMLAttributes<HTMLDivElement>) => {
-  return <div className='text-sm font-semibold py-[30px]'>{children}</div>
+const Body = ({ children, className }: HTMLAttributes<HTMLDivElement>) => {
+  return <div className={twMerge(`text-sm font-semibold py-[30px] ${className}`)}>{children}</div>
 }
 
 export default Body
