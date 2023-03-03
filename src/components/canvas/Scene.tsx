@@ -21,7 +21,7 @@ export default function Scene({ children, orbitControl = true, ...props }: Scene
       <ambientLight intensity={0.6} />
       {children}
       <Preload all />
-      {orbitControl ? <OrbitControls /> : ''}
+      {/* {orbitControl ? <OrbitControls /> : ''} */}
     </Canvas>
   )
 }

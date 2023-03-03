@@ -71,12 +71,7 @@ function Amy(props) {
     // setCharacterRotateZ(characterRef.current.rotation.z)
   })
 
-  // ThirdPersonCamera({
-  //     positionX: props.position.x,
-  //     positionY: props.position.y,
-  //     positionZ: props.position.z,
-  //     rotationZ: 0
-  // })
+  useEffect(() => {}, [])
 
   return (
     <group ref={group} {...props}>
@@ -86,11 +81,17 @@ function Amy(props) {
         position={[-0.3, 6, 5]}
         scale={0.1}
         onPointerOver={() => {
-          if (document) document.body.style.cursor = 'pointer'
+          document.body.style.cursor = 'pointer'
         }}
         onPointerOut={() => {
-          if (document) document.body.style.cursor = 'default'
+          document.body.style.cursor = 'default'
         }}>
+        <ThirdPersonCamera
+          positionX={positionX / 20}
+          positionY={positionY / 20}
+          positionZ={positionZ / 20}
+          rotationZ={rotationZ}
+        />
         <primitive object={nodes.mixamorigHips} />
 
         <skinnedMesh
