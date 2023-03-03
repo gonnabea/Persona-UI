@@ -7,6 +7,8 @@ import * as Colyseus from 'colyseus.js'
 import { useState } from 'react'
 import { Physics } from '@react-three/cannon'
 
+import { Chat } from '@/components/dom/ChatBox'
+
 const client = new Colyseus.Client('ws://localhost:4001')
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
@@ -19,7 +21,11 @@ const Logo = dynamic(() => import('@/components/canvas/Logo'), { ssr: false })
 export default function Page(props) {
   const [characterPosition, setCharacterPosition] = useState([0, 0, 0])
 
-  return <>3D World 페이지</>
+  return (
+    <>
+      <Chat />
+    </>
+  )
 }
 
 // Canvas components go here
