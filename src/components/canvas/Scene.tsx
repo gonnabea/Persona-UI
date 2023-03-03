@@ -6,7 +6,7 @@ interface SceneProps {
   orbitControl?: boolean
 }
 
-export default function Scene({ children, orbitControl, ...props }: SceneProps) {
+export default function Scene({ children, orbitControl = true, ...props }: SceneProps) {
   // Everything defined in here will persist between route changes, only children are swapped
   return (
     <Canvas {...props}>
