@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic'
-import Instructions from '@/components/dom/Instructions'
 import CastelModel from '@/components/canvas/Castel'
 import Amy from '@/components/canvas/characters/Amy'
 import PositionTracker from '@/components/canvas/PositionTracker'
@@ -15,7 +14,6 @@ const client = new Colyseus.Client('ws://localhost:4001')
 // WARNING ! errors might get obfuscated by using dynamic import.
 // If something goes wrong go back to a static import to show the error.
 // https://github.com/pmndrs/react-three-next/issues/49
-const Logo = dynamic(() => import('@/components/canvas/Logo'), { ssr: false })
 
 // Dom components go here
 export default function Page(props) {
