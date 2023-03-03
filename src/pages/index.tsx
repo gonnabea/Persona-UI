@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic'
-import Instructions from '@/components/dom/Instructions'
 import Button from '@/components/dom/Button'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -11,29 +10,36 @@ const Logo = dynamic(() => import('@/components/canvas/Logo'), { ssr: false })
 
 // Dom components go here
 export default function Page() {
-  const router = useRouter()
-
-  const moveToWorld = () => {
-    router.push('/3dWorld')
-  }
-
-  const moveToSignIn = () => {
-    router.push('/signin')
-  }
-
   return (
-    <Instructions>
-      <Button color='primary' onClick={moveToWorld}>
-        3D World
-      </Button>
-      <Button color='primary' onClick={moveToSignIn}>
-        인증 페이지
-      </Button>
-
-      {/* <Button>Test</Button> */}
-      {/* <Input placeholder='입력' onChange={setValue} value={value} disabled /> */}
-      {/* <Checkbox onChange={setToggle} checked={toggle} /> */}
-    </Instructions>
+    <div className='absolute top-0 left-0 right-0 z-20 flex items-center justify-center'>
+      <div className='flex flex-col items-center justify-center bg-white gap-y-3 p-[12px]'>
+        <Link href='/3dWorld' className='w-full'>
+          <Button color='primary' className='w-full'>
+            3dWorld
+          </Button>
+        </Link>
+        <Link href='/signin' className='w-full'>
+          <Button color='primary' className='w-full'>
+            로그인
+          </Button>
+        </Link>
+        <Link href='/signup' className='w-full'>
+          <Button color='primary' className='w-full'>
+            회원가입 (이용약관)
+          </Button>
+        </Link>
+        <Link href='/signup/create' className='w-full'>
+          <Button color='primary' className='w-full'>
+            회원가입 (정보 입력)
+          </Button>
+        </Link>
+        <Link href='/characters' className='w-full'>
+          <Button color='primary' className='w-full'>
+            캐릭터 목록
+          </Button>
+        </Link>
+      </div>
+    </div>
   )
 }
 
