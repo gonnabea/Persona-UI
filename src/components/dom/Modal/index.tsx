@@ -10,12 +10,24 @@ import Footer from './Footer'
 interface ModalProps {
   toggle: () => void
   active: boolean
-  headerChildren: JSX.Element
+  headerChildren?: JSX.Element
   bodyChildren: JSX.Element
   footerChildren?: JSX.Element
+  headerClassName?: string
+  bodyClassName?: string
+  footerClassName?: string
 }
 
-const Modal = ({ headerChildren, bodyChildren, footerChildren, toggle, active }: ModalProps) => {
+const Modal = ({
+  headerChildren,
+  bodyChildren,
+  footerChildren,
+  headerClassName,
+  bodyClassName,
+  footerClassName,
+  toggle,
+  active,
+}: ModalProps) => {
   const ref = useRef<Element | null>(null)
   const [mounted, setMounted] = useState<boolean>(false)
 
@@ -28,9 +40,11 @@ const Modal = ({ headerChildren, bodyChildren, footerChildren, toggle, active }:
     return createPortal(
       <Dim>
         <Container>
-          <Header toggle={toggle}>{headerChildren}</Header>
-          <Body>{bodyChildren}</Body>
-          {footerChildren ? <Footer>{footerChildren}</Footer> : ''}
+          <Header toggle={toggle} className={headerClassName}>
+            {headerChildren}
+          </Header>
+          <Body className={bodyClassName}>{bodyChildren}</Body>
+          {footerChildren ? <Footer className={footerClassName}>{footerChildren}</Footer> : ''}
         </Container>
       </Dim>,
       ref.current,

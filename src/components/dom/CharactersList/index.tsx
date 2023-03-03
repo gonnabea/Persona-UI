@@ -1,18 +1,68 @@
+import { useCallback, useState } from 'react'
+
+import ArrowLeft from '@/assets/icons/arrow-left.svg'
+import ArrowRight from '@/assets/icons/arrow-right.svg'
 import Scene from '@/components/canvas/Scene'
 import useEmblaCarousel from 'embla-carousel-react'
-import dynamic from 'next/dynamic'
+import Button from '../Button'
+import { twMerge } from 'tailwind-merge'
 
-const CastelModel = dynamic(() => import('@/components/canvas/Castel'), { ssr: false })
+interface ChbaractesListProps {
+  title?: boolean
+  titleClassName?: string
+  carouselClassName?: string
+  carouselItemClassName?: string
+  carouselArrowButtonClassName?: string
+  carouselArrowClassName?: string
+}
 
-const CharactersList = () => {
-  const [emblaRef] = useEmblaCarousel()
+const CharactersList = ({
+  title,
+  titleClassName,
+  carouselClassName,
+  carouselItemClassName,
+  carouselArrowButtonClassName,
+  carouselArrowClassName,
+}: ChbaractesListProps) => {
+  const [emblaRef, embla] = useEmblaCarousel()
+  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
+  const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
+
+  const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla])
+  const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla])
 
   return (
-    <>
-      <div ref={emblaRef} className=' overflow-hidden'>
+    <div className='flex'>
+      <div className='flex items-center justify-center'>
+        <Button
+          color='transparent'
+          useIcon={true}
+          onClick={scrollPrev}
+          className={twMerge(`
+            bg-black
+            bg-opacity-20
+            rounded-full
+            py-[18px]
+            ${carouselArrowButtonClassName}
+          `)}>
+          <ArrowLeft className={`${carouselArrowClassName}`} />
+        </Button>
+      </div>
+      <div
+        ref={emblaRef}
+        className={twMerge(`
+          overflow-hidden
+          ${carouselClassName}
+        `)}>
         <div className='flex h-full'>
           <div className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%]'>
-            <div className='mx-auto w-[210px] h-[300px]'>
+            <div
+              className={twMerge(`
+                mx-auto
+                w-[210px]
+                h-[300px]
+                ${carouselItemClassName}
+              `)}>
               <Scene orbitControl={false}>
                 <mesh rotation-x={Math.PI * 0.25} rotation-y={Math.PI * 0.25}>
                   <boxBufferGeometry args={[1, 1, 1]} attach='geometry' />
@@ -21,14 +71,24 @@ const CharactersList = () => {
                 </mesh>
               </Scene>
             </div>
-            <div className='text-center [&>*]:text-white mt-[26px]'>
-              <h5>여행ㄱ</h5>
-              <p className='opacity-50 mb-[38px] mt-[10px]'>ENFP</p>
-            </div>
+            {title ? (
+              <div className={`text-center mt-[26px] ${titleClassName}`}>
+                <h5>여행ㄱ</h5>
+                <p className='opacity-50 mb-[38px] mt-[10px]'>ENFP</p>
+              </div>
+            ) : (
+              ''
+            )}
           </div>
           <div className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%]'>
-            <div className='mx-auto w-[210px] h-[300px]'>
-              <Scene>
+            <div
+              className={twMerge(`
+                mx-auto
+                w-[210px]
+                h-[300px]
+                ${carouselItemClassName}
+              `)}>
+              <Scene orbitControl={false}>
                 <mesh rotation-x={Math.PI * 0.25} rotation-y={Math.PI * 0.25}>
                   <boxBufferGeometry args={[1, 1, 1]} attach='geometry' />
                   <meshStandardMaterial color={'blue'} />
@@ -36,14 +96,24 @@ const CharactersList = () => {
                 </mesh>
               </Scene>
             </div>
-            <div className='text-center [&>*]:text-white mt-[26px]'>
-              <h5>집에 있을래</h5>
-              <p className='opacity-50 mb-[38px] mt-[10px]'>INTJ</p>
-            </div>
+            {title ? (
+              <div className={`text-center mt-[26px] ${titleClassName}`}>
+                <h5>집에 있을래</h5>
+                <p className='opacity-50 mb-[38px] mt-[10px]'>INTJ</p>
+              </div>
+            ) : (
+              ''
+            )}
           </div>
           <div className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%]'>
-            <div className='mx-auto w-[210px] h-[300px]'>
-              <Scene>
+            <div
+              className={twMerge(`
+                mx-auto
+                w-[210px]
+                h-[300px]
+                ${carouselItemClassName}
+              `)}>
+              <Scene orbitControl={false}>
                 <mesh rotation-x={Math.PI * 0.25} rotation-y={Math.PI * 0.25}>
                   <boxBufferGeometry args={[1, 1, 1]} attach='geometry' />
                   <meshStandardMaterial color={'salmon'} />
@@ -51,14 +121,33 @@ const CharactersList = () => {
                 </mesh>
               </Scene>
             </div>
-            <div className='text-center [&>*]:text-white mt-[26px]'>
-              <h5>나도 집에 있을래...</h5>
-              <p className='opacity-50 mb-[38px] mt-[10px]'>ISTJ</p>
-            </div>
+            {title ? (
+              <div className={`text-center mt-[26px] ${titleClassName}`}>
+                <h5>나도 집에 있을래...</h5>
+                <p className='opacity-50 mb-[38px] mt-[10px]'>ISTJ</p>
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </div>
-    </>
+      <div className='flex items-center justify-center'>
+        <Button
+          color='transparent'
+          useIcon={true}
+          onClick={scrollNext}
+          className={twMerge(`
+            bg-black
+            bg-opacity-20
+            rounded-full
+            py-[18px]
+            ${carouselArrowButtonClassName}
+          `)}>
+          <ArrowRight className={`${carouselArrowClassName}`} />
+        </Button>
+      </div>
+    </div>
   )
 }
 

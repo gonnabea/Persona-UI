@@ -1,4 +1,5 @@
 import { InputHTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -33,7 +34,7 @@ const Input = ({ className = '', errorMessage, required, label, type, id, ...pro
         id={id}
         type={type}
         required={required}
-        className={`
+        className={twMerge(`
           pl-[12px]
           py-[12px]
           ${errorMessage ? '' : 'mb-[20px]'}
@@ -51,7 +52,7 @@ const Input = ({ className = '', errorMessage, required, label, type, id, ...pro
           disabled:bg-gray-200
           placeholder:focus:text-black
           ${className}
-        `}
+        `)}
         {...props}
       />
       {errorMessage ? <p className='w-full mt-[5px] mb-[20px] text-[#FF4218] text-[0.813rem]'>{errorMessage}</p> : ''}

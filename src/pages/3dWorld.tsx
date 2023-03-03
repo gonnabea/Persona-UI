@@ -1,28 +1,29 @@
 import dynamic from 'next/dynamic'
-import Instructions from '@/components/dom/Instructions'
 import CastelModel from '@/components/canvas/Castel'
 import Land from "@/components/canvas/Land";
 import Amy from "@/components/canvas/characters/Amy"
 import PositionTracker from '@/components/canvas/PositionTracker'
-import * as Colyseus from "colyseus.js";
+import * as Colyseus from 'colyseus.js'
 import { useState } from 'react'
 import { Physics } from '@react-three/cannon'
 
+import { Chat } from '@/components/dom/ChatBox'
 
-const client = new Colyseus.Client('ws://localhost:4001');
+const client = new Colyseus.Client('ws://localhost:4001')
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
 // If something goes wrong go back to a static import to show the error.
 // https://github.com/pmndrs/react-three-next/issues/49
-const Logo = dynamic(() => import('@/components/canvas/Logo'), { ssr: false })
 
 // Dom components go here
 export default function Page(props) {
-    const [characterPosition, setCharacterPosition] = useState([0, 0, 0]);
+    const [characterPosition, setCharacterPosition] = useState([0, 0, 0])
 
     return (
-        <>3D World 페이지</>
+        <>
+            <Chat />
+        </>
     )
 }
 

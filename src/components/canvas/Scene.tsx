@@ -9,7 +9,7 @@ interface SceneProps {
   orbitControl?: boolean
 }
 
-export default function Scene({ children, orbitControl, ...props }: SceneProps) {
+export default function Scene({ children, orbitControl = true, ...props }: SceneProps) {
   const targetObject = useRef();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function Scene({ children, orbitControl, ...props }: SceneProps) 
       <ambientLight intensity={0.6} />
       {children}
       <Preload all />
-      {orbitControl ? <OrbitControls /> : ''}
+      {/* {orbitControl ? <OrbitControls /> : ''} */}
     </Canvas>
   )
 }
