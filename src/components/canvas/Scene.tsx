@@ -4,14 +4,17 @@ import * as THREE from "three";
 import { Vector3 } from 'three';
 import { useEffect, useRef } from 'react';
 
-export default function Scene({ children, ...props }) {
+interface SceneProps {
+  children: JSX.Element
+  orbitControl?: boolean
+}
 
+export default function Scene({ children, orbitControl, ...props }: SceneProps) {
   const targetObject = useRef();
 
   useEffect(() => {
 
   })
-
   // Everything defined in here will persist between route changes, only children are swapped
   return (
     <Canvas {...props}>
@@ -20,7 +23,8 @@ export default function Scene({ children, ...props }) {
       <ambientLight intensity={0.6} />
       {children}
       <Preload all />
-      {/* <OrbitControls /> */}
+      {orbitControl ? <OrbitControls /> : ''}
     </Canvas>
   )
 }
+
