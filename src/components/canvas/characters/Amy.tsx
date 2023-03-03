@@ -1,6 +1,6 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
 import { useFrame, useLoader } from '@react-three/fiber'
-import { Suspense, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { FBXLoader } from 'three-stdlib'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import THREE from 'three'
@@ -16,8 +16,6 @@ function Amy(props) {
   const group = useRef()
   const { nodes, materials, animations } = useGLTF('/models/characters/Amy.glb')
   const { actions } = useAnimations(animations, group)
-
-  console.log(nodes, materials, animations)
 
   // 캐릭터 이동 구현
   const { forward, backward, left, right, jump } = useCharacterControl()
