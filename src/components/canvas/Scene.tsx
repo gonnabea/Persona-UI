@@ -1,15 +1,8 @@
-import { Canvas, useThree } from '@react-three/fiber'
-import { OrbitControls, Preload } from '@react-three/drei'
-import * as THREE from 'three'
-import { Vector3 } from 'three'
+import { Canvas } from '@react-three/fiber'
+import { Preload } from '@react-three/drei'
 import { useEffect, useRef } from 'react'
 
-interface SceneProps {
-  children: JSX.Element
-  orbitControl?: boolean
-}
-
-export default function Scene({ children, orbitControl = true, ...props }: SceneProps) {
+export default function Scene({ children, ...props }) {
   const targetObject = useRef()
 
   useEffect(() => {})
@@ -21,7 +14,6 @@ export default function Scene({ children, orbitControl = true, ...props }: Scene
       <ambientLight intensity={0.6} />
       {children}
       <Preload all />
-      {/* {orbitControl ? <OrbitControls /> : ''} */}
     </Canvas>
   )
 }
