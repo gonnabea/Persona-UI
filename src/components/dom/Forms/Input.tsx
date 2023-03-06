@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react'
+import { forwardRef, InputHTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -20,21 +20,23 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     | 'week'
 }
 
-const Input = ({ className = '', errorMessage, required, label, type, id, ...props }: InputProps) => {
-  return (
-    <>
-      {label ? (
-        <label className='inline-block w-full text-sm mb-[5px]' htmlFor={id}>
-          {label} <span className='font-semibold'>{required ? '(필수)' : ''}</span>
-        </label>
-      ) : (
-        ''
-      )}
-      <input
-        id={id}
-        type={type}
-        required={required}
-        className={twMerge(`
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ className = '', errorMessage, required, label, type, id, ...props }: InputProps, ref) => {
+    return (
+      <>
+        {label ? (
+          <label className='inline-block w-full text-sm mb-[5px]' htmlFor={id}>
+            {label} <span className='font-semibold'>{required ? '(필수)' : ''}</span>
+          </label>
+        ) : (
+          ''
+        )}
+        <input
+          ref={ref}
+          id={id}
+          type={type}
+          required={required}
+          className={twMerge(`
           pl-[12px]
           py-[12px]
           ${errorMessage ? '' : 'mb-[20px]'}
@@ -53,11 +55,14 @@ const Input = ({ className = '', errorMessage, required, label, type, id, ...pro
           placeholder:focus:text-black
           ${className}
         `)}
-        {...props}
-      />
-      {errorMessage ? <p className='w-full mt-[5px] mb-[20px] text-[#FF4218] text-[0.813rem]'>{errorMessage}</p> : ''}
-    </>
-  )
-}
+          {...props}
+        />
+        {errorMessage ? <p className='w-full mt-[5px] mb-[20px] text-[#FF4218] text-[0.813rem]'>{errorMessage}</p> : ''}
+      </>
+    )
+  },
+)
+
+Input.displayName = 'Input'
 
 export default Input
