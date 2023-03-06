@@ -8,19 +8,21 @@ import Header from '@/components/dom/Header'
 import Container from '@/components/dom/Container'
 import { Input } from '@/components/dom/Forms'
 import isContainsAll from '@/utils/array/isContainsAll'
+import { useEffect } from 'react'
 
 const termsCheckOptions = ['serviceTerms', 'privacyTerms', 'newsletter'] as const
 type TermsCheckList = (typeof termsCheckOptions)[number]
 
-const SignUpCreate = () => {
+const SignUpCreate = ({ query }) => {
   const router = useRouter()
 
-  if (
-    !Array.isArray(router.query.termsCheckList) ||
-    !isContainsAll<TermsCheckList>(router.query.termsCheckList as TermsCheckList[], ['serviceTerms', 'privacyTerms'])
-  ) {
-    router.push('/signup')
-  }
+  useEffect(() => {
+    const { termsCheckList = [] } = query
+    // 필수 이용약관을 체크 하지 않고 가입을 시도하려고 하면 이용약관 페이지로 이동
+    if (!isContainsAll<TermsCheckList>(termsCheckList as TermsCheckList[], ['serviceTerms', 'privacyTerms'])) {
+      router.push('/signup')
+    }
+  }, [query, router])
 
   return (
     <div className='flex flex-col w-full h-full'>
@@ -46,6 +48,10 @@ const SignUpCreate = () => {
       <Footer>© BIGINNING All Rights Reserved.</Footer>
     </div>
   )
+}
+
+SignUpCreate.getInitialProps = async ({ query }) => {
+  return { query }
 }
 
 export default SignUpCreate
