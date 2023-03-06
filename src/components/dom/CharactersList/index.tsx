@@ -63,7 +63,7 @@ const CharactersList = ({
                 h-[300px]
                 ${carouselItemClassName}
               `)}>
-              <Scene orbitControl={false}>
+              <Scene>
                 <mesh rotation-x={Math.PI * 0.25} rotation-y={Math.PI * 0.25}>
                   <boxBufferGeometry args={[1, 1, 1]} attach='geometry' />
                   <meshStandardMaterial color={'orange'} />
@@ -88,7 +88,7 @@ const CharactersList = ({
                 h-[300px]
                 ${carouselItemClassName}
               `)}>
-              <Scene orbitControl={false}>
+              <Scene>
                 <mesh rotation-x={Math.PI * 0.25} rotation-y={Math.PI * 0.25}>
                   <boxBufferGeometry args={[1, 1, 1]} attach='geometry' />
                   <meshStandardMaterial color={'blue'} />
@@ -113,7 +113,7 @@ const CharactersList = ({
                 h-[300px]
                 ${carouselItemClassName}
               `)}>
-              <Scene orbitControl={false}>
+              <Scene>
                 <mesh rotation-x={Math.PI * 0.25} rotation-y={Math.PI * 0.25}>
                   <boxBufferGeometry args={[1, 1, 1]} attach='geometry' />
                   <meshStandardMaterial color={'salmon'} />
