@@ -72,6 +72,10 @@ const SignUpCreate = ({ query }) => {
               type='email'
               {...register('signUpValues.email', {
                 required: '이메일을 입력해주세요.',
+                pattern: {
+                  value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                  message: '이메일 형식이 아닙니다.',
+                },
               })}
             />
             <Input
