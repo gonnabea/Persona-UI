@@ -8,6 +8,7 @@ import useToggle from '@/hooks/useToggle'
 import { useEffect } from 'react'
 import Modal from '@/components/dom/Modal'
 import { Input } from '@/components/dom/Forms'
+import Link from 'next/link'
 
 const Characters = () => {
   const [newCharModal, toggleNewCharModal] = useToggle(false)
@@ -23,20 +24,22 @@ const Characters = () => {
           <div className='flex flex-col items-center justify-center h-full'>
             <div className='flex flex-col items-center justify-center'>
               {/* 캐릭터가 없는 경우... */}
-              <Button
+              {/* <Button
                 onClick={toggleNewCharModal}
                 color='transparent'
                 className='[&>*]:text-white px-[74px] pb-[93px] pt-[114px] bg-primary-300 rounded-[20px]'>
                 <Plus className='mx-auto' />
                 <h6 className='text-[14px] mt-[44px]'>새로 만들기</h6>
-              </Button>
+              </Button> */}
               {/* 캐릭터 존재할 경우.. */}
-              {/* <CharactersList
+              <CharactersList
                 title={true}
                 titleClassName='[&>*]:text-white'
                 carouselArrowClassName='w-[15px] h-[27px]'
               />
-              <Button color='primary'>시작하기</Button> */}
+              <Link href='/3dWorld'>
+                <Button color='primary'>시작하기</Button>
+              </Link>
             </div>
           </div>
         </div>
