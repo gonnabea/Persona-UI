@@ -1,13 +1,42 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { useForm, DefaultValues } from 'react-hook-form'
 
 import PersonaBI from '@/assets/icons/persona-bi.svg'
 import signinBg from '@/assets/images/signin-bg.png'
 import Container from '@/components/dom/Container'
 import Button from '@/components/dom/Button'
 import { Input, Checkbox } from '@/components/dom/Forms'
+import { useRouter } from 'next/router'
+
+interface FormValues {
+  signUpValues: {
+    email: string
+    password: string
+  }
+}
+
+const defaultValues: DefaultValues<FormValues> = {
+  signUpValues: {
+    email: '',
+    password: '',
+  },
+}
 
 const SignIn = () => {
+  const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues,
+  })
+
+  const onSubmit = () => {
+    router.push('/characters')
+  }
+
   return (
     <div className='w-full h-full grid grid-cols-2 divide-x-0'>
       <div className='relative'>
@@ -19,9 +48,31 @@ const SignIn = () => {
             <PersonaBI className='w-[200px] mb-[60px] fill-primary-200' />
           </div>
           <div className='w-full'>
-            <form>
-              <Input type='email' id='email' label='이메일' className='w-full' />
-              <Input type='password' id='password' label='비밀번호' className='w-full' />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Input
+                type='email'
+                id='email'
+                label='이메일'
+                className='w-full'
+                errorMessage={errors.signUpValues?.email?.message}
+                {...register('signUpValues.email', {
+                  required: '이메일을 입력해주세요',
+                  pattern: {
+                    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                    message: '이메일 형식이 아닙니다.',
+                  },
+                })}
+              />
+              <Input
+                type='password'
+                id='password'
+                label='비밀번호'
+                className='w-full'
+                errorMessage={errors.signUpValues?.password?.message}
+                {...register('signUpValues.password', {
+                  required: '비밀번호를 입력해주세요',
+                })}
+              />
               {/* Login options (Always login, find accounts) */}
               <div className='flex items-center justify-between w-full mb-[20px]'>
                 <div>
