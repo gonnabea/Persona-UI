@@ -1,24 +1,26 @@
-import { InputHTMLAttributes } from 'react'
+import { forwardRef, InputHTMLAttributes } from 'react'
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   labelPosition?: 'left' | 'right'
 }
 
-const Checkbox = ({ className = '', label, id, labelPosition = 'left', ...props }: CheckboxProps) => {
-  return (
-    <>
-      {label && labelPosition === 'left' ? (
-        <label className='inline-block text-xs mr-[8px]' htmlFor={id}>
-          {label}
-        </label>
-      ) : (
-        ''
-      )}
-      <input
-        type='checkbox'
-        id={id}
-        className={`
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ className = '', label, id, labelPosition = 'left', ...props }: CheckboxProps, ref) => {
+    return (
+      <>
+        {label && labelPosition === 'left' ? (
+          <label className='inline-block text-xs mr-[8px]' htmlFor={id}>
+            {label}
+          </label>
+        ) : (
+          ''
+        )}
+        <input
+          type='checkbox'
+          id={id}
+          ref={ref}
+          className={`
           align-middle
           bottom-[0.08em]
           relative
@@ -50,17 +52,20 @@ const Checkbox = ({ className = '', label, id, labelPosition = 'left', ...props 
           disabled:checked:before:h-[22px]
           ${className}
         `}
-        {...props}
-      />
-      {label && labelPosition === 'right' ? (
-        <label className='inline-block text-xs ml-[8px]' htmlFor={id}>
-          {label}
-        </label>
-      ) : (
-        ''
-      )}
-    </>
-  )
-}
+          {...props}
+        />
+        {label && labelPosition === 'right' ? (
+          <label className='inline-block text-xs ml-[8px]' htmlFor={id}>
+            {label}
+          </label>
+        ) : (
+          ''
+        )}
+      </>
+    )
+  },
+)
+
+Checkbox.displayName = 'Checkbox'
 
 export default Checkbox

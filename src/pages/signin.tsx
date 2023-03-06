@@ -34,9 +34,11 @@ const SignIn = () => {
               <Button color='primary' className='w-full mb-[20px]'>
                 로그인
               </Button>
-              <Button color='secondary' className='w-full'>
-                Persona 가입
-              </Button>
+              <Link href='/signup'>
+                <Button color='secondary' className='w-full'>
+                  Persona 가입
+                </Button>
+              </Link>
             </form>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import PersonaBI from '@/assets/icons/persona-bi.svg'
 import Button from '@/components/dom/Button'
@@ -6,8 +7,21 @@ import Footer from '@/components/dom/Footer'
 import Header from '@/components/dom/Header'
 import Container from '@/components/dom/Container'
 import { Input } from '@/components/dom/Forms'
+import isContainsAll from '@/utils/array/isContainsAll'
+
+const termsCheckOptions = ['serviceTerms', 'privacyTerms', 'newsletter'] as const
+type TermsCheckList = (typeof termsCheckOptions)[number]
 
 const SignUpCreate = () => {
+  const router = useRouter()
+
+  if (
+    !Array.isArray(router.query.termsCheckList) ||
+    !isContainsAll<TermsCheckList>(router.query.termsCheckList as TermsCheckList[], ['serviceTerms', 'privacyTerms'])
+  ) {
+    router.push('/signup')
+  }
+
   return (
     <div className='flex flex-col w-full h-full'>
       <Header width='md'>

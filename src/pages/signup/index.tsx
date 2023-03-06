@@ -1,5 +1,8 @@
 import Link from 'next/link'
+import Router from 'next/router'
+import { SubmitHandler, useForm, DefaultValues } from 'react-hook-form'
 
+import isArrayEquals from '@/utils/array/isArrayEquals'
 import PersonaBI from '@/assets/icons/persona-bi.svg'
 import { CheckboxList } from '@/components/dom/Forms'
 import Header from '@/components/dom/Header'
@@ -9,16 +12,43 @@ import Footer from '@/components/dom/Footer'
 import Modal from '@/components/dom/Modal'
 import useToggle from '@/hooks/useToggle'
 import ScrollBox from '@/components/dom/ScrollBox'
+import { ChangeEvent } from 'react'
+import isContainsAll from '@/utils/array/isContainsAll'
+
+const termsCheckOptions = ['serviceTerms', 'privacyTerms', 'newsletter'] as const
+type TermsCheckList = (typeof termsCheckOptions)[number]
+
+interface FormValues {
+  termsCheckList: TermsCheckList[]
+  checkAll: 'all' | false
+}
+
+const defaultValues: DefaultValues<FormValues> = {
+  termsCheckList: [],
+}
 
 const SignUpTerms = () => {
   const [isTermsToggled, toggleTerms] = useToggle(false)
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues,
+  })
   const termsCheckboxLists = [
-    { title: '모두 동의', description: '', highlight: true },
+    { title: '모두 동의', description: '', highlight: true, value: 'all', register: register('checkAll') },
     {
       title: '서비스 이용약관 동의(필수)',
       description: '',
       onSideButtonClick: toggleTerms,
       highlight: false,
+      value: 'serviceTerms',
     },
     {
       title: '개인정보 수집 및 이용동의(필수)',
@@ -26,13 +56,59 @@ const SignUpTerms = () => {
         console.log('clicked 1')
       },
       highlight: false,
+      value: 'privacyTerms',
     },
     {
       title: '게임 플레이 등에 유용한 소식 받기',
       description: '업데이트, 사전등록, 이벤트 참가 등 도움되는 정보를 받습니다.',
       highlight: false,
+      value: 'newsletter',
     },
   ]
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    const { termsCheckList } = data
+
+    // 필수 이용 약관 체크했는지 확인
+    if (isContainsAll<TermsCheckList>(termsCheckList, ['serviceTerms', 'privacyTerms'])) {
+      return Router.push({ pathname: '/signup/create', query: { ...data } })
+    } else {
+      setError('termsCheckList', {
+        type: 'required',
+        message: '서비스 이용약관 동의 및 개인정보 수집 및 이용동의 모두 동의해주세요.',
+      })
+    }
+  }
+
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event
+    // 전체 선택을 눌렀을 때
+    if (getValues('checkAll') === 'all' && value === 'all') {
+      setValue('termsCheckList', [...termsCheckOptions])
+    }
+    if (getValues('checkAll') === false && value === 'all') {
+      setValue('termsCheckList', [])
+    }
+
+    // 다른 체크박스를 선택했는데 전체 체크인 경우
+    if (isArrayEquals<TermsCheckList>(getValues('termsCheckList'), [...termsCheckOptions]) && value !== 'all') {
+      setValue('checkAll', 'all')
+    }
+    if (!isArrayEquals<TermsCheckList>(getValues('termsCheckList'), [...termsCheckOptions]) && value !== 'all') {
+      setValue('checkAll', false)
+    }
+
+    if (!isContainsAll<TermsCheckList>(getValues('termsCheckList'), ['serviceTerms', 'privacyTerms'])) {
+      setError('termsCheckList', {
+        type: 'required',
+        message: '서비스 이용약관 동의 및 개인정보 수집 및 이용동의 모두 동의해주세요.',
+      })
+    } else {
+      clearErrors('termsCheckList')
+    }
+  }
 
   return (
     <div className='flex flex-col w-full h-full'>
@@ -45,8 +121,18 @@ const SignUpTerms = () => {
       <Container width='md'>
         <div className='flex flex-col items-center w-full h-full mt-[160px]'>
           <h2>약관동의</h2>
-          <form className='grid w-[400px] justify-items-center'>
-            <CheckboxList id='terms' className='w-full my-[40px]' items={termsCheckboxLists} />
+          <form className='grid w-[400px] justify-items-center' onSubmit={handleSubmit(onSubmit)}>
+            <CheckboxList
+              id='terms'
+              name='terms'
+              className='w-full mt-[40px]'
+              items={termsCheckboxLists}
+              globalRegister={register('termsCheckList')}
+              onChange={onChange}
+            />
+            <p className='w-full text-left text-red-500 text-[12px] mt-[10px] mb-[40px]'>
+              {errors.termsCheckList?.message}
+            </p>
             <Button color='primary'>다음</Button>
           </form>
         </div>
