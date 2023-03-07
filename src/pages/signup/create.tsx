@@ -10,6 +10,7 @@ import Container from '@/components/dom/Container'
 import { Input } from '@/components/dom/Forms'
 import isContainsAll from '@/utils/array/isContainsAll'
 import { useEffect } from 'react'
+import axios from 'axios'
 
 const termsCheckOptions = ['serviceTerms', 'privacyTerms', 'newsletter'] as const
 type TermsCheckList = (typeof termsCheckOptions)[number]
@@ -18,7 +19,7 @@ interface FormValues {
   signUpValues: {
     email: string
     password: string
-    passwordConfirm: string
+    password2: string
   }
 }
 
@@ -26,7 +27,7 @@ const defaultValues: DefaultValues<FormValues> = {
   signUpValues: {
     email: '',
     password: '',
-    passwordConfirm: '',
+    password2: '',
   },
 }
 
@@ -36,13 +37,24 @@ const SignUpCreate = ({ query }) => {
     register,
     handleSubmit,
     watch,
+    getValues,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues,
   })
 
   const onSubmit = () => {
-    router.push('/characters')
+    axios
+      .post('http://localhost:4000/auth/sign-up', getValues('signUpValues'))
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error))
+    // try {
+    //   const res = await axios.post('http://localhost:4000/auth/sign-up', getValues('signUpValues'))
+    //   console.log(res)
+    // } catch (error) {
+    //   console.log(error)
+    // }
+    // router.push('/characters')
   }
 
   // 필수 이용약관을 체크 하지 않고 가입을 시도하려고 하면 이용약관 페이지로 이동
@@ -88,11 +100,11 @@ const SignUpCreate = ({ query }) => {
               })}
             />
             <Input
-              errorMessage={errors.signUpValues?.passwordConfirm?.message}
+              errorMessage={errors.signUpValues?.password2?.message}
               className='w-full'
               label='비밀번호 확인'
               type='password'
-              {...register('signUpValues.passwordConfirm', {
+              {...register('signUpValues.password2', {
                 required: '다시 한번 비밀번호를 입력해주세요.',
                 validate: (value: string) => {
                   if (watch('signUpValues.password') !== value) {
