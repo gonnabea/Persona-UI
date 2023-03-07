@@ -8,16 +8,17 @@ import Container from '@/components/dom/Container'
 import Button from '@/components/dom/Button'
 import { Input, Checkbox } from '@/components/dom/Forms'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 
 interface FormValues {
-  signUpValues: {
+  signInValues: {
     email: string
     password: string
   }
 }
 
 const defaultValues: DefaultValues<FormValues> = {
-  signUpValues: {
+  signInValues: {
     email: '',
     password: '',
   },
@@ -28,13 +29,19 @@ const SignIn = () => {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues,
   })
 
-  const onSubmit = () => {
-    router.push('/characters')
+  const onSubmit = async () => {
+    try {
+      const res = await axios.post('http://localhost:4000/auth/sign-in', getValues('signInValues'))
+      router.push('/characters')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -54,8 +61,8 @@ const SignIn = () => {
                 id='email'
                 label='이메일'
                 className='w-full'
-                errorMessage={errors.signUpValues?.email?.message}
-                {...register('signUpValues.email', {
+                errorMessage={errors.signInValues?.email?.message}
+                {...register('signInValues.email', {
                   required: '이메일을 입력해주세요',
                   pattern: {
                     value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
@@ -68,8 +75,8 @@ const SignIn = () => {
                 id='password'
                 label='비밀번호'
                 className='w-full'
-                errorMessage={errors.signUpValues?.password?.message}
-                {...register('signUpValues.password', {
+                errorMessage={errors.signInValues?.password?.message}
+                {...register('signInValues.password', {
                   required: '비밀번호를 입력해주세요',
                 })}
               />

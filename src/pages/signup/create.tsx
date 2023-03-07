@@ -43,18 +43,14 @@ const SignUpCreate = ({ query }) => {
     defaultValues,
   })
 
-  const onSubmit = () => {
-    axios
-      .post('http://localhost:4000/auth/sign-up', getValues('signUpValues'))
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error))
-    // try {
-    //   const res = await axios.post('http://localhost:4000/auth/sign-up', getValues('signUpValues'))
-    //   console.log(res)
-    // } catch (error) {
-    //   console.log(error)
-    // }
-    // router.push('/characters')
+  const onSubmit = async () => {
+    try {
+      const res = await axios.post('http://localhost:4000/auth/sign-up', getValues('signUpValues'))
+      console.log(res)
+      // router.push('/characters')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   // 필수 이용약관을 체크 하지 않고 가입을 시도하려고 하면 이용약관 페이지로 이동
