@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import dynamic from 'next/dynamic'
 
 import ArrowLeft from '@/assets/icons/arrow-left.svg'
 import ArrowRight from '@/assets/icons/arrow-right.svg'
@@ -6,6 +7,8 @@ import Scene from '@/components/canvas/Scene'
 import useEmblaCarousel from 'embla-carousel-react'
 import Button from '../Button'
 import { twMerge } from 'tailwind-merge'
+
+const Mutant = dynamic(() => import('@/components/canvas/characters/Mutant'), { ssr: false })
 
 interface ChbaractesListProps {
   title?: boolean
@@ -64,11 +67,7 @@ const CharactersList = ({
                 ${carouselItemClassName}
               `)}>
               <Scene>
-                <mesh rotation-x={Math.PI * 0.25} rotation-y={Math.PI * 0.25}>
-                  <boxBufferGeometry args={[1, 1, 1]} attach='geometry' />
-                  <meshStandardMaterial color={'orange'} />
-                  <boxGeometry args={[3, 3, 3]} />
-                </mesh>
+                <Mutant scale={0.3} position-y={-2.5} />
               </Scene>
             </div>
             {title ? (
@@ -88,13 +87,9 @@ const CharactersList = ({
                 h-[300px]
                 ${carouselItemClassName}
               `)}>
-              <Scene>
-                <mesh rotation-x={Math.PI * 0.25} rotation-y={Math.PI * 0.25}>
-                  <boxBufferGeometry args={[1, 1, 1]} attach='geometry' />
-                  <meshStandardMaterial color={'blue'} />
-                  <boxGeometry args={[3, 3, 3]} />
-                </mesh>
-              </Scene>
+              {/* <Scene>
+                <Mutant />
+              </Scene> */}
             </div>
             {title ? (
               <div className={`text-center mt-[26px] ${titleClassName}`}>
@@ -113,13 +108,9 @@ const CharactersList = ({
                 h-[300px]
                 ${carouselItemClassName}
               `)}>
-              <Scene>
-                <mesh rotation-x={Math.PI * 0.25} rotation-y={Math.PI * 0.25}>
-                  <boxBufferGeometry args={[1, 1, 1]} attach='geometry' />
-                  <meshStandardMaterial color={'salmon'} />
-                  <boxGeometry args={[3, 3, 3]} />
-                </mesh>
-              </Scene>
+              {/* <Scene>
+                <Mutant />
+              </Scene> */}
             </div>
             {title ? (
               <div className={`text-center mt-[26px] ${titleClassName}`}>

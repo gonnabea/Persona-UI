@@ -5,7 +5,6 @@ import Header from '@/components/dom/Header'
 import CharactersList from '@/components/dom/CharactersList'
 import Button from '@/components/dom/Button'
 import useToggle from '@/hooks/useToggle'
-import { useEffect } from 'react'
 import Modal from '@/components/dom/Modal'
 import { Input } from '@/components/dom/Forms'
 import Link from 'next/link'
@@ -35,6 +34,8 @@ const Characters = () => {
               <CharactersList
                 title={true}
                 titleClassName='[&>*]:text-white'
+                carouselClassName='w-[600px]'
+                carouselItemClassName='w-full'
                 carouselArrowClassName='w-[15px] h-[27px]'
               />
               <Link href='/3dWorld'>
