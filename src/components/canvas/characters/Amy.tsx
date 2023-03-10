@@ -34,7 +34,7 @@ function Amy(props: JSX.IntrinsicElements['group']) {
 
   // 캐릭터 이동 구현
   const { forward, backward, left, right, jump } = useCharacterControl()
-
+actions.run?.play()
   const [positionX, setPositionX] = useState(-0.3)
   const [positionY, setPositionY] = useState(0.75)
   const [positionZ, setPositionZ] = useState(5)
@@ -44,7 +44,7 @@ function Amy(props: JSX.IntrinsicElements['group']) {
   const sideVector = new Vector3(0, 0, 0)
   const direction = new Vector3(0, 0, 0)
 
-  let MOVESPEED = 30
+  let MOVESPEED = 3
 
   const [mesh, api] = useSphere(() => ({
     mass: 1,
@@ -63,7 +63,7 @@ function Amy(props: JSX.IntrinsicElements['group']) {
   }))
 
   useFrame(() => {
-    actions.run.play()
+    
 
     frontVector.set(0, 0, Number(forward) - Number(backward))
     sideVector.set(Number(right) - Number(left), 0, 0)
@@ -89,12 +89,13 @@ function Amy(props: JSX.IntrinsicElements['group']) {
   useEffect(() => {}, [])
 
   return (
-    <group ref={groupRef} {...props}>
+    <>
+    <group ref={groupRef}>
       <group
         ref={characterRef}
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[-0.3, 6, 5]}
-        scale={0.1}
+        rotation={props.rotation}
+        scale={props.scale}
+
         onPointerOver={() => {
           document.body.style.cursor = 'pointer'
         }}
@@ -102,15 +103,21 @@ function Amy(props: JSX.IntrinsicElements['group']) {
           document.body.style.cursor = 'default'
         }}>
         <ThirdPersonCamera
-          positionX={positionX / 20}
-          positionY={positionY / 20}
-          positionZ={positionZ / 20}
+          positionX={positionX }
+          positionY={positionY }
+          positionZ={positionZ }
           rotationZ={rotationZ}
         />
         <primitive object={nodes.mixamorigHips} />
         <skinnedMesh geometry={nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />
       </group>
     </group>
+                <mesh ref={mesh} visible={true}>
+          <sphereGeometry args={[0.1]} />
+          <meshStandardMaterial color="orange" />
+          
+        </mesh>
+    </>
   )
 }
 
