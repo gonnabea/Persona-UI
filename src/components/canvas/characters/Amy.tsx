@@ -1,21 +1,36 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
-import { useFrame, useLoader } from '@react-three/fiber'
-import { Suspense, useEffect, useRef, useState } from 'react'
-import { FBXLoader } from 'three-stdlib'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import THREE from 'three'
+import { useFrame } from '@react-three/fiber'
+import { useEffect, useRef, useState } from 'react'
 import ThirdPersonCamera from '../ThirdPersonCam'
 import useCharacterControl from '@/hooks/useCharacterControl'
 import { Vector3 } from 'three'
 import { useSphere } from '@react-three/cannon'
+import * as THREE from 'three'
+import { GLTF } from 'three-stdlib'
 
-function Amy(props) {
-  const characterRef = useRef<any>() // 타입 조사 필요
+// GLTF Actions Type
+type ActionName = 'run'
+interface GLTFActions extends THREE.AnimationClip {
+  name: ActionName
+}
 
-  // const glb = useGLTF("/models/characters/Amy.fbx");
-  const group = useRef()
-  const { nodes, materials, animations } = useGLTF('/models/characters/Amy.glb')
-  const { actions } = useAnimations(animations, group)
+// GLTF Result Type
+type GLTFResult = GLTF & {
+  nodes: {
+    Ch46: THREE.SkinnedMesh
+    mixamorigHips: THREE.Bone
+  }
+  materials: {
+    Ch46_body: THREE.MeshStandardMaterial
+  }
+  animations: GLTFActions[]
+}
+
+function Amy(props: JSX.IntrinsicElements['group']) {
+  const characterRef = useRef<THREE.Group>()
+  const groupRef = useRef<THREE.Group>()
+  const { nodes, materials, animations } = useGLTF('/models/characters/Amy.glb') as unknown as GLTFResult
+  const { actions } = useAnimations<GLTFActions>(animations, groupRef)
 
   // 캐릭터 이동 구현
   const { forward, backward, left, right, jump } = useCharacterControl()
@@ -48,7 +63,7 @@ function Amy(props) {
   }))
 
   useFrame(() => {
-    actions.run?.play()
+    actions.run.play()
 
     frontVector.set(0, 0, Number(forward) - Number(backward))
     sideVector.set(Number(right) - Number(left), 0, 0)
@@ -74,7 +89,7 @@ function Amy(props) {
   useEffect(() => {}, [])
 
   return (
-    <group ref={group} {...props}>
+    <group ref={groupRef} {...props}>
       <group
         ref={characterRef}
         rotation={[Math.PI / 2, 0, 0]}
@@ -93,15 +108,7 @@ function Amy(props) {
           rotationZ={rotationZ}
         />
         <primitive object={nodes.mixamorigHips} />
-
-        <skinnedMesh
-          geometry={
-            // @ts-ignore
-            nodes.Ch46.geometry
-          }
-          material={materials.Ch46_body}
-          skeleton={nodes.Ch46.skeleton}
-        />
+        <skinnedMesh geometry={nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />
       </group>
     </group>
   )
