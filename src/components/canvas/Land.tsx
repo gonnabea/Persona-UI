@@ -1,9 +1,9 @@
 import { useGLTF } from '@react-three/drei';
 import { useFrame, useLoader, useThree } from '@react-three/fiber'
-import { Suspense, useRef } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import Amy from './characters/Amy';
-import ObstacleBox from './ObstacleBox';
+
 
 function Land(props) {
     const group = useRef();
@@ -11,6 +11,8 @@ function Land(props) {
 
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene);
+
+
 
     const findPosition = (e) => {
 
@@ -30,11 +32,10 @@ function Land(props) {
 
 
     return (
+      
         <Suspense fallback={null}>
             <primitive onClick={(e) => findPosition(e)} position={props.position} scale={0.1} rotation={props.rotation} object={glb.scene} />
-
         </Suspense>
-        
     );
 }
 

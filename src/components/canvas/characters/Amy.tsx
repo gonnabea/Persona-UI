@@ -103,16 +103,16 @@ actions.run?.play()
           document.body.style.cursor = 'default'
         }}>
         <ThirdPersonCamera
-          positionX={positionX }
-          positionY={positionY }
-          positionZ={positionZ }
+          positionX={positionX}
+          positionY={positionY}
+          positionZ={positionZ}
           rotationZ={rotationZ}
         />
         <primitive object={nodes.mixamorigHips} />
         <skinnedMesh geometry={nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />
       </group>
     </group>
-                <mesh ref={mesh} visible={true}>
+        <mesh ref={mesh} visible={true}>
           <sphereGeometry args={[0.1]} />
           <meshStandardMaterial color="orange" />
           
