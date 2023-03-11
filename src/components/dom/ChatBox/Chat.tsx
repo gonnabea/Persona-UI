@@ -1,5 +1,3 @@
-import * as Colyseus from 'colyseus.js'
-
 import { Input } from '@/components/dom/Forms'
 import ScrollBox from '@/components/dom/ScrollBox'
 import Content from './Content'
@@ -7,20 +5,6 @@ import { useEffect, useRef } from 'react'
 
 const Chat = () => {
   const chatBoxRef = useRef<HTMLDivElement>(null)
-  const client = new Colyseus.Client('ws://localhost:4001')
-
-  client
-    .joinOrCreate('room_name')
-    .then((room) => {
-      console.log(room.sessionId, 'joined', room.name)
-
-      // room.onMessage('message_type', (message) => {
-      //   console.log(client.id, 'received on', room.name, message)
-      // })
-    })
-    .catch((e) => {
-      console.log('JOIN ERROR', e)
-    })
 
   // Set scroll position to bottom in chat is updated..
   useEffect(() => {
