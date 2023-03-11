@@ -1,4 +1,6 @@
 import { useRef } from 'react'
+import { RecoilRoot } from 'recoil'
+
 import dynamic from 'next/dynamic'
 import Header from '@/config'
 import Layout from '@/components/dom/Layout'
@@ -8,8 +10,9 @@ const Scene = dynamic(() => import('@/components/canvas/Scene'), { ssr: true })
 
 export default function App({ Component, pageProps = { title: 'index' } }) {
   const ref = useRef()
+
   return (
-    <>
+    <RecoilRoot>
       <Header title={pageProps.title} />
       <Layout ref={ref}>
         <Component {...pageProps} />
@@ -22,6 +25,6 @@ export default function App({ Component, pageProps = { title: 'index' } }) {
           </Scene>
         )}
       </Layout>
-    </>
+    </RecoilRoot>
   )
 }
