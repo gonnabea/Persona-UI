@@ -6,7 +6,7 @@ import { Physics } from '@react-three/cannon'
 
 import { Chat } from '@/components/dom/ChatBox'
 import ObstacleBox from '@/components/canvas/ObstacleBox'
-import { ColyseusContext } from '@/context/Colyseus'
+import { colyseusClient } from '@/colyseus'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -16,12 +16,6 @@ import { ColyseusContext } from '@/context/Colyseus'
 // Dom components go here
 
 export default function Page(props) {
-  const colyseusClient = useContext(ColyseusContext)
-
-  useEffect(() => {
-    console.log(colyseusClient)
-  }, [colyseusClient])
-
   return (
     <>
       <Chat />
@@ -57,6 +51,8 @@ Page.canvas = (props) => {
   )
 }
 
-export async function getStaticProps() {
+export const getStaticProps = async () => {
+  console.log(colyseusClient) // 나중에 Room 연결 후 prop으로 패스
+
   return { props: { title: '3dWorld' } }
 }
