@@ -11,8 +11,8 @@ const Content = ({ children, className, ...props }: HTMLAttributes<HTMLDivElemen
             py-[12px]
             mt-[10px]
             bg-opacity-50
-            first-of-type:bg-primary-200
-            first-of-type:bg-opacity-70
+            last-of-type:bg-primary-200
+            last-of-type:bg-opacity-70
         `)}
       {...props}>
       {children}
