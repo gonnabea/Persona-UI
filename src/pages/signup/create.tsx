@@ -47,7 +47,7 @@ const SignUpCreate = ({ query }) => {
     try {
       const res = await axios.post('http://localhost:4000/auth/sign-up', getValues('signUpValues'))
       console.log(res)
-      // router.push('/characters')
+      router.push('/characters')
     } catch (error) {
       console.log(error)
     }
