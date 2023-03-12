@@ -10,6 +10,7 @@ export function BoxCollider(props) {
 
     if (props.isGround === true) {
       return (
+        // @ts-ignore
         <mesh ref={ref} name={"ground1"} visible={props.visible}>
           <boxGeometry args={props.args} />
           <meshStandardMaterial color="orange" />
@@ -19,6 +20,7 @@ export function BoxCollider(props) {
     }
     else if (props.isStair === true) {
       return (
+        // @ts-ignore
         <mesh ref={ref} name={"stair"} visible={props.visible}>
           <boxGeometry args={props.args} />
           <meshStandardMaterial color="orange" />
@@ -28,6 +30,7 @@ export function BoxCollider(props) {
     }
     else {
       return (
+        // @ts-ignore
         <mesh ref={ref} visible={props.visible}>
           <boxGeometry args={props.args} />
           <meshStandardMaterial color="orange" />
@@ -47,6 +50,7 @@ export function BoxCollider(props) {
     }))
 
     return (
+        // @ts-ignore
       <mesh ref={ref} visible={props.visible}>
         <sphereGeometry args={props.args} />
         <meshStandardMaterial color="red" />

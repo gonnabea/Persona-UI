@@ -112,6 +112,7 @@ actions.run?.play()
         <skinnedMesh geometry={nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />
       </group>
     </group>
+        {/* @ts-ignore */}
         <mesh ref={mesh} visible={true}>
           <sphereGeometry args={[0.1]} />
           <meshStandardMaterial color="orange" />

@@ -3,7 +3,7 @@ import { useFrame, useLoader, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef } from 'react'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import Amy from './characters/Amy';
-
+import { colyseusClient } from '@/colyseus'
 
 function Land(props) {
     const group = useRef();
@@ -12,6 +12,18 @@ function Land(props) {
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene);
 
+    const connectToSocket = () => {
+        colyseusClient.joinOrCreate("main").then(room => {
+            console.log(room);
+            room.send("chat", "Hello from client: " + room.sessionId)
+        })
+
+    }
+
+
+    useEffect(() => {
+        connectToSocket();
+    }, [])
 
 
     const findPosition = (e) => {
