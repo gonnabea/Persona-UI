@@ -37,7 +37,7 @@ const SignIn = () => {
 
   const onSubmit = async () => {
     try {
-      const res = await axios.post('http://localhost:4000/auth/sign-in', getValues('signInValues'))
+      await axios.post('http://localhost:4000/auth/sign-in', getValues('signInValues'))
       router.push('/characters')
     } catch (error) {
       console.log(error)
