@@ -8,7 +8,7 @@ import Container from '@/components/dom/Container'
 import Button from '@/components/dom/Button'
 import { Input, Checkbox } from '@/components/dom/Forms'
 import { useRouter } from 'next/router'
-import axios from 'axios'
+import { axiosClient } from '@/axios.config'
 
 interface FormValues {
   signInValues: {
@@ -37,7 +37,7 @@ const SignIn = () => {
 
   const onSubmit = async () => {
     try {
-      await axios.post('http://localhost:4000/auth/sign-in', getValues('signInValues'))
+      await axiosClient.post('/auth/sign-in', getValues('signInValues'))
       router.push('/characters')
     } catch (error) {
       console.log(error)

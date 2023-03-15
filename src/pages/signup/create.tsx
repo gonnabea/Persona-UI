@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { axiosClient } from '@/axios.config'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useForm, DefaultValues } from 'react-hook-form'
@@ -9,8 +11,6 @@ import Header from '@/components/dom/Header'
 import Container from '@/components/dom/Container'
 import { Input } from '@/components/dom/Forms'
 import isContainsAll from '@/utils/array/isContainsAll'
-import { useEffect } from 'react'
-import axios from 'axios'
 
 const termsCheckOptions = ['serviceTerms', 'privacyTerms', 'newsletter'] as const
 type TermsCheckList = (typeof termsCheckOptions)[number]
@@ -45,7 +45,7 @@ const SignUpCreate = ({ query }) => {
 
   const onSubmit = async () => {
     try {
-      await axios.post('http://localhost:4000/auth/sign-up', getValues('signUpValues'))
+      await axiosClient.post('/auth/sign-up', getValues('signUpValues'))
       router.push('/characters')
     } catch (error) {
       console.log(error)
