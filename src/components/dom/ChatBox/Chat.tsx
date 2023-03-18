@@ -3,7 +3,7 @@ import { DefaultValues, useForm } from 'react-hook-form'
 import { Input } from '@/components/dom/Forms'
 import ScrollBox from '@/components/dom/ScrollBox'
 import Content from './Content'
-import { colyseusClient } from '@/colyseus'
+import { joinRoom } from '@/colyseus'
 
 interface FormValues {
   chatValues: {
@@ -16,8 +16,7 @@ const defaultValues: DefaultValues<FormValues> = {
     chat: '',
   },
 }
-
-const chatRoom = colyseusClient.joinOrCreate('main')
+const chatRoom = joinRoom('main')
 
 const Chat = () => {
   const chatBoxRef = useRef<HTMLDivElement>(null)
@@ -53,10 +52,9 @@ const Chat = () => {
 
   useEffect(() => {
     getChatMessage()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // 채팅 갱신 됐을 때 스크롤 박스 아래로 내리기
   useEffect(() => {
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight
@@ -82,7 +80,13 @@ const Chat = () => {
             ))}
           </>
         </ScrollBox>
-        <Input type='text' className='w-[260px]' placeholder='채팅입력...' {...register('chatValues.chat')} />
+        <Input
+          type='text'
+          className='w-[260px]'
+          placeholder='채팅입력...'
+          {...register('chatValues.chat')}
+          // ref={chatInputRef}
+        />
       </form>
     </div>
   )
