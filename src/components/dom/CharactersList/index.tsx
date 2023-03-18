@@ -9,6 +9,8 @@ import Button from '../Button'
 import { twMerge } from 'tailwind-merge'
 
 const Mutant = dynamic(() => import('@/components/canvas/characters/Mutant'), { ssr: false })
+const Remy = dynamic(() => import('@/components/canvas/characters/Remy'), { ssr: false })
+const Louise = dynamic(() => import('@/components/canvas/characters/Louise'), { ssr: false })
 
 interface ChbaractesListProps {
   title?: boolean
@@ -28,8 +30,8 @@ const CharactersList = ({
   carouselArrowClassName,
 }: ChbaractesListProps) => {
   const [emblaRef, embla] = useEmblaCarousel()
-  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
-  const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
+  // const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
+  // const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
 
   const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla])
   const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla])
@@ -67,7 +69,7 @@ const CharactersList = ({
                 ${carouselItemClassName}
               `)}>
               <Scene>
-                <Mutant scale={0.3} position-y={-2.5} />
+                <Mutant position-y={-2.5} />
               </Scene>
             </div>
             {title ? (
@@ -87,9 +89,9 @@ const CharactersList = ({
                 h-[300px]
                 ${carouselItemClassName}
               `)}>
-              {/* <Scene>
-                <Mutant />
-              </Scene> */}
+              <Scene>
+                <Remy position-y={-2.75} />
+              </Scene>
             </div>
             {title ? (
               <div className={`text-center mt-[26px] ${titleClassName}`}>
@@ -108,9 +110,9 @@ const CharactersList = ({
                 h-[300px]
                 ${carouselItemClassName}
               `)}>
-              {/* <Scene>
-                <Mutant />
-              </Scene> */}
+              <Scene>
+                <Louise position-y={-3} />
+              </Scene>
             </div>
             {title ? (
               <div className={`text-center mt-[26px] ${titleClassName}`}>

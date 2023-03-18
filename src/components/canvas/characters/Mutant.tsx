@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { useAnimations, useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 
-// GTLF Action Type
+// GLTF Action Type
 type ActionName =
   | 'Armature|mixamo.com|Layer0'
   | 'Armature|mixamo.com|Layer0.001_Armature'
@@ -13,7 +13,7 @@ interface GLTFActions extends THREE.AnimationClip {
   name: ActionName
 }
 
-// GTLF Result Type
+// GLTF Result Type
 type GLTFResult = GLTF & {
   nodes: {
     MutantMesh: THREE.SkinnedMesh
@@ -36,8 +36,8 @@ const Mutant = (props: JSX.IntrinsicElements['group']) => {
   }, [actions])
 
   return (
-    <group ref={groupRef} {...props}>
-      <group scale={0.1} ref={characterRef} rotation={[Math.PI / 2, 0, 0]}>
+    <group ref={groupRef} dispose={null} {...props}>
+      <group ref={characterRef} rotation={[Math.PI / 2, 0, 0]} scale={0.03}>
         <primitive object={nodes.mixamorigHips} />
         <skinnedMesh
           material={materials.mutant_M}
@@ -48,5 +48,7 @@ const Mutant = (props: JSX.IntrinsicElements['group']) => {
     </group>
   )
 }
+
+useGLTF.preload('/models/characters/Mutant.glb')
 
 export default Mutant
