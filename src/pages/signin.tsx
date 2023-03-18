@@ -9,6 +9,8 @@ import Button from '@/components/dom/Button'
 import { Input, Checkbox } from '@/components/dom/Forms'
 import { useRouter } from 'next/router'
 import { axiosClient } from '@/axios.config'
+import { useSetRecoilState } from 'recoil'
+import authState, { Auth } from '@/recoil/auth/atom'
 
 interface FormValues {
   signInValues: {
@@ -25,6 +27,7 @@ const defaultValues: DefaultValues<FormValues> = {
 }
 
 const SignIn = () => {
+  const setAuth = useSetRecoilState<Auth>(authState)
   const router = useRouter()
   const {
     register,
@@ -37,7 +40,11 @@ const SignIn = () => {
 
   const onSubmit = async () => {
     try {
-      await axiosClient.post('/auth/sign-in', getValues('signInValues'))
+      const {
+        data: { token },
+      } = await axiosClient.post('/auth/sign-in', getValues('signInValues'))
+
+      setAuth({ accessToken: token, refreshToken: '' })
       router.push('/characters')
     } catch (error) {
       console.log(error)
