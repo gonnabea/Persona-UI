@@ -3,8 +3,7 @@ import { DefaultValues, useForm } from 'react-hook-form'
 import { Input } from '@/components/dom/Forms'
 import ScrollBox from '@/components/dom/ScrollBox'
 import Content from './Content'
-import { colyseusClient } from '@/colyseus'
-import { Room } from 'colyseus.js'
+import { joinRoom } from '@/colyseus'
 
 interface FormValues {
   chatValues: {
@@ -17,13 +16,11 @@ const defaultValues: DefaultValues<FormValues> = {
     chat: '',
   },
 }
-
-
+const chatRoom = joinRoom('main')
 
 const Chat = () => {
   const chatBoxRef = useRef<HTMLDivElement>(null)
   const [chatMessages, setChatMessages] = useState<string[]>([])
-  const chatRoomRef = useRef<Room<unknown>>()
 
   // submit chat
   const { register, handleSubmit, getValues, setValue } = useForm<FormValues>({
@@ -34,36 +31,30 @@ const Chat = () => {
     const message = getValues('chatValues.chat')
 
     if (message) {
-        console.log(message)
-        chatRoomRef.current.send('chats', message)
-      
+      chatRoom.then((room) => {
+        room.send('chat', message)
+      })
 
       setValue('chatValues.chat', '')
     }
   }
 
   // get chat
-  const getChatMessage = (room) => {
-    
-        room.onMessage('chats', (chat) => {
-          console.log(chat)
+  const getChatMessage = () => {
+    chatRoom
+      .then((room) => {
+        room.onMessage('chat', (chat) => {
           setChatMessages((prevChat) => [...prevChat, chat])
         })
-        
-      
-      
+      })
+      .catch((error) => console.log(error))
   }
 
   useEffect(() => {
-    colyseusClient.joinOrCreate('main').then(room => {
-      chatRoomRef.current = room;
-              
-      getChatMessage(room)
-    })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getChatMessage()
   }, [])
 
+  // 채팅 갱신 됐을 때 스크롤 박스 아래로 내리기
   useEffect(() => {
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight
@@ -89,7 +80,13 @@ const Chat = () => {
             ))}
           </>
         </ScrollBox>
-        <Input type='text' className='w-[260px]' placeholder='채팅입력...' {...register('chatValues.chat')} />
+        <Input
+          type='text'
+          className='w-[260px]'
+          placeholder='채팅입력...'
+          {...register('chatValues.chat')}
+          // ref={chatInputRef}
+        />
       </form>
     </div>
   )

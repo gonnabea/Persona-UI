@@ -24,6 +24,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.5",
     "recoil": "^0.7.7",
+    "recoil-persist": "^4.2.0",
     "three": "^0.149.0",
     "three-stdlib": "^2.21.6"
   },
