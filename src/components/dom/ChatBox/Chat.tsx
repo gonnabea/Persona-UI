@@ -4,6 +4,7 @@ import { Input } from '@/components/dom/Forms'
 import ScrollBox from '@/components/dom/ScrollBox'
 import Content from './Content'
 import { colyseusClient } from '@/colyseus'
+import { Room } from 'colyseus.js'
 
 interface FormValues {
   chatValues: {
@@ -17,11 +18,12 @@ const defaultValues: DefaultValues<FormValues> = {
   },
 }
 
-const chatRoom = colyseusClient.joinOrCreate('main')
+
 
 const Chat = () => {
   const chatBoxRef = useRef<HTMLDivElement>(null)
   const [chatMessages, setChatMessages] = useState<string[]>([])
+  const chatRoomRef = useRef<Room<unknown>>()
 
   // submit chat
   const { register, handleSubmit, getValues, setValue } = useForm<FormValues>({
@@ -32,27 +34,32 @@ const Chat = () => {
     const message = getValues('chatValues.chat')
 
     if (message) {
-      chatRoom.then((room) => {
-        room.send('chat', message)
-      })
+        console.log(message)
+        chatRoomRef.current.send('chats', message)
+      
 
       setValue('chatValues.chat', '')
     }
   }
 
   // get chat
-  const getChatMessage = () => {
-    chatRoom
-      .then((room) => {
-        room.onMessage('chat', (chat) => {
+  const getChatMessage = (room) => {
+    
+        room.onMessage('chats', (chat) => {
+          console.log(chat)
           setChatMessages((prevChat) => [...prevChat, chat])
         })
-      })
-      .catch((error) => console.log(error))
+        
+      
+      
   }
 
   useEffect(() => {
-    getChatMessage()
+    colyseusClient.joinOrCreate('main').then(room => {
+      chatRoomRef.current = room;
+              
+      getChatMessage(room)
+    })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
