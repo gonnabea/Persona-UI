@@ -51,8 +51,8 @@ const Characters = () => {
         bodyChildren={
           <>
             <CharactersList
-              carouselClassName='w-[204px]'
-              carouselItemClassName='w-[204px] px-[17px]'
+              carouselClassName='w-[300px]'
+              carouselItemClassName='w-[300px] px-[17px]'
               carouselArrowButtonClassName='w-[32px] h-[32px] p-0'
               carouselArrowClassName='w-[10px] mx-auto'
             />
