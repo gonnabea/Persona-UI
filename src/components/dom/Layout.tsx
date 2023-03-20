@@ -6,7 +6,7 @@ const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement
   useImperativeHandle(ref, () => localRef.current)
 
   return (
-    <div {...props} ref={localRef} className='absolute top-0 left-0 z-10 w-screen h-screen overflow-hidden dom'>
+    <div {...props} ref={localRef} className='h-full'>
       {children}
     </div>
   )

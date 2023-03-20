@@ -13,14 +13,14 @@ const Characters = () => {
   const [newCharModal, toggleNewCharModal] = useToggle(false)
 
   return (
-    <div className='flex flex-col h-full bg-primary-400'>
-      <Header width='full' className='border-none py-[40px]'>
+    <div className='flex flex-col h-auto min-h-full bg-primary-400'>
+      <Header className='border-none py-[40px]'>
         <PersonaBI className='fill-white w-[145.71px]' />
       </Header>
-      <Container width='full' className='flex flex-grow'>
-        <div className='h-full [&>*]:text-white'>
+      <Container className='flex items-center justify-center flex-1'>
+        <div className='[&>*]:text-white'>
           <h2 className='w-full font-black text-center mt-[22px]'>캐릭터 선택</h2>
-          <div className='flex flex-col items-center justify-center h-full'>
+          <div className='flex flex-col items-center justify-center'>
             <div className='flex flex-col items-center justify-center'>
               {/* 캐릭터가 없는 경우... */}
               {/* <Button

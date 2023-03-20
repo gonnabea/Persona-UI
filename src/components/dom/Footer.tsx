@@ -15,6 +15,7 @@ const Footer = ({ children, className = '', ...props }: HTMLAttributes<HTMLEleme
         font-semibold
         text-[11px]
         text-gray-900
+        bg-white
         ${className}
       `}
       {...props}>

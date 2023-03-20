@@ -26,6 +26,22 @@ module.exports = {
         },
       },
     },
+    screens: {
+      sm: { max: '640px' },
+      md: '768px',
+      lg: '900px',
+    },
+    container: {
+      center: true,
+      screens: {
+        sm: { max: '640px' },
+        md: '768px',
+        lg: '900px',
+      },
+      padding: {
+        DEFAULT: '1rem',
+      },
+    },
   },
   variants: {},
   plugins: [],

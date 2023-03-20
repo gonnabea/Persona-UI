@@ -1,27 +1,16 @@
 import { HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-export const widthVariables = {
-  sm: 'w-[320px]',
-  md: 'w-[900px]',
-  full: 'w-full',
-} as const
-
-type WidthVariablesKey = keyof typeof widthVariables
-
-interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
-  width: WidthVariablesKey // px
-}
-
-const Container = ({ children, width, className = '', ...props }: ContainerProps) => {
+const Container = ({ children, className = '', ...props }: HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
-      className={`
-        w-full
-        h-full
+      className={twMerge(`
+        container
+        py-5
         ${className}
-      `}
+      `)}
       {...props}>
-      <div className={`${widthVariables[width]} h-full mx-auto`}>{children}</div>
+      {children}
     </div>
   )
 }

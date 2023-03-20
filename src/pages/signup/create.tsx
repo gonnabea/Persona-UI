@@ -63,14 +63,14 @@ const SignUpCreate = ({ query }) => {
   }, [query, router])
 
   return (
-    <div className='flex flex-col w-full h-full'>
-      <Header width='md'>
+    <div className='flex flex-col h-auto min-h-full'>
+      <Header>
         <div className='flex items-center justify-between'>
           <PersonaBI className='fill-typo-black-primary' width='120px' />
           <Link href='/signin'>로그인</Link>
         </div>
       </Header>
-      <Container width='md'>
+      <Container className='flex items-center justify-center flex-1'>
         <div className='flex flex-col items-center justify-center w-full h-full'>
           <h2 className='mb-[40px]'>회원 가입</h2>
           <form className='grid w-[320px] justify-items-center' onSubmit={handleSubmit(onSubmit)}>

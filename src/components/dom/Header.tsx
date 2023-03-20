@@ -1,24 +1,21 @@
 import { HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import Container from './Container'
 
-import Container, { widthVariables } from './Container'
-
-interface HeaderProps extends HTMLAttributes<HTMLElement> {
-  width: keyof typeof widthVariables
-}
-
-const Header = ({ children, width, className = '', ...props }: HeaderProps) => {
+const Header = ({ children, className = '', ...props }: HTMLAttributes<HTMLElement>) => {
   return (
     <header
       className={twMerge(`
         py-[20px]
         border-b
         border-black
-        ${width === 'full' ? 'px-[40px]' : ''}
+        z-[1]
+        sticky
+        top-0
         ${className}
       `)}
       {...props}>
-      <Container width={width}>{children}</Container>
+      <Container className='py-0'>{children}</Container>
     </header>
   )
 }

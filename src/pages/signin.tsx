@@ -56,8 +56,8 @@ const SignIn = () => {
       <div className='relative'>
         <Image className='object-cover' src={signinBg} alt='signin-background' fill />
       </div>
-      <Container width='sm'>
-        <div className='flex flex-col items-center justify-center w-full h-full'>
+      <Container>
+        <div className='flex flex-col items-center justify-center h-full mx-auto lg:w-[320px]'>
           <div>
             <PersonaBI className='w-[200px] mb-[60px] fill-primary-200' />
           </div>

@@ -111,17 +111,17 @@ const SignUpTerms = () => {
   }
 
   return (
-    <div className='flex flex-col w-full h-full'>
-      <Header width='md'>
+    <div className='flex flex-col h-auto min-h-full'>
+      <Header className='bg-white'>
         <div className='flex items-center justify-between'>
           <PersonaBI className='fill-typo-black-primary' width='120px' />
           <Link href='/signin'>로그인</Link>
         </div>
       </Header>
-      <Container width='md'>
-        <div className='flex flex-col items-center w-full h-full mt-[160px]'>
+      <Container className='flex items-center justify-center flex-1'>
+        <div className='flex flex-col items-center justify-center'>
           <h2>약관동의</h2>
-          <form className='grid w-[400px] justify-items-center' onSubmit={handleSubmit(onSubmit)}>
+          <form className='grid lg:w-[400px] justify-items-center' onSubmit={handleSubmit(onSubmit)}>
             <CheckboxList
               id='terms'
               name='terms'
