@@ -18,6 +18,7 @@ type TermsCheckList = (typeof termsCheckOptions)[number]
 interface FormValues {
   signUpValues: {
     email: string
+    username: string
     password: string
     password2: string
   }
@@ -26,6 +27,7 @@ interface FormValues {
 const defaultValues: DefaultValues<FormValues> = {
   signUpValues: {
     email: '',
+    username: '',
     password: '',
     password2: '',
   },
@@ -46,7 +48,7 @@ const SignUpCreate = ({ query }) => {
   const onSubmit = async () => {
     try {
       await axiosClient.post('/auth/sign-up', getValues('signUpValues'))
-      router.push('/characters')
+      router.push('/signin')
     } catch (error) {
       console.log(error)
     }
@@ -69,7 +71,7 @@ const SignUpCreate = ({ query }) => {
         </div>
       </Header>
       <Container width='md'>
-        <div className='flex flex-col items-center w-full h-full mt-[160px]'>
+        <div className='flex flex-col items-center justify-center w-full h-full'>
           <h2 className='mb-[40px]'>회원 가입</h2>
           <form className='grid w-[320px] justify-items-center' onSubmit={handleSubmit(onSubmit)}>
             <Input
@@ -83,6 +85,15 @@ const SignUpCreate = ({ query }) => {
                   value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
                   message: '이메일 형식이 아닙니다.',
                 },
+              })}
+            />
+            <Input
+              errorMessage={errors.signUpValues?.username?.message}
+              className='w-full'
+              label='사용자명'
+              type='text'
+              {...register('signUpValues.username', {
+                required: '사용자명을 입력해주세요.',
               })}
             />
             <Input
