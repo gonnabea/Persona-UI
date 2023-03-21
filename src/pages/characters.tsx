@@ -14,7 +14,7 @@ const Characters = () => {
 
   return (
     <div className='flex flex-col h-auto min-h-full bg-primary-400'>
-      <Header className='border-none py-[40px]'>
+      <Header className='border-none py-[40px]' containerClassName='max-w-full px-[40px]'>
         <PersonaBI className='fill-white w-[145.71px]' />
       </Header>
       <Container className='flex items-center justify-center flex-1'>

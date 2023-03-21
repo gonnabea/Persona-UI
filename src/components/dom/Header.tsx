@@ -2,7 +2,11 @@ import { HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Container from './Container'
 
-const Header = ({ children, className = '', ...props }: HTMLAttributes<HTMLElement>) => {
+interface HeaderProps extends HTMLAttributes<HTMLElement> {
+  containerClassName?: string
+}
+
+const Header = ({ children, className = '', containerClassName = '', ...props }: HeaderProps) => {
   return (
     <header
       className={twMerge(`
@@ -15,7 +19,12 @@ const Header = ({ children, className = '', ...props }: HTMLAttributes<HTMLEleme
         ${className}
       `)}
       {...props}>
-      <Container className='py-0'>{children}</Container>
+      <Container
+        className={twMerge(`
+          py-0 ${containerClassName}
+        `)}>
+        {children}
+      </Container>
     </header>
   )
 }
