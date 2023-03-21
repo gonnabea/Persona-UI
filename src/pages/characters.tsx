@@ -17,21 +17,20 @@ const Characters = () => {
       <Header className='border-none py-[40px]' containerClassName='max-w-full px-[40px]'>
         <PersonaBI className='fill-white w-[145.71px]' />
       </Header>
-      <Container className='flex items-center justify-center flex-1'>
-        <div className='[&>*]:text-white'>
-          <h2 className='w-full font-black text-center mt-[22px]'>캐릭터 선택</h2>
-          <div className='flex flex-col items-center justify-center'>
-            <div className='flex flex-col items-center justify-center'>
-              {/* 캐릭터가 없는 경우... */}
-              {/* <Button
-                onClick={toggleNewCharModal}
-                color='transparent'
-                className='[&>*]:text-white px-[74px] pb-[93px] pt-[114px] bg-primary-300 rounded-[20px]'>
-                <Plus className='mx-auto' />
-                <h6 className='text-[14px] mt-[44px]'>새로 만들기</h6>
-              </Button> */}
-              {/* 캐릭터 존재할 경우.. */}
-              <CharactersList
+      <Container className='flex flex-col items-center justify-center flex-1 [&>*]:text-white'>
+        <h2 className='w-full font-black text-center mt-[20px]'>캐릭터 선택</h2>
+        <div className='flex flex-col items-center justify-center flex-1'>
+          <div className='flex flex-col items-center justify-center '>
+            {/* 캐릭터가 없는 경우... */}
+            <Button
+              onClick={toggleNewCharModal}
+              color='transparent'
+              className='[&>*]:text-white px-[74px] pb-[93px] pt-[114px] bg-primary-300 rounded-[20px]'>
+              <Plus className='mx-auto' />
+              <h6 className='text-[14px] mt-[44px]'>새로 만들기</h6>
+            </Button>
+            {/* 캐릭터 존재할 경우.. */}
+            {/* <CharactersList
                 title={true}
                 titleClassName='[&>*]:text-white'
                 carouselClassName='w-[600px]'
@@ -40,8 +39,7 @@ const Characters = () => {
               />
               <Link href='/3dWorld'>
                 <Button color='primary'>시작하기</Button>
-              </Link>
-            </div>
+              </Link> */}
           </div>
         </div>
       </Container>
