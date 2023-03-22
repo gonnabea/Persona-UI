@@ -73,7 +73,7 @@ const Chat = () => {
       <form onSubmit={handleSubmit(submitChatMesssage)}>
         <ScrollBox
           ref={chatBoxRef}
-          className='flex flex-col items-start px-0 bg-transparent w-[800px] h-[300px] pb-[10px] [&>*]:text-white'>
+          className='flex flex-col items-start px-0 bg-transparent w-[800px] h-[300px] pb-[10px] [&>*]:text-white no-scrollbar'>
           <>
             {chatMessages.map((chat, idx) => (
               <Content key={idx}>{chat}</Content>

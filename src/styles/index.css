@@ -5,6 +5,18 @@
 @import url('/public/fonts/pretendard/pretendard-subset.css');
 @import url('/public/fonts/pretendard/pretendard.css');
 
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
 @layer base {
   * {
     box-sizing: border-box;
