@@ -134,4 +134,8 @@ SignUpCreate.getInitialProps = async ({ query }) => {
   return { query }
 }
 
+export const getStaticProps = async () => {
+  return { props: { title: '회원가입' } }
+}
+
 export default SignUpCreate

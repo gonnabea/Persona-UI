@@ -112,4 +112,8 @@ const SignIn = () => {
   )
 }
 
+export const getStaticProps = async () => {
+  return { props: { title: '로그인' } }
+}
+
 export default SignIn

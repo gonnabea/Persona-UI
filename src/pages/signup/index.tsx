@@ -196,4 +196,8 @@ const SignUpTerms = () => {
   )
 }
 
+export const getStaticProps = async () => {
+  return { props: { title: '회원가입' } }
+}
+
 export default SignUpTerms

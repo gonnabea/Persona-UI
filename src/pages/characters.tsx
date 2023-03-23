@@ -70,4 +70,8 @@ const Characters = () => {
   )
 }
 
+export const getStaticProps = async () => {
+  return { props: { title: '캐릭터 선택' } }
+}
+
 export default Characters
