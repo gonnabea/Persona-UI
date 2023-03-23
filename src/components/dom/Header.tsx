@@ -16,6 +16,7 @@ const Header = ({ children, className = '', containerClassName = '', ...props }:
         z-[1]
         sticky
         top-0
+        bg-white
         ${className}
       `)}
       {...props}>
