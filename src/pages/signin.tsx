@@ -52,12 +52,12 @@ const SignIn = () => {
   }
 
   return (
-    <div className='w-full h-full grid grid-cols-2 divide-x-0'>
-      <div className='relative'>
+    <div className='relative flex justify-center w-full h-full lg:grid lg:grid-cols-2 lg:divide-x-0 lg:static'>
+      <div className='absolute w-full h-full lg:relative lg:w-auto lg:h-auto'>
         <Image className='object-cover' src={signinBg} alt='signin-background' fill />
       </div>
-      <Container>
-        <div className='flex flex-col items-center justify-center h-full mx-auto lg:w-[320px]'>
+      <Container className='flex items-center justify-center z-[2] lg:block'>
+        <div className='flex flex-col items-center justify-center mx-auto bg-white lg:h-full lg:w-[320px] p-[20px] lg:p-0 rounded-[20px] lg:rounded-none'>
           <div>
             <PersonaBI className='w-[200px] mb-[60px] fill-primary-200' />
           </div>
