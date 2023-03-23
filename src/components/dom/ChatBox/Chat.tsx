@@ -4,6 +4,8 @@ import { Input } from '@/components/dom/Forms'
 import ScrollBox from '@/components/dom/ScrollBox'
 import Content from './Content'
 import { joinRoom } from '@/colyseus'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { chatEnabledState } from '@/recoil/chat/atom'
 
 interface FormValues {
   chatValues: {
@@ -20,12 +22,16 @@ const chatRoom = joinRoom('main')
 
 const Chat = () => {
   const chatBoxRef = useRef<HTMLDivElement>(null)
+  const chatInputRef = useRef<HTMLInputElement>(null)
   const [chatMessages, setChatMessages] = useState<string[]>([])
+  const setChatEnabled = useSetRecoilState(chatEnabledState)
 
   // submit chat
   const { register, handleSubmit, getValues, setValue } = useForm<FormValues>({
     defaultValues,
   })
+
+  const { ref, ...chatInputEvents } = register('chatValues.chat')
 
   const submitChatMesssage = () => {
     const message = getValues('chatValues.chat')
@@ -36,8 +42,37 @@ const Chat = () => {
       })
 
       setValue('chatValues.chat', '')
+      chatInputRef.current.blur()
+      setChatEnabled(false)
     }
   }
+
+  // Enter, Esc키 이벤트 제어
+  useEffect(() => {
+    const handleKeyEvent = (event: KeyboardEvent) => {
+      const { key } = event
+      const isFocused = document.activeElement === chatInputRef.current
+
+      // 채팅 활성화 제어
+      if (key === 'Enter' && !isFocused) {
+        chatInputRef.current.focus()
+        setChatEnabled(true)
+      }
+
+      if (key === 'Escape' && isFocused) {
+        chatInputRef.current.blur()
+        setValue('chatValues.chat', '')
+        setChatEnabled(false)
+      }
+
+      //인게임 메뉴 제어
+    }
+
+    window.addEventListener('keydown', handleKeyEvent)
+    return () => {
+      window.removeEventListener('keydown', handleKeyEvent)
+    }
+  }, [])
 
   // get chat
   const getChatMessage = () => {
@@ -84,8 +119,11 @@ const Chat = () => {
           type='text'
           className='w-[260px]'
           placeholder='채팅입력...'
-          {...register('chatValues.chat')}
-          // ref={chatInputRef}
+          {...chatInputEvents}
+          ref={(e) => {
+            ref(e)
+            chatInputRef.current = e
+          }}
         />
       </form>
     </div>

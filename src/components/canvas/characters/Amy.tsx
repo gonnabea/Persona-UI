@@ -7,6 +7,8 @@ import { Vector3 } from 'three'
 import { useSphere } from '@react-three/cannon'
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
+import { useRecoilValue } from 'recoil'
+import { chatEnabledState } from '@/recoil/chat/atom'
 
 // GLTF Actions Type
 type ActionName = 'run'
@@ -31,10 +33,11 @@ function Amy(props: JSX.IntrinsicElements['group']) {
   const groupRef = useRef<THREE.Group>()
   const { nodes, materials, animations } = useGLTF('/models/characters/Amy.glb') as unknown as GLTFResult
   const { actions } = useAnimations<GLTFActions>(animations, groupRef)
+  const chatEnabled = useRecoilValue(chatEnabledState)
 
   // 캐릭터 이동 구현
   const { forward, backward, left, right, jump } = useCharacterControl()
-actions.run?.play()
+  actions.run?.play()
   const [positionX, setPositionX] = useState(-0.3)
   const [positionY, setPositionY] = useState(0.75)
   const [positionZ, setPositionZ] = useState(5)
@@ -63,61 +66,49 @@ actions.run?.play()
   }))
 
   useFrame(() => {
-    
-
     frontVector.set(0, 0, Number(forward) - Number(backward))
     sideVector.set(Number(right) - Number(left), 0, 0)
 
-    direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED)
+    if (!chatEnabled) {
+      direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED)
+      characterRef.current.rotation.z < 1.7 ? (characterRef.current.rotation.z += Number(right) / 5) : null
+      characterRef.current.rotation.z > -1.7 ? (characterRef.current.rotation.z -= Number(left) / 5) : null
+      characterRef.current.rotation.z > -3.4 ? (characterRef.current.rotation.z -= Number(backward) / 5) : null
+      characterRef.current.rotation.z < 0 ? (characterRef.current.rotation.z += Number(forward) / 5) : null
+    }
 
     api.velocity.set(direction.x, 0, direction.z)
 
     mesh.current.getWorldPosition(characterRef.current.position)
 
-    characterRef.current.rotation.z < 1.7 ? (characterRef.current.rotation.z += Number(right) / 5) : null
-    characterRef.current.rotation.z > -1.7 ? (characterRef.current.rotation.z -= Number(left) / 5) : null
-    characterRef.current.rotation.z > -3.4 ? (characterRef.current.rotation.z -= Number(backward) / 5) : null
-    characterRef.current.rotation.z < 0 ? (characterRef.current.rotation.z += Number(forward) / 5) : null
-
     setPositionX(characterRef.current.position.x)
     setPositionY(characterRef.current.position.y)
     setPositionZ(characterRef.current.position.z)
-
-    // setCharacterRotateZ(characterRef.current.rotation.z)
   })
-
-  useEffect(() => {}, [])
 
   return (
     <>
-    <group ref={groupRef}>
-      <group
-        ref={characterRef}
-        rotation={props.rotation}
-        scale={props.scale}
-
-        onPointerOver={() => {
-          document.body.style.cursor = 'pointer'
-        }}
-        onPointerOut={() => {
-          document.body.style.cursor = 'default'
-        }}>
-        <ThirdPersonCamera
-          positionX={positionX}
-          positionY={positionY}
-          positionZ={positionZ}
-          rotationZ={rotationZ}
-        />
-        <primitive object={nodes.mixamorigHips} />
-        <skinnedMesh geometry={nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />
+      <group ref={groupRef}>
+        <group
+          ref={characterRef}
+          rotation={props.rotation}
+          scale={props.scale}
+          onPointerOver={() => {
+            document.body.style.cursor = 'pointer'
+          }}
+          onPointerOut={() => {
+            document.body.style.cursor = 'default'
+          }}>
+          <ThirdPersonCamera positionX={positionX} positionY={positionY} positionZ={positionZ} rotationZ={rotationZ} />
+          <primitive object={nodes.mixamorigHips} />
+          <skinnedMesh geometry={nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />
+        </group>
       </group>
-    </group>
-        {/* @ts-ignore */}
-        <mesh ref={mesh} visible={true}>
-          <sphereGeometry args={[0.1]} />
-          <meshStandardMaterial color="orange" />
-          
-        </mesh>
+      {/* @ts-ignore */}
+      <mesh ref={mesh} visible={true}>
+        <sphereGeometry args={[0.1]} />
+        <meshStandardMaterial color='orange' />
+      </mesh>
     </>
   )
 }
