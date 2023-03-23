@@ -43,14 +43,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           font-semibold
           text-base
           rounded-lg
-          outline
-          outline-offset-0
-          outline-[1px]
-          outline-gray-500
           text-gray-400
-          focus:outline-primary-100
-          focus:outline-[2px]
-          disabled:outline-gray-300
+          appearance-none
+          outline-none
+          shadow-[0_0_0_1px_theme('colors.gray.500')]
+          focus:shadow-[0_0_0_2px_theme('colors.primary.100')]
+          disabled:shadow-[0_0_0_2px_theme('colors.gray.300')]
           disabled:bg-gray-200
           placeholder:focus:text-black
           ${className}
