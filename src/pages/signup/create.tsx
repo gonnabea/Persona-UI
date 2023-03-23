@@ -73,7 +73,7 @@ const SignUpCreate = ({ query }) => {
       <Container className='flex items-center justify-center flex-1'>
         <div className='flex flex-col items-center justify-center w-full h-full'>
           <h2 className='mb-[40px]'>회원 가입</h2>
-          <form className='grid w-[320px] justify-items-center' onSubmit={handleSubmit(onSubmit)}>
+          <form className='w-full grid lg:w-[320px] justify-items-center' onSubmit={handleSubmit(onSubmit)}>
             <Input
               errorMessage={errors.signUpValues?.email?.message}
               className='w-full'
