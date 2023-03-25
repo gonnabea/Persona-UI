@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { DefaultValues, useForm } from 'react-hook-form'
 import { Input } from '@/components/dom/Forms'
 import ScrollBox from '@/components/dom/ScrollBox'
 import Content from './Content'
 import { joinRoom } from '@/colyseus'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { chatEnabledState } from '@/recoil/chat/atom'
 
 interface FormValues {
@@ -21,10 +21,11 @@ const defaultValues: DefaultValues<FormValues> = {
 const chatRoom = joinRoom('main')
 
 const Chat = () => {
+  const setChatEnabled = useSetRecoilState(chatEnabledState)
+  const [chatMessages, setChatMessages] = useState<string[]>([])
+  const [chatHasError, setChatHasError] = useState<boolean>(false)
   const chatBoxRef = useRef<HTMLDivElement>(null)
   const chatInputRef = useRef<HTMLInputElement>(null)
-  const [chatMessages, setChatMessages] = useState<string[]>([])
-  const setChatEnabled = useSetRecoilState(chatEnabledState)
 
   // submit chat
   const { register, handleSubmit, getValues, setValue } = useForm<FormValues>({
@@ -54,12 +55,12 @@ const Chat = () => {
       const isFocused = document.activeElement === chatInputRef.current
 
       // 채팅 활성화 제어
-      if (key === 'Enter' && !isFocused) {
+      if (key === 'Enter' && !isFocused && !chatHasError) {
         chatInputRef.current.focus()
         setChatEnabled(true)
       }
 
-      if (key === 'Escape' && isFocused) {
+      if (key === 'Escape' && isFocused && !chatHasError) {
         chatInputRef.current.blur()
         setValue('chatValues.chat', '')
         setChatEnabled(false)
@@ -72,7 +73,7 @@ const Chat = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyEvent)
     }
-  }, [])
+  }, [chatHasError, setChatEnabled, setValue])
 
   // get chat
   const getChatMessage = () => {
@@ -82,7 +83,12 @@ const Chat = () => {
           setChatMessages((prevChat) => [...prevChat, chat])
         })
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        setChatMessages((prevMessages) => {
+          return [...prevMessages, '채팅서버 연결실패']
+        })
+        setChatHasError(true)
+      })
   }
 
   useEffect(() => {
@@ -119,6 +125,7 @@ const Chat = () => {
           type='text'
           className='w-[260px]'
           placeholder='채팅입력...'
+          disabled={chatHasError}
           {...chatInputEvents}
           ref={(e) => {
             ref(e)
