@@ -10,13 +10,15 @@ import { Input, Checkbox } from '@/components/dom/Forms'
 import { useRouter } from 'next/router'
 import { axiosClient } from '@/axios.config'
 import { useSetRecoilState } from 'recoil'
-import authState, { Auth } from '@/recoil/auth/atom'
+import authState, { AuthState } from '@/recoil/auth/atom'
+import { KeepSignInState, keepSignInState } from '@/recoil/auth/atom'
 
 interface FormValues {
   signInValues: {
     email: string
     password: string
   }
+  keepSignIn: boolean
 }
 
 const defaultValues: DefaultValues<FormValues> = {
@@ -24,15 +26,18 @@ const defaultValues: DefaultValues<FormValues> = {
     email: '',
     password: '',
   },
+  keepSignIn: false,
 }
 
 const SignIn = () => {
-  const setAuth = useSetRecoilState<Auth>(authState)
+  const setAuth = useSetRecoilState<AuthState>(authState)
+  const setKeepSignIn = useSetRecoilState<KeepSignInState>(keepSignInState)
   const router = useRouter()
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues,
@@ -44,6 +49,7 @@ const SignIn = () => {
         data: { token },
       } = await axiosClient.post('/auth/sign-in', getValues('signInValues'))
 
+      setKeepSignIn(getValues('keepSignIn'))
       setAuth({ accessToken: token, refreshToken: '' })
       router.push('/characters')
     } catch (error) {
@@ -90,7 +96,15 @@ const SignIn = () => {
               {/* Login options (Always login, find accounts) */}
               <div className='flex items-center justify-between w-full mb-[20px]'>
                 <div>
-                  <Checkbox label='로그인 상태 유지' labelPosition='right' id='always-login' />
+                  <Checkbox
+                    label='로그인 상태 유지'
+                    labelPosition='right'
+                    id='always-login'
+                    {...register('keepSignIn')}
+                    onChange={(e) => {
+                      setValue('keepSignIn', e.target.checked)
+                    }}
+                  />
                 </div>
                 <div className='text-xs underline'>
                   <Link href='/find-password'>비밀번호 찾기</Link>

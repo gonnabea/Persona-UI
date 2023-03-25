@@ -3,12 +3,20 @@ import { recoilPersist } from 'recoil-persist'
 
 const { persistAtom } = recoilPersist()
 
-export type Auth = {
+export type KeepSignInState = boolean
+
+export const keepSignInState = atom({
+  key: 'keepSignIn',
+  default: false,
+  effects: [persistAtom],
+})
+
+export type AuthState = {
   accessToken: string
   refreshToken: string
 }
 
-const auth = atom({
+const authState = atom({
   key: 'auth',
   default: {
     accessToken: '',
@@ -17,4 +25,4 @@ const auth = atom({
   effects: [persistAtom],
 })
 
-export default auth
+export default authState

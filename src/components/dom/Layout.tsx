@@ -1,21 +1,27 @@
-import { useRef, forwardRef, useImperativeHandle, HTMLAttributes, useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { useRecoilState } from 'recoil'
-import auth from '@/recoil/auth/atom'
+import { useRef, forwardRef, useImperativeHandle, HTMLAttributes, useEffect, useState } from 'react'
+import Router from 'next/router'
+import { useRecoilState, useResetRecoilState } from 'recoil'
+import authState, { keepSignInState } from '@/recoil/auth/atom'
 
 const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement>, ref) => {
   const localRef = useRef()
-  const router = useRouter()
-  const [authState] = useRecoilState(auth)
-  const { accessToken } = authState
+  const [auth] = useRecoilState(authState)
+  const resetAuthState = useResetRecoilState(authState)
+  const [keepSignIn] = useRecoilState(keepSignInState)
 
   useEffect(() => {
+    if (!keepSignIn) resetAuthState()
+  }, [keepSignIn, resetAuthState])
+
+  useEffect(() => {
+    const { accessToken } = auth
+
     if (accessToken) {
-      router.push('/characters')
+      Router.push('/characters')
     } else {
-      router.push('/signin')
+      Router.push('/signin')
     }
-  }, [accessToken, router])
+  }, [auth])
 
   useImperativeHandle(ref, () => localRef.current)
 
