@@ -34,6 +34,8 @@ const defaultValues: DefaultValues<FormValues> = {
 }
 
 const SignUpCreate = ({ query }) => {
+  const { termsCheckList = [] } = query
+
   const router = useRouter()
   const {
     register,
@@ -56,11 +58,12 @@ const SignUpCreate = ({ query }) => {
 
   // 필수 이용약관을 체크 하지 않고 가입을 시도하려고 하면 이용약관 페이지로 이동
   useEffect(() => {
-    const { termsCheckList = [] } = query
     if (!isContainsAll<TermsCheckList>(termsCheckList as TermsCheckList[], ['serviceTerms', 'privacyTerms'])) {
       router.push('/signup')
     }
-  }, [query, router])
+  }, [router, termsCheckList])
+
+  if (!isContainsAll<TermsCheckList>(termsCheckList as TermsCheckList[], ['serviceTerms', 'privacyTerms'])) return ''
 
   return (
     <div className='flex flex-col h-auto min-h-full'>
@@ -130,12 +133,8 @@ const SignUpCreate = ({ query }) => {
   )
 }
 
-SignUpCreate.getInitialProps = async ({ query }) => {
-  return { query }
-}
-
-export const getStaticProps = async () => {
-  return { props: { title: '회원가입' } }
+export const getServerSideProps = ({ query }) => {
+  return { props: { query, title: '회원가입' } }
 }
 
 export default SignUpCreate
