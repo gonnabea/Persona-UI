@@ -143,11 +143,11 @@ const SignUpTerms = () => {
         toggle={toggleTerms}
         headerChildren={
           <>
-            <h3 className='text-center'>서비스 이용약관 동의(필수)</h3>
+            <h3 className='text-center break-keep'>서비스 이용약관 동의(필수)</h3>
           </>
         }
         bodyChildren={
-          <ScrollBox className='w-[440px] h-[330px]'>
+          <ScrollBox className='h-full lg:w-[440px] lg:h-[330px]'>
             <>
               <h3>Lorem ipsum</h3>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae arcu metus. Orci varius natoque
@@ -180,7 +180,7 @@ const SignUpTerms = () => {
           </ScrollBox>
         }
         footerChildren={
-          <div className='grid grid-cols-2 gap-x-[10px]'>
+          <div className='flex flex-col-reverse lg:grid lg:grid-cols-2 gap-x-[10px] gap-y-[10px]'>
             <Button
               color='secondary'
               onClick={() => {

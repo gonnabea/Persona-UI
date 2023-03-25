@@ -54,6 +54,40 @@ const Modal = ({
   return null
 }
 
-export { Container as ModalContainer, Header as ModalHeader, Body as ModalBody, Footer as ModalFooter }
+const ModalWithoutDim = ({
+  headerChildren,
+  bodyChildren,
+  footerChildren,
+  headerClassName,
+  bodyClassName,
+  footerClassName,
+  toggle,
+  active,
+}: ModalProps) => {
+  const ref = useRef<Element | null>(null)
+  const [mounted, setMounted] = useState<boolean>(false)
+
+  useEffect(() => {
+    ref.current = document.body
+    setMounted(true)
+  }, [])
+
+  if (mounted && ref.current && active) {
+    return createPortal(
+      <Container>
+        <Header toggle={toggle} className={headerClassName}>
+          {headerChildren}
+        </Header>
+        <Body className={bodyClassName}>{bodyChildren}</Body>
+        {footerChildren ? <Footer className={footerClassName}>{footerChildren}</Footer> : ''}
+      </Container>,
+      ref.current,
+    )
+  }
+
+  return null
+}
+
+export { Container as ModalContainer, Header as ModalHeader, Body as ModalBody, Footer as ModalFooter, ModalWithoutDim }
 
 export default Modal

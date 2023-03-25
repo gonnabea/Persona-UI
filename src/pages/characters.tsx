@@ -64,7 +64,7 @@ const Characters = () => {
             </Button>
           </>
         }
-        footerClassName='m-[-30px]'
+        footerClassName='m-[-10px] lg:m-[-30px]'
       />
     </div>
   )

@@ -8,7 +8,8 @@ const Footer = ({ children, className = '', ...props }: HTMLAttributes<HTMLEleme
         border-t
         border-black
         border-opacity-10
-        py-[30px]
+        py-[10px]
+        lg:py-[30px]
         flex
         justify-center
         items-center
