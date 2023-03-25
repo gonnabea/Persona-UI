@@ -12,6 +12,8 @@ import { axiosClient } from '@/axios.config'
 import { useSetRecoilState } from 'recoil'
 import authState, { AuthState } from '@/recoil/auth/atom'
 import { KeepSignInState, keepSignInState } from '@/recoil/auth/atom'
+import useToggle from '@/hooks/useToggle'
+import Modal from '@/components/dom/Modal'
 
 interface FormValues {
   signInValues: {
@@ -32,6 +34,7 @@ const defaultValues: DefaultValues<FormValues> = {
 const SignIn = () => {
   const setAuth = useSetRecoilState<AuthState>(authState)
   const setKeepSignIn = useSetRecoilState<KeepSignInState>(keepSignInState)
+  const [findPasswordModalEnabled, toggleFindPasswordModalEnabled] = useToggle(false)
   const router = useRouter()
   const {
     register,
@@ -63,7 +66,7 @@ const SignIn = () => {
         <Image className='object-cover' src={signinBg} alt='signin-background' fill />
       </div>
       <Container className='flex items-center justify-center z-[2] lg:block'>
-        <div className='flex flex-col items-center justify-center mx-auto bg-white lg:h-full lg:w-[320px] p-[20px] lg:p-0 rounded-[20px] lg:rounded-none'>
+        <div className='flex flex-col items-center justify-center w-full mx-auto bg-white lg:h-full lg:w-[320px] p-[20px] lg:p-0 rounded-[20px] lg:rounded-none'>
           <div>
             <PersonaBI className='w-[200px] mb-[60px] fill-primary-200' />
           </div>
@@ -106,8 +109,8 @@ const SignIn = () => {
                     }}
                   />
                 </div>
-                <div className='text-xs underline'>
-                  <Link href='/find-password'>비밀번호 찾기</Link>
+                <div className='text-xs underline' onClick={toggleFindPasswordModalEnabled}>
+                  비밀번호 찾기
                 </div>
               </div>
               <Button color='primary' className='w-full mb-[20px]'>
@@ -122,6 +125,18 @@ const SignIn = () => {
           </div>
         </div>
       </Container>
+      <Modal
+        toggle={toggleFindPasswordModalEnabled}
+        active={findPasswordModalEnabled}
+        containerClassName='h-auto'
+        bodyClassName='flex justify-center items-center'
+        bodyChildren={<>해당 페이지는 준비중입니다.</>}
+        footerChildren={
+          <Button color='primary' className='w-full' onClick={toggleFindPasswordModalEnabled}>
+            닫기
+          </Button>
+        }
+      />
     </div>
   )
 }

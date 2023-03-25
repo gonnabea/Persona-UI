@@ -1,9 +1,10 @@
 import { HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-const Container = ({ children }: HTMLAttributes<HTMLDivElement>) => {
+const Container = ({ children, className = '' }: HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
-      className={`
+      className={twMerge(`
         bg-white
         p-[10px]
         lg:p-[30px]
@@ -14,7 +15,8 @@ const Container = ({ children }: HTMLAttributes<HTMLDivElement>) => {
         w-[90%]
         lg:h-auto
         lg:w-auto
-      `}>
+        ${className}
+      `)}>
       {children}
     </div>
   )

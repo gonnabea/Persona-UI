@@ -10,6 +10,7 @@ import Footer from './Footer'
 interface ModalProps {
   toggle: () => void
   active: boolean
+  containerClassName?: string
   headerChildren?: JSX.Element
   bodyChildren: JSX.Element
   footerChildren?: JSX.Element
@@ -19,6 +20,7 @@ interface ModalProps {
 }
 
 const Modal = ({
+  containerClassName,
   headerChildren,
   bodyChildren,
   footerChildren,
@@ -39,7 +41,7 @@ const Modal = ({
   if (mounted && ref.current && active) {
     return createPortal(
       <Dim>
-        <Container>
+        <Container className={containerClassName}>
           <Header toggle={toggle} className={headerClassName}>
             {headerChildren}
           </Header>
