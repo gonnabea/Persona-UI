@@ -16,9 +16,7 @@ const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement
   useEffect(() => {
     const { accessToken } = auth
 
-    if (accessToken) {
-      Router.push('/characters')
-    } else {
+    if (!accessToken) {
       Router.push('/signin')
     }
   }, [auth])
