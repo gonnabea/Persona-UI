@@ -5,6 +5,13 @@ import PositionTracker from '@/components/canvas/PositionTracker'
 import { Physics } from '@react-three/cannon'
 import { Chat } from '@/components/dom/ChatBox'
 import { BoxCollider, SphereCollider } from '@/components/canvas/Colliders'
+import Button from '@/components/dom/Button'
+import Kebab from '@/assets/icons/kebab.svg'
+import { ModalWithoutDim } from '@/components/dom/Modal'
+import useToggle from '@/hooks/useToggle'
+import LogoutIcon from '@/assets/icons/logout.svg'
+import { useResetRecoilState } from 'recoil'
+import authState, { keepSignInState } from '@/recoil/auth/atom'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -14,9 +21,53 @@ import { BoxCollider, SphereCollider } from '@/components/canvas/Colliders'
 // Dom components go here
 
 export default function Page(props) {
+  const [menuEnabled, toggleMenuEnabled] = useToggle(false)
+  const resetToken = useResetRecoilState(authState)
+  const resetKeepSignInStatus = useResetRecoilState(keepSignInState)
+  const menuList = [
+    {
+      title: '로그아웃',
+      Icon: LogoutIcon,
+      callback: () => {
+        resetToken()
+        resetKeepSignInStatus()
+      },
+    },
+  ]
+
   return (
     <>
+      <Button
+        color='white'
+        className='absolute border rounded-full p-[8px] top-[34px] right-[40px] z-[1] border-[#B3B3B3] hover:bg-white'
+        onClick={toggleMenuEnabled}>
+        <Kebab className='fill-primary-200' />
+      </Button>
       <Chat />
+      <ModalWithoutDim
+        active={menuEnabled}
+        toggle={toggleMenuEnabled}
+        containerClassName='top-[34px] right-[40px] z-[2] lg:w-[230px]'
+        headerChildren={<>메뉴</>}
+        bodyClassName='mx-[-10px] lg:mx-[-30px] lg:pb-0 lg:pt-[8px]'
+        bodyChildren={
+          <div className='flex flex-col'>
+            {menuList.map((item, index) => {
+              const { title, callback, Icon } = item
+              return (
+                <Button
+                  key={`menu-${index}`}
+                  color='white'
+                  onClick={callback}
+                  className='flex text-left rounded-none lg:px-[30px] lg:py-[10px]'>
+                  {Icon ? <Icon /> : ''}
+                  <p className='pl-[10px]'>{title}</p>
+                </Button>
+              )
+            })}
+          </div>
+        }
+      />
     </>
   )
 }

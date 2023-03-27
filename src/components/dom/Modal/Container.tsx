@@ -15,6 +15,7 @@ const Container = ({ children, className = '' }: HTMLAttributes<HTMLDivElement>)
         w-[90%]
         lg:h-auto
         lg:w-auto
+        fixed
         ${className}
       `)}>
       {children}

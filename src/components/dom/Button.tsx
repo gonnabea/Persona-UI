@@ -21,6 +21,14 @@ const buttonColorVariables = {
     disabled:text-gray-400
     disabled:bg-gray-200
   `,
+  white: `
+    bg-white
+    hover:bg-gray-200
+    hover:text-primary-200
+    hover:fill-primary-200
+    disabled:text-gray-400
+    disabled:fill-gray-400
+  `,
   transparent: `
     font-semibold
   `,

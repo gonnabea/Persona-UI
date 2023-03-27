@@ -57,6 +57,7 @@ const Modal = ({
 }
 
 const ModalWithoutDim = ({
+  containerClassName,
   headerChildren,
   bodyChildren,
   footerChildren,
@@ -76,7 +77,7 @@ const ModalWithoutDim = ({
 
   if (mounted && ref.current && active) {
     return createPortal(
-      <Container>
+      <Container className={`w-auto h-auto ${containerClassName}`}>
         <Header toggle={toggle} className={headerClassName}>
           {headerChildren}
         </Header>
