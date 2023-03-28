@@ -59,9 +59,9 @@ export default function Page(props) {
                   key={`menu-${index}`}
                   color='white'
                   onClick={callback}
-                  className='flex text-left rounded-none lg:px-[30px] lg:py-[10px]'>
+                  className='flex text-left rounded-none lg:px-[30px] lg:py-[10px] stroke-typo-black-primary hover:stroke-primary-200 stroke-2'>
                   {Icon ? <Icon /> : ''}
-                  <p className='pl-[10px]'>{title}</p>
+                  <p className='pl-[10px] text-inherit'>{title}</p>
                 </Button>
               )
             })}
