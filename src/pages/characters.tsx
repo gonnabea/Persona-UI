@@ -18,28 +18,29 @@ const Characters = () => {
         <PersonaBI className='fill-white w-[145.71px]' />
       </Header>
       <Container className='flex flex-col items-center justify-center flex-1 [&>*]:text-white'>
-        <h2 className='w-full font-black text-center mt-[20px]'>캐릭터 선택</h2>
+        <h2 className='w-full font-black text-center lg:mt-[20px]'>캐릭터 선택</h2>
         <div className='flex flex-col items-center justify-center flex-1'>
           <div className='flex flex-col items-center justify-center '>
             {/* 캐릭터가 없는 경우... */}
-            <Button
+            {/* <Button
               onClick={toggleNewCharModal}
               color='transparent'
               className='[&>*]:text-white px-[74px] pb-[93px] pt-[114px] bg-primary-300 rounded-[20px]'>
               <Plus className='mx-auto' />
               <h6 className='text-[14px] mt-[44px]'>새로 만들기</h6>
-            </Button>
+            </Button> */}
             {/* 캐릭터 존재할 경우.. */}
-            {/* <CharactersList
-                title={true}
-                titleClassName='[&>*]:text-white'
-                carouselClassName='w-[600px]'
-                carouselItemClassName='w-full'
-                carouselArrowClassName='w-[15px] h-[27px]'
-              />
-              <Link href='/3dWorld'>
-                <Button color='primary'>시작하기</Button>
-              </Link> */}
+            <CharactersList
+              title={true}
+              titleClassName='[&>*]:text-white'
+              carouselClassName='w-[180px] lg:w-[600px]'
+              carouselItemClassName='w-full'
+              carouselArrowButtonClassName='w-[32px] h-[32px] p-0'
+              carouselArrowClassName='w-[10px] mx-auto'
+            />
+            <Link href='/3dWorld'>
+              <Button color='primary'>시작하기</Button>
+            </Link>
           </div>
         </div>
       </Container>
