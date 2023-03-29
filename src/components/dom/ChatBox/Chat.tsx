@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { DefaultValues, useForm } from 'react-hook-form'
+import MobileDetect from 'mobile-detect'
+
 import { Input } from '@/components/dom/Forms'
 import ScrollBox from '@/components/dom/ScrollBox'
 import Content from './Content'
@@ -20,7 +22,8 @@ const defaultValues: DefaultValues<FormValues> = {
 }
 const chatRoom = joinRoom('main')
 
-const Chat = () => {
+const Chat = (props) => {
+  const { isMobile } = props
   const setChatEnabled = useSetRecoilState(chatEnabledState)
   const [chatMessages, setChatMessages] = useState<string[]>([])
   const [chatHasError, setChatHasError] = useState<boolean>(false)
@@ -135,6 +138,13 @@ const Chat = () => {
       </form>
     </div>
   )
+}
+
+export const getStaticProps = async ({ req }) => {
+  const userAgent = typeof navigator === 'undefined' ? req.headers['user-agent'] : navigator.userAgent
+  const md = new MobileDetect(userAgent)
+
+  return { props: { title: '3dWorld', isMobile: !!md.mobile() } }
 }
 
 export default Chat

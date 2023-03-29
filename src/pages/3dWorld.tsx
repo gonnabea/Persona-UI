@@ -1,4 +1,7 @@
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
+import { Joystick } from 'react-joystick-component'
+import MobileDetect from 'mobile-detect'
+
 import Land from '@/components/canvas/Land'
 import Amy from '@/components/canvas/characters/Amy'
 import PositionTracker from '@/components/canvas/PositionTracker'
@@ -20,7 +23,7 @@ import authState, { keepSignInState } from '@/recoil/auth/atom'
 
 // Dom components go here
 
-export default function Page(props) {
+export default function Page({ isMobile }) {
   const [menuEnabled, toggleMenuEnabled] = useToggle(false)
   const resetToken = useResetRecoilState(authState)
   const resetKeepSignInStatus = useResetRecoilState(keepSignInState)
@@ -35,19 +38,58 @@ export default function Page(props) {
     },
   ]
 
+  // 조이스틱 이벤트
+  const joystickMoveEvent = (event) => {
+    const direction = event.direction
+
+    if (direction === 'FORWARD') {
+    }
+    if (direction === 'LEFT') {
+    }
+    if (direction === 'RIGHT') {
+    }
+    if (direction === 'BACKWARD') {
+    }
+  }
+
   return (
     <>
+      {/* 모바일 채팅버튼 */}
+      {isMobile ? (
+        <Button
+          color='white'
+          className='absolute border rounded-full p-[8px] top-[20px] left-[20px] lg:top-[34px] lg:left-[40px] z-[1] border-[#B3B3B3] hover:bg-white'>
+          <Kebab className='fill-primary-200 sm:max-md:w-[12px] sm:max-md:h-[12px]' />
+        </Button>
+      ) : (
+        ''
+      )}
       <Button
         color='white'
-        className='absolute border rounded-full p-[8px] top-[34px] right-[40px] z-[1] border-[#B3B3B3] hover:bg-white'
+        className='absolute border rounded-full p-[8px] top-[20px] right-[20px] lg:top-[34px] lg:right-[40px] z-[1] border-[#B3B3B3] hover:bg-white'
         onClick={toggleMenuEnabled}>
         <Kebab className='fill-primary-200' />
       </Button>
-      <Chat />
+      {/* <Chat /> */}
+      {/* 모바일 조이스틱 */}
+      {isMobile ? (
+        <div className='absolute bottom-[30px] left-[30px] z-[2]'>
+          <Joystick
+            size={120}
+            stickSize={60}
+            baseColor='rgba(247, 247, 247, 0.5)'
+            stickColor='#808080'
+            move={joystickMoveEvent}
+            throttle={100}
+          />
+        </div>
+      ) : (
+        ''
+      )}
       <ModalWithoutDim
         active={menuEnabled}
         toggle={toggleMenuEnabled}
-        containerClassName='top-[34px] right-[40px] z-[2] lg:w-[230px]'
+        containerClassName='top-[20px] right-[20px] lg:top-[34px] lg:right-[40px] z-[2] lg:w-[230px]'
         headerChildren={<>메뉴</>}
         bodyClassName='mx-[-10px] lg:mx-[-30px] lg:pb-0 lg:pt-[8px]'
         bodyChildren={
@@ -113,6 +155,9 @@ Page.canvas = (props) => {
   )
 }
 
-export const getStaticProps = async () => {
-  return { props: { title: '3dWorld' } }
+export const getServerSideProps = async ({ req }) => {
+  const userAgent = req.headers['user-agent']
+  const md = new MobileDetect(userAgent)
+
+  return { props: { title: '3dWorld', isMobile: !!md.mobile() } }
 }
