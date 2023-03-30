@@ -7,8 +7,6 @@ import { Vector3 } from 'three'
 import { useSphere } from '@react-three/cannon'
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
-import { useRecoilValue } from 'recoil'
-import { chatEnabledState } from '@/recoil/chat/atom'
 
 // GLTF Actions Type
 type ActionName = 'run'
@@ -33,7 +31,6 @@ function Amy(props: JSX.IntrinsicElements['group']) {
   const groupRef = useRef<THREE.Group>()
   const { nodes, materials, animations } = useGLTF('/models/characters/Amy.glb') as unknown as GLTFResult
   const { actions } = useAnimations<GLTFActions>(animations, groupRef)
-  const chatEnabled = useRecoilValue(chatEnabledState)
 
   // 캐릭터 이동 구현
   const { forward, backward, left, right, jump } = useCharacterControl()
@@ -69,13 +66,11 @@ function Amy(props: JSX.IntrinsicElements['group']) {
     frontVector.set(0, 0, Number(forward) - Number(backward))
     sideVector.set(Number(right) - Number(left), 0, 0)
 
-    if (!chatEnabled) {
-      direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED)
-      characterRef.current.rotation.z < 1.7 ? (characterRef.current.rotation.z += Number(right) / 5) : null
-      characterRef.current.rotation.z > -1.7 ? (characterRef.current.rotation.z -= Number(left) / 5) : null
-      characterRef.current.rotation.z > -3.4 ? (characterRef.current.rotation.z -= Number(backward) / 5) : null
-      characterRef.current.rotation.z < 0 ? (characterRef.current.rotation.z += Number(forward) / 5) : null
-    }
+    direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED)
+    characterRef.current.rotation.z < 1.7 ? (characterRef.current.rotation.z += Number(right) / 5) : null
+    characterRef.current.rotation.z > -1.7 ? (characterRef.current.rotation.z -= Number(left) / 5) : null
+    characterRef.current.rotation.z > -3.4 ? (characterRef.current.rotation.z -= Number(backward) / 5) : null
+    characterRef.current.rotation.z < 0 ? (characterRef.current.rotation.z += Number(forward) / 5) : null
 
     api.velocity.set(direction.x, 0, direction.z)
 

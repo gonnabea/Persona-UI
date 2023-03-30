@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react'
+import { Suspense } from 'react'
 import { Joystick } from 'react-joystick-component'
 import MobileDetect from 'mobile-detect'
 
@@ -13,8 +13,9 @@ import Kebab from '@/assets/icons/kebab.svg'
 import { ModalWithoutDim } from '@/components/dom/Modal'
 import useToggle from '@/hooks/useToggle'
 import LogoutIcon from '@/assets/icons/logout.svg'
-import { useResetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 import authState, { keepSignInState } from '@/recoil/auth/atom'
+import { chatEnabledState } from '@/recoil/chat/atom'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -24,6 +25,7 @@ import authState, { keepSignInState } from '@/recoil/auth/atom'
 // Dom components go here
 
 export default function Page({ isMobile }) {
+  const [chatEnabled, setChatEnabled] = useRecoilState(chatEnabledState)
   const [menuEnabled, toggleMenuEnabled] = useToggle(false)
   const resetToken = useResetRecoilState(authState)
   const resetKeepSignInStatus = useResetRecoilState(keepSignInState)
@@ -37,6 +39,10 @@ export default function Page({ isMobile }) {
       },
     },
   ]
+
+  const toggleChatEnabled = () => {
+    setChatEnabled(!chatEnabled)
+  }
 
   // 조이스틱 이벤트
   const joystickMoveEvent = (event) => {
@@ -58,8 +64,9 @@ export default function Page({ isMobile }) {
       {isMobile ? (
         <Button
           color='white'
+          onClick={toggleChatEnabled}
           className='absolute border rounded-full p-[8px] top-[20px] left-[20px] lg:top-[34px] lg:left-[40px] z-[1] border-[#B3B3B3] hover:bg-white'>
-          <Kebab className='fill-primary-200 sm:max-md:w-[12px] sm:max-md:h-[12px]' />
+          <Kebab className='fill-primary-200' />
         </Button>
       ) : (
         ''
@@ -70,7 +77,7 @@ export default function Page({ isMobile }) {
         onClick={toggleMenuEnabled}>
         <Kebab className='fill-primary-200' />
       </Button>
-      {/* <Chat /> */}
+      <Chat isMobile={isMobile} />
       {/* 모바일 조이스틱 */}
       {isMobile ? (
         <div className='absolute bottom-[30px] left-[30px] z-[2]'>

@@ -11,7 +11,7 @@ const Header = ({ children, className = '', toggle }: HeaderProps) => {
     <div className='mx-[-10px] mt-[-10px] lg:mx-[-30px] lg:mt-[-30px]'>
       <div className='text-right px-[10px] pt-[10px]'>
         <button onClick={toggle}>
-          <X />
+          <X className='stroke-[#243747]' />
         </button>
       </div>
       <div

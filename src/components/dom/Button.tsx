@@ -48,6 +48,7 @@ interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   color: keyof typeof buttonColorVariables
   useIcon?: boolean
   disabled?: boolean
+  type?: 'button' | 'submit'
 }
 
 const Button = ({ children, color, useIcon, className = '', ...props }: ButtonProps) => {
