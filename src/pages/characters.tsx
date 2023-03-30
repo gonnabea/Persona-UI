@@ -47,11 +47,13 @@ const Characters = () => {
       <Modal
         active={newCharModal}
         toggle={toggleNewCharModal}
+        bodyClassName='px-[1px]'
         bodyChildren={
           <>
             <CharactersList
+              carouselContainerClassName='justify-center items-center'
               carouselClassName='w-[300px]'
-              carouselItemClassName='w-[300px] px-[17px]'
+              carouselItemClassName='w-[200px] md:w-[300px] px-[17px]'
               carouselArrowButtonClassName='w-[32px] h-[32px] p-0'
               carouselArrowClassName='w-[10px] mx-auto'
             />

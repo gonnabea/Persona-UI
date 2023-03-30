@@ -15,6 +15,7 @@ const Louise = dynamic(() => import('@/components/canvas/characters/Louise'), { 
 interface ChbaractesListProps {
   title?: boolean
   titleClassName?: string
+  carouselContainerClassName?: string
   carouselClassName?: string
   carouselItemClassName?: string
   carouselArrowButtonClassName?: string
@@ -24,6 +25,7 @@ interface ChbaractesListProps {
 const CharactersList = ({
   title,
   titleClassName,
+  carouselContainerClassName,
   carouselClassName,
   carouselItemClassName,
   carouselArrowButtonClassName,
@@ -37,7 +39,7 @@ const CharactersList = ({
   const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla])
 
   return (
-    <div className='flex'>
+    <div className={`flex ${carouselContainerClassName}`}>
       <div className='flex items-center justify-center'>
         <Button
           color='transparent'
