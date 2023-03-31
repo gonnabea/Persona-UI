@@ -7,7 +7,7 @@ import ScrollBox from '@/components/dom/ScrollBox'
 import Button from '@/components/dom/Button'
 import Content from './Content'
 import { joinRoom } from '@/colyseus'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { chatEnabledState } from '@/recoil/chat/atom'
 
 const chatContainerStyles = {
@@ -174,7 +174,7 @@ const Chat = ({ isMobile }: ChatProps) => {
         </ScrollBox>
         <Input
           type='text'
-          className={`${isMobile ? 'w-full' : 'w-[260px]'}`}
+          className={`${isMobile ? 'w-full' : 'w-[260px] sticky bottom-0'}`}
           placeholder='채팅입력...'
           disabled={chatHasError}
           {...chatInputEvents}
