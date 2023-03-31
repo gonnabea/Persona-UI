@@ -48,13 +48,19 @@ export default function Page({ isMobile }) {
   const joystickMoveEvent = (event) => {
     const direction = event.direction
 
-    if (direction === 'FORWARD') {
+    const arrowKeys = {
+      FORWARD: { code: 'KeyW', key: 'w' },
+      BACKWARD: { code: 'KeyS', key: 's' },
+      LEFT: { code: 'KeyA', key: 'a' },
+      RIGHT: { code: 'KeyD', key: 'd' },
     }
-    if (direction === 'LEFT') {
-    }
-    if (direction === 'RIGHT') {
-    }
-    if (direction === 'BACKWARD') {
+
+    for (const [key, value] of Object.entries(arrowKeys)) {
+      if (key === direction) {
+        document.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, cancelable: true, ...value }))
+      } else {
+        document.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, cancelable: true, ...value }))
+      }
     }
   }
 
@@ -87,6 +93,7 @@ export default function Page({ isMobile }) {
             baseColor='rgba(247, 247, 247, 0.5)'
             stickColor='#808080'
             move={joystickMoveEvent}
+            stop={joystickMoveEvent}
             throttle={100}
           />
         </div>
