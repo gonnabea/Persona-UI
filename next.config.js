@@ -14,6 +14,7 @@ const nextConfig = {
   // },
   experimental: {},
   images: {},
+  output: 'standalone',
   reactStrictMode: false, // Recommended for the `pages` directory, default in `app`.
   webpack(config, { isServer }) {
     // audio support
