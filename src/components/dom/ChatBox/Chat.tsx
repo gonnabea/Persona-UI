@@ -79,7 +79,6 @@ const Chat = ({ isMobile }: ChatProps) => {
       setValue('chatValues.chat', '')
       if (!isMobile) {
         chatInputRef.current.blur()
-        setChatEnabled(false)
       }
     }
   }
@@ -93,13 +92,11 @@ const Chat = ({ isMobile }: ChatProps) => {
       // 채팅 활성화 제어
       if (key === 'Enter' && !isFocused && !chatHasError) {
         chatInputRef.current.focus()
-        setChatEnabled(true)
       }
 
       if (key === 'Escape' && isFocused && !chatHasError) {
         chatInputRef.current.blur()
         setValue('chatValues.chat', '')
-        setChatEnabled(false)
       }
 
       //인게임 메뉴 제어
@@ -181,6 +178,12 @@ const Chat = ({ isMobile }: ChatProps) => {
           ref={(e) => {
             ref(e)
             chatInputRef.current = e
+          }}
+          onFocus={() => {
+            setChatEnabled(true)
+          }}
+          onBlur={() => {
+            setChatEnabled(false)
           }}
         />
       </form>
