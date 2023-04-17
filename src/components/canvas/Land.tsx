@@ -6,6 +6,14 @@ function Land(props) {
   const group = useRef()
   const glb = useGLTF('/models/the_pure_land.glb')
 
+  console.log(glb)
+
+//   Object.keys(glb.materials).forEach(function(v){
+//     glb.materials[v].metalness = 1;
+//     glb.materials[v].roughness = 0.8;
+    
+// })
+
   const raycaster = useThree((state) => state.raycaster)
   const scene = useThree((state) => state.scene)
 

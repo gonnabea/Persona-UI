@@ -7,6 +7,8 @@ import { Vector3 } from 'three'
 import { useSphere } from '@react-three/cannon'
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
+import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
+import { useRecoilState } from 'recoil'
 
 // GLTF Actions Type
 type ActionName = 'run'
@@ -31,6 +33,7 @@ function Amy(props: JSX.IntrinsicElements['group']) {
   const groupRef = useRef<THREE.Group>()
   const { nodes, materials, animations } = useGLTF('/models/characters/Amy.glb') as unknown as GLTFResult
   const { actions } = useAnimations<GLTFActions>(animations, groupRef)
+  
 
   // 캐릭터 이동 구현
   const { forward, backward, left, right, jump } = useCharacterControl()
@@ -39,6 +42,9 @@ function Amy(props: JSX.IntrinsicElements['group']) {
   const [positionY, setPositionY] = useState(0.75)
   const [positionZ, setPositionZ] = useState(5)
   const [rotationZ, setRotationZ] = useState([0, 0, 0])
+
+  const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
+
 
   const frontVector = new Vector3(0, 0, 0)
   const sideVector = new Vector3(0, 0, 0)
@@ -79,6 +85,13 @@ function Amy(props: JSX.IntrinsicElements['group']) {
     setPositionX(characterRef.current.position.x)
     setPositionY(characterRef.current.position.y)
     setPositionZ(characterRef.current.position.z)
+
+    colyseusRoom?.send("player", {
+      positionX,
+      positionY,
+      positionZ 
+    })
+    
   })
 
   return (

@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Joystick } from 'react-joystick-component'
 import MobileDetect from 'mobile-detect'
 
@@ -16,6 +16,10 @@ import LogoutIcon from '@/assets/icons/logout.svg'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import authState, { keepSignInState } from '@/recoil/auth/atom'
 import { chatEnabledState } from '@/recoil/chat/atom'
+import Louise from '@/components/canvas/characters/Louise'
+import Mutant from '@/components/canvas/characters/Mutant'
+import { joinRoom } from '@/colyseus'
+import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -28,6 +32,8 @@ export default function Page({ isMobile }) {
   const [chatEnabled, setChatEnabled] = useRecoilState(chatEnabledState)
   const [menuEnabled, toggleMenuEnabled] = useToggle(false)
   const resetToken = useResetRecoilState(authState)
+  const [_, setColyseusRoom] = useRecoilState(colyseusRoomState)
+
   const resetKeepSignInStatus = useResetRecoilState(keepSignInState)
   const menuList = [
     {
@@ -39,6 +45,13 @@ export default function Page({ isMobile }) {
       },
     },
   ]
+
+  const connectToColyseus = () => {
+    joinRoom("main").then(room => {
+      setColyseusRoom(room)
+      console.log(room)
+    })
+  }
 
   const toggleChatEnabled = () => {
     setChatEnabled(!chatEnabled)
@@ -63,6 +76,10 @@ export default function Page({ isMobile }) {
       }
     }
   }
+
+  useEffect(() => {
+    connectToColyseus();
+  }, [])
 
   return (
     <>
@@ -138,6 +155,9 @@ Page.canvas = (props) => {
           {/* <CastelModel /> */}
           <Land position={[0, -1, 0]} rotation={[0, 0, 0]}></Land>
           <Amy scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
+          <Louise scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
+          <Mutant scale={[0.01,0.01,0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />  
+
           <BoxCollider position={[-0.5, -1, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
           <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} />
           <SphereCollider
@@ -162,7 +182,7 @@ Page.canvas = (props) => {
 
           <PositionTracker />
 
-          <PositionTracker />
+     
         </Suspense>
       </Physics>
     </>

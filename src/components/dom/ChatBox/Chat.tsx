@@ -9,6 +9,7 @@ import Content from './Content'
 import { joinRoom } from '@/colyseus'
 import { useRecoilState } from 'recoil'
 import { chatEnabledState } from '@/recoil/chat/atom'
+import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 
 const chatContainerStyles = {
   mobile: `
@@ -44,7 +45,6 @@ const defaultValues: DefaultValues<FormValues> = {
     chat: '',
   },
 }
-const chatRoom = joinRoom('main')
 
 interface ChatProps {
   isMobile?: boolean
@@ -52,8 +52,10 @@ interface ChatProps {
 
 const Chat = ({ isMobile }: ChatProps) => {
   const [chatEnabeld, setChatEnabled] = useRecoilState(chatEnabledState)
+  const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
   const [chatMessages, setChatMessages] = useState<string[]>([])
   const [chatHasError, setChatHasError] = useState<boolean>(false)
+
   const chatBoxRef = useRef<HTMLDivElement>(null)
   const chatInputRef = useRef<HTMLInputElement>(null)
 
@@ -72,9 +74,9 @@ const Chat = ({ isMobile }: ChatProps) => {
     const message = getValues('chatValues.chat')
 
     if (message) {
-      chatRoom.then((room) => {
-        room.send('chat', message)
-      })
+      
+        colyseusRoom.send('chat', message)
+      
 
       setValue('chatValues.chat', '')
       if (!isMobile) {
@@ -114,23 +116,25 @@ const Chat = ({ isMobile }: ChatProps) => {
 
   // get chat
   const getChatMessage = () => {
-    chatRoom
-      .then((room) => {
-        room.onMessage('chat', (chat) => {
+        console.log(colyseusRoom)
+        colyseusRoom.onMessage('chat', (chat) => {
           setChatMessages((prevChat) => [...prevChat, chat])
         })
-      })
-      .catch((error) => {
-        setChatMessages((prevMessages) => {
-          return [...prevMessages, '채팅서버 연결실패']
-        })
-        setChatHasError(true)
-      })
+
+        
+      
+      // .catch((error) => {
+      //   setChatMessages((prevMessages) => {
+      //     return [...prevMessages, '채팅서버 연결실패']
+      //   })
+      //   setChatHasError(true)
+      // })
   }
 
   useEffect(() => {
-    getChatMessage()
-  }, [])
+    
+    colyseusRoom ? getChatMessage() : null
+  },[])
 
   // 채팅 갱신 됐을 때 스크롤 박스 아래로 내리기
   useEffect(() => {
