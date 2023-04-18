@@ -41,7 +41,7 @@ function Amy(props: JSX.IntrinsicElements['group']) {
   const [positionX, setPositionX] = useState(-0.3)
   const [positionY, setPositionY] = useState(0.75)
   const [positionZ, setPositionZ] = useState(5)
-  const [rotationZ, setRotationZ] = useState([0, 0, 0])
+  const [rotationZ, setRotationZ] = useState(0)
 
   const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
 
@@ -85,11 +85,17 @@ function Amy(props: JSX.IntrinsicElements['group']) {
     setPositionX(characterRef.current.position.x)
     setPositionY(characterRef.current.position.y)
     setPositionZ(characterRef.current.position.z)
+    setRotationZ(characterRef.current.rotation.z)
 
-    colyseusRoom?.send("player", {
+    colyseusRoom?.send("move", {
+      user: {
+        email: JSON.parse(localStorage.getItem("me")).email,
+        username: JSON.parse(localStorage.getItem("me")).username,
+      },
       positionX,
       positionY,
-      positionZ 
+      positionZ,
+      rotationZ 
     })
     
   })

@@ -32,7 +32,7 @@ export default function Page({ isMobile }) {
   const [chatEnabled, setChatEnabled] = useRecoilState(chatEnabledState)
   const [menuEnabled, toggleMenuEnabled] = useToggle(false)
   const resetToken = useResetRecoilState(authState)
-  const [_, setColyseusRoom] = useRecoilState(colyseusRoomState)
+  const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
 
   const resetKeepSignInStatus = useResetRecoilState(keepSignInState)
   const menuList = [
@@ -49,7 +49,15 @@ export default function Page({ isMobile }) {
   const connectToColyseus = () => {
     joinRoom("main").then(room => {
       setColyseusRoom(room)
-      console.log(room)
+      console.log(room);
+      onMoveCharacters(room);
+    })
+  }
+
+  // 타 유저 캐릭터 이동 메세지 리스너
+  const onMoveCharacters = (room) => {
+    room.onMessage("move", (message) => {
+      console.log(message)
     })
   }
 
@@ -79,6 +87,7 @@ export default function Page({ isMobile }) {
 
   useEffect(() => {
     connectToColyseus();
+    
   }, [])
 
   return (

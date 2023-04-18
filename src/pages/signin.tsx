@@ -49,11 +49,12 @@ const SignIn = () => {
   const onSubmit = async () => {
     try {
       const {
-        data: { token },
+        data: { token, data },
       } = await axiosClient.post('/auth/sign-in', getValues('signInValues'))
-
+      console.log(data)
       setKeepSignIn(getValues('keepSignIn'))
       setAuth({ accessToken: token, refreshToken: '' })
+      localStorage.setItem("me", JSON.stringify(data))
       router.push('/characters')
     } catch (error) {
       console.log(error)
