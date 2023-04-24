@@ -111,8 +111,13 @@ export default function Page({ isMobile }) {
       // console.log(message)
       // console.log(room)
       // console.log(colyseusPlayers)
-      console.log(message);
+      // console.log(message);
       console.log(room.state.players.$items)
+      const me = JSON.parse(localStorage.getItem("me"))
+      const usersArr = Array.from(room.state.players.$items.values())
+      
+      const otherUsers = usersArr.filter(player => player.key !== me.colyseusClientId)
+      console.log(otherUsers)
     })
   }
 
