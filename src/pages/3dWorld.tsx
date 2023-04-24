@@ -20,6 +20,7 @@ import Louise from '@/components/canvas/characters/Louise'
 import Mutant from '@/components/canvas/characters/Mutant'
 import { joinRoom } from '@/colyseus'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
+import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -33,6 +34,9 @@ export default function Page({ isMobile }) {
   const [menuEnabled, toggleMenuEnabled] = useToggle(false)
   const resetToken = useResetRecoilState(authState)
   const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
+  // 웹소켓으로 통신할 유저정보 (position, rotation ...)
+  const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState) 
+
 
   const resetKeepSignInStatus = useResetRecoilState(keepSignInState)
   const menuList = [
@@ -47,17 +51,68 @@ export default function Page({ isMobile }) {
   ]
 
   const connectToColyseus = () => {
-    joinRoom("main").then(room => {
-      setColyseusRoom(room)
-      console.log(room);
-      onMoveCharacters(room);
+    const me = JSON.parse(localStorage.getItem("me"));
+    // 본인이 colyseus 접속 시
+    joinRoom("main", {user: {
+      email: me.email,
+      username: me.username,
+    }}).then(room => {
+
+      
+      // const me = JSON.parse(localStorage.getItem("me"));
+      // // 접속 시 서버에 유저정보 넘겨주기
+      // room.send("join", {
+      //   email: me.email,
+      //   username: me.username,
+      // })
+      
+      setColyseusRoom(room); // 전역 store에 연결된 coyseus room 담기
+      onColyseusConnection(room); // 타 유저 colysus room 접속 시 처리 함수
+      onMoveCharacters(room); // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
+      getColyseusSessionId(room);
     })
   }
 
-  // 타 유저 캐릭터 이동 메세지 리스너
+  const getColyseusSessionId = (room) => {
+    room.onMessage("getSessionId", (sessionId) => {
+      const me = JSON.parse(localStorage.getItem("me"));
+      localStorage.setItem("me", JSON.stringify({...me, colyseusSessionId: sessionId}))
+    })
+  }
+
+  // 타 유저 실시간 연동 접속 시
+  const onColyseusConnection = (room) => {
+    room.onMessage("join", (message) => {
+      // store에 해당 player 상태 객체 추가.
+      const newColyseusPlayer = message;
+      setColyseusPlayers([...colyseusPlayers, newColyseusPlayer]);
+      console.log(colyseusPlayers)
+    })
+  }
+
+  
   const onMoveCharacters = (room) => {
+
+  //   데이터 형태
+
+  // {
+  //   positionX: 0,
+  //   positionY: 0,
+  //   positionZ: 0,
+  //   rotationZ: 0,
+  //   user: {
+  //    email,
+  //    username
+  //   } 
+  // }    
+
+    // 타 유저 캐릭터 이동 메세지 리스너
     room.onMessage("move", (message) => {
-      console.log(message)
+      // console.log(message)
+      // console.log(room)
+      // console.log(colyseusPlayers)
+      console.log(message);
+      console.log(room.state.players.$items)
     })
   }
 

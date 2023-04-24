@@ -9,6 +9,7 @@ import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { useRecoilState } from 'recoil'
+import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 
 // GLTF Actions Type
 type ActionName = 'run'
@@ -44,6 +45,7 @@ function Amy(props: JSX.IntrinsicElements['group']) {
   const [rotationZ, setRotationZ] = useState(0)
 
   const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
+  const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState);
 
 
   const frontVector = new Vector3(0, 0, 0)
@@ -86,17 +88,45 @@ function Amy(props: JSX.IntrinsicElements['group']) {
     setPositionY(characterRef.current.position.y)
     setPositionZ(characterRef.current.position.z)
     setRotationZ(characterRef.current.rotation.z)
-
+    // console.log(colyseusRoom)
+    const me = JSON.parse(localStorage.getItem("me"));
     colyseusRoom?.send("move", {
       user: {
-        email: JSON.parse(localStorage.getItem("me")).email,
-        username: JSON.parse(localStorage.getItem("me")).username,
+        email: me.email,
+        username: me.username,
       },
       positionX,
       positionY,
       positionZ,
       rotationZ 
     })
+
+    // setColyseusPlayers([{
+    //   user: {
+    //     email: JSON.parse(localStorage.getItem("me")).email,
+    //     username: JSON.parse(localStorage.getItem("me")).username,
+    //   },
+    //   positionX,
+    //   positionY,
+    //   positionZ,
+    //   rotationZ 
+    // }, ...colyseusPlayers])
+
+  
+
+    // colyseusPlayers[0] = {
+    //   user: {
+    //     colyseusClientId: me.clientId,
+    //     email: me.email,
+    //     username: me.username,
+    //   },
+    //   positionX,
+    //   positionY,
+    //   positionZ,
+    //   rotationZ 
+    // }
+
+    
     
   })
 
