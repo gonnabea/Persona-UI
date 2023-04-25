@@ -54,7 +54,7 @@ const SignIn = () => {
       console.log(data)
       setKeepSignIn(getValues('keepSignIn'))
       setAuth({ accessToken: token, refreshToken: '' })
-      localStorage.setItem("me", JSON.stringify(data))
+      localStorage.setItem('me', JSON.stringify(data))
       router.push('/characters')
     } catch (error) {
       console.log(error)

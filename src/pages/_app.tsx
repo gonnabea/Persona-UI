@@ -5,6 +5,8 @@ import dynamic from 'next/dynamic'
 import Header from '@/config'
 import Layout from '@/components/dom/Layout'
 import '@/styles/index.css'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Scene = dynamic(() => import('@/components/canvas/Scene'), { ssr: true })
 
@@ -25,6 +27,18 @@ export default function App({ Component, pageProps = { title: 'index' } }) {
           </Scene>
         )}
       </Layout>
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
     </RecoilRoot>
   )
 }
