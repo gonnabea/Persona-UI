@@ -12,7 +12,7 @@ services:
     networks:
       - client-network
   client-blue:
-    image: forestlee0513/persona-client
+    image: forestlee0513/persona-client:main-latest
     container_name: client-blue
     hostname: client-blue
     restart: 'always'
@@ -21,7 +21,7 @@ services:
     networks:
       - client-network
   client-green:
-    image: forestlee0513/persona-client
+    image: forestlee0513/persona-client:main-latest
     container_name: client-green
     hostname: client-green
     restart: 'always'
@@ -32,3 +32,4 @@ services:
 
 networks:
   client-network:
+    driver: bridge
