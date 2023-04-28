@@ -1,20 +1,17 @@
 import { useEffect } from 'react'
 import Router from 'next/router'
-import { useRecoilState } from 'recoil'
-import authState from '@/recoil/auth/atom'
 
 export default function Page() {
-  const [auth] = useRecoilState(authState)
-
   useEffect(() => {
-    const { accessToken } = auth
+    const authState = JSON.parse(localStorage.getItem('me'))
+    const accessToken = authState.token
 
     if (!accessToken) {
       Router.push('/signin')
     } else {
       Router.push('/characters')
     }
-  }, [auth])
+  }, [])
 
   return null
 }

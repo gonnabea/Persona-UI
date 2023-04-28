@@ -9,9 +9,6 @@ import Button from '@/components/dom/Button'
 import { Input, Checkbox } from '@/components/dom/Forms'
 import { useRouter } from 'next/router'
 import { axiosClient } from '@/axios.config'
-import { useSetRecoilState } from 'recoil'
-import authState, { AuthState } from '@/recoil/auth/atom'
-import { KeepSignInState, keepSignInState } from '@/recoil/auth/atom'
 import useToggle from '@/hooks/useToggle'
 import Modal from '@/components/dom/Modal'
 
@@ -32,8 +29,6 @@ const defaultValues: DefaultValues<FormValues> = {
 }
 
 const SignIn = () => {
-  const setAuth = useSetRecoilState<AuthState>(authState)
-  const setKeepSignIn = useSetRecoilState<KeepSignInState>(keepSignInState)
   const [findPasswordModalEnabled, toggleFindPasswordModalEnabled] = useToggle(false)
   const router = useRouter()
   const {
@@ -48,12 +43,7 @@ const SignIn = () => {
 
   const onSubmit = async () => {
     try {
-      const {
-        data: { token, data },
-      } = await axiosClient.post('/auth/sign-in', getValues('signInValues'))
-      console.log(data)
-      setKeepSignIn(getValues('keepSignIn'))
-      setAuth({ accessToken: token, refreshToken: '' })
+      const { data } = await axiosClient.post('/auth/sign-in', getValues('signInValues'))
       localStorage.setItem('me', JSON.stringify(data))
       router.push('/characters')
     } catch (error) {

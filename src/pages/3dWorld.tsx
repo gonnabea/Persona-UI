@@ -13,14 +13,14 @@ import Kebab from '@/assets/icons/kebab.svg'
 import { ModalWithoutDim } from '@/components/dom/Modal'
 import useToggle from '@/hooks/useToggle'
 import LogoutIcon from '@/assets/icons/logout.svg'
-import { useRecoilState, useResetRecoilState } from 'recoil'
-import authState, { keepSignInState } from '@/recoil/auth/atom'
+import { useRecoilState } from 'recoil'
 import { chatEnabledState } from '@/recoil/chat/atom'
 import Louise from '@/components/canvas/characters/Louise'
 import Mutant from '@/components/canvas/characters/Mutant'
 import { joinRoom } from '@/colyseus'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
+import { useRouter } from 'next/router'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -30,93 +30,89 @@ import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 // Dom components go here
 
 export default function Page({ isMobile }) {
+  const router = useRouter()
   const [chatEnabled, setChatEnabled] = useRecoilState(chatEnabledState)
   const [menuEnabled, toggleMenuEnabled] = useToggle(false)
-  const resetToken = useResetRecoilState(authState)
   const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
   // 웹소켓으로 통신할 유저정보 (position, rotation ...)
-  const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState) 
+  const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState)
 
-
-  const resetKeepSignInStatus = useResetRecoilState(keepSignInState)
   const menuList = [
     {
       title: '로그아웃',
       Icon: LogoutIcon,
       callback: () => {
-        resetToken()
-        resetKeepSignInStatus()
+        localStorage.removeItem('me')
+        router.push('/signin')
       },
     },
   ]
 
   const connectToColyseus = () => {
-    const me = JSON.parse(localStorage.getItem("me"));
+    const me = JSON.parse(localStorage.getItem('me'))
     // 본인이 colyseus 접속 시
-    joinRoom("main", {user: {
-      email: me.email,
-      username: me.username,
-    }}).then(room => {
-
-      
+    joinRoom('main', {
+      user: {
+        email: me.email,
+        username: me.username,
+      },
+    }).then((room) => {
       // const me = JSON.parse(localStorage.getItem("me"));
       // // 접속 시 서버에 유저정보 넘겨주기
       // room.send("join", {
       //   email: me.email,
       //   username: me.username,
       // })
-      
-      setColyseusRoom(room); // 전역 store에 연결된 coyseus room 담기
-      onColyseusConnection(room); // 타 유저 colysus room 접속 시 처리 함수
-      onMoveCharacters(room); // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
-      getColyseusSessionId(room);
+
+      setColyseusRoom(room) // 전역 store에 연결된 coyseus room 담기
+      onColyseusConnection(room) // 타 유저 colysus room 접속 시 처리 함수
+      onMoveCharacters(room) // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
+      getColyseusSessionId(room)
     })
   }
 
   const getColyseusSessionId = (room) => {
-    room.onMessage("getSessionId", (sessionId) => {
-      const me = JSON.parse(localStorage.getItem("me"));
-      localStorage.setItem("me", JSON.stringify({...me, colyseusSessionId: sessionId}))
+    room.onMessage('getSessionId', (sessionId) => {
+      const me = JSON.parse(localStorage.getItem('me'))
+      localStorage.setItem('me', JSON.stringify({ ...me, colyseusSessionId: sessionId }))
     })
   }
 
   // 타 유저 실시간 연동 접속 시
   const onColyseusConnection = (room) => {
-    room.onMessage("join", (message) => {
+    room.onMessage('join', (message) => {
       // store에 해당 player 상태 객체 추가.
-      const newColyseusPlayer = message;
-      setColyseusPlayers([...colyseusPlayers, newColyseusPlayer]);
+      const newColyseusPlayer = message
+      setColyseusPlayers([...colyseusPlayers, newColyseusPlayer])
       console.log(colyseusPlayers)
     })
   }
 
-  
   const onMoveCharacters = (room) => {
+    //   데이터 형태
 
-  //   데이터 형태
-
-  // {
-  //   positionX: 0,
-  //   positionY: 0,
-  //   positionZ: 0,
-  //   rotationZ: 0,
-  //   user: {
-  //    email,
-  //    username
-  //   } 
-  // }    
+    // {
+    //   positionX: 0,
+    //   positionY: 0,
+    //   positionZ: 0,
+    //   rotationZ: 0,
+    //   user: {
+    //    email,
+    //    username
+    //   }
+    // }
 
     // 타 유저 캐릭터 이동 메세지 리스너
-    room.onMessage("move", (message) => {
+    room.onMessage('move', (message) => {
       // console.log(message)
       // console.log(room)
       // console.log(colyseusPlayers)
       // console.log(message);
       console.log(room.state.players.$items)
-      const me = JSON.parse(localStorage.getItem("me"))
+      const me = JSON.parse(localStorage.getItem('me'))
       const usersArr = Array.from(room.state.players.$items.values())
-      
-      const otherUsers = usersArr.filter(player => player.key !== me.colyseusClientId)
+
+      const otherUsers = usersArr.filter((player) => player.key !== me.colyseusClientId)
       console.log(otherUsers)
     })
   }
@@ -146,8 +142,7 @@ export default function Page({ isMobile }) {
   }
 
   useEffect(() => {
-    connectToColyseus();
-    
+    connectToColyseus()
   }, [])
 
   return (
@@ -225,7 +220,7 @@ Page.canvas = (props) => {
           <Land position={[0, -1, 0]} rotation={[0, 0, 0]}></Land>
           <Amy scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
           <Louise scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
-          <Mutant scale={[0.01,0.01,0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />  
+          <Mutant scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
 
           <BoxCollider position={[-0.5, -1, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
           <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} />
@@ -250,8 +245,6 @@ Page.canvas = (props) => {
           />
 
           <PositionTracker />
-
-     
         </Suspense>
       </Physics>
     </>
