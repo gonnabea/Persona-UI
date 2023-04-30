@@ -1,6 +1,6 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
-import { useEffect, useRef, useState } from 'react'
+import { useFrame, useGraph, useThree } from '@react-three/fiber'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import ThirdPersonCamera from '../ThirdPersonCam'
 import useCharacterControl from '@/hooks/useCharacterControl'
 import { Vector3 } from 'three'
@@ -10,6 +10,7 @@ import { GLTF } from 'three-stdlib'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { useRecoilState } from 'recoil'
 import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
+import { clone as SkeletonUtilsClone } from "../../../utils/SkeletonUtils";
 
 // GLTF Actions Type
 type ActionName = 'run'
@@ -29,12 +30,24 @@ type GLTFResult = GLTF & {
   animations: GLTFActions[]
 }
 
-function Amy(props: JSX.IntrinsicElements['group']) {
+interface propTypes {
+  positionX?: number
+  positionY?: number
+  positionZ?: number
+  rotationZ?: number
+  isMyCharacter: boolean
+}
+
+function Amy(props: propTypes) {
   const characterRef = useRef<THREE.Group>()
   const groupRef = useRef<THREE.Group>()
-  const { nodes, materials, animations } = useGLTF('/models/characters/Amy.glb') as unknown as GLTFResult
+  const { nodes, materials, animations, scene: amyScene } = useGLTF('/models/characters/Amy.glb') as unknown as GLTFResult
   const { actions } = useAnimations<GLTFActions>(animations, groupRef)
+  const {scene} = useThree()
   
+  const cloned = useMemo(() => SkeletonUtilsClone(amyScene), [amyScene])
+  const { nodes: clonedNodes } = useGraph(cloned)
+  const { actions: clonedActions } = useAnimations(animations ,groupRef)
 
   // 캐릭터 이동 구현
   const { forward, backward, left, right, jump } = useCharacterControl()
@@ -71,72 +84,60 @@ function Amy(props: JSX.IntrinsicElements['group']) {
   }))
 
   useFrame(() => {
-    frontVector.set(0, 0, Number(forward) - Number(backward))
-    sideVector.set(Number(right) - Number(left), 0, 0)
-
-    direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED)
-    characterRef.current.rotation.z < 1.7 ? (characterRef.current.rotation.z += Number(right) / 5) : null
-    characterRef.current.rotation.z > -1.7 ? (characterRef.current.rotation.z -= Number(left) / 5) : null
-    characterRef.current.rotation.z > -3.4 ? (characterRef.current.rotation.z -= Number(backward) / 5) : null
-    characterRef.current.rotation.z < 0 ? (characterRef.current.rotation.z += Number(forward) / 5) : null
-
-    api.velocity.set(direction.x, 0, direction.z)
-
-    mesh.current.getWorldPosition(characterRef.current.position)
-
-    setPositionX(characterRef.current.position.x)
-    setPositionY(characterRef.current.position.y)
-    setPositionZ(characterRef.current.position.z)
-    setRotationZ(characterRef.current.rotation.z)
-    // console.log(colyseusRoom)
-    const me = JSON.parse(localStorage.getItem("me"));
-    colyseusRoom?.send("move", {
-      user: {
-        email: me.email,
-        username: me.username,
-      },
-      positionX,
-      positionY,
-      positionZ,
-      rotationZ 
-    })
-
-    // setColyseusPlayers([{
-    //   user: {
-    //     email: JSON.parse(localStorage.getItem("me")).email,
-    //     username: JSON.parse(localStorage.getItem("me")).username,
-    //   },
-    //   positionX,
-    //   positionY,
-    //   positionZ,
-    //   rotationZ 
-    // }, ...colyseusPlayers])
-
+    if(props.isMyCharacter === true) {
+      frontVector.set(0, 0, Number(forward) - Number(backward))
+      sideVector.set(Number(right) - Number(left), 0, 0)
   
+      direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED)
+      characterRef.current.rotation.z < 1.7 ? (characterRef.current.rotation.z += Number(right) / 5) : null
+      characterRef.current.rotation.z > -1.7 ? (characterRef.current.rotation.z -= Number(left) / 5) : null
+      characterRef.current.rotation.z > -3.4 ? (characterRef.current.rotation.z -= Number(backward) / 5) : null
+      characterRef.current.rotation.z < 0 ? (characterRef.current.rotation.z += Number(forward) / 5) : null
+  
+      api.velocity.set(direction.x, 0, direction.z)
+  
+      mesh.current.getWorldPosition(characterRef.current.position)
+  
+      setPositionX(characterRef.current.position.x)
+      setPositionY(characterRef.current.position.y)
+      setPositionZ(characterRef.current.position.z)
+      setRotationZ(characterRef.current.rotation.z)
+      // console.log(colyseusRoom)
+      const me = JSON.parse(localStorage.getItem("me"));
+      colyseusRoom?.send("move", {
+        user: {
+          email: me.email,
+          username: me.username,
+        },
+        positionX,
+        positionY,
+        positionZ,
+        rotationZ 
+      })
+    }
+    else {
+      // 타인 캐릭터일 경우
+      setPositionX(props.positionX);
+      setPositionY(props.positionY);
+      setPositionZ(props.positionZ);
+      setRotationZ(props.rotationZ);
+      // console.log(clonedNodes)
+    }
 
-    // colyseusPlayers[0] = {
-    //   user: {
-    //     colyseusClientId: me.clientId,
-    //     email: me.email,
-    //     username: me.username,
-    //   },
-    //   positionX,
-    //   positionY,
-    //   positionZ,
-    //   rotationZ 
-    // }
-
+    
     
     
   })
 
-  return (
+  return props.isMyCharacter ? (
     <>
-      <group ref={groupRef}>
+      
+      
+      <group ref={groupRef} dispose={null}>
         <group
           ref={characterRef}
-          rotation={props.rotation}
-          scale={props.scale}
+       
+          scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]}
           onPointerOver={() => {
             document.body.style.cursor = 'pointer'
           }}
@@ -148,13 +149,30 @@ function Amy(props: JSX.IntrinsicElements['group']) {
           <skinnedMesh geometry={nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />
         </group>
       </group>
-      {/* @ts-ignore */}
+        {/* @ts-ignore */}
       <mesh ref={mesh} visible={true}>
         <sphereGeometry args={[0.1]} />
         <meshStandardMaterial color='orange' />
       </mesh>
+      
+      
     </>
-  )
+  ) : 
+    // console.log(clonedNodes)
+  <group ref={groupRef} dispose={null}>
+      <group
+          ref={characterRef}
+        scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, rotationZ]} position={[positionX, positionY, positionZ]}
+          onPointerOver={() => {
+            document.body.style.cursor = 'pointer'
+          }}
+          onPointerOut={() => {
+            document.body.style.cursor = 'default'
+          }}>
+          <primitive object={clonedNodes.Scene} />
+          <skinnedMesh geometry={clonedNodes.Ch46.geometry} material={materials.Ch46_body} skeleton={clonedNodes.Ch46.skeleton} />
+        </group>
+      </group>
 }
 
 export default Amy
