@@ -19,6 +19,6 @@
     "jsx": "preserve",
     "resolveJsonModule": true
   },
-  "include": ["@types/*.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["@types/*.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "src/utils/SkeletonUtils.js"],
   "exclude": ["node_modules"]
 }

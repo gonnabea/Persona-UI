@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { Joystick } from 'react-joystick-component'
 import MobileDetect from 'mobile-detect'
 
@@ -21,6 +21,7 @@ import { joinRoom } from '@/colyseus'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 import { useRouter } from 'next/router'
+import CharacterGroup from '@/components/canvas/characters/CharacterGroup'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -33,7 +34,7 @@ export default function Page({ isMobile }) {
   const router = useRouter()
   const [chatEnabled, setChatEnabled] = useRecoilState(chatEnabledState)
   const [menuEnabled, toggleMenuEnabled] = useToggle(false)
-  const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
+  const [_, setColyseusRoom] = useRecoilState(colyseusRoomState)
   // 웹소켓으로 통신할 유저정보 (position, rotation ...)
   const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState)
 
@@ -66,7 +67,7 @@ export default function Page({ isMobile }) {
 
       setColyseusRoom(room) // 전역 store에 연결된 coyseus room 담기
       onColyseusConnection(room) // 타 유저 colysus room 접속 시 처리 함수
-      onMoveCharacters(room) // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
+      // onMoveCharacters(room); // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
       getColyseusSessionId(room)
     })
   }
@@ -218,10 +219,10 @@ Page.canvas = (props) => {
         <Suspense fallback={null}>
           {/* <CastelModel /> */}
           <Land position={[0, -1, 0]} rotation={[0, 0, 0]}></Land>
-          <Amy scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
+          <Amy isMyCharacter={true} />
           <Louise scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
           <Mutant scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
-
+          <CharacterGroup />
           <BoxCollider position={[-0.5, -1, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
           <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} />
           <SphereCollider
