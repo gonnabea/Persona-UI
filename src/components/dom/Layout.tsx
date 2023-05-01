@@ -1,6 +1,5 @@
-import { useRef, forwardRef, useImperativeHandle, HTMLAttributes, useEffect, useState } from 'react'
-import Router, { useRouter } from 'next/router'
-import { useRecoilState, useResetRecoilState } from 'recoil'
+import { useRef, forwardRef, useImperativeHandle, HTMLAttributes, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement>, ref) => {
   const canvasFixedPaths = ['/3dWorld']
@@ -8,6 +7,19 @@ const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement
   const router = useRouter()
 
   useImperativeHandle(ref, () => localRef.current)
+
+  useEffect(() => {
+    const authState = JSON.parse(localStorage.getItem('me'))
+    const accessToken = authState?.token
+
+    if (!accessToken) {
+      router.push('/signin')
+    }
+
+    if (router.pathname === '/signin' && accessToken) {
+      router.push('/characters')
+    }
+  }, [])
 
   return (
     <div

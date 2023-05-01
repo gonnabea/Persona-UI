@@ -4,7 +4,7 @@ import Router from 'next/router'
 export default function Page() {
   useEffect(() => {
     const authState = JSON.parse(localStorage.getItem('me'))
-    const accessToken = authState.token
+    const accessToken = authState?.token
 
     if (!accessToken) {
       Router.push('/signin')
