@@ -45,21 +45,24 @@ function Amy(props: propTypes) {
   const { actions } = useAnimations<GLTFActions>(animations, groupRef)
   const {scene} = useThree()
   
-  const cloned = useMemo(() => SkeletonUtilsClone(amyScene), [amyScene])
+  const cloned = useMemo(() => SkeletonUtilsClone(amyScene), [scene])
   const { nodes: clonedNodes } = useGraph(cloned)
+
+
   const { actions: clonedActions } = useAnimations(animations ,groupRef)
 
   // 캐릭터 이동 구현
   const { forward, backward, left, right, jump } = useCharacterControl()
-  actions.run?.play()
   const [positionX, setPositionX] = useState(-0.3)
   const [positionY, setPositionY] = useState(0.75)
   const [positionZ, setPositionZ] = useState(5)
   const [rotationZ, setRotationZ] = useState(0)
-
+  
   const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
   const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState);
-
+  
+  actions.run?.play()
+  // clonedActions.run?.play()
 
   const frontVector = new Vector3(0, 0, 0)
   const sideVector = new Vector3(0, 0, 0)
@@ -82,6 +85,11 @@ function Amy(props: propTypes) {
       }
     },
   }))
+
+  useEffect(() => {
+
+
+  }, [])
 
   useFrame(() => {
     if(props.isMyCharacter === true) {
@@ -122,6 +130,13 @@ function Amy(props: propTypes) {
       setPositionZ(props.positionZ);
       setRotationZ(props.rotationZ);
       // console.log(clonedNodes)
+      // clonedNodes.Scene.scale.x = 0.01;
+      // clonedNodes.Scene.scale.y = 0.01;
+      // clonedNodes.Scene.scale.z = 0.01;
+      //       clonedNodes.Scene.position.x = props.positionX;
+      // clonedNodes.Scene.position.y = props.positionY;
+      // clonedNodes.Scene.position.z = props.positionZ;
+      //             clonedNodes.Scene.rotation.z = props.rotationZ;
     }
 
     
@@ -158,21 +173,15 @@ function Amy(props: propTypes) {
       
     </>
   ) : 
-    // console.log(clonedNodes)
-  <group ref={groupRef} dispose={null}>
-      <group
-          ref={characterRef}
-        scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, rotationZ]} position={[positionX, positionY, positionZ]}
-          onPointerOver={() => {
-            document.body.style.cursor = 'pointer'
-          }}
-          onPointerOut={() => {
-            document.body.style.cursor = 'default'
-          }}>
-          <primitive object={clonedNodes.Scene} />
-          <skinnedMesh geometry={clonedNodes.Ch46.geometry} material={materials.Ch46_body} skeleton={clonedNodes.Ch46.skeleton} />
-        </group>
-      </group>
+  <>
+    {console.log(cloned)}
+          
+          <primitive object={cloned} rotation={[Math.PI / 2, 0, rotationZ]} position={[positionX, positionY, positionZ]} scale={0.01}  />
+          {/* <skinnedMesh geometry={clonedNodes.Ch46.geometry} material={materials.Ch46_body} skeleton={clonedNodes.Ch46.skeleton} /> */}
+          {/* <skinnedMesh geometry={clonedNodes.Armature.geometry} material={materials.Armature_body} skeleton={clonedNodes.Armature.skeleton} /> */}
+        
+ 
+      </>
 }
 
 export default Amy
