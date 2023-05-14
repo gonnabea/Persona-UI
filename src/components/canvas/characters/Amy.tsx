@@ -41,7 +41,7 @@ interface propTypes {
 function Amy(props: propTypes) {
   const characterRef = useRef<THREE.Group>()
   const groupRef = useRef<THREE.Group>()
-  const { nodes, materials, animations, scene: amyScene } = useGLTF('/models/characters/Amy.glb') as unknown as GLTFResult
+  const { nodes, materials, animations, scene: amyScene } = useGLTF('/models/characters/AmyTest.glb') as unknown as GLTFResult
   const { actions } = useAnimations<GLTFActions>(animations, groupRef)
   const {scene} = useThree()
   
@@ -61,8 +61,10 @@ function Amy(props: propTypes) {
   const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
   const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState);
   
-  actions.run?.play()
-  // clonedActions.run?.play()
+  
+  
+
+
 
   const frontVector = new Vector3(0, 0, 0)
   const sideVector = new Vector3(0, 0, 0)
@@ -91,8 +93,23 @@ function Amy(props: propTypes) {
 
   }, [])
 
+  const setAnimationStatus = () => {
+    if (forward || backward || left || right) {
+      actions['run_in_place']?.play(); actions['standing'].stop();
+    }
+    else {
+      actions['run_in_place']?.stop(); actions['standing'].play(); actions['standing'].time = 15
+    }
+  }
+
   useFrame(() => {
+    console.log(actions)
+    console.log(nodes, materials)
+    setAnimationStatus()
+
     if(props.isMyCharacter === true) {
+      console.log(forward, backward, left, right)
+      
       frontVector.set(0, 0, Number(forward) - Number(backward))
       sideVector.set(Number(right) - Number(left), 0, 0)
   
@@ -147,7 +164,7 @@ function Amy(props: propTypes) {
   return props.isMyCharacter ? (
     <>
       
-      
+      {console.log(nodes, materials)}
       <group ref={groupRef} dispose={null}>
         <group
           ref={characterRef}
@@ -161,7 +178,7 @@ function Amy(props: propTypes) {
           }}>
           <ThirdPersonCamera positionX={positionX} positionY={positionY} positionZ={positionZ} rotationZ={rotationZ} />
           <primitive object={nodes.mixamorigHips} />
-          <skinnedMesh geometry={nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />
+          <skinnedMesh geometry={nodes.Mesh022.geometry} material={materials['Ch46_body.022']} skeleton={nodes.Mesh022.skeleton} />
         </group>
       </group>
         {/* @ts-ignore */}
