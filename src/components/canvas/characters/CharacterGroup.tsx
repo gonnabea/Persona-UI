@@ -2,7 +2,7 @@ import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import React, { useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import Amy from './Amy'
-import AmyOthers from './AmyOhters'
+import AmyOthers from './worldCharacters/AmyOhters'
 // import Ferret from './Model'
 // import { Schema as ColyseusSchema } from "@colyseus/schema";
 // let characters = []

@@ -3,7 +3,7 @@
 import { useFrame, useGraph, useLoader, useThree } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { clone as SkeletonUtilsClone } from "../../../utils/SkeletonUtils";
+import { clone as SkeletonUtilsClone } from "../../../../utils/SkeletonUtils";
 import { GLTF } from 'three-stdlib'
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { useRecoilState } from "recoil";
@@ -67,7 +67,7 @@ useFrame(() => {
       const usersArr = Array.from(colyseusRoom.state.players.$items.values());
       const me = JSON.parse(localStorage.getItem("me"))
 
-      const otherUsers = usersArr.filter(player => player.id !== me.colyseusSessionId)
+      const otherUsers = usersArr.filter(player => player.id && player.id !== me.colyseusSessionId)
       console.log(usersArr)
       console.log(otherUsers)
       setOtherUSers(otherUsers)
@@ -83,7 +83,9 @@ useFrame(() => {
     {console.log(colyseusRoom)}
     {console.log(nodes)}
     <group ref={groupRef} scale={0.02} 
-    position={otherUsers && otherUsers[1] ? [otherUsers[1]?.positionX, otherUsers[1]?.positionY, otherUsers[1]?.positionZ] : null} rotation={otherUsers && otherUsers[1] ? [Math.PI / 2, 0, otherUsers[2].rotationZ] : null}>
+    position={otherUsers && otherUsers[0] ? [otherUsers[0]?.positionX, otherUsers[0]?.positionY, otherUsers[0]?.positionZ] : null} 
+    rotation={otherUsers && otherUsers[0] ? [Math.PI / 2, 0, otherUsers[0]?.rotationZ] : null}
+    >
         <group ref={characterRef}>
           <primitive object={nodes.mixamorigHips} />
           <skinnedMesh 
