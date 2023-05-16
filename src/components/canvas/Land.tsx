@@ -40,6 +40,7 @@ function Land(props) {
         scale={0.1}
         rotation={props.rotation}
         object={glb.scene}
+        // visible={false}
       />
     </Suspense>
   )

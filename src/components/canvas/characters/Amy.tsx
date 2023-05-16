@@ -148,7 +148,7 @@ function Amy(props: propTypes) {
       </group>
       {/* @ts-ignore */}
       <mesh ref={mesh} visible={true}>
-        <sphereGeometry args={[0.1]} />
+        <sphereGeometry args={[0.2]} />
         <meshStandardMaterial color='orange' />
       </mesh>
     </>
