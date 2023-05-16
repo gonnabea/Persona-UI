@@ -54,7 +54,7 @@ function Amy(props: propTypes) {
   const frontVector = new Vector3(0, 0, 0)
   const sideVector = new Vector3(0, 0, 0)
   const direction = new Vector3(0, 0, 0)
-  let MOVESPEED = 3
+  let MOVESPEED = 6
   const [mesh, api] = useSphere(() => ({
     mass: 1,
     type: 'Dynamic',

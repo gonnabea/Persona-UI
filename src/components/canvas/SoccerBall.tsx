@@ -1,7 +1,7 @@
 import { useSphere } from '@react-three/cannon'
 import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
-import { Suspense, useRef } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { SphereCollider } from './Colliders'
 
 function SoccerBall(props) {
@@ -20,9 +20,9 @@ function SoccerBall(props) {
   const scene = useThree((state) => state.scene)
 
   const [mesh, api] = useSphere(() => ({
-    mass: 4,
+    mass: 3,
     type: 'Dynamic',
-    args: [0.5],
+    args: [0.3],
     onCollideBegin: (e) => {
       if (e.body.name === 'ground1') {
         console.log('바닥과 충돌')
@@ -33,6 +33,10 @@ function SoccerBall(props) {
       }
     },
   }))
+
+  useEffect(() => {
+    api.position.set(10,0,-10)
+  }, [])
 
 
   
@@ -61,13 +65,13 @@ function SoccerBall(props) {
     <Suspense fallback={null}>
       <primitive
         ref={ballModelRef}
-        position={[0,0,0]}
-        scale={0.5}
+        position={[0,0,1]}
+        scale={0.3}
         rotation={props.rotation}
         object={glb.scene}
       />
        <mesh ref={mesh} visible={true}>
-        <sphereGeometry args={[0.5]} />
+        <sphereGeometry args={[0.3]} />
         <meshStandardMaterial color='orange' visible={false} />
       </mesh>
     </Suspense>
