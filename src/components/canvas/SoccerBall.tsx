@@ -20,7 +20,7 @@ function SoccerBall(props) {
   const scene = useThree((state) => state.scene)
 
   const [mesh, api] = useSphere(() => ({
-    mass: 3,
+    mass: 2,
     type: 'Dynamic',
     args: [0.3],
     onCollideBegin: (e) => {
