@@ -20,7 +20,7 @@ function SoccerBall(props) {
   const scene = useThree((state) => state.scene)
 
   const [mesh, api] = useSphere(() => ({
-    mass: 2,
+    mass: 1,
     type: 'Dynamic',
     args: [0.3],
     onCollideBegin: (e) => {
@@ -42,11 +42,10 @@ function SoccerBall(props) {
   
   useFrame(({ clock }) => {
       const a = clock.getElapsedTime()
-      console.log(ballModelRef)
+      
       // console.log("Hey, I'm executing every frame!");
       // console.log(a)
-      console.log(mesh)
-      console.log(api)
+     
       api.position.subscribe(value => {
           ballModelRef.current.position.setX(value[0])
           ballModelRef.current.position.setY(value[1])

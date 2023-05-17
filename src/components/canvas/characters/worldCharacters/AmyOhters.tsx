@@ -68,8 +68,8 @@ useFrame(() => {
       const me = JSON.parse(localStorage.getItem("me"))
 
       const otherUsers = usersArr.filter(player => player.id && player.id !== me.colyseusSessionId)
-      console.log(usersArr)
-      console.log(otherUsers)
+      // console.log(usersArr)
+      // console.log(otherUsers)
       setOtherUSers(otherUsers)
 })
 
@@ -80,8 +80,8 @@ useFrame(() => {
     //     )
     <>
     {/* {console.log(cloned)} */}
-    {console.log(colyseusRoom)}
-    {console.log(nodes)}
+    {/* {console.log(colyseusRoom)}
+    {console.log(nodes)} */}
     <group ref={groupRef} scale={0.02} 
     position={otherUsers && otherUsers[0] ? [otherUsers[0]?.positionX, otherUsers[0]?.positionY, otherUsers[0]?.positionZ] : null} 
     rotation={otherUsers && otherUsers[0] ? [Math.PI / 2, 0, otherUsers[0]?.rotationZ] : null}

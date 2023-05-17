@@ -48,8 +48,8 @@ const WorldLouise = (props: JSX.IntrinsicElements['group']) => {
       const me = JSON.parse(localStorage.getItem("me"))
 
       const otherUsers = usersArr.filter(player => player.id && player.id !== me.colyseusSessionId)
-      console.log(usersArr)
-      console.log(otherUsers)
+      // console.log(usersArr)
+      // console.log(otherUsers)
       setOtherUSers(otherUsers)
   })
 

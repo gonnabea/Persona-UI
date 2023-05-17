@@ -70,6 +70,9 @@ function Amy(props: propTypes) {
     },
   }))
   useEffect(() => {
+    materials['Ch46_body.001'].metalness = 0.5;
+    materials['Ch46_body.001'].roughness = 0.1;
+
   }, [])
   const setAnimationStatus = () => {
     if (forward || backward || left || right) {
@@ -81,11 +84,11 @@ function Amy(props: propTypes) {
     }
   }
   useFrame(() => {
-    console.log(actions)
-    console.log(nodes, materials)
+    // console.log(actions)
+    // console.log(nodes, materials)
     setAnimationStatus()
     if (props.isMyCharacter === true) {
-      console.log(forward, backward, left, right)
+      // console.log(forward, backward, left, right)
       frontVector.set(0, 0, Number(forward) - Number(backward))
       sideVector.set(Number(right) - Number(left), 0, 0)
       direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED)
@@ -130,7 +133,7 @@ function Amy(props: propTypes) {
   })
   return props.isMyCharacter ? (
     <>
-      {console.log(nodes, materials)}
+      {/* {console.log(nodes, materials)} */}
       <group ref={groupRef} dispose={null}>
         <group
           ref={characterRef}
@@ -154,7 +157,7 @@ function Amy(props: propTypes) {
     </>
   ) :
     <>
-      {console.log(cloned)}
+      {/* {console.log(cloned)} */}
       <primitive object={cloned} rotation={[Math.PI / 2, 0, rotationZ]} position={[positionX, positionY, positionZ]} scale={0.01} />
       {/* <skinnedMesh geometry={clonedNodes.Ch46.geometry} material={materials.Ch46_body} skeleton={clonedNodes.Ch46.skeleton} /> */}
       {/* <skinnedMesh geometry={clonedNodes.Armature.geometry} material={materials.Armature_body} skeleton={clonedNodes.Armature.skeleton} /> */}
