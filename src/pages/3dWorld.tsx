@@ -22,6 +22,10 @@ import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 import { useRouter } from 'next/router'
 import CharacterGroup from '@/components/canvas/characters/CharacterGroup'
+import AmyOthers from '@/components/canvas/characters/worldCharacters/AmyOhters'
+import WorldLouise from '@/components/canvas/characters/worldCharacters/WorldLouise'
+import WorldMutant from '@/components/canvas/characters/worldCharacters/WorldMutant'
+import SoccerBall from '@/components/canvas/SoccerBall'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -50,6 +54,7 @@ export default function Page({ isMobile }) {
   ]
 
   const connectToColyseus = () => {
+    alert('colyseusConnected')
     const me = JSON.parse(localStorage.getItem('me'))
     // 본인이 colyseus 접속 시
     joinRoom('main', {
@@ -220,12 +225,15 @@ Page.canvas = (props) => {
           {/* <CastelModel /> */}
           <Land position={[0, -1, 0]} rotation={[0, 0, 0]}></Land>
           <Amy isMyCharacter={true} />
-          <Louise scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
-          <Mutant scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
-          <CharacterGroup />
+          <WorldLouise />
+          <WorldMutant />
+          {/* <Louise scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
+          <Mutant scale={[0.01,0.01,0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />   */}
+          {/* <CharacterGroup /> */}
+          <AmyOthers />
           <BoxCollider position={[-0.5, -1, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
-          <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} />
-          <SphereCollider
+          <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} />
+          {/* <SphereCollider
             position={[-1.693505738960225, -0.5, -7.033493077608636]}
             rotation={[Math.PI / 4, 0, 0]}
             args={[0.3]}
@@ -243,7 +251,9 @@ Page.canvas = (props) => {
             rotation={[Math.PI / 4, 0, 0]}
             args={[0.3]}
             type='Dynamic'
-          />
+          /> */}
+
+          <SoccerBall />
 
           <PositionTracker />
         </Suspense>

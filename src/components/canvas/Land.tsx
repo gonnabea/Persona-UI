@@ -5,7 +5,8 @@ import { Suspense, useRef } from 'react'
 function Land(props) {
   const group = useRef()
   const glb = useGLTF('/models/the_pure_land.glb')
-
+  const targetObject = useRef()
+  const directionalLight = useRef()
   console.log(glb)
 
 //   Object.keys(glb.materials).forEach(function(v){
@@ -40,7 +41,9 @@ function Land(props) {
         scale={0.1}
         rotation={props.rotation}
         object={glb.scene}
+        // visible={false}
       />
+      {/* <directionalLight position={[0, 0, 0]} intensity={10} target={targetObject.current} /> */}
     </Suspense>
   )
 }
