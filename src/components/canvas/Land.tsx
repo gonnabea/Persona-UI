@@ -4,10 +4,10 @@ import { Suspense, useRef } from 'react'
 
 function Land(props) {
   const group = useRef()
-  const glb = useGLTF('/models/the_pure_land.glb')
+  const glb = useGLTF('/models/beach_island.glb')
   const targetObject = useRef()
   const directionalLight = useRef()
-  console.log(glb)
+ 
 
 //   Object.keys(glb.materials).forEach(function(v){
 //     glb.materials[v].metalness = 1;
@@ -37,9 +37,9 @@ function Land(props) {
     <Suspense fallback={null}>
       <primitive
         onClick={(e) => findPosition(e)}
-        position={props.position}
+        position={[0,48,0]}
         scale={0.1}
-        rotation={props.rotation}
+        rotation={[0,0,0]}
         object={glb.scene}
         // visible={false}
       />

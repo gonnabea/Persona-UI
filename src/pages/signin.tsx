@@ -52,6 +52,7 @@ const SignIn = () => {
         data: { token, data },
       } = await axiosClient.post('/auth/sign-in', getValues('signInValues'))
       console.log(data)
+      console.log(token)
       setKeepSignIn(getValues('keepSignIn'))
       setAuth({ accessToken: token, refreshToken: '' })
       localStorage.setItem("me", JSON.stringify(data))

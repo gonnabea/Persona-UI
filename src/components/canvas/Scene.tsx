@@ -11,6 +11,9 @@ export default function Scene({ children, ...props }) {
   // const { scene } = useThree();
 
   useEffect(() => {
+    // setTimeout(() => {
+    //   directionalLight.current['intensity'] = 11;
+    // }, 5000)
     // console.log(directionalLight)
     // const scene = sceneRef.current
     // const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
@@ -20,14 +23,15 @@ export default function Scene({ children, ...props }) {
   // Everything defined in here will persist between route changes, only children are swapped
   return (
     <Canvas {...props} ref={sceneRef}>
+      <Suspense>
       {children}
       <Preload all />
 
-      <object3D ref={targetObject} position={[-4, 0, 0]} />
       <ambientLight intensity={1} />
 
-      <Suspense>
-      <directionalLight position={[0, 0, 0]} intensity={10} target={targetObject.current} />
+          <object3D ref={targetObject} position={[-4, 0, 0]} />
+            <directionalLight ref={directionalLight} position={[0, 0, 0]} intensity={11} target={targetObject.current} />
+
       </Suspense>
      
     </Canvas>

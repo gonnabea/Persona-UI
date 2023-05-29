@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { Joystick } from 'react-joystick-component'
 import MobileDetect from 'mobile-detect'
 
@@ -22,10 +22,11 @@ import { joinRoom } from '@/colyseus'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 import CharacterGroup from '@/components/canvas/characters/CharacterGroup'
-import AmyOthers from '@/components/canvas/characters/worldCharacters/AmyOhters'
+import AmyOthers from '@/components/canvas/characters/worldCharacters/AmyOther'
 import WorldLouise from '@/components/canvas/characters/worldCharacters/WorldLouise'
 import WorldMutant from '@/components/canvas/characters/worldCharacters/WorldMutant'
 import SoccerBall from '@/components/canvas/SoccerBall'
+import SoccerField from '@/components/canvas/SoccerField'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -57,7 +58,7 @@ export default function Page({ isMobile }) {
   ]
 
   const connectToColyseus = () => {
-    alert('colyseusConnected')
+    // alert('colyseusConnected')
     const me = JSON.parse(localStorage.getItem("me"));
     // 본인이 colyseus 접속 시
     joinRoom("main", {user: {
@@ -65,7 +66,8 @@ export default function Page({ isMobile }) {
       username: me.username,
     }}).then(room => {
 
-      
+      console.log(room)
+     
       // const me = JSON.parse(localStorage.getItem("me"));
       // // 접속 시 서버에 유저정보 넘겨주기
       // room.send("join", {
@@ -119,12 +121,12 @@ export default function Page({ isMobile }) {
       // console.log(room)
       // console.log(colyseusPlayers)
       // console.log(message);
-      console.log(room.state.players.$items)
+      
       const me = JSON.parse(localStorage.getItem("me"))
       const usersArr = Array.from(room.state.players.$items.values())
       
       const otherUsers = usersArr.filter(player => player.key !== me.colyseusClientId)
-      console.log(otherUsers)
+
     })
   }
 
@@ -224,21 +226,24 @@ export default function Page({ isMobile }) {
 // Canvas components go here
 // It will receive same props as the Page component (from getStaticProps, etc.)
 Page.canvas = (props) => {
+
+
   return (
     <>
       <Physics gravity={[0, -100, 0]}>
         <Suspense fallback={null}>
           {/* <CastelModel /> */}
-          <Land position={[0, -1, 0]} rotation={[0, 0, 0]}></Land>
-          <Amy isMyCharacter={true} />
+          <Land></Land>
+          <SoccerField></SoccerField>
+          <Amy />
           <WorldLouise />
           <WorldMutant />
           {/* <Louise scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
           <Mutant scale={[0.01,0.01,0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />   */}
           {/* <CharacterGroup /> */}
-          <AmyOthers />
+          {/* <AmyOthers /> */}
           <BoxCollider position={[-0.5, -1, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
-          <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} />
+          {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
           {/* <SphereCollider
             position={[-1.693505738960225, -0.5, -7.033493077608636]}
             rotation={[Math.PI / 4, 0, 0]}
@@ -263,6 +268,10 @@ Page.canvas = (props) => {
 
           <PositionTracker />
 
+          {/* <object3D name={'dirLightTarget'} position={[-4, 0, 0]} />
+      <directionalLight  position={[0, 0, 0]} intensity={11} target={'dirLightTarget'} /> */}
+      
+
      
         </Suspense>
       </Physics>
@@ -273,6 +282,7 @@ Page.canvas = (props) => {
 export const getServerSideProps = async ({ req }) => {
   const userAgent = req.headers['user-agent']
   const md = new MobileDetect(userAgent)
+  
 
   return { props: { title: '3dWorld', isMobile: !!md.mobile() } }
 }
