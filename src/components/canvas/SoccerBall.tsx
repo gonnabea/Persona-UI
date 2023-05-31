@@ -1,14 +1,18 @@
+import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { useSphere } from '@react-three/cannon'
 import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef } from 'react'
+import { useRecoilState } from 'recoil'
 import { SphereCollider } from './Colliders'
 
 function SoccerBall(props) {
   const ballModelRef = useRef()
   const glb = useGLTF('/models/soccer_ball.glb')
+  const [colyseusRoom, _] = useRecoilState(colyseusRoomState)
 
-  console.log(glb)
+
+
 
 //   Object.keys(glb.materials).forEach(function(v){
 //     glb.materials[v].metalness = 1;
@@ -69,7 +73,7 @@ function SoccerBall(props) {
         rotation={props.rotation}
         object={glb.scene}
       />
-       <mesh ref={mesh} visible={true}>
+       <mesh name={'soccer_ball'} ref={mesh} visible={true}>
         <sphereGeometry args={[0.3]} />
         <meshStandardMaterial color='orange' visible={false} />
       </mesh>

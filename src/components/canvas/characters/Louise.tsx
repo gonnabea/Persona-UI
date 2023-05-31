@@ -93,6 +93,6 @@ const Louise = (props: JSX.IntrinsicElements['group']) => {
   )
 }
 
-useGLTF.preload('/moldes/characters/Louise.glb')
+useGLTF.preload('/models/characters/Louise.glb')
 
 export default Louise

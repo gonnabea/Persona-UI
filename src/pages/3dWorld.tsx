@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { Joystick } from 'react-joystick-component'
 import MobileDetect from 'mobile-detect'
 
@@ -17,15 +17,16 @@ import { useRecoilState } from 'recoil'
 import { chatEnabledState } from '@/recoil/chat/atom'
 import Louise from '@/components/canvas/characters/Louise'
 import Mutant from '@/components/canvas/characters/Mutant'
-import { joinRoom } from '@/colyseus'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 import { useRouter } from 'next/router'
 import CharacterGroup from '@/components/canvas/characters/CharacterGroup'
-import AmyOthers from '@/components/canvas/characters/worldCharacters/AmyOhters'
+import AmyOthers from '@/components/canvas/characters/worldCharacters/AmyOther'
 import WorldLouise from '@/components/canvas/characters/worldCharacters/WorldLouise'
 import WorldMutant from '@/components/canvas/characters/worldCharacters/WorldMutant'
 import SoccerBall from '@/components/canvas/SoccerBall'
+import SoccerField from '@/components/canvas/SoccerField'
+import * as Colyseus from 'colyseus.js'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -33,6 +34,11 @@ import SoccerBall from '@/components/canvas/SoccerBall'
 // https://github.com/pmndrs/react-three-next/issues/49
 
 // Dom components go here
+
+// Colyseus functions
+const colyseusClient = new Colyseus.Client(process.env.NEXT_PUBLIC_SOCKET_URL)
+// const joinRoom = (roomName: string, options?: { [key: string]: any }) =>
+//   colyseusClient.joinOrCreate(roomName, { accessToken: localStorage.getItem("accessToken"), ...options })
 
 export default function Page({ isMobile }) {
   const router = useRouter()
@@ -54,27 +60,31 @@ export default function Page({ isMobile }) {
   ]
 
   const connectToColyseus = () => {
-    alert('colyseusConnected')
+    // alert('colyseusConnected')
     const me = JSON.parse(localStorage.getItem('me'))
     // 본인이 colyseus 접속 시
-    joinRoom('main', {
-      user: {
-        email: me.email,
-        username: me.username,
-      },
-    }).then((room) => {
-      // const me = JSON.parse(localStorage.getItem("me"));
-      // // 접속 시 서버에 유저정보 넘겨주기
-      // room.send("join", {
-      //   email: me.email,
-      //   username: me.username,
-      // })
+    colyseusClient
+      .joinOrCreate('main', {
+        user: {
+          email: me.email,
+          username: me.username,
+        },
+      })
+      .then((room) => {
+        console.log(room)
 
-      setColyseusRoom(room) // 전역 store에 연결된 coyseus room 담기
-      onColyseusConnection(room) // 타 유저 colysus room 접속 시 처리 함수
-      // onMoveCharacters(room); // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
-      getColyseusSessionId(room)
-    })
+        // const me = JSON.parse(localStorage.getItem("me"));
+        // // 접속 시 서버에 유저정보 넘겨주기
+        // room.send("join", {
+        //   email: me.email,
+        //   username: me.username,
+        // })
+
+        setColyseusRoom(room) // 전역 store에 연결된 coyseus room 담기
+        onColyseusConnection(room) // 타 유저 colysus room 접속 시 처리 함수
+        // onMoveCharacters(room); // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
+        getColyseusSessionId(room)
+      })
   }
 
   const getColyseusSessionId = (room) => {
@@ -114,12 +124,11 @@ export default function Page({ isMobile }) {
       // console.log(room)
       // console.log(colyseusPlayers)
       // console.log(message);
-      console.log(room.state.players.$items)
+
       const me = JSON.parse(localStorage.getItem('me'))
       const usersArr = Array.from(room.state.players.$items.values())
 
       const otherUsers = usersArr.filter((player) => player.key !== me.colyseusClientId)
-      console.log(otherUsers)
     })
   }
 
@@ -223,16 +232,17 @@ Page.canvas = (props) => {
       <Physics gravity={[0, -100, 0]}>
         <Suspense fallback={null}>
           {/* <CastelModel /> */}
-          <Land position={[0, -1, 0]} rotation={[0, 0, 0]}></Land>
-          <Amy isMyCharacter={true} />
+          <Land></Land>
+          <SoccerField></SoccerField>
+          <Amy />
           <WorldLouise />
           <WorldMutant />
           {/* <Louise scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
           <Mutant scale={[0.01,0.01,0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />   */}
           {/* <CharacterGroup /> */}
-          <AmyOthers />
+          {/* <AmyOthers /> */}
           <BoxCollider position={[-0.5, -1, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
-          <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} />
+          {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
           {/* <SphereCollider
             position={[-1.693505738960225, -0.5, -7.033493077608636]}
             rotation={[Math.PI / 4, 0, 0]}
@@ -256,6 +266,9 @@ Page.canvas = (props) => {
           <SoccerBall />
 
           <PositionTracker />
+
+          {/* <object3D name={'dirLightTarget'} position={[-4, 0, 0]} />
+      <directionalLight  position={[0, 0, 0]} intensity={11} target={'dirLightTarget'} /> */}
         </Suspense>
       </Physics>
     </>

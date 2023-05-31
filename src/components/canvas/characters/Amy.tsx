@@ -11,6 +11,7 @@ import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { useRecoilState } from 'recoil'
 import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 import { clone as SkeletonUtilsClone } from "../../../utils/SkeletonUtils";
+
 // GLTF Actions Type
 type ActionName = 'run'
 interface GLTFActions extends THREE.AnimationClip {
@@ -27,14 +28,16 @@ type GLTFResult = GLTF & {
   }
   animations: GLTFActions[]
 }
+
 interface propTypes {
   positionX?: number
   positionY?: number
   positionZ?: number
   rotationZ?: number
-  isMyCharacter: boolean
 }
+
 function Amy(props: propTypes) {
+
   const characterRef = useRef<THREE.Group>()
   const groupRef = useRef<THREE.Group>()
   const { nodes, materials, animations, scene: amyScene } = useGLTF('/models/characters/AmyTest.glb') as unknown as GLTFResult
@@ -43,6 +46,9 @@ function Amy(props: propTypes) {
   const cloned = useMemo(() => SkeletonUtilsClone(amyScene), [scene])
   const { nodes: clonedNodes } = useGraph(cloned)
   const { actions: clonedActions } = useAnimations(animations, groupRef)
+  const [isMyCharacter, setIsMyCharacter] = useState(true)
+
+  
   // 캐릭터 이동 구현
   const { forward, backward, left, right, jump } = useCharacterControl()
   const [positionX, setPositionX] = useState(-0.3)
@@ -51,14 +57,18 @@ function Amy(props: propTypes) {
   const [rotationZ, setRotationZ] = useState(0)
   const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
   const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState);
+  const [otherUsers, setOtherUSers] = useState();
+
+
   const frontVector = new Vector3(0, 0, 0)
   const sideVector = new Vector3(0, 0, 0)
   const direction = new Vector3(0, 0, 0)
   let MOVESPEED = 6
+
   const [mesh, api] = useSphere(() => ({
     mass: 1,
     type: 'Dynamic',
-    args: [0.2],
+    args: [0.4],
     onCollideBegin: (e) => {
       if (e.body.name === 'ground1') {
         console.log('바닥과 충돌')
@@ -69,26 +79,55 @@ function Amy(props: propTypes) {
       }
     },
   }))
+
   useEffect(() => {
     materials['Ch46_body.001'].metalness = 0.5;
     materials['Ch46_body.001'].roughness = 0.1;
 
+     
+    const usersArr = Array.from(colyseusRoom.state.players.$items.values());
+      const myColyseusId = colyseusRoom.sessionId;
+      console.log(colyseusRoom)
+      console.log(usersArr)
+      const existUsers = usersArr.filter(player => player.id !== undefined);
+      const colyseusRoomOwner = existUsers[0]
+
+      console.log(existUsers)
+
+     
+      const otherUsers = usersArr.filter(player => player.id && player.id !== myColyseusId)
+
+      if(colyseusRoomOwner && colyseusRoomOwner.id === myColyseusId) {
+        setIsMyCharacter(true);
+      }
+      else if(existUsers.length !== 0) {
+        setIsMyCharacter(false)
+      }
+
+   
+
+      setOtherUSers(otherUsers)
+
+
   }, [])
+
   const setAnimationStatus = () => {
     if (forward || backward || left || right) {
-      actions['run']?.play(); actions['idle'].stop();
+      actions['run']?.play(); 
+      actions['idle']?.stop();
     }
     else {
-      actions['idle'].play();
+      actions['idle']?.play();
       actions['run']?.stop();
     }
   }
+  const me = JSON.parse(localStorage.getItem("me"));
+
   useFrame(() => {
-    // console.log(actions)
-    // console.log(nodes, materials)
+   
     setAnimationStatus()
-    if (props.isMyCharacter === true) {
-      // console.log(forward, backward, left, right)
+    if (isMyCharacter === true) {
+      console.log("Amy: isMyCharacter!!!")
       frontVector.set(0, 0, Number(forward) - Number(backward))
       sideVector.set(Number(right) - Number(left), 0, 0)
       direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED)
@@ -102,65 +141,98 @@ function Amy(props: propTypes) {
       setPositionY(characterRef.current.position.y)
       setPositionZ(characterRef.current.position.z)
       setRotationZ(characterRef.current.rotation.z)
-      // console.log(colyseusRoom)
-      const me = JSON.parse(localStorage.getItem("me"));
-      colyseusRoom?.send("move", {
-        user: {
-          email: me.email,
-          username: me.username,
-        },
-        positionX,
-        positionY,
-        positionZ,
-        rotationZ
-      })
+      if (forward || backward || left || right) {
+        // console.log("moving")
+        colyseusRoom?.send("move", {
+          user: {
+            email: me.email,
+            username: me.username,
+          },
+          positionX,
+          positionY,
+          positionZ,
+          rotationZ
+        })
+
+      }
     }
     else {
+      console.log("Amy: is not my character")
       // 타인 캐릭터일 경우
-      setPositionX(props.positionX);
-      setPositionY(props.positionY);
-      setPositionZ(props.positionZ);
-      setRotationZ(props.rotationZ);
-      // console.log(clonedNodes)
-      // clonedNodes.Scene.scale.x = 0.01;
-      // clonedNodes.Scene.scale.y = 0.01;
-      // clonedNodes.Scene.scale.z = 0.01;
-      //       clonedNodes.Scene.position.x = props.positionX;
-      // clonedNodes.Scene.position.y = props.positionY;
-      // clonedNodes.Scene.position.z = props.positionZ;
-      //             clonedNodes.Scene.rotation.z = props.rotationZ;
+      if(otherUsers && otherUsers[0]) {
+              const positionX = otherUsers[0].positionX
+        const positionY = otherUsers[0].positionY
+        const positionZ = otherUsers[0].positionZ
+        const rotationZ = otherUsers[0].rotationZ
+      setPositionX(positionX);
+      setPositionY(positionY);
+      setPositionZ(positionZ);
+      setRotationZ(rotationZ);
+      }
     }
   })
-  return props.isMyCharacter ? (
+
+  return isMyCharacter ? (
     <>
-      {/* {console.log(nodes, materials)} */}
       <group ref={groupRef} dispose={null}>
         <group
           ref={characterRef}
-          scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]}
+          scale={[0.01, 0.01, 0.01]} 
+          rotation={[Math.PI / 2, 0, 0]} 
+          position={[-0.3, 6, 5]}
           onPointerOver={() => {
             document.body.style.cursor = 'pointer'
           }}
           onPointerOut={() => {
             document.body.style.cursor = 'default'
           }}>
-          <ThirdPersonCamera positionX={positionX} positionY={positionY} positionZ={positionZ} rotationZ={rotationZ} />
+          <ThirdPersonCamera 
+            positionX={positionX} 
+            positionY={positionY} 
+            positionZ={positionZ} 
+            rotationZ={rotationZ} 
+          />
           <primitive object={nodes.mixamorigHips} />
-          <skinnedMesh geometry={nodes.Ch46.geometry} material={materials['Ch46_body.001']} skeleton={nodes.Ch46.skeleton} />
+          <skinnedMesh 
+            geometry={nodes.Ch46.geometry} 
+            material={materials['Ch46_body.001']} 
+            skeleton={nodes.Ch46.skeleton} 
+          />
         </group>
       </group>
       {/* @ts-ignore */}
-      <mesh ref={mesh} visible={true}>
-        <sphereGeometry args={[0.2]} />
+      <mesh ref={mesh} visible={false}>
+        <sphereGeometry args={[0.4]} />
         <meshStandardMaterial color='orange' />
       </mesh>
     </>
   ) :
     <>
-      {/* {console.log(cloned)} */}
-      <primitive object={cloned} rotation={[Math.PI / 2, 0, rotationZ]} position={[positionX, positionY, positionZ]} scale={0.01} />
-      {/* <skinnedMesh geometry={clonedNodes.Ch46.geometry} material={materials.Ch46_body} skeleton={clonedNodes.Ch46.skeleton} /> */}
-      {/* <skinnedMesh geometry={clonedNodes.Armature.geometry} material={materials.Armature_body} skeleton={clonedNodes.Armature.skeleton} /> */}
+     <group ref={groupRef} dispose={null}>
+        <group
+          ref={characterRef}
+          scale={[0.01, 0.01, 0.01]} 
+          rotation={[Math.PI / 2, 0, 0]} 
+          position={[positionX, positionY, positionZ]}
+          onPointerOver={() => {
+            document.body.style.cursor = 'pointer'
+          }}
+          onPointerOut={() => {
+            document.body.style.cursor = 'default'
+          }}>
+          
+          <primitive object={nodes.mixamorigHips} />
+          <skinnedMesh 
+            geometry={nodes.Ch46.geometry} 
+            material={materials['Ch46_body.001']} 
+            skeleton={nodes.Ch46.skeleton} 
+          />
+        </group>
+      </group>
+     
+
     </>
+
 }
+
 export default Amy

@@ -44,7 +44,7 @@ const WorldLouise = (props: JSX.IntrinsicElements['group']) => {
   const [otherUsers, setOtherUSers] = useState([]);
 
   useFrame(() => {
-      const usersArr = Array.from(colyseusRoom.state.players.$items.values());
+      const usersArr = Array.from(colyseusRoom?.state.players.$items.values());
       const me = JSON.parse(localStorage.getItem("me"))
 
       const otherUsers = usersArr.filter(player => player.id && player.id !== me.colyseusSessionId)
