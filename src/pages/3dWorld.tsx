@@ -27,6 +27,7 @@ import WorldLouise from '@/components/canvas/characters/worldCharacters/WorldLou
 import WorldMutant from '@/components/canvas/characters/worldCharacters/WorldMutant'
 import SoccerBall from '@/components/canvas/SoccerBall'
 import SoccerField from '@/components/canvas/SoccerField'
+import * as Colyseus from 'colyseus.js'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -34,6 +35,11 @@ import SoccerField from '@/components/canvas/SoccerField'
 // https://github.com/pmndrs/react-three-next/issues/49
 
 // Dom components go here
+
+// Colyseus functions
+const colyseusClient = new Colyseus.Client(process.env.NEXT_PUBLIC_SOCKET_URL)
+// const joinRoom = (roomName: string, options?: { [key: string]: any }) =>
+//   colyseusClient.joinOrCreate(roomName, { accessToken: localStorage.getItem("accessToken"), ...options })
 
 export default function Page({ isMobile }) {
   const [chatEnabled, setChatEnabled] = useRecoilState(chatEnabledState)
@@ -61,7 +67,7 @@ export default function Page({ isMobile }) {
     // alert('colyseusConnected')
     const me = JSON.parse(localStorage.getItem("me"));
     // 본인이 colyseus 접속 시
-    joinRoom("main", {user: {
+    colyseusClient.joinOrCreate("main", {user: {
       email: me.email,
       username: me.username,
     }}).then(room => {
