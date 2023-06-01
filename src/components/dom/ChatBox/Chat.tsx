@@ -71,7 +71,6 @@ const Chat = ({ isMobile }: ChatProps) => {
 
   const submitChatMesssage = () => {
     const message = getValues('chatValues.chat')
-
     if (message) {
       
         colyseusRoom.send('chat', message)
@@ -113,7 +112,7 @@ const Chat = ({ isMobile }: ChatProps) => {
   // get chat
   const getChatMessage = () => {
         console.log(colyseusRoom)
-        colyseusRoom.onMessage('chat', (chat) => {
+        colyseusRoom?.onMessage('chat', (chat) => {
           setChatMessages((prevChat) => [...prevChat, chat])
         })
 
@@ -129,8 +128,8 @@ const Chat = ({ isMobile }: ChatProps) => {
 
   useEffect(() => {
     
-    colyseusRoom ? getChatMessage() : null
-  },[])
+    getChatMessage()
+  },[colyseusRoom])
 
   // 채팅 갱신 됐을 때 스크롤 박스 아래로 내리기
   useEffect(() => {

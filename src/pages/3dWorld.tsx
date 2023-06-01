@@ -3,7 +3,7 @@ import { Joystick } from 'react-joystick-component'
 import MobileDetect from 'mobile-detect'
 
 import Land from '@/components/canvas/Land'
-import Amy from '@/components/canvas/characters/Amy'
+import {Amy, OtherUserAmy} from '@/components/canvas/characters/Amy'
 import PositionTracker from '@/components/canvas/PositionTracker'
 import { Physics } from '@react-three/cannon'
 import { Chat } from '@/components/dom/ChatBox'
@@ -235,6 +235,7 @@ Page.canvas = (props) => {
           <Land></Land>
           <SoccerField></SoccerField>
           <Amy />
+          {/* <OtherUserAmy /> */}
           <WorldLouise />
           <WorldMutant />
           {/* <Louise scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
