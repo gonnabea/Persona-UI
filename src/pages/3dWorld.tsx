@@ -3,7 +3,7 @@ import { Joystick } from 'react-joystick-component'
 import MobileDetect from 'mobile-detect'
 
 import Land from '@/components/canvas/Land'
-import {Amy, OtherUserAmy} from '@/components/canvas/characters/Amy'
+import {Amy, OtherUserAmy} from '@/components/canvas/characters/MyCharacter'
 import PositionTracker from '@/components/canvas/PositionTracker'
 import { Physics } from '@react-three/cannon'
 import { Chat } from '@/components/dom/ChatBox'
@@ -20,13 +20,13 @@ import Mutant from '@/components/canvas/characters/Mutant'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 import { useRouter } from 'next/router'
-import CharacterGroup from '@/components/canvas/characters/CharacterGroup'
-import AmyOthers from '@/components/canvas/characters/worldCharacters/AmyOther'
-import WorldLouise from '@/components/canvas/characters/worldCharacters/WorldLouise'
-import WorldMutant from '@/components/canvas/characters/worldCharacters/WorldMutant'
+
 import SoccerBall from '@/components/canvas/SoccerBall'
 import SoccerField from '@/components/canvas/SoccerField'
 import * as Colyseus from 'colyseus.js'
+import Player4Character from '@/components/canvas/characters/worldCharacters/Player4'
+import Player2Character from '@/components/canvas/characters/worldCharacters/Player2'
+import Player3Character from '@/components/canvas/characters/worldCharacters/Player3'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -68,7 +68,8 @@ export default function Page({ isMobile }) {
         user: {
           email: me.email,
           username: me.username,
-        },
+          character: 'amy'
+        }, // amy || mutant || Louise ...
       })
       .then((room) => {
         console.log(room)
@@ -235,9 +236,12 @@ Page.canvas = (props) => {
           <Land></Land>
           <SoccerField></SoccerField>
           <Amy />
+          <Player2Character />
+          <Player3Character />
+          <Player4Character />
           {/* <OtherUserAmy /> */}
-          <WorldLouise />
-          <WorldMutant />
+          {/* <WorldLouise />
+          <WorldMutant /> */}
           {/* <Louise scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
           <Mutant scale={[0.01,0.01,0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />   */}
           {/* <CharacterGroup /> */}
