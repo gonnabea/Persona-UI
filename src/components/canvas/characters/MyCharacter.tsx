@@ -36,7 +36,7 @@ interface propTypes {
   rotationZ?: number
 }
 
-export function Amy(props: propTypes) {
+export function MyCharacter(props: propTypes) {
 
   const amyCharacterRef = useRef<THREE.Group>()
   const mutantCharacterRef = useRef<THREE.Group>()
@@ -276,7 +276,7 @@ export function Amy(props: propTypes) {
           rotation={[Math.PI / 2, 0, 0]} 
           position={[-0.3, 6, 5]}
         ref={mutantCharacterRef}>
-                    <ThirdPersonCamera 
+          <ThirdPersonCamera 
             positionX={positionX} 
             positionY={positionY} 
             positionZ={positionZ} 
@@ -299,7 +299,7 @@ export function Amy(props: propTypes) {
         <group name='Armature'           
            
           >
-                      <ThirdPersonCamera 
+          <ThirdPersonCamera 
             positionX={positionX} 
             positionY={positionY} 
             positionZ={positionZ} 

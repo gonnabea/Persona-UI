@@ -3,7 +3,7 @@ import { Joystick } from 'react-joystick-component'
 import MobileDetect from 'mobile-detect'
 
 import Land from '@/components/canvas/Land'
-import {Amy, OtherUserAmy} from '@/components/canvas/characters/MyCharacter'
+import {MyCharacter} from '@/components/canvas/characters/MyCharacter'
 import PositionTracker from '@/components/canvas/PositionTracker'
 import { Physics } from '@react-three/cannon'
 import { Chat } from '@/components/dom/ChatBox'
@@ -66,9 +66,9 @@ export default function Page({ isMobile }) {
     colyseusClient
       .joinOrCreate('main', {
         user: {
-          email: me.email,
-          username: me.username,
-          character: 'amy'
+          email: me.data.email,
+          username: me.data.username,
+          character: me.character ? me.character : 'amy' 
         }, // amy || mutant || Louise ...
       })
       .then((room) => {
@@ -235,7 +235,7 @@ Page.canvas = (props) => {
           {/* <CastelModel /> */}
           <Land></Land>
           <SoccerField></SoccerField>
-          <Amy />
+          <MyCharacter />
           <Player2Character />
           <Player3Character />
           <Player4Character />
