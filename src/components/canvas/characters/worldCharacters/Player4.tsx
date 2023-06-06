@@ -45,13 +45,13 @@ const Player4Character = () => {
   const [character, setCharacter] = useState('louise')
   
 
-  const { nodes: amyNodes, materials: amyMaterials, animations: amyAnimations, scene: amyScene } = useGLTF('/models/characters/AmyClone.glb')
+  const { nodes: amyNodes, materials: amyMaterials, animations: amyAnimations, scene: amyScene } = useGLTF('/models/characters/player4/Amy.glb')
   const { actions: amyActions } = useAnimations(amyAnimations, amyGroupRef)
 
-  const { nodes: mutantNodes, materials: mutantMaterials, animations: mutantAnimations } = useGLTF('/models/characters/Mutant.glb')
+  const { nodes: mutantNodes, materials: mutantMaterials, animations: mutantAnimations } = useGLTF('/models/characters/player4/Mutant.glb')
   const { actions: mutantActions } = useAnimations(mutantAnimations, mutantGroupRef)
 
-  const { nodes: louiseNodes, materials: louiseMaterials, animations: louiseAnimations } = useGLTF('/models/characters/Louise.glb')
+  const { nodes: louiseNodes, materials: louiseMaterials, animations: louiseAnimations } = useGLTF('/models/characters/player4/Louise.glb')
   const { actions: louiseActions } = useAnimations(louiseAnimations, louiseGroupRef)
 
 
