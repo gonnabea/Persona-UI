@@ -94,7 +94,9 @@ export function MyCharacter(props: propTypes) {
   useEffect(() => {
     // materials['Ch46_body.001'].metalness = 0.5;
     // materials['Ch46_body.001'].roughness = 0.1;
+    const me = JSON.parse(localStorage.getItem("me"));
 
+    setCharacter(me?.character)
      
 
 
