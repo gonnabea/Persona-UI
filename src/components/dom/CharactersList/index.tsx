@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 
 import ArrowLeft from '@/assets/icons/arrow-left.svg'
@@ -20,6 +20,7 @@ interface ChbaractesListProps {
   carouselItemClassName?: string
   carouselArrowButtonClassName?: string
   carouselArrowClassName?: string
+  setState?: Dispatch<SetStateAction<string>>
 }
 
 const CharactersList = ({
@@ -30,13 +31,27 @@ const CharactersList = ({
   carouselItemClassName,
   carouselArrowButtonClassName,
   carouselArrowClassName,
+  setState,
 }: ChbaractesListProps) => {
   const [emblaRef, embla] = useEmblaCarousel()
-  // const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
-  // const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
+  const carouselItemsRef = useRef(null)
 
   const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla])
   const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla])
+
+  useEffect(() => {
+    if (carouselItemsRef) {
+      const characterList = carouselItemsRef.current.querySelectorAll('div.character')
+
+      embla &&
+        embla.on('select', () => {
+          const currentIndex = embla && embla.slidesInView(true)[0]
+          setState(characterList[currentIndex].id)
+        })
+
+      setState(characterList[0].id)
+    }
+  }, [embla, setState])
 
   return (
     <div className={`flex ${carouselContainerClassName}`}>
@@ -61,8 +76,10 @@ const CharactersList = ({
           overflow-hidden
           ${carouselClassName}
         `)}>
-        <div className='flex h-full'>
-          <div className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%]'>
+        <div className='flex h-full' ref={carouselItemsRef}>
+          <div
+            className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%] character'
+            id='mutant'>
             <div
               className={twMerge(`
                 mx-auto
@@ -83,7 +100,7 @@ const CharactersList = ({
               ''
             )}
           </div>
-          <div className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%]'>
+          <div className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%] character' id='ramy'>
             <div
               className={twMerge(`
                 mx-auto
@@ -104,7 +121,9 @@ const CharactersList = ({
               ''
             )}
           </div>
-          <div className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%]'>
+          <div
+            className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%] character'
+            id='louise'>
             <div
               className={twMerge(`
                 mx-auto

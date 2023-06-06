@@ -8,9 +8,20 @@ import useToggle from '@/hooks/useToggle'
 import Modal from '@/components/dom/Modal'
 import { Input } from '@/components/dom/Forms'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 const Characters = () => {
   const [newCharModal, toggleNewCharModal] = useToggle(false)
+  const [character, setCharacter] = useState('')
+
+  // 로컬스토리지에 캐릭터 지정
+  useEffect(() => {
+    const me = JSON.parse(localStorage.getItem('me'))
+
+    if (character && me && Object.keys(me).length > 0) {
+      localStorage.setItem('me', JSON.stringify({ ...me, character }))
+    }
+  }, [character])
 
   return (
     <div className='flex flex-col h-auto min-h-full bg-primary-400'>
@@ -37,6 +48,7 @@ const Characters = () => {
               carouselItemClassName='w-full'
               carouselArrowButtonClassName='w-[32px] h-[32px] p-0'
               carouselArrowClassName='w-[10px] mx-auto'
+              setState={setCharacter}
             />
             <Link href='/3dWorld'>
               <Button color='primary'>시작하기</Button>
