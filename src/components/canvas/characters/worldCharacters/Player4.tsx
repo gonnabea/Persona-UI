@@ -72,6 +72,8 @@ useFrame(() => {
       const otherUsers = usersArr.filter(player => player.id && player.id !== myColyseusId)
 
       console.log(otherUsers)
+      otherUsers[2] ? setCharacter(otherUsers[0].character) : null
+
 
       setOtherUSers(otherUsers)
 
