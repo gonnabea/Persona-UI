@@ -116,6 +116,10 @@ const Chat = ({ isMobile }: ChatProps) => {
           setChatMessages((prevChat) => [...prevChat, chat])
         })
 
+        colyseusRoom?.onMessage('join', (user) => {
+          setChatMessages((prevChat) => [...prevChat, user.username + ' has joined'])
+        })
+
         
       
       // .catch((error) => {
