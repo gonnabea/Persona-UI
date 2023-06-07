@@ -72,7 +72,7 @@ useFrame(() => {
       const otherUsers = usersArr.filter(player => player.id && player.id !== myColyseusId)
 
       console.log(otherUsers)
-      otherUsers[1] ? setCharacter(otherUsers[0].character) : null
+      otherUsers[1] ? setCharacter(otherUsers[1].character) : null
 
       setOtherUSers(otherUsers)
 
@@ -95,7 +95,7 @@ useFrame(() => {
           <primitive object={amyNodes.mixamorigHips} />
           <skinnedMesh 
             geometry={amyNodes.Ch46.geometry} 
-            material={amyMaterials.Ch46_body} 
+            material={amyMaterials['Ch46_body.001']} 
             skeleton={amyNodes.Ch46.skeleton} 
           />
         </group>

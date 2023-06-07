@@ -95,7 +95,7 @@ useFrame(() => {
           <primitive object={amyNodes.mixamorigHips} />
           <skinnedMesh 
             geometry={amyNodes.Ch46.geometry} 
-            material={amyMaterials.Ch46_body} 
+            material={amyMaterials['Ch46_body.001']} 
             skeleton={amyNodes.Ch46.skeleton} 
           />
         </group>
