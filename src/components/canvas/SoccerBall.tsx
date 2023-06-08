@@ -39,23 +39,25 @@ function SoccerBall(props) {
       } else {
         console.log('물체와 충돌')
         if(colyseusRoom) {
+
           const me = JSON.parse(localStorage.getItem("me"))
           const usersArr = Array.from(colyseusRoom.state.players.$items.values());
+
           console.log(ballModelRef.current)
           console.log(mesh)
           console.log(api.velocity)
           console.log(api.angularVelocity)
-  
-          if(usersArr[0].id === me.colyseusSessionId) {
             
-              const message = {
-                velocity: {x: velocity[0], y: velocity[1], z: velocity[2]},
-                angularVelocity: {x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2]},
-
-                ballId: 'soccer_ball_1'
+              if(velocity && angularVelocity) {
+                const message = {
+                  velocity: {x: velocity[0], y: velocity[1], z: velocity[2]},
+                  angularVelocity: {x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2]},
+                  position: ballModelRef.current.position,
+                  ballId: 'soccer_ball_1'
+                }
+                colyseusRoom.send("ballMove", message)
               }
-              colyseusRoom.send("ballMove", message)
-            }
+            
         }
       }
     },
@@ -96,10 +98,19 @@ function SoccerBall(props) {
       })
 
 
-        colyseusRoom?.onMessage("ballMove", (message) => {
+        colyseusRoom?.onMessage("ballMove", ({message, clientId}) => {
             
             console.log(message)
-          
+
+            const linearVelocity = message.velocity
+            const angularVelocity = message.angularVelocity
+            const position = message.position
+
+            api.velocity.set(linearVelocity.x, linearVelocity.y, linearVelocity.z)
+            api.angularVelocity.set(angularVelocity.x, angularVelocity.y, angularVelocity.z)
+            ballModelRef.current.position.setX(position.x)
+            ballModelRef.current.position.setY(position.y)
+            ballModelRef.current.position.setZ(position.z)
             
           })
       }, 1000)
