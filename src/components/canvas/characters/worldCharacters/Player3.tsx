@@ -64,17 +64,20 @@ const Player3Character = () => {
 
 useFrame(() => {
 
-      console.log(amyCharacterRef.current)
 
-      const usersArr = Array.from(colyseusRoom.state.players.$items.values());
+
+      if(colyseusRoom) {
+        const usersArr = Array.from(colyseusRoom.state.players.$items.values());
+        
+        const myColyseusId = colyseusRoom.sessionId;
+        const otherUsers = usersArr.filter(player => player.id && player.id !== myColyseusId)
+  
       
-      const myColyseusId = colyseusRoom.sessionId;
-      const otherUsers = usersArr.filter(player => player.id && player.id !== myColyseusId)
+        otherUsers[1] ? setCharacter(otherUsers[1].character) : null
+  
+        setOtherUSers(otherUsers)
 
-      console.log(otherUsers)
-      otherUsers[1] ? setCharacter(otherUsers[1].character) : null
-
-      setOtherUSers(otherUsers)
+      }
 
 })
 

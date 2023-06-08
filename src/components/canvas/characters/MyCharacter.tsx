@@ -234,7 +234,7 @@ export function MyCharacter(props: propTypes) {
 
       }
 
-      console.log(colyseusRoom.state.players.$items)
+      
     
     
   })

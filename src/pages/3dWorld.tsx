@@ -60,7 +60,7 @@ export default function Page({ isMobile }) {
   ]
 
   const connectToColyseus = () => {
-    // alert('colyseusConnected')
+    alert('colyseusConnected')
     const me = JSON.parse(localStorage.getItem('me'))
     // 본인이 colyseus 접속 시
     colyseusClient
