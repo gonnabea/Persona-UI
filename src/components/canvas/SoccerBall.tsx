@@ -111,6 +111,7 @@ function SoccerBall(props) {
             ballModelRef.current.position.setX(position.x)
             ballModelRef.current.position.setY(position.y)
             ballModelRef.current.position.setZ(position.z)
+            api.position.set(position.x, position.y, position.z)
             
           })
       }, 1000)
