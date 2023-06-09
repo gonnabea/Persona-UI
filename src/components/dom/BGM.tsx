@@ -1,5 +1,5 @@
-import { HTMLAttributes, useState, useEffect } from 'react'
-import { twMerge } from 'tailwind-merge'
+import { useState, useEffect } from 'react'
+
 
 const BGM = ({ bgmUrl = '/sounds/bgm/raon_raul.mp3' }) => {
 
@@ -27,9 +27,9 @@ const BGM = ({ bgmUrl = '/sounds/bgm/raon_raul.mp3' }) => {
 
 
   return (
-    <div>
-        <button onClick={togglePlay}>{play === true ? 'bgm off' : 'bgm on'}</button>
-    </div>
+ 
+        <button className='absolute p-2 text-center text-white rounded-full bg-[#8171C3] z-[1] bottom-[65px] right-[30px]' onClick={togglePlay}>{play === true ? 'bgm off' : 'bgm on'}</button>
+
   )
 }
 
