@@ -3,7 +3,7 @@ import { Joystick } from 'react-joystick-component'
 import MobileDetect from 'mobile-detect'
 
 import Land from '@/components/canvas/Land'
-import {MyCharacter} from '@/components/canvas/characters/MyCharacter'
+import { MyCharacter } from '@/components/canvas/characters/MyCharacter'
 import PositionTracker from '@/components/canvas/PositionTracker'
 import { Physics } from '@react-three/cannon'
 import { Chat } from '@/components/dom/ChatBox'
@@ -15,8 +15,8 @@ import useToggle from '@/hooks/useToggle'
 import LogoutIcon from '@/assets/icons/logout.svg'
 import { useRecoilState } from 'recoil'
 import { chatEnabledState } from '@/recoil/chat/atom'
-import Louise from '@/components/canvas/characters/Louise'
-import Mutant from '@/components/canvas/characters/Mutant'
+// import Louise from '@/components/canvas/characters/Louise'
+// import Mutant from '@/components/canvas/characters/Mutant'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 import { useRouter } from 'next/router'
@@ -27,6 +27,7 @@ import * as Colyseus from 'colyseus.js'
 import Player4Character from '@/components/canvas/characters/worldCharacters/Player4'
 import Player2Character from '@/components/canvas/characters/worldCharacters/Player2'
 import Player3Character from '@/components/canvas/characters/worldCharacters/Player3'
+import { toast } from 'react-toastify'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -60,7 +61,6 @@ export default function Page({ isMobile }) {
   ]
 
   const connectToColyseus = () => {
-    alert('colyseusConnected')
     const me = JSON.parse(localStorage.getItem('me'))
     // 본인이 colyseus 접속 시
     colyseusClient
@@ -68,7 +68,7 @@ export default function Page({ isMobile }) {
         user: {
           email: me.data.email,
           username: me.data.username,
-          character: me.character ? me.character : 'amy' 
+          character: me.character ? me.character : 'amy',
         }, // amy || mutant || Louise ...
       })
       .then((room) => {
@@ -85,6 +85,7 @@ export default function Page({ isMobile }) {
         onColyseusConnection(room) // 타 유저 colysus room 접속 시 처리 함수
         // onMoveCharacters(room); // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
         getColyseusSessionId(room)
+        toast('colyseusConnected')
       })
   }
 
@@ -158,7 +159,22 @@ export default function Page({ isMobile }) {
   }
 
   useEffect(() => {
-    connectToColyseus()
+    const me = JSON.parse(localStorage.getItem('me'))
+
+    // me 객체 자체가 없을 때 로그인 페이지로 이동
+    if (!me) {
+      router.push('/sign-in')
+    }
+
+    // me 객체 중에서 캐릭터 정보가 없으면 캐릭터 선택 페이지로 이동
+    if (!me?.character) {
+      router.push('/characters')
+    }
+
+    // me 객체 중에서 캐릭터 정보 있을 때만 colyseus 연결 시도
+    if (me.character) {
+      connectToColyseus()
+    }
   }, [])
 
   return (
