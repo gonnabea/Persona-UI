@@ -30,7 +30,7 @@ function SoccerBall(props) {
     mass: 1,
     type: 'Dynamic',
     args: [0.3],
-    
+
     onCollideBegin: (e) => {
       if (e.body.name === 'ground1') {
         console.log('바닥과 충돌')
@@ -43,24 +43,124 @@ function SoccerBall(props) {
           const me = JSON.parse(localStorage.getItem("me"))
           const usersArr = Array.from(colyseusRoom.state.players.$items.values());
 
-          console.log(ballModelRef.current)
-          console.log(mesh)
-          console.log(api.velocity)
-          console.log(api.angularVelocity)
-            
-              if(velocity && angularVelocity) {
-                const message = {
-                  velocity: {x: velocity[0], y: velocity[1], z: velocity[2]},
-                  angularVelocity: {x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2]},
+              console.log(e)
+      
+              
+
+          
+                 const message = {
                   position: ballModelRef.current.position,
                   ballId: 'soccer_ball_1'
                 }
+                colyseusRoom.send("ballSync", message)
+            
+                   
+
+      console.log(usersArr)
+
+
+      if(velocity) {
+             const message = {
+                  velocity:{x: velocity[0], y: velocity[1], z: velocity[2]},
+                  angularVelocity:{x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2]},
+                  ballId: 'soccer_ball_1'
+                }
                 colyseusRoom.send("ballMove", message)
+      
               }
+           
+
+                
+              
             
         }
       }
     },
+
+        onCollide: (e) => {
+      if (e.body.name === 'ground1') {
+        console.log('바닥과 충돌')
+      } else if (e.body.name === 'stair') {
+        console.log('계단과 충돌')
+      } else {
+        console.log('물체와 충돌')
+        if(colyseusRoom) {
+
+          const me = JSON.parse(localStorage.getItem("me"))
+          const usersArr = Array.from(colyseusRoom.state.players.$items.values());
+
+              console.log(e)
+      
+              
+
+          
+        
+            
+                   
+
+      console.log(usersArr)
+
+
+      if(velocity) {
+             const message = {
+                  velocity:{x: velocity[0], y: velocity[1], z: velocity[2]},
+                  angularVelocity:{x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2]},
+                  ballId: 'soccer_ball_1'
+                }
+                colyseusRoom.send("ballMove", message)
+      
+              }
+           
+
+                
+              
+            
+        }
+      }
+    },
+
+        onCollideEnd: (e) => {
+      if (e.body.name === 'ground1') {
+        console.log('바닥과 충돌')
+      } else if (e.body.name === 'stair') {
+        console.log('계단과 충돌')
+      } else {
+        console.log('물체와 충돌')
+        if(colyseusRoom) {
+
+          const me = JSON.parse(localStorage.getItem("me"))
+          const usersArr = Array.from(colyseusRoom.state.players.$items.values());
+
+              console.log(e)
+      
+              
+
+        
+            
+                   
+
+      console.log(usersArr)
+
+
+      if(velocity) {
+             const message = {
+                  velocity:{x: velocity[0], y: velocity[1], z: velocity[2]},
+                  angularVelocity:{x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2]},
+                  ballId: 'soccer_ball_1'
+                }
+                colyseusRoom.send("ballMove", message)
+      
+              }
+           
+
+                
+              
+            
+        }
+      }
+    },
+
+
   }))
 
   useEffect(() => {
@@ -98,22 +198,39 @@ function SoccerBall(props) {
       })
 
 
-        colyseusRoom?.onMessage("ballMove", ({message, clientId}) => {
+        colyseusRoom?.onMessage("ballSync", ({message, clientId}) => {
             
             console.log(message)
 
-            const linearVelocity = message.velocity
-            const angularVelocity = message.angularVelocity
             const position = message.position
 
-            api.velocity.set(linearVelocity.x, linearVelocity.y, linearVelocity.z)
-            api.angularVelocity.set(angularVelocity.x, angularVelocity.y, angularVelocity.z)
             ballModelRef.current.position.setX(position.x)
             ballModelRef.current.position.setY(position.y)
             ballModelRef.current.position.setZ(position.z)
             api.position.set(position.x, position.y, position.z)
+          
             
           })
+
+      
+
+
+          colyseusRoom?.onMessage("ballMove", ({message, clientId}) => { 
+
+            const linearVelocity = message.velocity
+            const angularVelocity = message.angularVelocity
+            
+         
+              api.velocity.set(linearVelocity.x, linearVelocity.y, linearVelocity.z)
+              api.angularVelocity.set(angularVelocity.x, angularVelocity.y, angularVelocity.z)
+
+            
+
+          
+
+          })
+          
+
       }, 1000)
             
         
@@ -127,8 +244,10 @@ function SoccerBall(props) {
       // console.log("Hey, I'm executing every frame!");
       // console.log(a)
 
-      const me = JSON.parse(localStorage.getItem("me"))
+ 
+
       
+
       
     
  
