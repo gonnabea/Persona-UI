@@ -16,6 +16,7 @@ const BGM = ({ bgmUrl = '/sounds/bgm/raon_raul.mp3' }) => {
         }
         else {
             setPlay(true);
+            audio.loop = true;
             audio.play()
         }
     }
