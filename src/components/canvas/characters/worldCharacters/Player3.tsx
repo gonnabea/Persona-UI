@@ -131,8 +131,8 @@ useFrame(() => {
     <group ref={louiseCharacterRef} dispose={null}>
       <group>
         <group 
-    position={otherUsers && otherUsers[2] ? [otherUsers[2]?.positionX, otherUsers[2]?.positionY, otherUsers[2]?.positionZ] : null} 
-    rotation={otherUsers && otherUsers[2] ? [Math.PI / 2, 0, otherUsers[2]?.rotationZ] : null} 
+    position={otherUsers && otherUsers[1] ? [otherUsers[1]?.positionX, otherUsers[1]?.positionY, otherUsers[2]?.positionZ] : null} 
+    rotation={otherUsers && otherUsers[1] ? [Math.PI / 2, 0, otherUsers[1]?.rotationZ] : null} 
         scale={0.01}>
           <primitive object={louiseNodes.mixamorig8Hips} />
   

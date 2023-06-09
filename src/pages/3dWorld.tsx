@@ -28,6 +28,7 @@ import Player4Character from '@/components/canvas/characters/worldCharacters/Pla
 import Player2Character from '@/components/canvas/characters/worldCharacters/Player2'
 import Player3Character from '@/components/canvas/characters/worldCharacters/Player3'
 import { toast } from 'react-toastify'
+import BGM from '@/components/dom/BGM'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -196,6 +197,7 @@ export default function Page({ isMobile }) {
         onClick={toggleMenuEnabled}>
         <Kebab className='fill-primary-200' />
       </Button>
+      <BGM />
       <Chat isMobile={isMobile} />
       {/* 모바일 조이스틱 */}
       {isMobile ? (
