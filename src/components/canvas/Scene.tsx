@@ -1,16 +1,20 @@
 import { Canvas, useThree } from '@react-three/fiber'
 import { Preload } from '@react-three/drei'
-import { Suspense, useEffect, useRef } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 export default function Scene({ children, ...props }) {
   const targetObject = useRef()
   const directionalLight = useRef()
   const sceneRef = useRef();
+  const [dirLightIntensity, setDirLightIntensity] = useState(10)
 
   // const { scene } = useThree();
 
   useEffect(() => {
+    setTimeout(() => {
+      setDirLightIntensity(dirLightIntensity + 1)
+    }, 20000)
     // setTimeout(() => {
     //   directionalLight.current['intensity'] = 11;
     // }, 5000)
@@ -25,12 +29,12 @@ export default function Scene({ children, ...props }) {
     <Canvas {...props} ref={sceneRef}>
       <Suspense>
       {children}
-      <Preload all />
+    
 
       <ambientLight intensity={1} />
 
           <object3D ref={targetObject} position={[-4, 0, 0]} />
-            <directionalLight ref={directionalLight} position={[0, 0, 0]} intensity={11} target={targetObject.current} />
+            <directionalLight ref={directionalLight} position={[0, 0, 0]} intensity={dirLightIntensity} target={targetObject.current} />
 
       </Suspense>
      
