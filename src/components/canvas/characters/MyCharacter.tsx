@@ -120,14 +120,15 @@ export function MyCharacter(props: propTypes) {
   }
 
     const setMutantAnimationStatus = () => {
+      console.log(mutantActions)
 
     if (forward || backward || left || right) {
-      mutantActions['run']?.play(); 
-      mutantActions['idle']?.stop();
+      mutantActions['run_Armature.001_Armature']?.play(); 
+      mutantActions['Armature|mixamo.com|Layer0']?.stop();
     }
     else {
-      mutantActions['idle']?.play();
-      mutantActions['run']?.stop();
+      mutantActions['Armature|mixamo.com|Layer0']?.play();
+      mutantActions['run_Armature.001_Armature']?.stop();
     }
   }
 

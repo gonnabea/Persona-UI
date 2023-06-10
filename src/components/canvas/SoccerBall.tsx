@@ -229,6 +229,38 @@ function SoccerBall(props) {
           
 
           })
+
+      //     colyseusRoom?.onMessage('join', () => {
+      //         const usersArr = Array.from(colyseusRoom.state.players.$items.values());
+
+
+      
+              
+
+      //       const message = {
+      //        position: ballModelRef.current.position,
+      //        ballId: 'soccer_ball_1'
+      //      }
+
+
+      //      colyseusRoom.send("ballSync", message)
+       
+              
+
+      //   console.log(usersArr)
+
+
+      //  if(velocity) {
+      //        const message = {
+      //              velocity:{x: velocity[0], y: velocity[1], z: velocity[2]},
+      //              angularVelocity:{x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2]},
+      //              ballId: 'soccer_ball_1'
+      //            }
+      //            colyseusRoom.send("ballMove", message)
+       
+      //    }
+
+      //     } )
           
 
       }, 1000)

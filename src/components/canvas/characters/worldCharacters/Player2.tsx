@@ -56,7 +56,7 @@ const Player2Character = () => {
 
 
   amyActions.run?.play()
-  mutantActions.run?.play()
+  mutantActions['run_Armature.001_Armature']?.play()
   louiseActions.run?.play()
 
 
