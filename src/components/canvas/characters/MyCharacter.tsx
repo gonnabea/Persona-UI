@@ -120,7 +120,7 @@ export function MyCharacter(props: propTypes) {
   }
 
     const setMutantAnimationStatus = () => {
-      console.log(mutantActions)
+      // console.log(mutantActions)
 
     if (forward || backward || left || right) {
       mutantActions['run_Armature.001_Armature']?.play(); 
@@ -133,7 +133,7 @@ export function MyCharacter(props: propTypes) {
   }
 
     const setLouiseAnimationStatus = () => {
-      console.log(louiseActions)
+      // console.log(louiseActions)
     if (forward || backward || left || right) {
       louiseActions['run']?.play(); 
       // louiseActions['Armature|mixamo.com|Layer0.001']?.stop();
@@ -162,7 +162,7 @@ export function MyCharacter(props: propTypes) {
     
       
       if(character === 'amy') {
-        console.log("Amy: isMyCharacter!!!")
+
 
         setAmyAnimationStatus()
 
@@ -182,7 +182,7 @@ export function MyCharacter(props: propTypes) {
       }
 
       if(character === "mutant") {
-        console.log("mutant: isMyCharacter!!!")
+
 
         setMutantAnimationStatus()
         frontVector.set(0, 0, Number(forward) - Number(backward))
@@ -201,7 +201,7 @@ export function MyCharacter(props: propTypes) {
       }
 
       if(character === "louise") {
-        console.log("louise: isMyCharacter!!!")
+
 
         setLouiseAnimationStatus()
         frontVector.set(0, 0, Number(forward) - Number(backward))

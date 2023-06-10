@@ -1,51 +1,22 @@
 // 현재 마우스 위치 표시용 컴포넌트
+import { useThree } from '@react-three/fiber'
 
-import { useGLTF } from '@react-three/drei'
-import { useFrame, useLoader, useThree } from '@react-three/fiber'
-import { Suspense, useEffect, useRef } from 'react'
-import { FBXLoader } from 'three-stdlib'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+function PositionTracker() {
+  
+  const raycaster = useThree((state) => state.raycaster);
+  const scene = useThree((state) => state.scene)
 
-let mouseStatus: string
-function PositionTracker(props) {
-  const { viewport } = useThree()
+    // 마우스 클릭한 지점 위치 얻기
+  const closedObjPosition = raycaster.intersectObjects(scene.children)[0]?.point
+  const clickedMaterial = raycaster.intersectObjects(scene.children)[0]?.object.material.name
 
-  // const ref = useRef({
-  //     position: {}
-  // });
+  console.log(raycaster.intersectObjects(scene.children)[0])
 
-  useFrame(({ mouse }) => {
-    const x = (mouse.x * viewport.width) / 2
-    const y = (mouse.y * viewport.height) / 2
-    // const tracker = ref.current as any
-    // tracker.position.set(x, y, 0)
-    // tracker.rotation.set(-y, x, 0)
+  console.log(closedObjPosition)
+  console.log(clickedMaterial)
 
-    mouseStatus = x + ', ' + y
-  })
 
-  useEffect(() => {
-    const mouseClickEvent = () => {
-      console.log(mouseStatus)
-    }
-
-    if (typeof window !== undefined) {
-      window.addEventListener('click', mouseClickEvent)
-    }
-
-    return () => {
-      if (typeof window !== undefined) {
-        window.removeEventListener('click', mouseClickEvent)
-      }
-    }
-  }, [])
-
-  return (
-    // <Suspense fallback={null}>
-    //     <primitive object={fbx} {...props} />
-    // </Suspense>
-    <>{/* {console.log(ref.current)} */}</>
-  )
+  // return [closedObjPosition, clickedMaterial]
 }
 
 export default PositionTracker

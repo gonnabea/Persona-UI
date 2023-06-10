@@ -164,7 +164,8 @@ function SoccerBall(props) {
   }))
 
   useEffect(() => {
-    api.position.set(10,0,-10)
+    
+    api.position.set(-1.5799805660188322,-0.5, -61.161431290782154)
     
     setTimeout(() => {
         const me = JSON.parse(localStorage.getItem("me"))

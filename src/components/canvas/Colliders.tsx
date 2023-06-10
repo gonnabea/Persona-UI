@@ -33,7 +33,7 @@ export function BoxCollider(props) {
         // @ts-ignore
         <mesh ref={ref} visible={props.visible}>
           <boxGeometry args={props.args} />
-          <meshStandardMaterial color="orange" />
+          <meshStandardMaterial color="skyblue" opacity={0.3} />
         </mesh>
       )
     }
