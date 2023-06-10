@@ -133,13 +133,13 @@ export function MyCharacter(props: propTypes) {
   }
 
     const setLouiseAnimationStatus = () => {
-
+      console.log(louiseActions)
     if (forward || backward || left || right) {
       louiseActions['run']?.play(); 
-      louiseActions['idle']?.stop();
+      // louiseActions['Armature|mixamo.com|Layer0.001']?.stop();
     }
     else {
-      louiseActions['idle']?.play();
+      louiseActions['Armature|mixamo.com|Layer0.001']?.play();
       louiseActions['run']?.stop();
     }
   }

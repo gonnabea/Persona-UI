@@ -57,7 +57,7 @@ const Player2Character = () => {
 
   amyActions.run?.play()
   mutantActions['run_Armature.001_Armature']?.play()
-  louiseActions.run?.play()
+  louiseActions['Armature|mixamo.com|Layer0.001']?.play()
 
 
 
@@ -126,9 +126,10 @@ useFrame(() => {
     {/* louise */}
 
 { character === 'louise' && otherUsers && otherUsers[0] ? 
-    <group ref={louiseCharacterRef} dispose={null}>
+    <group ref={louiseGroupRef}  dispose={null}>
       <group>
         <group 
+        ref={louiseCharacterRef}
     position={otherUsers && otherUsers[0] ? [otherUsers[0]?.positionX, otherUsers[0]?.positionY, otherUsers[0]?.positionZ] : null} 
     rotation={otherUsers && otherUsers[0] ? [Math.PI / 2, 0, otherUsers[0]?.rotationZ] : null} 
         scale={0.01}>
