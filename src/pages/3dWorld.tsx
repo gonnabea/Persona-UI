@@ -88,6 +88,9 @@ export default function Page({ isMobile }) {
         getColyseusSessionId(room)
         toast('colyseusConnected')
       })
+      .catch((error) => {
+        toast('채팅 연결 실패')
+      })
   }
 
   const getColyseusSessionId = (room) => {
@@ -266,12 +269,11 @@ Page.canvas = (props) => {
           {/* <CharacterGroup /> */}
           {/* <AmyOthers /> */}
           <BoxCollider position={[-0.5, -1, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
-         
+
           <BoxCollider position={[16.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 50]} visible={true} />
           <BoxCollider position={[-17.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 50]} visible={true} />
           <BoxCollider position={[-0.7667139636867977, -0.5, -87.62388279411937]} args={[45, 3, 3]} visible={true} />
           <BoxCollider position={[-0.7667139636867977, -0.5, -34.62388279411937]} args={[45, 3, 0.2]} visible={true} />
-
 
           {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
           {/* <SphereCollider
@@ -295,8 +297,6 @@ Page.canvas = (props) => {
           /> */}
 
           <SoccerBall />
-
-          
 
           {/* <object3D name={'dirLightTarget'} position={[-4, 0, 0]} />
       <directionalLight  position={[0, 0, 0]} intensity={11} target={'dirLightTarget'} /> */}
