@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
+import { Dispatch, SetStateAction, useCallback, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 
 import ArrowLeft from '@/assets/icons/arrow-left.svg'
@@ -8,6 +8,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import Button from '../Button'
 import { twMerge } from 'tailwind-merge'
 
+const Amy = dynamic(() => import('@/components/canvas/characters/Amy'), { ssr: false })
 const Mutant = dynamic(() => import('@/components/canvas/characters/Mutant'), { ssr: false })
 const Remy = dynamic(() => import('@/components/canvas/characters/Remy'), { ssr: false })
 const Louise = dynamic(() => import('@/components/canvas/characters/Louise'), { ssr: false })
@@ -77,6 +78,27 @@ const CharactersList = ({
           ${carouselClassName}
         `)}>
         <div className='flex h-full' ref={carouselItemsRef}>
+          <div className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%] character' id='amy'>
+            <div
+              className={twMerge(`
+                mx-auto
+                w-[210px]
+                h-[300px]
+                ${carouselItemClassName}
+              `)}>
+              <Scene>
+                <Amy position-y={-3} />
+              </Scene>
+            </div>
+            {title ? (
+              <div className={`text-center mt-[26px] ${titleClassName}`}>
+                <h5>Amy</h5>
+                <p className='opacity-50 mb-[38px] mt-[10px]'>ENTJ</p>
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
           <div
             className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%] character'
             id='mutant'>
