@@ -187,15 +187,15 @@ function SoccerBall(props) {
       })
 
       api.position.subscribe(value => {
-        ballModelRef.current.position.setX(value[0])
-        ballModelRef.current.position.setY(value[1])
-        ballModelRef.current.position.setZ(value[2])
+        ballModelRef.current?.position.setX(value[0])
+        ballModelRef.current?.position.setY(value[1])
+        ballModelRef.current?.position.setZ(value[2])
         // console.log(colyseusRoom)
         
       })
 
       api.rotation.subscribe(value => {
-          ballModelRef.current.rotation.set(value[0], value[1], value[2])
+          ballModelRef.current?.rotation.set(value[0], value[1], value[2])
       })
 
 
@@ -205,9 +205,9 @@ function SoccerBall(props) {
 
             const position = message.position
 
-            ballModelRef.current.position.setX(position.x)
-            ballModelRef.current.position.setY(position.y)
-            ballModelRef.current.position.setZ(position.z)
+            ballModelRef.current?.position.setX(position.x)
+            ballModelRef.current?.position.setY(position.y)
+            ballModelRef.current?.position.setZ(position.z)
             api.position.set(position.x, position.y, position.z)
           
             
