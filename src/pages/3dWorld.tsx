@@ -29,6 +29,9 @@ import Player3Character from '@/components/canvas/characters/worldCharacters/Pla
 import { toast } from 'react-toastify'
 import BGM from '@/components/dom/BGM'
 import PositionTracker from '@/components/canvas/PositionTracker'
+import { Loader, useProgress } from '@react-three/drei'
+import Cube from '@/components/dom/CubeLoader'
+import WorldItems from '@/components/dom/3dWorldItems'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -42,7 +45,7 @@ const colyseusClient = new Colyseus.Client(process.env.NEXT_PUBLIC_SOCKET_URL)
 // const joinRoom = (roomName: string, options?: { [key: string]: any }) =>
 //   colyseusClient.joinOrCreate(roomName, { accessToken: localStorage.getItem("accessToken"), ...options })
 
-export default function Page({ isMobile }) {
+export default function Page(pageProps) {
   const router = useRouter()
   const [chatEnabled, setChatEnabled] = useRecoilState(chatEnabledState)
   const [menuEnabled, toggleMenuEnabled] = useToggle(false)
@@ -162,6 +165,9 @@ export default function Page({ isMobile }) {
     }
   }
 
+
+
+
   useEffect(() => {
     const me = JSON.parse(localStorage.getItem('me'))
 
@@ -181,10 +187,13 @@ export default function Page({ isMobile }) {
     }
   }, [])
 
+
+
+
   return (
     <>
       {/* 모바일 채팅버튼 */}
-      {isMobile ? (
+      {pageProps.isMobile ? (
         <Button
           color='white'
           onClick={toggleChatEnabled}
@@ -201,9 +210,9 @@ export default function Page({ isMobile }) {
         <Kebab className='fill-primary-200' />
       </Button>
       <BGM />
-      <Chat isMobile={isMobile} />
+      <Chat isMobile={pageProps.isMobile} />
       {/* 모바일 조이스틱 */}
-      {isMobile ? (
+      {pageProps.isMobile ? (
         <div className='absolute bottom-[30px] left-[30px] z-[2]'>
           <Joystick
             size={120}
@@ -242,61 +251,42 @@ export default function Page({ isMobile }) {
           </div>
         }
       />
+      <div style={{ position : 'absolute' , fontSize: '24px', zIndex: 999}}>
+      {/* <Cube 
+        width={'100px'}
+        front={
+          <div style={{
+            backgroundColor:'black',
+            color: 'white', 
+            display: 'flex', 
+            justifyContent:'center', 
+            alignItems: 'center', 
+            width: '100%', 
+            height: '100%',
+            fontSize: '30px',
+            fontWeight: 'bold',
+            border: 'solid 1px black',
+            boxShadow: '0px 10px 20px 2px rgba(0, 255, 255, 0.5)'
+          }}>{ loader ? loader.loadingProgress : null}</div>
+        }
+      /> */}
+
+      </div>
     </>
   )
 }
 
 // Canvas components go here
 // It will receive same props as the Page component (from getStaticProps, etc.)
-Page.canvas = (props) => {
+Page.canvas = (pageProps) => {
+  console.log(pageProps)
+  
+
   return (
     <>
       <Physics gravity={[0, -100, 0]}>
         <Suspense fallback={null}>
-          {/* <CastelModel /> */}
-          <Land></Land>
-          <SoccerField></SoccerField>
-          <MyCharacter />
-          <Player2Character />
-          <Player3Character />
-          <Player4Character />
-          <PositionTracker />
-          {/* <OtherUserAmy /> */}
-          {/* <WorldLouise />
-          <WorldMutant /> */}
-          {/* <Louise scale={[0.01, 0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />
-          <Mutant scale={[0.01,0.01,0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />   */}
-          {/* <CharacterGroup /> */}
-          {/* <AmyOthers /> */}
-          <BoxCollider position={[-0.5, -1, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
-
-          <BoxCollider position={[16.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 50]} visible={true} />
-          <BoxCollider position={[-17.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 50]} visible={true} />
-          <BoxCollider position={[-0.7667139636867977, -0.5, -87.62388279411937]} args={[45, 3, 3]} visible={true} />
-          <BoxCollider position={[-0.7667139636867977, -0.5, -34.62388279411937]} args={[45, 3, 0.2]} visible={true} />
-
-          {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
-          {/* <SphereCollider
-            position={[-1.693505738960225, -0.5, -7.033493077608636]}
-            rotation={[Math.PI / 4, 0, 0]}
-            args={[0.3]}
-            type='Dynamic'
-          />
-          <SphereCollider
-            position={[-1.693505738960225, -0.5, -7.033493077608636]}
-            rotation={[Math.PI / 4, 0, 0]}
-            args={[0.3]}
-            type='Dynamic'
-          />
-
-          <SphereCollider
-            position={[-1.693505738960225, -0.5, -7.033493077608636]}
-            rotation={[Math.PI / 4, 0, 0]}
-            args={[0.3]}
-            type='Dynamic'
-          /> */}
-
-          <SoccerBall />
+         <WorldItems />
 
           {/* <object3D name={'dirLightTarget'} position={[-4, 0, 0]} />
       <directionalLight  position={[0, 0, 0]} intensity={11} target={'dirLightTarget'} /> */}
