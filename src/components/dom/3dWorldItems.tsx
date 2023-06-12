@@ -24,7 +24,7 @@ export default function WorldItems() {
         const { active, progress, errors, item, loaded, total } = useProgress()
 
         console.log(active, progress, errors, item, loaded, total)
-        return <Html center>{progress} % loaded</Html>
+        return <Html center style={{width: '300px'}}>{progress.toFixed(0)} % loaded</Html>
     }
 
     return (
