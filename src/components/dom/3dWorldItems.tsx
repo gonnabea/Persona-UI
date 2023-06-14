@@ -6,7 +6,7 @@
 //     return <Html center>{progress} % loaded</Html>
 //   }
 
-import { Html, useProgress } from "@react-three/drei"
+import { Html, PerspectiveCamera, useProgress } from "@react-three/drei"
 import { BoxCollider } from "../canvas/Colliders"
 import Land from "../canvas/Land"
 import PositionTracker from "../canvas/PositionTracker"
@@ -50,7 +50,7 @@ export default function WorldItems() {
           <BoxCollider position={[-17.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 50]} visible={true} />
           <BoxCollider position={[-0.7667139636867977, -0.5, -87.62388279411937]} args={[45, 3, 3]} visible={true} />
           <BoxCollider position={[-0.7667139636867977, -0.5, -34.62388279411937]} args={[45, 3, 0.2]} visible={true} />
-
+          {/* <PerspectiveCamera makeDefault  /> */}
           {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
           {/* <SphereCollider
             position={[-1.693505738960225, -0.5, -7.033493077608636]}
