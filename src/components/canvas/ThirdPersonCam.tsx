@@ -12,7 +12,7 @@ const ThirdPersonCamera = ({ positionX, positionY, positionZ, rotationZ }) => {
         controls.minDistance = 5;
         controls.maxDistance = 5;
 
-        camera.position.set(positionX - 2, positionY + 2, positionZ - 2)
+        camera.position.set(positionX - 3, positionY + 3, positionZ - 3)
         camera.rotateZ = rotationZ
 
 
