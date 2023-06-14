@@ -49,7 +49,7 @@ export default function Page(pageProps) {
   const router = useRouter()
   const [chatEnabled, setChatEnabled] = useRecoilState(chatEnabledState)
   const [menuEnabled, toggleMenuEnabled] = useToggle(false)
-  const [_, setColyseusRoom] = useRecoilState(colyseusRoomState)
+  const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
   // 웹소켓으로 통신할 유저정보 (position, rotation ...)
   const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState)
 
@@ -87,7 +87,7 @@ export default function Page(pageProps) {
 
         setColyseusRoom(room) // 전역 store에 연결된 coyseus room 담기
         onColyseusConnection(room) // 타 유저 colysus room 접속 시 처리 함수
-        // onMoveCharacters(room); // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
+        onMoveCharacters(room) // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
         getColyseusSessionId(room)
         toast('colyseusConnected')
       })
@@ -183,6 +183,15 @@ export default function Page(pageProps) {
       connectToColyseus()
     }
   }, [])
+
+  useEffect(() => {
+    // leave from room
+    return () => {
+      if (colyseusRoom) {
+        colyseusRoom.leave()
+      }
+    }
+  }, [colyseusRoom])
 
   return (
     <>
