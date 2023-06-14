@@ -89,10 +89,10 @@ export default function Page(pageProps) {
         onColyseusConnection(room) // 타 유저 colysus room 접속 시 처리 함수
         onMoveCharacters(room) // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
         getColyseusSessionId(room)
-        toast('colyseusConnected')
+        toast('네트워크 연결됨')
       })
       .catch((error) => {
-        toast('채팅 연결 실패')
+        toast('네트워크 연결 실패')
       })
   }
 

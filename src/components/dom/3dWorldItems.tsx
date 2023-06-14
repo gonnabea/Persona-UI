@@ -37,9 +37,11 @@ const WorldItems = () => {
 
   useEffect(() => {
     const onMoveCharacters = () => {
-      colyseusRoom.onMessage('move', () => {
-        setUserList(Array.from(colyseusRoom.state.players.$items.values()))
-      })
+      if (colyseusRoom) {
+        colyseusRoom.onMessage('move', (client) => {
+          setUserList(Array.from(colyseusRoom.state.players.$items.values()))
+        })
+      }
     }
 
     onMoveCharacters()
@@ -58,6 +60,7 @@ const WorldItems = () => {
               </Html>
             )
           }
+
           return ''
         })}
         <Land></Land>
