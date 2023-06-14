@@ -1,5 +1,6 @@
 import { Canvas, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef, useState } from 'react'
+import { WebGPU } from './WebGPU'
 
 export default function Scene({ children, ...props }) {
   const targetObject = useRef()
@@ -35,6 +36,7 @@ export default function Scene({ children, ...props }) {
           intensity={dirLightIntensity}
           target={targetObject.current}
         />
+        
       </Suspense>
     </Canvas>
   )
