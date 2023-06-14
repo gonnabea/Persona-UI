@@ -13,15 +13,12 @@ import { useRecoilState } from 'recoil'
 const Scene = dynamic(() => import('@/components/canvas/Scene'), { ssr: true })
 
 export default function App({ Component, pageProps = { title: 'index' } }) {
-  const ref = useRef();
-
-
-
+  const ref = useRef()
 
   return (
     <RecoilRoot>
       <Header title={pageProps.title} />
-     
+
       <Layout ref={ref}>
         <Component {...pageProps} />
         {/* The canvas can either be in front of the dom or behind. If it is in front it can overlay contents.
@@ -29,14 +26,12 @@ export default function App({ Component, pageProps = { title: 'index' } }) {
          * Since the event source is now shared, the canvas would block events, we prevent that with pointerEvents: none. */}
         {Component?.canvas && (
           <Scene className='pointer-events-none' eventSource={ref} eventPrefix='client'>
-       
             {Component.canvas(pageProps)}
-         
           </Scene>
         )}
       </Layout>
       <ToastContainer
-        position='top-right'
+        position='bottom-right'
         autoClose={5000}
         hideProgressBar={true}
         newestOnTop={false}
