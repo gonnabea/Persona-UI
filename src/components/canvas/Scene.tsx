@@ -1,12 +1,10 @@
 import { Canvas, useThree } from '@react-three/fiber'
-import { Preload } from '@react-three/drei'
 import { Suspense, useEffect, useRef, useState } from 'react'
-import * as THREE from 'three'
 
 export default function Scene({ children, ...props }) {
   const targetObject = useRef()
   const directionalLight = useRef()
-  const sceneRef = useRef();
+  const sceneRef = useRef()
   const [dirLightIntensity, setDirLightIntensity] = useState(10)
 
   // const { scene } = useThree();
@@ -23,21 +21,21 @@ export default function Scene({ children, ...props }) {
     // const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
     // sceneRef.current.add( directionalLight );
   }, [])
- 
+
   // Everything defined in here will persist between route changes, only children are swapped
   return (
-    <Canvas {...props} ref={sceneRef}>
+    <Canvas {...props} ref={sceneRef} style={{ zIndex: 1 }}>
       <Suspense>
-      {children}
-    
-
-      <ambientLight intensity={1} />
-
-          <object3D ref={targetObject} position={[-4, 0, 0]} />
-            <directionalLight ref={directionalLight} position={[0, 0, 0]} intensity={dirLightIntensity} target={targetObject.current} />
-
+        {children}
+        <ambientLight intensity={1} />
+        <object3D ref={targetObject} position={[-4, 0, 0]} />
+        <directionalLight
+          ref={directionalLight}
+          position={[0, 0, 0]}
+          intensity={dirLightIntensity}
+          target={targetObject.current}
+        />
       </Suspense>
-     
     </Canvas>
   )
 }
