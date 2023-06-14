@@ -165,9 +165,6 @@ export default function Page(pageProps) {
     }
   }
 
-
-
-
   useEffect(() => {
     const me = JSON.parse(localStorage.getItem('me'))
 
@@ -187,9 +184,6 @@ export default function Page(pageProps) {
     }
   }, [])
 
-
-
-
   return (
     <>
       {/* 모바일 채팅버튼 */}
@@ -197,7 +191,7 @@ export default function Page(pageProps) {
         <Button
           color='white'
           onClick={toggleChatEnabled}
-          className='absolute border rounded-full p-[8px] top-[20px] left-[20px] lg:top-[34px] lg:left-[40px] z-[1] border-[#B3B3B3] hover:bg-white'>
+          className='absolute border rounded-full p-[8px] top-[20px] left-[20px] lg:top-[34px] lg:left-[40px] z-[2] border-[#B3B3B3] hover:bg-white'>
           <Kebab className='fill-primary-200' />
         </Button>
       ) : (
@@ -205,7 +199,7 @@ export default function Page(pageProps) {
       )}
       <Button
         color='white'
-        className='absolute border rounded-full p-[8px] top-[20px] right-[20px] lg:top-[34px] lg:right-[40px] z-[1] border-[#B3B3B3] hover:bg-white'
+        className='absolute border rounded-full p-[8px] top-[20px] right-[20px] lg:top-[34px] lg:right-[40px] z-[2] border-[#B3B3B3] hover:bg-white'
         onClick={toggleMenuEnabled}>
         <Kebab className='fill-primary-200' />
       </Button>
@@ -251,8 +245,8 @@ export default function Page(pageProps) {
           </div>
         }
       />
-      <div style={{ position : 'absolute' , fontSize: '24px', zIndex: 999}}>
-      {/* <Cube 
+      <div style={{ position: 'absolute', fontSize: '24px', zIndex: 999 }}>
+        {/* <Cube 
         width={'100px'}
         front={
           <div style={{
@@ -270,7 +264,6 @@ export default function Page(pageProps) {
           }}>{ loader ? loader.loadingProgress : null}</div>
         }
       /> */}
-
       </div>
     </>
   )
@@ -280,13 +273,12 @@ export default function Page(pageProps) {
 // It will receive same props as the Page component (from getStaticProps, etc.)
 Page.canvas = (pageProps) => {
   console.log(pageProps)
-  
 
   return (
     <>
       <Physics gravity={[0, -100, 0]}>
         <Suspense fallback={null}>
-         <WorldItems />
+          <WorldItems />
 
           {/* <object3D name={'dirLightTarget'} position={[-4, 0, 0]} />
       <directionalLight  position={[0, 0, 0]} intensity={11} target={'dirLightTarget'} /> */}
