@@ -20,6 +20,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import SoccerTrophy from '../canvas/SoccerTrophy'
+import ScreenModel from '../canvas/ScreenModel'
 
 const Loader = () => {
   const { active, progress, errors, item, loaded, total } = useProgress()
@@ -87,6 +88,8 @@ const WorldItems = () => {
         <BoxCollider position={[0.7667139636867977, -0.5, -34.62388279411937]} args={[35, 3, 0.2]} visible={false} />
 
         <SoccerTrophy  />
+
+        <ScreenModel />
 
         {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
         {/* <SphereCollider
