@@ -21,7 +21,7 @@ type GLTFResult = GLTF & {
 
 const Amy = (props: JSX.IntrinsicElements['group']) => {
   const group = useRef<THREE.Group>()
-  const { nodes, materials, animations } = useGLTF('/models/characters/Amy.glb') as unknown as GLTFResult
+  const { nodes, materials, animations } = useGLTF(`/models/characters/Amy.glb`) as unknown as GLTFResult
   const { actions } = useAnimations<GLTFActions>(animations, group)
 
   useEffect(() => {
