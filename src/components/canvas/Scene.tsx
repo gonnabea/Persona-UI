@@ -13,7 +13,7 @@ export default function Scene({ children, ...props }) {
   useEffect(() => {
     setTimeout(() => {
       setDirLightIntensity(dirLightIntensity + 1)
-    }, 20000)
+    }, 10000)
     // setTimeout(() => {
     //   directionalLight.current['intensity'] = 11;
     // }, 5000)
@@ -28,7 +28,7 @@ export default function Scene({ children, ...props }) {
     <Canvas {...props} ref={sceneRef} style={{ zIndex: 1 }}>
       <Suspense>
         {children}
-        <ambientLight intensity={1} />
+        <ambientLight intensity={0.8} />
         <object3D ref={targetObject} position={[-4, 0, 0]} />
         <directionalLight
           ref={directionalLight}
