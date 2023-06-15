@@ -50,13 +50,15 @@ export function MyCharacter(props: propTypes) {
 
 
 
-  const { nodes: amyNodes, materials: amyMaterials, animations: amyAnimations, scene: amyScene } = useGLTF(`${process.env.NEXT_PUBLIC_API_URL}/file/downloadCharacters?fileName=player1/Amy.glb`)
+  // const { nodes: amyNodes, materials: amyMaterials, animations: amyAnimations, scene: amyScene } = useGLTF(`${process.env.NEXT_PUBLIC_API_URL}/file/downloadCharacters?fileName=player1/Amy.glb`)
+  const { nodes: amyNodes, materials: amyMaterials, animations: amyAnimations, scene: amyScene } = useGLTF(`${process.env.NEXT_PUBLIC_API_URL}/models/characters/player1/Amy.glb`)
+
   const { actions: amyActions } = useAnimations(amyAnimations, amyGroupRef)
 
-  const { nodes: mutantNodes, materials: mutantMaterials, animations: mutantAnimations } = useGLTF(`${process.env.NEXT_PUBLIC_API_URL}/file/downloadCharacters?fileName=player1/Mutant.glb`)
+  const { nodes: mutantNodes, materials: mutantMaterials, animations: mutantAnimations } = useGLTF(`${process.env.NEXT_PUBLIC_API_URL}/models/characters/player1/Mutant.glb`)
   const { actions: mutantActions } = useAnimations(mutantAnimations, mutantGroupRef)
 
-  const { nodes: louiseNodes, materials: louiseMaterials, animations: louiseAnimations } = useGLTF(`${process.env.NEXT_PUBLIC_API_URL}/file/downloadCharacters?fileName=player1/Louise.glb`)
+  const { nodes: louiseNodes, materials: louiseMaterials, animations: louiseAnimations } = useGLTF(`${process.env.NEXT_PUBLIC_API_URL}/models/characters/player1/Louise.glb`)
   const { actions: louiseActions } = useAnimations(louiseAnimations, louiseGroupRef)
 
   const { scene } = useThree()
