@@ -11,6 +11,7 @@ import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { useRecoilState } from 'recoil'
 import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 import { clone as SkeletonUtilsClone } from "../../../utils/SkeletonUtils";
+import { enterSoccerIndexState } from '@/recoil/enterSoccer/atom'
 
 // GLTF Actions Type
 type ActionName = 'run'
@@ -61,6 +62,27 @@ export function MyCharacter(props: propTypes) {
   const { nodes: louiseNodes, materials: louiseMaterials, animations: louiseAnimations } = useGLTF(`/models/characters/player1/Louise.glb`)
   const { actions: louiseActions } = useAnimations(louiseAnimations, louiseGroupRef)
 
+    Object.values(amyMaterials).forEach(material => {
+    
+    material.metalness = 0.5;
+    material.roughness = 0.3;
+
+  })
+
+      Object.values(mutantMaterials).forEach(material => {
+    
+    material.metalness = 0.5;
+    material.roughness = 0.3;
+
+  })
+
+      Object.values(louiseMaterials).forEach(material => {
+    
+    material.metalness = 0.5;
+    material.roughness = 0.3;
+
+  })
+
   const { scene } = useThree()
 
   // 캐릭터 이동 구현
@@ -71,6 +93,9 @@ export function MyCharacter(props: propTypes) {
   const [rotationZ, setRotationZ] = useState(0)
   const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
   const [updateIndex, forceUpdate] = useState(0)
+
+  const [enterSoccerIndex, setEnterSoccerIndex] = useRecoilState(enterSoccerIndexState);
+  
 
 
   const frontVector = new Vector3(0, 0, 0)
@@ -104,6 +129,11 @@ export function MyCharacter(props: propTypes) {
 
   }, [])
 
+  useEffect(() => {
+    console.log(enterSoccerIndex)
+ 
+       enterSoccerIndex === false ? api.position.set(-3.4604011564526544,-0.49999999999999956,-56.78822926307936) : api.position.set(-3.330882705354396,0.776234018484764,-30.72388229519129)
+  }, [enterSoccerIndex])
 
 
 

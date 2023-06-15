@@ -19,6 +19,7 @@ import Player4Character from '../canvas/characters/worldCharacters/Player4'
 import { Suspense, useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
+import SoccerTrophy from '../canvas/SoccerTrophy'
 
 const Loader = () => {
   const { active, progress, errors, item, loaded, total } = useProgress()
@@ -79,10 +80,13 @@ const WorldItems = () => {
         {/* <AmyOthers /> */}
         <BoxCollider position={[-0.5, -1, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
 
-        <BoxCollider position={[16.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 50]} visible={true} />
-        <BoxCollider position={[-17.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 50]} visible={true} />
-        <BoxCollider position={[-0.7667139636867977, -0.5, -87.62388279411937]} args={[45, 3, 3]} visible={true} />
-        <BoxCollider position={[-0.7667139636867977, -0.5, -34.62388279411937]} args={[45, 3, 0.2]} visible={true} />
+        {/* 축구장 벽 콜라이더 */}
+        <BoxCollider position={[16.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 55]} visible={false} />
+        <BoxCollider position={[-17.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 55]} visible={false} />
+        <BoxCollider position={[-0.7667139636867977, -0.5, -87.62388279411937]} args={[45, 3, 3]} visible={false} />
+        <BoxCollider position={[0.7667139636867977, -0.5, -34.62388279411937]} args={[35, 3, 0.2]} visible={false} />
+
+        <SoccerTrophy  />
 
         {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
         {/* <SphereCollider

@@ -9,12 +9,16 @@ function Land(props) {
   const directionalLight = useRef()
  
 
-//   Object.keys(glb.materials).forEach(function(v){
-//     glb.materials[v].metalness = 1;
-//     glb.materials[v].roughness = 0.8;
-    
-// })
 
+
+  Object.values(glb.materials).forEach(material => {
+    
+    material.metalness = 0.5;
+    material.roughness = 0.2;
+
+
+
+  })
   const raycaster = useThree((state) => state.raycaster)
   const scene = useThree((state) => state.scene)
 

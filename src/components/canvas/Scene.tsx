@@ -6,14 +6,14 @@ export default function Scene({ children, ...props }) {
   const targetObject = useRef()
   const directionalLight = useRef()
   const sceneRef = useRef()
-  const [dirLightIntensity, setDirLightIntensity] = useState(10)
+  const [dirLightIntensity, setDirLightIntensity] = useState(0)
 
   // const { scene } = useThree();
 
   useEffect(() => {
     setTimeout(() => {
-      setDirLightIntensity(dirLightIntensity + 1)
-    }, 10000)
+      setDirLightIntensity(1)
+    }, 0)
     // setTimeout(() => {
     //   directionalLight.current['intensity'] = 11;
     // }, 5000)
@@ -28,11 +28,11 @@ export default function Scene({ children, ...props }) {
     <Canvas {...props} ref={sceneRef} style={{ zIndex: 1 }}>
       <Suspense>
         {children}
-        <ambientLight intensity={0.8} />
+        <ambientLight intensity={0.6} />
         <object3D ref={targetObject} position={[-4, 0, 0]} />
         <directionalLight
           ref={directionalLight}
-          position={[0, 0, 0]}
+          position={[0, 20, 0]}
           intensity={dirLightIntensity}
           target={targetObject.current}
         />
