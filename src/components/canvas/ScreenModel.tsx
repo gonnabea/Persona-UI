@@ -52,15 +52,7 @@ function ScreenModel(props) {
     //    video.play()
   }, [])
 
-x
-: 
-14.022834499063098
-y
-: 
--0.5000000000000004
-z
-: 
--29.959824138261883
+
         return (
             <>
                 <primitive 
@@ -68,7 +60,7 @@ z
                         videoTexture1.source.data.paused ? videoTexture1.source.data.play() : videoTexture1.source.data.pause()
                     }} 
                     
-                    position={[30.022834499063098,-2,-20.51774623131295]} scale={1} 
+                    position={[30.022834499063098,-2,-20.51774623131295]} scale={[1.5, 1.2 ,1]} 
                     object={gltf.scene} 
                     rotation={[0, 3.8, 0]}
                     onPointerOver={() => {
