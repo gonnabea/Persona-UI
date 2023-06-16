@@ -1,5 +1,5 @@
 import { enterSoccerIndexState } from '@/recoil/enterSoccer/atom'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, useTexture, useVideoTexture } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useRef, useState, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
@@ -7,19 +7,21 @@ import { useRecoilState } from 'recoil'
 
 function ScreenModel(props) {
   const group = useRef()
-  const gltf = useGLTF('/models/2010_flat_screen_tv.glb')
-  const videoTexture = useRef()
+  const gltf = useGLTF('/models/tv.glb')
+  const videoTextureRef = useRef()
+  const videoTexture1 = useVideoTexture("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
   console.log(gltf)
   // gltf.materials.M_0136_Charcoal.metalness = 1;
   // gltf.materials.M_0136_Charcoal.roughness = 0.5;
 
-      const [video, setVideo] = useState(() => {
-      const vid = document.createElement("video");
-      vid.src = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
-      vid.crossOrigin = "Anonymous";
-      vid.loop = true;
-      return vid;
-        });
+    //   const [video, setVideo] = useState(() => {
+    //   const vid = document.createElement("video");
+    //   vid.src = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+    //   vid.crossOrigin = "Anonymous";
+    //   vid.loop = true;
+    //   vid.play()
+    //   return vid;
+    //     });
 
 
 //   Object.keys(glb.materials).forEach(function(v){
@@ -35,25 +37,40 @@ function ScreenModel(props) {
     material.metalness = 0.5;
     material.roughness = 0.3;
 
-
+   material.emissiveMap = videoTexture1
 
   })
 
   useEffect(() => {
-      gltf.materials[''].map = videoTexture.current
+      console.log(gltf)
+      setTimeout(() => {
+          gltf.scene.children[0].children[0].children[0].children[1].children[0].material.map = videoTexture1;
+          console.log(videoTexture1, "color: red;")
+          videoTexture1.source.data.play()
+        //   video.play()
+      }, 0)
+    //    video.play()
   }, [])
 
-
+x
+: 
+14.022834499063098
+y
+: 
+-0.5000000000000004
+z
+: 
+-29.959824138261883
         return (
             <>
                 <primitive 
                     onClick={() => {
-                        video.paused ? video.play() : video.pause()
+                        videoTexture1.source.data.paused ? videoTexture1.source.data.play() : videoTexture1.source.data.pause()
                     }} 
                     
-                    position={[0,1.5,0]} scale={10} 
+                    position={[30.022834499063098,-2,-20.51774623131295]} scale={1} 
                     object={gltf.scene} 
-                    rotation={[0, 3.9, 0]}
+                    rotation={[0, 3.8, 0]}
                     onPointerOver={() => {
                         document.body.style.cursor = "pointer"
                     }}
@@ -62,12 +79,12 @@ function ScreenModel(props) {
     
                     }}
                 />
-                    <mesh onClick={() => video.paused ? video.play() : video.pause()} scale={[10,5.8,6]} rotation={[0,3.9,0]} position={[-1,1.7,-0.6]}>
+                    {/* <mesh  scale={[0,5.8,6]} rotation={[0,3.9,0]} position={[-1,1.7,-0.6]}>
                         <planeBufferGeometry />
                         <meshBasicMaterial>
-                            <videoTexture ref={videoTexture} attach="map" args={[video]} />
+                            <videoTexture ref={videoTextureRef} attach="map" args={[video]} />
                         </meshBasicMaterial>
-                    </mesh>
+                    </mesh> */}
             </>
         )
 }

@@ -1,8 +1,9 @@
 import { enterSoccerIndexState } from '@/recoil/enterSoccer/atom'
 import { useGLTF } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useFrame, useLoader, useThree } from '@react-three/fiber'
 import { Suspense, useRef } from 'react'
 import { useRecoilState } from 'recoil'
+import { TextureLoader } from 'three'
 
 
 function SoccerTrophy(props) {
@@ -10,6 +11,9 @@ function SoccerTrophy(props) {
   const gltf = useGLTF('/models/fifa_club_world_cup/scene.gltf')
   const targetObject = useRef()
   const directionalLight = useRef()
+
+  const imgTexture = useLoader(TextureLoader, 'https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI');
+
   console.log(gltf)
   // gltf.materials.M_0136_Charcoal.metalness = 1;
   // gltf.materials.M_0136_Charcoal.roughness = 0.5;
@@ -25,6 +29,15 @@ function SoccerTrophy(props) {
     
     material.metalness = 0.5;
     material.roughness = 0.3;
+    // material.normalMap = imgTexture
+
+
+    // material.transparent = true
+    // material.opacity = 0.8
+
+   
+    
+    // material.alphaToCoverage = true
 
 
 

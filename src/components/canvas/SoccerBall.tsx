@@ -30,7 +30,7 @@ function SoccerBall(props) {
     mass: 1,
     type: 'Dynamic',
     args: [0.3],
-
+    position: [-1.5799805660188322,-0.5, -61.161431290782154],
     onCollideBegin: (e) => {
       if (e.body.name === 'ground1') {
         console.log('바닥과 충돌')
@@ -165,7 +165,7 @@ function SoccerBall(props) {
 
   useEffect(() => {
     
-    api.position.set(-1.5799805660188322,-0.5, -61.161431290782154)
+    
     
     setTimeout(() => {
         const me = JSON.parse(localStorage.getItem("me"))
