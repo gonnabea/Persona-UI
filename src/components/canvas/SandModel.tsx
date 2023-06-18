@@ -5,6 +5,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useMemo, useRef, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import Indicator from "./Indicator"
+import { selectedItemState } from '@/recoil/selectedItem/atom'
 
 
 function SandModel(props) {
@@ -16,17 +17,13 @@ function SandModel(props) {
 
 
 
-  Object.values(glb.materials).forEach(material => {
-    
-    material.metalness = 0.5;
-    material.roughness = 0.2;
 
-  })
 
   const raycaster = useThree((state) => state.raycaster)
   const scene = useThree((state) => state.scene)
 
   const [landClickPos, setLandClickPos] = useRecoilState(landClickPosState)
+  const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
 
   const [landClickIndex, setLandClickIndex] = useState(0);
 
@@ -55,6 +52,13 @@ function SandModel(props) {
   useEffect(() => {
         const clickedPosition = raycaster.intersectObjects(scene.children)[0]?.point
 
+          Object.values(glb.materials).forEach(material => {
+    
+    material.metalness = 0.5;
+    material.roughness = 0.2;
+
+  })
+
 
         // setLandClickPos(clickedPosition);
     setLandClickIndex(landClickIndex + 1)
@@ -62,6 +66,8 @@ function SandModel(props) {
 
     setBlockPositions([...blockPositions, landClickPos])
 
+    
+  setSelectedItem(clonedArr[landClickIndex])
 
 
   }, [landClickPos])
@@ -74,7 +80,7 @@ function SandModel(props) {
 
   return (
     <>
-      <primitive
+      {/* <primitive
   
         onPointerOver={() => {
             document.body.style.cursor = "pointer"
@@ -87,7 +93,7 @@ function SandModel(props) {
         rotation={[0,0,0]}
         object={glb.scene}
         // visible={false}
-      />
+      /> */}
       {
         
           //   <primitive
@@ -117,10 +123,19 @@ function SandModel(props) {
                 onPointerOut={() => {
                     document.body.style.cursor = "default"
                 }}
+                onClick={(e) => {
+                  console.log(e.eventObject)
+                  setSelectedItem((e.eventObject))
+                }}
+                
                 position={[blockPositions[index]?.x.toFixed(0), blockPositions[index]?.y.toFixed(0), blockPositions[index]?.z.toFixed(0)]}
-                scale={[3,3, 0.3]}
+                scale={[1,1,1]}
                 rotation={[0,0,0]}
                 object={cloned}
+                modelInfo={{
+                  name: 'sand_box',
+                  index
+                }}
                 // visible={false}
             />
             }
@@ -130,10 +145,10 @@ function SandModel(props) {
       }
 
         <Indicator 
-                position={[
-                    landClickPos?.x, landClickPos?.y +4, landClickPos?.z
-                ]} 
-                visible={true} 
+                position={ selectedItem ? [
+                    parseInt(selectedItem.position.x), parseInt(selectedItem.position.y) +4, parseInt(selectedItem.position.z)
+                ] : null} 
+                
             />
       {/* <directionalLight position={[0, 0, 0]} intensity={10} target={targetObject.current} /> */}
     </>
