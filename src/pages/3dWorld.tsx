@@ -31,7 +31,7 @@ import BGM from '@/components/dom/BGM'
 import PositionTracker from '@/components/canvas/PositionTracker'
 import { Loader, useProgress } from '@react-three/drei'
 import Cube from '@/components/dom/CubeLoader'
-import WorldItems from '@/components/dom/3dWorldItems'
+import WorldItems from '@/components/canvas/3dWorldItems'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.

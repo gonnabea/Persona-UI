@@ -7,20 +7,21 @@
 //   }
 
 import { Html, useProgress } from '@react-three/drei'
-import { BoxCollider } from '../canvas/Colliders'
-import Land from '../canvas/Land'
-import PositionTracker from '../canvas/PositionTracker'
-import SoccerBall from '../canvas/SoccerBall'
-import SoccerField from '../canvas/SoccerField'
-import { MyCharacter } from '../canvas/characters/MyCharacter'
-import Player2Character from '../canvas/characters/worldCharacters/Player2'
-import Player3Character from '../canvas/characters/worldCharacters/Player3'
-import Player4Character from '../canvas/characters/worldCharacters/Player4'
+import { BoxCollider } from './Colliders'
+import Land from './Land'
+import PositionTracker from './PositionTracker'
+import SoccerBall from './SoccerBall'
+import SoccerField from './SoccerField'
+import { MyCharacter } from './characters/MyCharacter'
+import Player2Character from './characters/worldCharacters/Player2'
+import Player3Character from './characters/worldCharacters/Player3'
+import Player4Character from './characters/worldCharacters/Player4'
 import { Suspense, useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
-import SoccerTrophy from '../canvas/SoccerTrophy'
-import ScreenModel from '../canvas/ScreenModel'
+import SoccerTrophy from './SoccerTrophy'
+import ScreenModel from './ScreenModel'
+import SandModel from './SandModel'
 
 const Loader = () => {
   const { active, progress, errors, item, loaded, total } = useProgress()
@@ -88,6 +89,8 @@ const WorldItems = () => {
         <BoxCollider position={[0.7667139636867977, -0.5, -34.62388279411937]} args={[35, 3, 0.2]} visible={false} />
 
         <SoccerTrophy  />
+
+        <SandModel />
 
         <ScreenModel />
 

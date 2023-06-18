@@ -1,12 +1,18 @@
+import { landClickPosState } from '@/recoil/landClickPos/atom'
 import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useRef } from 'react'
+import { useRecoilState } from 'recoil'
+
 
 function Land(props) {
   const group = useRef()
   const glb = useGLTF('/models/beach_island.glb')
   const targetObject = useRef()
   const directionalLight = useRef()
+
+  const [landClickPos, setLandClickPos] = useRecoilState(landClickPosState)
+
  
 
 
@@ -27,6 +33,8 @@ function Land(props) {
     const clickedPosition = raycaster.intersectObjects(scene.children)[0]?.point
 
     console.log(clickedPosition)
+
+    setLandClickPos(clickedPosition)
 
     //   console.log(clickedPosition)
   }
