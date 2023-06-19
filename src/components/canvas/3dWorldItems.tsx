@@ -51,10 +51,10 @@ const WorldItems = () => {
   const [otherUserList, setOtherUserList] = useState([])
   const colyseusRoom = useRecoilValue(colyseusRoomState)
 
+
+
   useEffect(() => {
-    const onMoveCharacters = () => {
-      if (colyseusRoom) {
-        colyseusRoom.onMessage('move', () => {
+   colyseusRoom.onMessage('move', () => {
           // 나의 정보
           const me = JSON.parse(localStorage.getItem('me'))
           const myClientId = me.colyseusSessionId
@@ -67,11 +67,9 @@ const WorldItems = () => {
             }),
           )
         })
-      }
-    }
-
-    onMoveCharacters()
   }, [colyseusRoom])
+
+
 
   return (
     <>

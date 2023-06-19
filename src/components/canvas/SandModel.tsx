@@ -41,14 +41,6 @@ function SandModel(props) {
   }
 
 
-
-  
-
-
-  console.log(clonedArr)
-
-
-
   useEffect(() => {
         const clickedPosition = raycaster.intersectObjects(scene.children)[0]?.point
 
