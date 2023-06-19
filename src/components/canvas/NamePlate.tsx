@@ -12,11 +12,9 @@ type NamePlateType = {
 // 닉네임 컴포넌트
 const NamePlate = ({ positionX, positionY, positionZ, username }: NamePlateType) => {
   return (
-    <group>
-      <Html position={[positionX, positionY, positionZ]} as='div' width='50px' height='50px'>
-        <div>{username}</div>
-      </Html>
-    </group>
+    <Html position={[positionX, positionY, positionZ]} as='div'>
+      <div className='text-white bg-black rounded-full p-[10px]'>{username}</div>
+    </Html>
   )
 }
 
