@@ -19,9 +19,22 @@ import Player4Character from './characters/worldCharacters/Player4'
 import { Suspense, useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
+import SandModel from './SandModel'
 import SoccerTrophy from './SoccerTrophy'
 import ScreenModel from './ScreenModel'
-import SandModel from './SandModel'
+import NamePlate from './NamePlate'
+
+type User = {
+  character: string
+  email: string
+  id: string
+  isAttacking: boolean
+  positionX: number
+  positionY: number
+  positionZ: number
+  rotationZ: number
+  username: string
+}
 
 const Loader = () => {
   const { active, progress, errors, item, loaded, total } = useProgress()
@@ -35,14 +48,24 @@ const Loader = () => {
 }
 
 const WorldItems = () => {
-  const [userList, setUserList] = useState([])
+  const [otherUserList, setOtherUserList] = useState([])
   const colyseusRoom = useRecoilValue(colyseusRoomState)
 
   useEffect(() => {
     const onMoveCharacters = () => {
       if (colyseusRoom) {
-        colyseusRoom.onMessage('move', (client) => {
-          setUserList(Array.from(colyseusRoom.state.players.$items.values()))
+        colyseusRoom.onMessage('move', () => {
+          // 나의 정보
+          const me = JSON.parse(localStorage.getItem('me'))
+          const myClientId = me.colyseusSessionId
+          // 나의 정보를 제외하고 다른 유저의 정보를 State로 지정함
+          setOtherUserList(
+            Array.from(colyseusRoom.state.players.$items.values()).filter((user: User) => {
+              if (user.id !== myClientId) {
+                return user
+              }
+            }),
+          )
         })
       }
     }
@@ -53,14 +76,20 @@ const WorldItems = () => {
   return (
     <>
       <Suspense fallback={<Loader />}>
-        {userList.map((user) => {
+        {/* 다른 유저의 닉네임 출력 */}
+        {/* TODO: 나중에 플레이어 컴포넌트가 통합된다면 플레이어 컴포넌트로 이동 */}
+        {otherUserList.map((user) => {
           const { username, positionX, positionY, positionZ, id } = user
 
           if (positionX && positionY && positionZ) {
             return (
-              <Html position={[positionX, positionY, positionZ]} key={id}>
-                <div>{username}</div>
-              </Html>
+              <NamePlate
+                positionX={positionX + 0.5}
+                positionY={positionY + 2.5}
+                positionZ={positionZ}
+                username={username}
+                key={id}
+              />
             )
           }
 
@@ -88,7 +117,7 @@ const WorldItems = () => {
         <BoxCollider position={[-0.7667139636867977, -0.5, -87.62388279411937]} args={[45, 3, 3]} visible={false} />
         <BoxCollider position={[0.7667139636867977, -0.5, -34.62388279411937]} args={[35, 3, 0.2]} visible={false} />
 
-        <SoccerTrophy  />
+        <SoccerTrophy />
 
         <SandModel />
 
