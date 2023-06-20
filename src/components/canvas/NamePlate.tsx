@@ -1,5 +1,4 @@
 import { Html } from '@react-three/drei'
-import { useState } from 'react'
 
 // 체력바 추가 시 타입추가
 type NamePlateType = {
@@ -13,7 +12,7 @@ type NamePlateType = {
 const NamePlate = ({ positionX, positionY, positionZ, username }: NamePlateType) => {
   return (
     <Html position={[positionX, positionY, positionZ]} as='div'>
-      <div className='text-white bg-black rounded-full p-[10px]'>{username}</div>
+      <div className='text-xs font-bold text-white bg-black rounded-full bg-opacity-50 p-[10px]'>{username}</div>
     </Html>
   )
 }
