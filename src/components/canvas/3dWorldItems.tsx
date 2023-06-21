@@ -17,12 +17,13 @@ import Player2Character from './characters/worldCharacters/Player2'
 import Player3Character from './characters/worldCharacters/Player3'
 import Player4Character from './characters/worldCharacters/Player4'
 import { Suspense, useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import SandModel from './SandModel'
 import SoccerTrophy from './SoccerTrophy'
 import ScreenModel from './ScreenModel'
 import NamePlate from './NamePlate'
+import ChatBubble from './ChatBubble'
 
 type User = {
   character: string
@@ -34,6 +35,10 @@ type User = {
   positionZ: number
   rotationZ: number
   username: string
+}
+
+interface Chat extends User {
+  chatMessage: string
 }
 
 const Loader = () => {
@@ -48,28 +53,33 @@ const Loader = () => {
 }
 
 const WorldItems = () => {
-  const [otherUserList, setOtherUserList] = useState([])
+  const [otherUserList, setOtherUserList] = useState<User[]>([])
+  const [chatList, setChatList] = useState<{ [key: string]: Chat }>({})
   const colyseusRoom = useRecoilValue(colyseusRoomState)
 
-
-
+  // move 이벤트
   useEffect(() => {
-   colyseusRoom.onMessage('move', () => {
-          // 나의 정보
-          const me = JSON.parse(localStorage.getItem('me'))
-          const myClientId = me.colyseusSessionId
-          // 나의 정보를 제외하고 다른 유저의 정보를 State로 지정함
-          setOtherUserList(
-            Array.from(colyseusRoom.state.players.$items.values()).filter((user: User) => {
-              if (user.id !== myClientId) {
-                return user
-              }
-            }),
-          )
-        })
+    colyseusRoom.onMessage('move', () => {
+      // 나의 정보
+      const me = JSON.parse(localStorage.getItem('me'))
+      const myClientId = me.colyseusSessionId
+      // 나의 정보를 제외하고 다른 유저의 정보를 State로 지정함
+      setOtherUserList(
+        Array.from(colyseusRoom.state.players.$items.values()).filter((user: User) => {
+          if (user.id !== myClientId) {
+            return user
+          }
+        }) as User[],
+      )
+    })
   }, [colyseusRoom])
 
-
+  // 채팅 이벤트
+  useEffect(() => {
+    colyseusRoom.onMessage('chat', (client) => {
+      setChatList({ ...chatList, [client.id]: client })
+    })
+  }, [chatList, colyseusRoom])
 
   return (
     <>
@@ -92,6 +102,25 @@ const WorldItems = () => {
           }
 
           return ''
+        })}
+
+        {/* 채팅 말풍선 */}
+        {otherUserList.map((user) => {
+          const { positionX, positionY, positionZ, id, username } = user
+          const chatMessage = chatList[id]?.chatMessage
+
+          if (positionX && positionY && positionZ && chatMessage) {
+            return (
+              <ChatBubble
+                positionX={positionX + 0.5}
+                positionY={positionY + 3.5}
+                positionZ={positionZ}
+                username={username}
+                text={chatMessage}
+                key={id}
+              />
+            )
+          }
         })}
         <Land></Land>
         <SoccerField></SoccerField>
