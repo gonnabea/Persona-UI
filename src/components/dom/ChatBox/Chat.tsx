@@ -72,9 +72,7 @@ const Chat = ({ isMobile }: ChatProps) => {
   const submitChatMesssage = () => {
     const message = getValues('chatValues.chat')
     if (message) {
-      
-        colyseusRoom.send('chat', message)
-      
+      colyseusRoom.send('chat', message)
 
       setValue('chatValues.chat', '')
       if (!isMobile) {
@@ -111,29 +109,26 @@ const Chat = ({ isMobile }: ChatProps) => {
 
   // get chat
   const getChatMessage = () => {
-        console.log(colyseusRoom)
-        colyseusRoom?.onMessage('chat', (chat) => {
-          setChatMessages((prevChat) => [...prevChat, chat])
-        })
+    console.log(colyseusRoom)
+    colyseusRoom?.onMessage('chat', (chat) => {
+      setChatMessages((prevChat) => [...prevChat, `${chat.username}: ${chat.chatMessage}`])
+    })
 
-        colyseusRoom?.onMessage('join', (user) => {
-          setChatMessages((prevChat) => [...prevChat, user.username + ' has joined'])
-        })
+    colyseusRoom?.onMessage('join', (user) => {
+      setChatMessages((prevChat) => [...prevChat, user.username + ' has joined'])
+    })
 
-        
-      
-      // .catch((error) => {
-      //   setChatMessages((prevMessages) => {
-      //     return [...prevMessages, '채팅서버 연결실패']
-      //   })
-      //   setChatHasError(true)
-      // })
+    // .catch((error) => {
+    //   setChatMessages((prevMessages) => {
+    //     return [...prevMessages, '채팅서버 연결실패']
+    //   })
+    //   setChatHasError(true)
+    // })
   }
 
   useEffect(() => {
-    
     getChatMessage()
-  },[colyseusRoom])
+  }, [colyseusRoom])
 
   // 채팅 갱신 됐을 때 스크롤 박스 아래로 내리기
   useEffect(() => {

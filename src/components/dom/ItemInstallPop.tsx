@@ -145,7 +145,7 @@ const ItemInstallPop = ({ itemName,  }) => {
 
         </div>
 
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <span>위치 조정</span>
             <div className='flex items-center justify-center'>
                 <span className='pr-2'>{`positionX: ${selectedItem ? selectedItem.position.x : 0}`}</span>
@@ -167,7 +167,7 @@ const ItemInstallPop = ({ itemName,  }) => {
                 <button onClick={() => minusPositionZ()}>-</button>
             </div>
 
-        </div>
+        </div> */}
 
         {/* <div>
             <span>회전</span>

@@ -1,6 +1,6 @@
 import { landClickPosState } from '@/recoil/landClickPos/atom'
 import { clone } from '@/utils/SkeletonUtils'
-import { useGLTF } from '@react-three/drei'
+import { TransformControls, useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useMemo, useRef, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
@@ -76,6 +76,7 @@ function SandModel(props) {
 
   return (
     <>
+    
       {/* <primitive
   
         onPointerOver={() => {
@@ -110,8 +111,9 @@ function SandModel(props) {
           { 
             if(index <= landClickIndex) {
 
-                return <primitive
-                key={index}
+                return <TransformControls key={index} object={selectedItem} mode="translate">
+                <primitive
+                
                 // onClick={(e) => findPosition(e)}
                 onPointerOver={() => {
                     document.body.style.cursor = "pointer"
@@ -124,7 +126,7 @@ function SandModel(props) {
                   setSelectedItem((e.eventObject))
                 }}
                 
-                position={[blockPositions[index]?.x.toFixed(0), blockPositions[index]?.y.toFixed(0), blockPositions[index]?.z.toFixed(0)]}
+                position={[parseFloat(blockPositions[index]?.x.toFixed(0)), parseFloat(blockPositions[index]?.y.toFixed(0)), parseFloat(blockPositions[index]?.z.toFixed(0))]}
                 scale={[1,1,1]}
                 rotation={[0,0,0]}
                 object={cloned}
@@ -134,18 +136,19 @@ function SandModel(props) {
                 }}
                 // visible={false}
             />
+            </TransformControls>
             }
         }
           ) 
         
       }
 
-        <Indicator 
+        {/* <Indicator 
                 position={ selectedItem ? [
                     parseFloat(selectedItem.position.x), parseFloat(selectedItem.position.y) +4, parseFloat(selectedItem.position.z)
                 ] : null} 
                 visible={true}
-            />
+            /> */}
       {/* <directionalLight position={[0, 0, 0]} intensity={10} target={targetObject.current} /> */}
     </>
   )
