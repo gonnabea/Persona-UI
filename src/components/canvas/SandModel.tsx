@@ -29,6 +29,8 @@ function SandModel(props) {
 
   const [blockPositions, setBlockPositions] = useState([]);
 
+  const justCreatedBlock = useRef();
+
 
   const clonedArr = [];
 
@@ -53,15 +55,17 @@ function SandModel(props) {
 
 
         // setLandClickPos(clickedPosition);
-    setLandClickIndex(landClickIndex + 1)
+        
+        
+        setBlockPositions([...blockPositions, landClickPos])
+        
+        
+        setSelectedItem(clonedArr[landClickIndex])
+        setLandClickIndex(landClickIndex + 1)
 
+  
 
-    setBlockPositions([...blockPositions, landClickPos])
-
-    
-  setSelectedItem(clonedArr[landClickIndex])
-
-
+  console.log(selectedItem)
   }, [landClickPos])
 
   useFrame(({ clock }) => {
@@ -138,9 +142,9 @@ function SandModel(props) {
 
         <Indicator 
                 position={ selectedItem ? [
-                    parseInt(selectedItem.position.x), parseInt(selectedItem.position.y) +4, parseInt(selectedItem.position.z)
+                    parseFloat(selectedItem.position.x), parseFloat(selectedItem.position.y) +4, parseFloat(selectedItem.position.z)
                 ] : null} 
-                
+                visible={true}
             />
       {/* <directionalLight position={[0, 0, 0]} intensity={10} target={targetObject.current} /> */}
     </>

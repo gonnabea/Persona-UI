@@ -13,6 +13,7 @@ export default function Scene({ children, ...props }) {
   useEffect(() => {
     setTimeout(() => {
       setDirLightIntensity(1)
+      
     }, 0)
     // setTimeout(() => {
     //   directionalLight.current['intensity'] = 11;
@@ -25,7 +26,7 @@ export default function Scene({ children, ...props }) {
 
   // Everything defined in here will persist between route changes, only children are swapped
   return (
-    <Canvas {...props} ref={sceneRef} style={{ zIndex: 1 }}>
+    <Canvas  {...props} ref={sceneRef} style={{ zIndex: 1 }}>
       <Suspense>
         {children}
         <ambientLight intensity={0.6} />

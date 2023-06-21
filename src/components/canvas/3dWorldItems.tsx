@@ -54,7 +54,7 @@ const WorldItems = () => {
 
 
   useEffect(() => {
-   colyseusRoom.onMessage('move', () => {
+   colyseusRoom?.onMessage('move', () => {
           // 나의 정보
           const me = JSON.parse(localStorage.getItem('me'))
           const myClientId = me.colyseusSessionId
@@ -66,7 +66,7 @@ const WorldItems = () => {
               }
             }),
           )
-        })
+    })
   }, [colyseusRoom])
 
 
