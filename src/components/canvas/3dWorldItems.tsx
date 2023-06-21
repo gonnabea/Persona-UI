@@ -17,7 +17,7 @@ import Player2Character from './characters/worldCharacters/Player2'
 import Player3Character from './characters/worldCharacters/Player3'
 import Player4Character from './characters/worldCharacters/Player4'
 import { Suspense, useEffect, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import SandModel from './SandModel'
 import SoccerTrophy from './SoccerTrophy'
@@ -56,12 +56,10 @@ const WorldItems = () => {
   const [otherUserList, setOtherUserList] = useState<User[]>([])
   const [chatList, setChatList] = useState<{ [key: string]: Chat }>({})
   const colyseusRoom = useRecoilValue(colyseusRoomState)
-  
-  const [updateIndex, forceUpdateIndex] = useState(0);
-  
-  // move 이벤트
+
   useEffect(() => {
-    colyseusRoom.onMessage('move', () => {
+    // move 이벤트
+    colyseusRoom?.onMessage('move', () => {
       // 나의 정보
       const me = JSON.parse(localStorage.getItem('me'))
       const myClientId = me.colyseusSessionId
@@ -74,19 +72,13 @@ const WorldItems = () => {
         }) as User[],
       )
     })
-  }, [colyseusRoom])
-
-  // 채팅 이벤트
-  useEffect(() => {
-    colyseusRoom.onMessage('chat', (client) => {
-      setChatList({ ...chatList, [client.id]: client })
-      forceUpdateIndex(updateIndex + 1)
+    // 채팅 이벤트
+    colyseusRoom?.onMessage('chat', (client) => {
+      setChatList((prevState) => {
+        return { ...prevState, [client.id]: client }
+      })
     })
   }, [colyseusRoom])
-
-  useEffect(() => {
-
-  }, [updateIndex])
 
   return (
     <>
