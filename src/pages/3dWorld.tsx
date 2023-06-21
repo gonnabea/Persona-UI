@@ -195,7 +195,7 @@ export default function Page(pageProps) {
   }, [colyseusRoom])
 
   return (
-    <>
+    <div>
       {/* 모바일 채팅버튼 */}
       {pageProps.isMobile ? (
         <Button
@@ -276,7 +276,7 @@ export default function Page(pageProps) {
         }
       /> */}
       </div>
-    </>
+    </div>
   )
 }
 
