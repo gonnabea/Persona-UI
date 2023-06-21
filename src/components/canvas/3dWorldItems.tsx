@@ -57,9 +57,9 @@ const WorldItems = () => {
   const [chatList, setChatList] = useState<{ [key: string]: Chat }>({})
   const colyseusRoom = useRecoilValue(colyseusRoomState)
 
-  // move 이벤트
   useEffect(() => {
-    colyseusRoom.onMessage('move', () => {
+    // move 이벤트
+    colyseusRoom?.onMessage('move', () => {
       // 나의 정보
       const me = JSON.parse(localStorage.getItem('me'))
       const myClientId = me.colyseusSessionId
@@ -72,14 +72,13 @@ const WorldItems = () => {
         }) as User[],
       )
     })
-  }, [colyseusRoom])
-
-  // 채팅 이벤트
-  useEffect(() => {
-    colyseusRoom.onMessage('chat', (client) => {
-      setChatList({ ...chatList, [client.id]: client })
+    // 채팅 이벤트
+    colyseusRoom?.onMessage('chat', (client) => {
+      setChatList((prevState) => {
+        return { ...prevState, [client.id]: client }
+      })
     })
-  }, [chatList, colyseusRoom])
+  }, [colyseusRoom])
 
   return (
     <>
