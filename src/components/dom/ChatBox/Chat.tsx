@@ -55,6 +55,7 @@ const Chat = ({ isMobile }: ChatProps) => {
   const [chatMessages, setChatMessages] = useState<string[]>([])
   const [chatHasError, setChatHasError] = useState<boolean>(false)
 
+  const chatContainerRef = useRef<HTMLDivElement>(null)
   const chatBoxRef = useRef<HTMLDivElement>(null)
   const chatInputRef = useRef<HTMLInputElement>(null)
 
@@ -137,6 +138,15 @@ const Chat = ({ isMobile }: ChatProps) => {
     }
   }, [chatMessages])
 
+  // 채팅 박스 우클릭 방지
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.addEventListener('contextmenu', (event) => {
+        event.preventDefault()
+      })
+    }
+  }, [])
+
   if (isMobile && !chatEnabeld) return null
 
   return (
@@ -145,7 +155,8 @@ const Chat = ({ isMobile }: ChatProps) => {
           absolute
           z-[20]
           ${chatContainerStyles[isMobile ? 'mobile' : 'pc']}
-        `}>
+        `}
+      ref={chatContainerRef}>
       <form onSubmit={handleSubmit(submitChatMesssage)} className={isMobile ? 'h-full flex flex-col px-[10px]' : ''}>
         {isMobile ? (
           <div className='flex w-full pt-[20px] pr-[10px] lg:pt-[34px] lg:pr-[30px]'>
