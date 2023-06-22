@@ -25,7 +25,7 @@ const ChatBubble = ({ positionX, positionY, positionZ, text, username }: ChatBub
     }
   }, [text])
 
-  if (hidden) return ''
+  if (hidden) return null
 
   return (
     <Html position={[positionX, positionY, positionZ]} as='div'>

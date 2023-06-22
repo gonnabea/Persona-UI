@@ -13,6 +13,7 @@ import { colyseusPlayersState } from '@/recoil/colyseusPlayers/atom'
 import { clone as SkeletonUtilsClone } from '../../../utils/SkeletonUtils'
 import { enterSoccerIndexState } from '@/recoil/enterSoccer/atom'
 import NamePlate from '../NamePlate'
+import ChatBubble from '../ChatBubble'
 
 // GLTF Actions Type
 type ActionName = 'run'
@@ -38,6 +39,22 @@ interface propTypes {
   rotationZ?: number
 }
 
+type User = {
+  character: string
+  email: string
+  id: string
+  isAttacking: boolean
+  positionX: number
+  positionY: number
+  positionZ: number
+  rotationZ: number
+  username: string
+}
+
+interface Chat extends User {
+  chatMessage: string
+}
+
 export function MyCharacter(props: propTypes) {
   const amyCharacterRef = useRef<THREE.Group>()
   const mutantCharacterRef = useRef<THREE.Group>()
@@ -48,6 +65,7 @@ export function MyCharacter(props: propTypes) {
   const louiseGroupRef = useRef<THREE.Group>()
 
   const [character, setCharacter] = useState('mutant')
+  const [myChat, setMyChat] = useState<Chat>({})
 
   // const { nodes: amyNodes, materials: amyMaterials, animations: amyAnimations, scene: amyScene } = useGLTF(`${process.env.NEXT_PUBLIC_API_URL}/file/downloadCharacters?fileName=player1/Amy.glb`)
   const {
@@ -253,8 +271,28 @@ export function MyCharacter(props: propTypes) {
     }
   })
 
+  // 내 최근 채팅 가져오기
+  useEffect(() => {
+    colyseusRoom?.onMessage('chat', (client: Chat) => {
+      setMyChat(() => {
+        if (client.id === me.colyseusSessionId) return client
+      })
+    })
+  }, [colyseusRoom])
+
   return (
     <>
+      {myChat?.chatMessage ? (
+        <ChatBubble
+          positionX={positionX + 0.2}
+          positionY={positionY + 2.5}
+          positionZ={positionZ}
+          username={me.data.username}
+          text={myChat?.chatMessage}
+        />
+      ) : (
+        ''
+      )}
       <NamePlate
         positionX={positionX + 0.2}
         positionY={positionY + 2}
