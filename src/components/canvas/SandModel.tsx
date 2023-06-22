@@ -126,7 +126,7 @@ function SandModel(props) {
                   setSelectedItem((e.eventObject))
                 }}
                 
-                position={[parseFloat(blockPositions[index]?.x.toFixed(0)), parseFloat(blockPositions[index]?.y.toFixed(0)), parseFloat(blockPositions[index]?.z.toFixed(0))]}
+                position={[parseFloat(blockPositions[index]?.x.toFixed(0)), 0, parseFloat(blockPositions[index]?.z.toFixed(0))]}
                 scale={[1,1,1]}
                 rotation={[0,0,0]}
                 object={cloned}

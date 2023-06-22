@@ -284,7 +284,7 @@ export function MyCharacter(props: propTypes) {
     <>
       {myChat?.chatMessage ? (
         <ChatBubble
-          positionX={positionX + 0.2}
+          positionX={positionX}
           positionY={positionY + 2.5}
           positionZ={positionZ}
           username={me.data.username}

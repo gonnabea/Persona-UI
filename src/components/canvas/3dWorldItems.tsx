@@ -122,6 +122,7 @@ const WorldItems = () => {
             )
           }
         })}
+        
         <Land></Land>
         <SoccerField></SoccerField>
         <MyCharacter />

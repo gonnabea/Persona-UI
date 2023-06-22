@@ -29,8 +29,12 @@ const ChatBubble = ({ positionX, positionY, positionZ, text, username }: ChatBub
 
   return (
     <Html position={[positionX, positionY, positionZ]} as='div'>
-      <div className='w-auto text-xs text-white border-white rounded-full bg-primary-100 bg-opacity-70 p-[10px] break-keep'>
-        {username}:{text}
+      <div className='flex items-center text-xs text-white border-2 border-white rounded-full bg-primary-100 bg-opacity-70 p-[10px] break-keep'>
+        <span className='pr-2 font-semibold text-white'>
+          {username}: 
+          </span>
+          
+          {text}
       </div>
     </Html>
   )

@@ -1,5 +1,5 @@
 import { landClickPosState } from '@/recoil/landClickPos/atom'
-import { useGLTF } from '@react-three/drei'
+import { OrbitControls, Sky, useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useRef } from 'react'
 import { useRecoilState } from 'recoil'
@@ -52,6 +52,7 @@ function Land(props) {
 
   return (
     <Suspense fallback={null}>
+      <Sky distance={450000} sunPosition={[0, 1, 0]} inclination={0} azimuth={0.25} {...props} />
       <primitive
         onContextMenu={(e) => findPosition(e)}
         position={[0,48,0]}
@@ -63,6 +64,7 @@ function Land(props) {
         }}
         // visible={false}
       />
+      {/* <OrbitControls /> */}
       {/* <directionalLight position={[0, 0, 0]} intensity={10} target={targetObject.current} /> */}
     </Suspense>
   )

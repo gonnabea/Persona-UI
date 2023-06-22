@@ -73,7 +73,7 @@ const Chat = ({ isMobile }: ChatProps) => {
   const submitChatMesssage = () => {
     const message = getValues('chatValues.chat')
     if (message) {
-      colyseusRoom.send('chat', message)
+      colyseusRoom?.send('chat', message)
 
       setValue('chatValues.chat', '')
       if (!isMobile) {
