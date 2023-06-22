@@ -1,4 +1,4 @@
-import { useAnimations, useGLTF } from '@react-three/drei'
+import { OrbitControls, useAnimations, useGLTF, useKeyboardControls } from '@react-three/drei'
 import { useFrame, useGraph, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import ThirdPersonCamera from '../ThirdPersonCam'
@@ -67,6 +67,8 @@ export function MyCharacter(props: propTypes) {
   const [character, setCharacter] = useState('mutant')
   const [myChat, setMyChat] = useState<Chat>({})
 
+  const [, get] = useKeyboardControls()
+
   // const { nodes: amyNodes, materials: amyMaterials, animations: amyAnimations, scene: amyScene } = useGLTF(`${process.env.NEXT_PUBLIC_API_URL}/file/downloadCharacters?fileName=player1/Amy.glb`)
   const {
     nodes: amyNodes,
@@ -109,7 +111,9 @@ export function MyCharacter(props: propTypes) {
   const { scene } = useThree()
 
   // 캐릭터 이동 구현
-  const { forward, backward, left, right, jump } = useCharacterControl()
+  // const { forward, backward, left, right, jump } = useCharacterControl()
+  const { forward, backward, left, right, jump } = get()
+  
   const [positionX, setPositionX] = useState(-0.3)
   const [positionY, setPositionY] = useState(0.75)
   const [positionZ, setPositionZ] = useState(5)
@@ -312,18 +316,19 @@ export function MyCharacter(props: propTypes) {
             onPointerOut={() => {
               document.body.style.cursor = 'default'
             }}>
-            <ThirdPersonCamera
-              positionX={positionX}
-              positionY={positionY}
-              positionZ={positionZ}
-              rotationZ={rotationZ}
-            />
+        
             <primitive object={amyNodes.mixamorigHips} />
             <skinnedMesh
               geometry={amyNodes.Ch46.geometry}
               material={amyMaterials['Ch46_body.001']}
               skeleton={amyNodes.Ch46.skeleton}
             />
+            {/* <ThirdPersonCamera
+              positionX={positionX}
+              positionY={positionY}
+              positionZ={positionZ}
+              rotationZ={rotationZ}
+            /> */}
           </group>
         </group>
       ) : null}
@@ -335,12 +340,7 @@ export function MyCharacter(props: propTypes) {
             rotation={[Math.PI / 2, 0, 0]}
             position={[-0.3, 6, 5]}
             ref={mutantCharacterRef}>
-            <ThirdPersonCamera
-              positionX={positionX}
-              positionY={positionY}
-              positionZ={positionZ}
-              rotationZ={rotationZ}
-            />
+       
             <primitive object={mutantNodes.mixamorigHips} />
             <skinnedMesh
               material={mutantMaterials.mutant_M}
@@ -360,12 +360,12 @@ export function MyCharacter(props: propTypes) {
             position={[-0.3, 6, 5]}
             name='Scene'>
             <group name='Armature'>
-              <ThirdPersonCamera
+              {/* <ThirdPersonCamera
                 positionX={positionX}
                 positionY={positionY}
                 positionZ={positionZ}
                 rotationZ={rotationZ}
-              />
+              /> */}
               <primitive object={louiseNodes.mixamorig8Hips} />
               <skinnedMesh
                 name='Ch07_Body'
@@ -413,6 +413,8 @@ export function MyCharacter(props: propTypes) {
           </group>
         </group>
       ) : null}
+      
+      <OrbitControls target={new Vector3(positionX, positionY + 2, positionZ)} maxDistance={5} minDistance={5} enableZoom={false} enablePan={false}  />
 
       {/* @ts-ignore */}
 

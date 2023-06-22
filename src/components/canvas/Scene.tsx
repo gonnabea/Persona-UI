@@ -1,3 +1,4 @@
+import { KeyboardControls } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { WebGPU } from './WebGPU'
@@ -26,6 +27,14 @@ export default function Scene({ children, ...props }) {
 
   // Everything defined in here will persist between route changes, only children are swapped
   return (
+        <KeyboardControls
+      map={[
+        { name: "forward", keys: ["ArrowUp", "w", "W"] },
+        { name: "backward", keys: ["ArrowDown", "s", "S"] },
+        { name: "left", keys: ["ArrowLeft", "a", "A"] },
+        { name: "right", keys: ["ArrowRight", "d", "D"] },
+        { name: "jump", keys: ["Space"] },
+      ]}>
     <Canvas  {...props} ref={sceneRef} style={{ zIndex: 1 }}>
       <Suspense>
         {children}
@@ -40,5 +49,6 @@ export default function Scene({ children, ...props }) {
         
       </Suspense>
     </Canvas>
+    </KeyboardControls>
   )
 }
