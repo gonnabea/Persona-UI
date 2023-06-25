@@ -111,8 +111,8 @@ export function MyCharacter(props: propTypes) {
   const { scene } = useThree()
 
   // 캐릭터 이동 구현
-  // const { forward, backward, left, right, jump } = useCharacterControl()
-  const { forward, backward, left, right, jump } = get()
+  const { forward, backward, left, right, jump } = useCharacterControl()
+  // const { forward, backward, left, right, jump } = get()
   
   const [positionX, setPositionX] = useState(-0.3)
   const [positionY, setPositionY] = useState(0.75)

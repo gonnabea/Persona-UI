@@ -122,12 +122,13 @@ function SandModel(props) {
                     document.body.style.cursor = "default"
                 }}
                 onClick={(e) => {
+                  e.stopPropagation()
                   console.log(e.eventObject)
                   setSelectedItem((e.eventObject))
                 }}
                 
                 position={[parseFloat(blockPositions[index]?.x.toFixed(0)), 0, parseFloat(blockPositions[index]?.z.toFixed(0))]}
-                scale={[1,1,1]}
+                scale={[1,1,0.5]}
                 rotation={[0,0,0]}
                 object={cloned}
                 modelInfo={{

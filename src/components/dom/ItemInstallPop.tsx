@@ -110,38 +110,38 @@ const ItemInstallPop = ({ itemName,  }) => {
         <div className="flex flex-col">
             <span>크기 조절</span>
             <div className='flex items-center justify-center'>
-                <span className='pr-2'>{`scaleX: ${selectedItem?.scale.x}`}</span>
-                <input type='range' min={0} max={20} name="scaleX" value={selectedItem ? selectedItem.scale.x : null}  onInput={(e) => handleScaleX(e)} />
+                <span className='pr-2'>{`너비: ${selectedItem?.scale.x}`}</span>
+                <input type='range' step={0.5} min={0.5} max={20} name="scaleX" value={selectedItem ? selectedItem.scale.x : null}  onInput={(e) => handleScaleX(e)} />
             </div>
 
             <div className='flex items-center justify-center'>
-                <span className='pr-2'>{`scaleY: ${selectedItem?.scale.y}`}</span>
-                <input type='range' min={0} max={10} name="scaleY" value={selectedItem ? selectedItem.scale.y : null}  onInput={(e) => handleScaleY(e)} />
+                <span className='pr-2'>{`높이: ${selectedItem?.scale.y}`}</span>
+                <input type='range' step={0.5} min={0.5} max={10} name="scaleY" value={selectedItem ? selectedItem.scale.y : null}  onInput={(e) => handleScaleY(e)} />
             </div>
 
-            <div className='flex items-center justify-center'>
+            {/* <div className='flex items-center justify-center'>
                 <span className='pr-2'>{`scaleZ: ${selectedItem?.scale.z}`}</span>
-                <input type='range' min={0} max={20} name="scaleZ" value={selectedItem ? selectedItem.scale.z : null}  onInput={(e) => handleScaleZ(e)} />
-            </div>
+                <input type='range' step={0.5} min={0.5} max={0.5} name="scaleZ" value={selectedItem ? selectedItem.scale.z : null}  onInput={(e) => handleScaleZ(e)} />
+            </div> */}
 
         </div>
 
         <div className="flex flex-col">
             <span>회전 조절</span>
             <div className='flex items-center justify-center'>
-                <span className='pr-2'>{`rotationX: ${selectedItem?.rotation.x}`}</span>
-                <input step={0.1} type='range' min={0} max={3.141592} name="rotationX" value={selectedItem ? selectedItem.rotation.x : null}  onInput={(e) => handleRotationX(e)} />
+                <span className='pr-2'>{`가로축: ${selectedItem?.rotation.x}`}</span>
+                <input step={3.141592 / 8} type='range' min={0} max={3.141592} name="rotationX" value={selectedItem ? selectedItem.rotation.x : null}  onInput={(e) => handleRotationX(e)} />
             </div>
 
             <div className='flex items-center justify-center'>
-                <span className='pr-2'>{`rotationY: ${selectedItem?.rotation.y}`}</span>
-                <input step={0.1} type='range' min={0} max={3.141592} name="rotationY" value={selectedItem ? selectedItem.rotation.y : null}  onInput={(e) => handleRotationY(e)} />
+                <span className='pr-2'>{`세로축: ${selectedItem?.rotation.y}`}</span>
+                <input step={3.141592 / 8} type='range' min={0} max={3.141592} name="rotationY" value={selectedItem ? selectedItem.rotation.y : null}  onInput={(e) => handleRotationY(e)} />
             </div>
 
-            <div className='flex items-center justify-center'>
+            {/* <div className='flex items-center justify-center'>
                 <span className='pr-2'>{`rotationZ: ${selectedItem?.rotation.z}`}</span>
-                <input step={0.1} type='range' min={0} max={3.141592} name="rotationZ" value={selectedItem ? selectedItem.rotation.z : null}  onInput={(e) => handleRotationZ(e)} />
-            </div>
+                <input step={3.141592 / 8} type='range' min={0} max={3.141592} name="rotationZ" value={selectedItem ? selectedItem.rotation.z : null}  onInput={(e) => handleRotationZ(e)} />
+            </div> */}
 
         </div>
 

@@ -214,7 +214,7 @@ export default function Page(pageProps) {
         <Kebab className='fill-primary-200' />
       </Button>
       <BGM />
-      <ItemInstallPop itemName={'모래 블록'} />
+      <ItemInstallPop itemName={'모래벽'} />
       <Chat isMobile={pageProps.isMobile} />
       {/* 모바일 조이스틱 */}
       {pageProps.isMobile ? (
