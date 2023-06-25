@@ -29,12 +29,17 @@ function Land(props) {
   const scene = useThree((state) => state.scene)
 
   const findPosition = (e) => {
-    // 마우스 클릭한 지점 위치 얻기 (랜드 모델 한정)
+    // 마우스 클릭한 지점 위치 얻기
     console.log(e)
 
-    if(raycaster.intersectObjects(scene.children)[0].object.name === 'ground1') {
-      console.log(raycaster.intersectObjects(scene.children)[0])
-      const clickedPosition = raycaster.intersectObjects(scene.children)[0]?.point
+    e.stopPropagation()
+
+    if(raycaster.intersectObjects(scene.children)[0]) {
+      alert(raycaster.intersectObjects(scene.children)[0].object.name)
+
+      const groundTarget = raycaster.intersectObjects(scene.children).find(target => target.object.name === 'ground1')
+      console.log(groundTarget)
+      const clickedPosition = groundTarget.point
   
       console.log(clickedPosition)
   

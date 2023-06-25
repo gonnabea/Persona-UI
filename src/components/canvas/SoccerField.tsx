@@ -1,6 +1,6 @@
 import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
-import { Suspense, useRef } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 
 function SoccerField(props) {
   const group = useRef()
@@ -15,6 +15,20 @@ function SoccerField(props) {
     
 // })
 
+    useEffect(() => {
+        const clickedPosition = raycaster.intersectObjects(scene.children)[0]?.point
+
+
+
+          Object.values(glb.materials).forEach(material => {
+    
+    material.metalness = 0.5;
+    material.roughness = 0.2;
+
+  })
+
+}, [])
+
   const raycaster = useThree((state) => state.raycaster)
   const scene = useThree((state) => state.scene)
 
@@ -26,6 +40,8 @@ function SoccerField(props) {
 
     //   console.log(clickedPosition)
   }
+
+
 
   useFrame(({ clock }) => {
     const a = clock.getElapsedTime()

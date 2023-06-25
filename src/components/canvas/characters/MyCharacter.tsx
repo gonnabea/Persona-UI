@@ -132,6 +132,7 @@ export function MyCharacter(props: propTypes) {
     mass: 1,
     type: 'Dynamic',
     args: [0.4],
+    position: [10,0,0],
     onCollideBegin: (e) => {
       if (e.body.name === 'ground1') {
         console.log('바닥과 충돌')
