@@ -272,7 +272,7 @@ export function MyCharacter(props: propTypes) {
       // mutantCharacterRef.current.rotation.z < 0 ? (mutantCharacterRef.current.rotation.z += Number(forward) / 5) : null
 
     if(forward || backward || left || right)
-      amyCharacterRef.current.rotation.z = -(Math.atan2(direction.x, direction.z))
+      mutantCharacterRef.current.rotation.z = -(Math.atan2(direction.x, direction.z))
 
       api.velocity.set(direction.x, 0, direction.z)
       mesh.current.getWorldPosition(mutantCharacterRef.current.position)
@@ -295,7 +295,7 @@ export function MyCharacter(props: propTypes) {
       // louiseCharacterRef.current.rotation.z < 0 ? (louiseCharacterRef.current.rotation.z += Number(forward) / 5) : null
 
       if(forward || backward || left || right)
-        amyCharacterRef.current.rotation.z = -(Math.atan2(direction.x, direction.z))
+        louiseCharacterRef.current.rotation.z = -(Math.atan2(direction.x, direction.z))
 
       api.velocity.set(direction.x, 0, direction.z)
       mesh.current.getWorldPosition(louiseCharacterRef.current.position)
