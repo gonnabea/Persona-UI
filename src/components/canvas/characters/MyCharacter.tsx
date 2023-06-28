@@ -261,8 +261,8 @@ export function MyCharacter(props: propTypes) {
 
     if (character === 'mutant') {
       setMutantAnimationStatus()
-      frontVector.set(0, 0, Number(forward) - Number(backward))
-      sideVector.set(Number(right) - Number(left), 0, 0)
+       frontVector.set(0, 0, Number(backward) - Number(forward))
+      sideVector.set(Number(left) - Number(right), 0, 0)
       direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED).applyEuler(cameraRef.current.object.rotation)
       // mutantCharacterRef.current.rotation.z < 1.7 ? (mutantCharacterRef.current.rotation.z += Number(right) / 5) : null
       // mutantCharacterRef.current.rotation.z > -1.7 ? (mutantCharacterRef.current.rotation.z -= Number(left) / 5) : null
@@ -284,8 +284,8 @@ export function MyCharacter(props: propTypes) {
 
     if (character === 'louise') {
       setLouiseAnimationStatus()
-      frontVector.set(0, 0, Number(forward) - Number(backward))
-      sideVector.set(Number(right) - Number(left), 0, 0)
+       frontVector.set(0, 0, Number(backward) - Number(forward))
+      sideVector.set(Number(left) - Number(right), 0, 0)
       direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED).applyEuler(cameraRef.current.object.rotation)
       // louiseCharacterRef.current.rotation.z < 1.7 ? (louiseCharacterRef.current.rotation.z += Number(right) / 5) : null
       // louiseCharacterRef.current.rotation.z > -1.7 ? (louiseCharacterRef.current.rotation.z -= Number(left) / 5) : null
