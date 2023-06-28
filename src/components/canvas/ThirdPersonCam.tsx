@@ -1,5 +1,6 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useState } from "react";
+import { Vector3 } from "three";
 import { OrbitControls } from "three-stdlib";
 
 
@@ -8,8 +9,10 @@ const ThirdPersonCamera = ({ positionX, positionY, positionZ, rotationZ }) => {
     const [time, setTime] = useState();
 
     
+    
     useEffect(() => {
         const controls = new OrbitControls(camera, gl.domElement);
+        
         
         controls.enabled = true
         controls.enableRotate = true

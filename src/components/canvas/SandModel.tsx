@@ -7,6 +7,9 @@ import { useRecoilState } from 'recoil'
 import Indicator from "./Indicator"
 import { selectedItemState } from '@/recoil/selectedItem/atom'
 import { useBox } from '@react-three/cannon'
+import { BoxCollider } from './Colliders'
+import { isEditModeState } from '@/recoil/isEdisMode/atom'
+import { Vector3 } from 'three'
 
 
 function SandModel(props) {
@@ -25,6 +28,7 @@ function SandModel(props) {
 
   const [landClickPos, setLandClickPos] = useRecoilState(landClickPosState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
+  const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
 
   const [landClickIndex, setLandClickIndex] = useState(0);
 
@@ -35,7 +39,24 @@ function SandModel(props) {
 
   const boxColliders = [];
 
+  const useBoxTest = useBox(() => ({
+    mass: 1
+  }))
+
+  console.log('useBoxTest:   ',useBoxTest)
+
+  function disposeMesh(mesh) {
+    if(mesh) {
+      scene.remove(mesh);
+      mesh.geometry.dispose();
+      mesh.material.dispose();
+      mesh = undefined; //clear any reference for it to be able to garbage collected
+
+    }
+}
+
   for(let i=0; i<200; i++) {
+
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const cloned = useMemo(() => clone(glb.scene), [scene])
 
@@ -44,19 +65,28 @@ function SandModel(props) {
       mass: 1,
           type: 'Static',
       rotation: [0, 0, 0], 
-      position: [cloned.position.x,cloned.position.y,cloned.position.z] , args: [1,1,0.5], name: 'wall_collider' + i,
+      position: [0,0,0] , args: [1,1,0.5],
       
-      onCollide: () => {
+      onCollide: (e) => {
+        console.log(e)
+        e.target.scale.set(5,5,5)
+        e.target.visible = true
+        e.target.updateMatrix()
+       
 
-      }
+      },
+      
     }))
 
     clonedArr.push(cloned)
-    boxColliders.push({mesh: mesh.current, api})
+    boxColliders.push({mesh: mesh, api})
 
-    
+ 
+
  
   }
+
+  
 
 
   useEffect(() => {
@@ -79,7 +109,7 @@ function SandModel(props) {
         setSelectedItem(clonedArr[landClickIndex])
         setLandClickIndex(landClickIndex + 1)
 
-  
+
 
   console.log(selectedItem)
   }, [landClickPos])
@@ -128,11 +158,19 @@ function SandModel(props) {
             
             if(index <= landClickIndex) {
 
-                return <TransformControls onObjectChange={(e) => {
-
+                return <>
+                <TransformControls 
+                
+                onPointerOver={(e) => {
                   boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)
-                  boxColliders[index].mesh.position.set(cloned.position.x, cloned.position.y, cloned.position.z)
-                  boxColliders[index].mesh.scale.set(Number(selectedItem.scale.x), Number(selectedItem.scale.y), Number(selectedItem.scale.z))
+
+                }}
+                onObjectChange={(e) => {
+
+                  
+              
+                  boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)
+              
 
                   console.log(boxColliders[index].mesh)
 
@@ -140,9 +178,9 @@ function SandModel(props) {
 
                   // console.log(selectedItem.scale)
                   // boxColliders[index].mesh.scale.set(Number(selectedItem.scale.x) ,selectedItem.scale.y, selectedItem.scale.z)
-                  boxColliders[index].api.scaleOverride([Number(selectedItem.scale.x), Number(selectedItem.scale.y), Number(selectedItem.scale.z)])
+                  // boxColliders[index].api.scaleOverride([Number(selectedItem.scale.x), Number(selectedItem.scale.y), Number(selectedItem.scale.z)])
                   // console.log(boxColliders[index].api)
-                  boxColliders[index].api.wakeUp()
+                  // boxColliders[index].api.wakeUp()
            
                   }} key={index} object={selectedItem} mode="translate">
                 <primitive
@@ -150,15 +188,29 @@ function SandModel(props) {
                 // onClick={(e) => findPosition(e)}
                 onPointerOver={() => {
                     document.body.style.cursor = "pointer"
+                  boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)
+             
+                  boxColliders[index].mesh.current.position.setX(cloned.position.x)
+                  boxColliders[index].mesh.current.position.setY(cloned.position.y)
+                  boxColliders[index].mesh.current.position.setZ(cloned.position.z)
+
+
                     
                 }}
+                
                 onPointerOut={() => {
                     document.body.style.cursor = "default"
                 }}
+
                 onClick={(e) => {
                   e.stopPropagation()
                   console.log(e.eventObject)
                   setSelectedItem((e.eventObject))
+                  boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)
+                
+                  boxColliders[index].mesh.current.position.setX(cloned.position.x)
+                  boxColliders[index].mesh.current.position.setY(cloned.position.y)
+                  boxColliders[index].mesh.current.position.setZ(cloned.position.z)
                   
                 }}
 
@@ -176,16 +228,17 @@ function SandModel(props) {
                 // visible={false}
             />
             
-              <mesh ref={boxColliders[index].mesh} visible={true} position={boxColliders[index].api.position} >
+            </TransformControls>
+            </>
+            }
+              <mesh ref={boxColliders[index].mesh} visible={true} >
                 <boxGeometry 
                 // args={clonedArr[index]} 
                   
                   args={[1,1,0.5]}
                 />
-                <meshStandardMaterial color="orange" />
+                <meshStandardMaterial color="orange" visible={true} />
             </mesh>
-            </TransformControls>
-            }
         
         }
           ) 

@@ -64,6 +64,8 @@ export function MyCharacter(props: propTypes) {
   const mutantGroupRef = useRef<THREE.Group>()
   const louiseGroupRef = useRef<THREE.Group>()
 
+  const cameraRef = useRef()
+
   const [character, setCharacter] = useState('mutant')
   const [myChat, setMyChat] = useState<Chat>({})
 
@@ -195,7 +197,7 @@ export function MyCharacter(props: propTypes) {
 
   const me = JSON.parse(localStorage.getItem('me'))
 
-  useFrame(() => {
+  useFrame((state) => {
     // let characterRef
 
     // if (characterRef === 'amy')
@@ -205,17 +207,51 @@ export function MyCharacter(props: propTypes) {
     // if (characterRef === 'louise')
     //   characterRef = louiseCharacterRef;
 
+    console.log(cameraRef.current)
+
     if (character === 'amy') {
       setAmyAnimationStatus()
 
-      frontVector.set(0, 0, Number(forward) - Number(backward))
-      sideVector.set(Number(right) - Number(left), 0, 0)
-      direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED)
-      amyCharacterRef.current.rotation.z < 1.7 ? (amyCharacterRef.current.rotation.z += Number(right) / 5) : null
-      amyCharacterRef.current.rotation.z > -1.7 ? (amyCharacterRef.current.rotation.z -= Number(left) / 5) : null
-      amyCharacterRef.current.rotation.z > -3.4 ? (amyCharacterRef.current.rotation.z -= Number(backward) / 5) : null
-      amyCharacterRef.current.rotation.z < 0 ? (amyCharacterRef.current.rotation.z += Number(forward) / 5) : null
-      api.velocity.set(direction.x, 0, direction.z)
+      // if(cameraRef.current.object.rotation.y > 0 && cameraRef.current.object.rotation.y < 1.7) {
+      //   frontVector.set(0, 0, Number(forward) - Number(backward))
+      //   sideVector.set(Number(forward), 0, 0)
+      // }
+      // else {
+      // }
+     frontVector.set(0, 0, Number(backward) - Number(forward))
+    sideVector.set(Number(left) - Number(right), 0, 0)
+    direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED).applyEuler(cameraRef.current.object.rotation)
+
+    console.log(cameraRef.current.getAzimuthalAngle())
+    console.log(Math.atan2(direction.x, direction.z))
+
+    
+
+      // amyCharacterRef.current.rotation.z < 1.7 ? (amyCharacterRef.current.rotation.z += Number(right) / 5) : null
+      // amyCharacterRef.current.rotation.z > -1.7 ? (amyCharacterRef.current.rotation.z -= Number(left) / 5) : null
+      // amyCharacterRef.current.rotation.z > -3.4 ? (amyCharacterRef.current.rotation.z -= Number(backward) / 5) : null
+      // amyCharacterRef.current.rotation.z < 0 ? (amyCharacterRef.current.rotation.z += Number(forward) / 5) : null
+      
+      
+    //     amyCharacterRef.current.rotation.z = THREE.MathUtils.lerp(
+    //   amyCharacterRef.current.rotation.z,
+    //   Math.sin((MOVESPEED > 1) * state.clock.elapsedTime * 10) / 6,
+    //   0.1,
+    // )
+
+    // amyCharacterRef.current.rotation.copy(cameraRef.current.object.rotation)
+    // amyCharacterRef.current.rotation.y=0
+    if(forward || backward || left || right)
+      amyCharacterRef.current.rotation.z = -(Math.atan2(direction.x, direction.z))
+
+    // if (store.currentAngle > Math.PI) store.currentAngle -= Math.PI * 2;
+    // if (store.currentAngle < -Math.PI) store.currentAngle += Math.PI * 2;
+
+    // amyCharacterRef.current.lookAt(new Vector3(cameraRef.current.target.x +1, cameraRef.current.target.y +2, cameraRef.current.target.z - 1))
+      // amyCharacterRef.current.quaternion.rotateTowards(cameraRef.current.object.quaternion, 1)
+      console.log(cameraRef.current.target.z)
+        api.velocity.set(direction.x, 0, direction.z)
+      // amyCharacterRef.current.rotation.z = cameraRef.current.object.rotation.z
       mesh.current.getWorldPosition(amyCharacterRef.current.position)
       setPositionX(amyCharacterRef.current.position.x)
       setPositionY(amyCharacterRef.current.position.y)
@@ -227,13 +263,17 @@ export function MyCharacter(props: propTypes) {
       setMutantAnimationStatus()
       frontVector.set(0, 0, Number(forward) - Number(backward))
       sideVector.set(Number(right) - Number(left), 0, 0)
-      direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED)
-      mutantCharacterRef.current.rotation.z < 1.7 ? (mutantCharacterRef.current.rotation.z += Number(right) / 5) : null
-      mutantCharacterRef.current.rotation.z > -1.7 ? (mutantCharacterRef.current.rotation.z -= Number(left) / 5) : null
-      mutantCharacterRef.current.rotation.z > -3.4
-        ? (mutantCharacterRef.current.rotation.z -= Number(backward) / 5)
-        : null
-      mutantCharacterRef.current.rotation.z < 0 ? (mutantCharacterRef.current.rotation.z += Number(forward) / 5) : null
+      direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED).applyEuler(cameraRef.current.object.rotation)
+      // mutantCharacterRef.current.rotation.z < 1.7 ? (mutantCharacterRef.current.rotation.z += Number(right) / 5) : null
+      // mutantCharacterRef.current.rotation.z > -1.7 ? (mutantCharacterRef.current.rotation.z -= Number(left) / 5) : null
+      // mutantCharacterRef.current.rotation.z > -3.4
+      //   ? (mutantCharacterRef.current.rotation.z -= Number(backward) / 5)
+      //   : null
+      // mutantCharacterRef.current.rotation.z < 0 ? (mutantCharacterRef.current.rotation.z += Number(forward) / 5) : null
+
+    if(forward || backward || left || right)
+      amyCharacterRef.current.rotation.z = -(Math.atan2(direction.x, direction.z))
+
       api.velocity.set(direction.x, 0, direction.z)
       mesh.current.getWorldPosition(mutantCharacterRef.current.position)
       setPositionX(mutantCharacterRef.current.position.x)
@@ -246,13 +286,17 @@ export function MyCharacter(props: propTypes) {
       setLouiseAnimationStatus()
       frontVector.set(0, 0, Number(forward) - Number(backward))
       sideVector.set(Number(right) - Number(left), 0, 0)
-      direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED)
-      louiseCharacterRef.current.rotation.z < 1.7 ? (louiseCharacterRef.current.rotation.z += Number(right) / 5) : null
-      louiseCharacterRef.current.rotation.z > -1.7 ? (louiseCharacterRef.current.rotation.z -= Number(left) / 5) : null
-      louiseCharacterRef.current.rotation.z > -3.4
-        ? (louiseCharacterRef.current.rotation.z -= Number(backward) / 5)
-        : null
-      louiseCharacterRef.current.rotation.z < 0 ? (louiseCharacterRef.current.rotation.z += Number(forward) / 5) : null
+      direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED).applyEuler(cameraRef.current.object.rotation)
+      // louiseCharacterRef.current.rotation.z < 1.7 ? (louiseCharacterRef.current.rotation.z += Number(right) / 5) : null
+      // louiseCharacterRef.current.rotation.z > -1.7 ? (louiseCharacterRef.current.rotation.z -= Number(left) / 5) : null
+      // louiseCharacterRef.current.rotation.z > -3.4
+      //   ? (louiseCharacterRef.current.rotation.z -= Number(backward) / 5)
+      //   : null
+      // louiseCharacterRef.current.rotation.z < 0 ? (louiseCharacterRef.current.rotation.z += Number(forward) / 5) : null
+
+      if(forward || backward || left || right)
+        amyCharacterRef.current.rotation.z = -(Math.atan2(direction.x, direction.z))
+
       api.velocity.set(direction.x, 0, direction.z)
       mesh.current.getWorldPosition(louiseCharacterRef.current.position)
       setPositionX(louiseCharacterRef.current.position.x)
@@ -262,6 +306,8 @@ export function MyCharacter(props: propTypes) {
     }
 
     if (forward || backward || left || right) {
+
+      
       // console.log("moving")
       colyseusRoom?.send('move', {
         user: {
@@ -415,7 +461,7 @@ export function MyCharacter(props: propTypes) {
         </group>
       ) : null}
       
-      <OrbitControls target={new Vector3(positionX, positionY + 2, positionZ)} maxDistance={5} minDistance={5} enableZoom={false} enablePan={false}  />
+      <OrbitControls ref={cameraRef} target={new Vector3(positionX, positionY + 2, positionZ)} maxDistance={5} minDistance={5} enableZoom={false} enablePan={false}  />
 
       {/* @ts-ignore */}
 

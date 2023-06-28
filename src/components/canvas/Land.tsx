@@ -35,7 +35,7 @@ function Land(props) {
     e.stopPropagation()
 
     if(raycaster.intersectObjects(scene.children)[0]) {
-      alert(raycaster.intersectObjects(scene.children)[0].object.name)
+      // alert(raycaster.intersectObjects(scene.children)[0].object.name)
 
       const groundTarget = raycaster.intersectObjects(scene.children).find(target => target.object.name === 'ground1')
       console.log(groundTarget)

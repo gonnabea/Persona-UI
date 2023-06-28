@@ -297,6 +297,7 @@ function SoccerBall(props) {
         rotation={props.rotation}
         object={glb.scene}
       />
+      {console.log(mesh)}
        <mesh name={'soccer_ball_1'} ref={mesh} visible={true}>
         <sphereGeometry args={[0.3]} />
         <meshStandardMaterial color='orange' visible={false} />
