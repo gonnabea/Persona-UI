@@ -11,19 +11,23 @@ const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement
   useEffect(() => {
     const authState = JSON.parse(localStorage.getItem('me'))
     const accessToken = authState?.token
+    const ignoreRedirectList = ['/signup', '/signup/create', '/verify/email', '/404']
 
-    if (!accessToken) {
-      router.push('/signin')
-    }
+    console.log(ignoreRedirectList.includes(router.pathname), router)
 
-    if (router.pathname === '/signin' && accessToken) {
-      router.push('/characters')
+    if (!ignoreRedirectList.includes(router.pathname)) {
+      if (!accessToken) {
+        router.push('/signin')
+      }
+
+      if (router.pathname === '/signin' && accessToken) {
+        router.push('/characters')
+      }
     }
   }, [])
 
   return (
     <div
-      
       {...props}
       ref={localRef}
       className={`h-full text-[14px] lg:text-[16px] ${
