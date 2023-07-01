@@ -38,12 +38,14 @@ function Land(props) {
       // alert(raycaster.intersectObjects(scene.children)[0].object.name)
 
       const groundTarget = raycaster.intersectObjects(scene.children).find(target => target.object.name === 'ground1')
-      console.log(groundTarget)
-      const clickedPosition = groundTarget.point
-  
-      console.log(clickedPosition)
-  
-      setLandClickPos(clickedPosition)
+
+      if(groundTarget) {
+        const clickedPosition = groundTarget.point
+    
+
+    
+        setLandClickPos(clickedPosition)
+      }
     }
 
     //   console.log(clickedPosition)

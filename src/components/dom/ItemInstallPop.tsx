@@ -108,7 +108,7 @@ const ItemInstallPop = ({ itemName,  }) => {
     <div className='fixed top-0 z-10 p-4 bg-gray-200 right-24' >
         <span className='pb-2 text-lg font-bold '>{itemName}</span>
         <div className="flex flex-col">
-            <span>크기 조절</span>
+            {/* <span>크기 조절</span>
             <div className='flex items-center justify-center'>
                 <span className='pr-2'>{`너비: ${selectedItem?.scale.x}`}</span>
                 <input type='range' step={0.5} min={0.5} max={20} name="scaleX" value={selectedItem ? selectedItem.scale.x : null}  onInput={(e) => handleScaleX(e)} />
@@ -117,7 +117,7 @@ const ItemInstallPop = ({ itemName,  }) => {
             <div className='flex items-center justify-center'>
                 <span className='pr-2'>{`높이: ${selectedItem?.scale.y}`}</span>
                 <input type='range' step={0.5} min={0.5} max={10} name="scaleY" value={selectedItem ? selectedItem.scale.y : null}  onInput={(e) => handleScaleY(e)} />
-            </div>
+            </div> */}
 
             {/* <div className='flex items-center justify-center'>
                 <span className='pr-2'>{`scaleZ: ${selectedItem?.scale.z}`}</span>

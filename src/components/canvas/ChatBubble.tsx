@@ -28,11 +28,11 @@ const ChatBubble = ({ positionX, positionY, positionZ, text, username }: ChatBub
   if (hidden) return null
 
   return (
-    <Html position={[positionX, positionY, positionZ]} as='div'>
+    <Html position={[positionX, positionY - 0.5, positionZ]} as='div'>
       <div className='flex items-center text-xs text-white border-2 border-white rounded-full bg-primary-100 bg-opacity-70 p-[10px] break-keep'>
-        <span className='pr-2 font-semibold text-white'>
+        {/* <span className='pr-2 font-semibold text-white'>
           {username}: 
-          </span>
+          </span> */}
           
           {text}
       </div>

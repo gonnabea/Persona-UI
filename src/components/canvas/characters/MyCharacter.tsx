@@ -207,7 +207,7 @@ export function MyCharacter(props: propTypes) {
     // if (characterRef === 'louise')
     //   characterRef = louiseCharacterRef;
 
-    console.log(cameraRef.current)
+    // console.log(cameraRef.current)
 
     if (character === 'amy') {
       setAmyAnimationStatus()
@@ -222,8 +222,8 @@ export function MyCharacter(props: propTypes) {
     sideVector.set(Number(left) - Number(right), 0, 0)
     direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED).applyEuler(cameraRef.current.object.rotation)
 
-    console.log(cameraRef.current.getAzimuthalAngle())
-    console.log(Math.atan2(direction.x, direction.z))
+    // console.log(cameraRef.current.getAzimuthalAngle())
+    // console.log(Math.atan2(direction.x, direction.z))
 
     
 
@@ -249,7 +249,7 @@ export function MyCharacter(props: propTypes) {
 
     // amyCharacterRef.current.lookAt(new Vector3(cameraRef.current.target.x +1, cameraRef.current.target.y +2, cameraRef.current.target.z - 1))
       // amyCharacterRef.current.quaternion.rotateTowards(cameraRef.current.object.quaternion, 1)
-      console.log(cameraRef.current.target.z)
+      // console.log(cameraRef.current.target.z)
         api.velocity.set(direction.x, 0, direction.z)
       // amyCharacterRef.current.rotation.z = cameraRef.current.object.rotation.z
       mesh.current.getWorldPosition(amyCharacterRef.current.position)

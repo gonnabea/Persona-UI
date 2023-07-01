@@ -24,6 +24,7 @@ import SoccerTrophy from './SoccerTrophy'
 import ScreenModel from './ScreenModel'
 import NamePlate from './NamePlate'
 import ChatBubble from './ChatBubble'
+import BlockGroup from './BlockGroup'
 
 type User = {
   character: string
@@ -148,6 +149,7 @@ const WorldItems = () => {
         <SoccerTrophy />
 
         <SandModel />
+        {/* <BlockGroup /> */}
 
         <ScreenModel />
 
