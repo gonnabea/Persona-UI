@@ -50,7 +50,12 @@ const SignUpCreate = ({ query }) => {
   const onSubmit = async () => {
     try {
       await axiosClient.post('/auth/sign-up', getValues('signUpValues'))
-      router.push('/signin')
+      router.push({
+        pathname: '/verify/email',
+        query: {
+          email: getValues('signUpValues.email'),
+        },
+      })
     } catch (error) {
       console.log(error)
     }

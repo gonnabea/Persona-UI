@@ -5,7 +5,7 @@ import { Input } from '@/components/dom/Forms'
 import Link from 'next/link'
 import PersonaBI from '@/assets/icons/persona-bi.svg'
 import Header from '@/components/dom/Header'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { axiosClient } from '@/axios.config'
 import { DefaultValues, useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -25,7 +25,9 @@ const defaultValues: DefaultValues<FormValues> = {
   },
 }
 
-const VerifyEmail = () => {
+const VerifyEmail = ({ query }) => {
+  const { email } = query
+
   const [mailSent, setMailSent] = useState(false)
   const [isMailSending, setIsMailSending] = useState(false)
   const router = useRouter()
@@ -39,11 +41,8 @@ const VerifyEmail = () => {
     defaultValues,
   })
 
-  // 이메일이 프롭으로 전달 됐을때 메일 전송 시도
-  useEffect(() => {}, [])
-
   // 이메일 토큰 전송
-  const sendMail = async () => {
+  const sendMail = useCallback(async () => {
     setIsMailSending(true)
     try {
       await axiosClient.post('/verify/email', {
@@ -54,14 +53,14 @@ const VerifyEmail = () => {
       console.log(error)
     }
     setIsMailSending(false)
-  }
+  }, [getValues])
 
   // 인증번호 인증
   const verifyToken = async () => {
     try {
       await axiosClient.get('/verify/email', {
         params: {
-          token: getValues('verifyEmailValues.token'),
+          token: decodeURIComponent(getValues('verifyEmailValues.token')),
         },
       })
       toast('성공적으로 인증 되었습니다.')
@@ -70,6 +69,12 @@ const VerifyEmail = () => {
       console.log(error)
     }
   }
+
+  // 이메일이 프롭으로 전달 됐을때 메일 전송 시도
+  useEffect(() => {
+    setValue('verifyEmailValues.email', email)
+    sendMail()
+  }, [email, sendMail, setValue])
 
   return (
     <div className='flex flex-col h-auto min-h-full'>
