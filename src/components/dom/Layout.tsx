@@ -11,7 +11,14 @@ const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement
   useEffect(() => {
     const authState = JSON.parse(localStorage.getItem('me'))
     const accessToken = authState?.token
-    const ignoreRedirectList = ['/signup', '/signup/create', '/verify/email', '/404']
+    const ignoreRedirectList = [
+      '/signup',
+      '/signup/create',
+      '/verify/email',
+      '/404',
+      '/resetPassword',
+      '/resetPassword/set',
+    ]
 
     console.log(ignoreRedirectList.includes(router.pathname), router)
 

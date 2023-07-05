@@ -9,8 +9,6 @@ import Button from '@/components/dom/Button'
 import { Input, Checkbox } from '@/components/dom/Forms'
 import { useRouter } from 'next/router'
 import { axiosClient } from '@/axios.config'
-import useToggle from '@/hooks/useToggle'
-import Modal from '@/components/dom/Modal'
 
 interface FormValues {
   signInValues: {
@@ -29,7 +27,6 @@ const defaultValues: DefaultValues<FormValues> = {
 }
 
 const SignIn = () => {
-  const [findPasswordModalEnabled, toggleFindPasswordModalEnabled] = useToggle(false)
   const router = useRouter()
   const {
     register,
@@ -100,8 +97,8 @@ const SignIn = () => {
                     }}
                   />
                 </div>
-                <div className='text-xs underline' onClick={toggleFindPasswordModalEnabled}>
-                  비밀번호 찾기
+                <div className='text-xs underline'>
+                  <Link href='/resetPassword'>비밀번호 찾기</Link>
                 </div>
               </div>
               <Button color='primary' className='w-full mb-[20px]'>
@@ -116,18 +113,6 @@ const SignIn = () => {
           </div>
         </div>
       </Container>
-      <Modal
-        toggle={toggleFindPasswordModalEnabled}
-        active={findPasswordModalEnabled}
-        containerClassName='h-auto'
-        bodyClassName='flex justify-center items-center'
-        bodyChildren={<>해당 페이지는 준비중입니다.</>}
-        footerChildren={
-          <Button color='primary' className='w-full' onClick={toggleFindPasswordModalEnabled}>
-            닫기
-          </Button>
-        }
-      />
     </div>
   )
 }
