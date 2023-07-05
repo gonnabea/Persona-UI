@@ -197,7 +197,7 @@ export default function Page(pageProps) {
   }, [colyseusRoom])
 
   return (
-    <div className='[&>*]:pointer-events-none'>
+    <div className='lg:[&>*]:pointer-events-none'>
       {/* 모바일 채팅버튼 */}
       {pageProps.isMobile ? (
         <Button
@@ -221,7 +221,7 @@ export default function Page(pageProps) {
       <Chat isMobile={pageProps.isMobile} />
       {/* 모바일 조이스틱 */}
       {pageProps.isMobile ? (
-        <div className='absolute !pointer-events-auto bottom-[30px] left-[30px] z-[2]'>
+        <div className='absolute bottom-[30px] left-[30px] z-[2]'>
           <Joystick
             size={120}
             stickSize={60}
