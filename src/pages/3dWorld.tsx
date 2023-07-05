@@ -34,6 +34,7 @@ import Cube from '@/components/dom/CubeLoader'
 import WorldItems from '@/components/canvas/3dWorldItems'
 import ItemInstallPop from '@/components/dom/ItemInstallPop'
 import EditModeBtn from '@/components/dom/EditModeBtn'
+import ChatIcon from '@/assets/icons/chat.svg'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -196,14 +197,14 @@ export default function Page(pageProps) {
   }, [colyseusRoom])
 
   return (
-    <div>
+    <div className='[&>*]:pointer-events-none'>
       {/* 모바일 채팅버튼 */}
       {pageProps.isMobile ? (
         <Button
           color='white'
           onClick={toggleChatEnabled}
           className='absolute border rounded-full p-[8px] top-[20px] left-[20px] lg:top-[34px] lg:left-[40px] z-[2] border-[#B3B3B3] hover:bg-white'>
-          <Kebab className='fill-primary-200' />
+          <ChatIcon className='fill-primary-200' />
         </Button>
       ) : (
         ''
