@@ -20,5 +20,10 @@
     "resolveJsonModule": true
   },
   "include": ["@types/*.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "src/utils/SkeletonUtils.js"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",    
+    "renderer/next.config.js",
+    "app",
+    "dist"
+  ]
 }
