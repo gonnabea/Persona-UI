@@ -197,7 +197,7 @@ export default function Page(pageProps) {
   }, [colyseusRoom])
 
   return (
-    <div className='lg:[&>*]:pointer-events-none'>
+    <div className='[&>*]:select-none'>
       {/* 모바일 채팅버튼 */}
       {pageProps.isMobile ? (
         <Button
