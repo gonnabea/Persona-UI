@@ -3,6 +3,9 @@ import { twMerge } from 'tailwind-merge'
 import Container from './Container'
 import { selectedItemState } from '@/recoil/selectedItem/atom'
 import { useRecoilState } from 'recoil'
+import { landClickPosState } from '@/recoil/landClickPos/atom'
+import { landClickIndexState } from '@/recoil/landClickIndex/atom'
+import { newWallState } from '@/recoil/newWallPosition/atom'
 
 
 
@@ -10,6 +13,11 @@ import { useRecoilState } from 'recoil'
 const ItemInstallPop = ({ itemName,  }) => {
 
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
+  const [landClickPos, setLandClickPos] = useRecoilState(landClickPosState)
+  const [landClickIndex, setLandClickIndex] = useRecoilState(landClickIndexState);
+  const [newWall, setNewWall] = useRecoilState(newWallState)
+
+
 
   const [updateIndex, forceUpdate] = useState(0);
 
@@ -144,6 +152,104 @@ const ItemInstallPop = ({ itemName,  }) => {
             </div> */}
 
         </div>
+
+        <div className="flex justify-around w-full">
+            
+            <button onClick={
+                () => {
+
+                    if(selectedItem.rotation.y !== 0) {
+                        setNewWall({
+                            position: {x: selectedItem.position.x, y: selectedItem.position.y, z: selectedItem.position.z + 2},
+                            rotation: {x: 0, y: -1.6, z: 0}
+                        });
+                    }
+                    else if(selectedItem.rotation.y === 0) {
+                        setNewWall({
+                            position: {x: selectedItem.position.x - 1, y: selectedItem.position.y, z: selectedItem.position.z + 1},
+                            rotation: {x: 0, y: -1.6, z: 0}
+                        });
+                    }
+                    
+                   
+
+                }
+            }>LB</button>
+
+            <button onClick={
+                () => {
+                    if(selectedItem.rotation.y === 0) {
+                        
+                        setNewWall({position: {x: selectedItem.position.x - 2, y: selectedItem.position.y, z: selectedItem.position.z}})
+                    } 
+                    else if(selectedItem.rotation.y !==0) {
+                        setNewWall({position: {x: selectedItem.position.x - 1, y: selectedItem.position.y, z: selectedItem.position.z + 1}})
+                        
+                    }
+                
+                }
+            }>LL</button>
+            
+        </div>
+
+        <div className="flex justify-around w-full">
+            <button onClick={
+                () => {
+
+                    if(selectedItem.rotation.y !== 0) {
+                        setNewWall({
+                            position: {x: selectedItem.position.x, y: selectedItem.position.y, z: selectedItem.position.z + 2},
+                            rotation: {x: 0, y: -1.6, z: 0}
+                        });
+                    }
+                    else if(selectedItem.rotation.y === 0) {
+                        setNewWall({
+                            position: {x: selectedItem.position.x + 1, y: selectedItem.position.y, z: selectedItem.position.z + 1},
+                            rotation: {x: 0, y: -1.6, z: 0}
+                        });
+                    }
+                    
+                   
+
+                }
+            }>RB</button>
+            <button onClick={
+                () => {
+                    if(selectedItem.rotation.y !== 0) {
+                        setNewWall({
+                            position: {x: selectedItem.position.x + 1, y: selectedItem.position.y, z: selectedItem.position.z + 1},
+                        
+                        })
+                    }
+                    else if(selectedItem.rotation.y === 0) {
+                        setNewWall({
+                            position: {x: selectedItem.position.x + 2, y: selectedItem.position.y, z: selectedItem.position.z},
+                            
+                        })
+                    }
+                }
+                    
+
+            }>RL</button>
+            
+        </div>
+
+        <div className="flex justify-around w-full">
+        <button onClick={
+                () => {
+                    setNewWall({
+                        position: {x: selectedItem.position.x, y: selectedItem.position.y + 3, z: selectedItem.position.z},
+                        rotation: {x: selectedItem.rotation.x, y: selectedItem.rotation.y, z: selectedItem.rotation.z}
+                    
+                    })
+                }
+            }>T</button>
+        <button onClick={
+                () => {setNewWall({position: {x: selectedItem.position.x, y: selectedItem.position.y - 3, z: selectedItem.position.z}})}
+            }>B</button>
+        </div>
+
+
 
         {/* <div className="flex flex-col">
             <span>위치 조정</span>

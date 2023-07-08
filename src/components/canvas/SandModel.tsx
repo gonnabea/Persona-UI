@@ -10,6 +10,8 @@ import { useBox } from '@react-three/cannon'
 import { BoxCollider } from './Colliders'
 import { isEditModeState } from '@/recoil/isEdisMode/atom'
 import { Vector3 } from 'three'
+import { landClickIndexState } from '@/recoil/landClickIndex/atom'
+import { newWallState } from '@/recoil/newWallPosition/atom'
 
 
 function SandModel(props) {
@@ -29,8 +31,9 @@ function SandModel(props) {
   const [landClickPos, setLandClickPos] = useRecoilState(landClickPosState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
+  const [newWall, setNewWall] = useRecoilState(newWallState)
 
-  const [landClickIndex, setLandClickIndex] = useState(0);
+  const [landClickIndex, setLandClickIndex] = useRecoilState(landClickIndexState);
 
   const [blockPositions, setBlockPositions] = useState([]);
 
@@ -59,7 +62,7 @@ function SandModel(props) {
     }
 }
 
-  for(let i=0; i<50; i++) {
+  for(let i=0; i<200; i++) {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const cloned = useMemo(() => clone(glb.scene), [scene])
@@ -69,7 +72,7 @@ function SandModel(props) {
       mass: 1,
           type: 'Static',
       rotation: [0, 0, 0], 
-      position: [0,0,0] , args: [2,4,0.2],
+      position: [0,0,0] , args: [2.35,4,0.2],
       
       onCollide: (e) => {
         console.log(e)
@@ -88,6 +91,53 @@ function SandModel(props) {
  
   }
 
+    useEffect(() => {
+        
+        
+        console.log(newWall)
+        if (newWall) {
+          setBlockPositions([...blockPositions, newWall.position])
+          
+          
+          setSelectedItem(clonedArr[landClickIndex])
+          setLandClickIndex(landClickIndex + 1)
+
+          if(newWall.rotation) {
+            clonedArr[landClickIndex]?.rotation.set(
+              
+              newWall.rotation.x,
+              newWall.rotation.y,
+              newWall.rotation.z
+            
+              )
+
+          }
+         
+          
+            console.log(landClickIndex)
+              if(landClickIndex > 200 && removedArr[0]) {
+      
+                removedArr[0].collider.mesh.current.position.setX(newWall.position.x)
+                removedArr[0].collider.mesh.current.position.setY(newWall.position.y)
+                removedArr[0].collider.mesh.current.position.setZ(newWall.position.z)
+                removedArr[0].collider.api.position.set(newWall.position.x,newWall.position.y,newWall.position.z)
+                removedArr[0].collider.api.rotation.set(newWall.rotation.x,newWall.rotation.y,newWall.rotation.z)
+                removedArr[0].model.position.set(newWall.position.x,newWall.position.y,newWall.position.z)
+                
+                console.log(newWall)
+                console.log(clonedArr[landClickIndex])
+
+  
+                setRemovedArr(removedArr.slice(1))
+  
+              }
+
+        }
+
+
+  
+  }, [newWall])
+
   
 
 
@@ -104,29 +154,31 @@ function SandModel(props) {
 
         // setLandClickPos(clickedPosition);
         
-        
+        console.log(landClickPos)
         setBlockPositions([...blockPositions, landClickPos])
         
         
         setSelectedItem(clonedArr[landClickIndex])
         setLandClickIndex(landClickIndex + 1)
-        console.log(removedArr)
+       
       
 
-            if(landClickIndex > 50 && removedArr[0]) {
+            if(landClickIndex > 200 && removedArr[0]) {
     
               removedArr[0].collider.mesh.current.position.setX(landClickPos.x)
               removedArr[0].collider.mesh.current.position.setY(landClickPos.y)
-              removedArr[0].collider.mesh.current.position.setY(landClickPos.z)
+              removedArr[0].collider.mesh.current.position.setZ(landClickPos.z)
               removedArr[0].collider.api.position.set(landClickPos.x,landClickPos.y,landClickPos.z)
-              removedArr[0].model.position.set(landClickPos.x,landClickPos.y,landClickPos.z)
+              
 
+              removedArr[0].model.position.set(landClickPos.x,landClickPos.y,landClickPos.z)
+              setSelectedItem(removedArr[0].model)
               setRemovedArr(removedArr.slice(1))
 
             }
 
 
-  console.log(selectedItem)
+  
   }, [landClickPos])
 
   useFrame(({ clock }) => {
@@ -259,8 +311,8 @@ function SandModel(props) {
               
                 // onMouseUp={boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)} 
                 
-                position={[parseFloat(blockPositions[index]?.x.toFixed(0)), 0, parseFloat(blockPositions[index]?.z.toFixed(0))]}
-                scale={[2,4,0.2]}
+                position={[parseFloat(blockPositions[index]?.x.toFixed(0)), parseFloat(blockPositions[index]?.y.toFixed(0)), parseFloat(blockPositions[index]?.z.toFixed(0))]}
+                scale={[2.35,4.3,0.2]}
                 rotation={[0,0,0]}
                 object={cloned}
                 modelInfo={{
