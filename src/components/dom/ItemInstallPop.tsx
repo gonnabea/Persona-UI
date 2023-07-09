@@ -160,6 +160,54 @@ const ItemInstallPop = ({ itemName,  }) => {
 
                     if(selectedItem.rotation.y !== 0) {
                         setNewWall({
+                            position: {x: selectedItem.position.x, y: selectedItem.position.y, z: selectedItem.position.z - 2},
+                            rotation: {x: 0, y: -1.6, z: 0}
+                        });
+                    }
+                    else if(selectedItem.rotation.y === 0) {
+                        setNewWall({
+                            position: {x: selectedItem.position.x - 1, y: selectedItem.position.y, z: selectedItem.position.z - 1},
+                            rotation: {x: 0, y: -1.6, z: 0}
+                        });
+                    }
+                    
+                   
+
+                }
+            }>LT</button>
+
+            <button onClick={
+                () => {
+
+                    if(selectedItem.rotation.y !== 0) {
+                        setNewWall({
+                            position: {x: selectedItem.position.x, y: selectedItem.position.y, z: selectedItem.position.z - 2},
+                            rotation: {x: 0, y: -1.6, z: 0}
+                        });
+                    }
+                    else if(selectedItem.rotation.y === 0) {
+                        setNewWall({
+                            position: {x: selectedItem.position.x + 1, y: selectedItem.position.y, z: selectedItem.position.z - 1},
+                            rotation: {x: 0, y: -1.6, z: 0}
+                        });
+                    }
+                    
+                   
+
+                }
+            }>RT</button>
+
+            
+            
+        </div>
+
+        <div className="flex justify-around w-full">
+            
+            <button onClick={
+                () => {
+
+                    if(selectedItem.rotation.y !== 0) {
+                        setNewWall({
                             position: {x: selectedItem.position.x, y: selectedItem.position.y, z: selectedItem.position.z + 2},
                             rotation: {x: 0, y: -1.6, z: 0}
                         });
@@ -176,23 +224,6 @@ const ItemInstallPop = ({ itemName,  }) => {
                 }
             }>LB</button>
 
-            <button onClick={
-                () => {
-                    if(selectedItem.rotation.y === 0) {
-                        
-                        setNewWall({position: {x: selectedItem.position.x - 2, y: selectedItem.position.y, z: selectedItem.position.z}})
-                    } 
-                    else if(selectedItem.rotation.y !==0) {
-                        setNewWall({position: {x: selectedItem.position.x - 1, y: selectedItem.position.y, z: selectedItem.position.z + 1}})
-                        
-                    }
-                
-                }
-            }>LL</button>
-            
-        </div>
-
-        <div className="flex justify-around w-full">
             <button onClick={
                 () => {
 
@@ -213,6 +244,25 @@ const ItemInstallPop = ({ itemName,  }) => {
 
                 }
             }>RB</button>
+
+            
+            
+        </div>
+
+        <div className="flex justify-around w-full">
+            <button onClick={
+                () => {
+                    if(selectedItem.rotation.y === 0) {
+                        
+                        setNewWall({position: {x: selectedItem.position.x - 2, y: selectedItem.position.y, z: selectedItem.position.z}})
+                    } 
+                    else if(selectedItem.rotation.y !==0) {
+                        setNewWall({position: {x: selectedItem.position.x - 1, y: selectedItem.position.y, z: selectedItem.position.z + 1}})
+                        
+                    }
+                
+                }
+            }>LL</button>
             <button onClick={
                 () => {
                     if(selectedItem.rotation.y !== 0) {

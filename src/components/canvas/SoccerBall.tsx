@@ -27,23 +27,19 @@ function SoccerBall(props) {
   const scene = useThree((state) => state.scene)
 
   const [mesh, api] = useSphere(() => ({
-    mass: 1,
+    mass: 0.1,
     type: 'Dynamic',
     args: [0.3],
     position: [-1.5799805660188322,-0.5, -61.161431290782154],
     onCollideBegin: (e) => {
       if (e.body.name === 'ground1') {
         console.log('바닥과 충돌')
-      } else if (e.body.name === 'stair') {
-        console.log('계단과 충돌')
-      } else {
-        console.log('물체와 충돌')
-        if(colyseusRoom) {
+         if(colyseusRoom) {
 
           const me = JSON.parse(localStorage.getItem("me"))
           const usersArr = Array.from(colyseusRoom.state.players.$items.values());
 
-              console.log(e)
+      
       
               
 
@@ -56,7 +52,47 @@ function SoccerBall(props) {
             
                    
 
-      console.log(usersArr)
+  
+
+
+      if(velocity) {
+             const message = {
+                  velocity:{x: velocity[0], y: velocity[1], z: velocity[2]},
+                  angularVelocity:{x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2]},
+                  ballId: 'soccer_ball_1'
+                }
+                colyseusRoom.send("ballMove", message)
+      
+              }
+           
+
+                
+              
+            
+        }
+      } else if (e.body.name === 'stair') {
+        console.log('계단과 충돌')
+      } else {
+        console.log('물체와 충돌')
+        if(colyseusRoom) {
+
+          const me = JSON.parse(localStorage.getItem("me"))
+          const usersArr = Array.from(colyseusRoom.state.players.$items.values());
+
+      
+      
+              
+
+          
+                 const message = {
+                  position: ballModelRef.current.position,
+                  ballId: 'soccer_ball_1'
+                }
+                colyseusRoom.send("ballSync", message)
+            
+                   
+
+  
 
 
       if(velocity) {
