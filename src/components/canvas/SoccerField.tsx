@@ -1,6 +1,7 @@
 import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef } from 'react'
+import { BoxCollider } from './Colliders'
 
 function SoccerField(props) {
   const group = useRef()
@@ -9,25 +10,20 @@ function SoccerField(props) {
   const directionalLight = useRef()
   console.log(glb)
 
-//   Object.keys(glb.materials).forEach(function(v){
-//     glb.materials[v].metalness = 1;
-//     glb.materials[v].roughness = 0.8;
-    
-// })
+  //   Object.keys(glb.materials).forEach(function(v){
+  //     glb.materials[v].metalness = 1;
+  //     glb.materials[v].roughness = 0.8;
 
-    useEffect(() => {
-        const clickedPosition = raycaster.intersectObjects(scene.children)[0]?.point
+  // })
 
+  useEffect(() => {
+    const clickedPosition = raycaster.intersectObjects(scene.children)[0]?.point
 
-
-          Object.values(glb.materials).forEach(material => {
-    
-    material.metalness = 0.5;
-    material.roughness = 0.2;
-
-  })
-
-}, [])
+    Object.values(glb.materials).forEach((material) => {
+      material.metalness = 0.5
+      material.roughness = 0.2
+    })
+  }, [])
 
   const raycaster = useThree((state) => state.raycaster)
   const scene = useThree((state) => state.scene)
@@ -41,8 +37,6 @@ function SoccerField(props) {
     //   console.log(clickedPosition)
   }
 
-
-
   useFrame(({ clock }) => {
     const a = clock.getElapsedTime()
     // console.log("Hey, I'm executing every frame!");
@@ -53,12 +47,38 @@ function SoccerField(props) {
     <Suspense fallback={null}>
       <primitive
         onClick={(e) => findPosition(e)}
-        position={[0,-1.3,-60]}
+        position={[0, -1.3, -60]}
         scale={1}
-        rotation={[0,0,0]}
+        rotation={[0, 0, 0]}
         object={glb.scene}
         // visible={false}
       />
+      {/* 골대 1 */}
+      <group>
+        {/* top */}
+        <BoxCollider position={[0, 1, -37.5]} args={[4, 0.1, 2]} />
+        {/* bottom */}
+        <BoxCollider position={[0, -1, -37.5]} args={[4, 1, 2]} name='soccer' />
+        {/* back */}
+        <BoxCollider position={[0, 0, -36.5]} args={[4, 2, 0.1]} />
+        {/* left */}
+        <BoxCollider position={[2, -1, -37.5]} args={[0.1, 4, 2]} />
+        {/* right */}
+        <BoxCollider position={[-2, -1, -37.5]} args={[0.1, 4, 2]} />
+      </group>
+      {/* 골대 2 */}
+      <group>
+        {/* top */}
+        <BoxCollider position={[0, 1, -82.5]} args={[4, 0.1, 2]} />
+        {/* bottom */}
+        <BoxCollider position={[0, -1, -82.5]} args={[4, 1, 2]} />
+        {/* back */}
+        <BoxCollider position={[0, 0, -83.5]} args={[4, 2, 0.1]} />
+        {/* left */}
+        <BoxCollider position={[2, -1, -82.5]} args={[0.1, 4, 2]} />
+        {/* right */}
+        <BoxCollider position={[-2, -1, -82.5]} args={[0.1, 4, 2]} />
+      </group>
       {/* <directionalLight position={[0, 0, 0]} intensity={10} target={targetObject.current} /> */}
     </Suspense>
   )
