@@ -144,7 +144,8 @@ export default function Page(pageProps) {
     })
   }
 
-  const toggleChatEnabled = () => {
+  const toggleChatEnabled = (event) => {
+    event.stopPropagation()
     setChatEnabled(!chatEnabled)
   }
 
@@ -202,8 +203,11 @@ export default function Page(pageProps) {
       {pageProps.isMobile ? (
         <Button
           color='white'
-          onClick={toggleChatEnabled}
-          className='absolute border rounded-full p-[8px] top-[20px] left-[20px] lg:top-[34px] lg:left-[40px] z-[2] border-[#B3B3B3] hover:bg-white'>
+          className='absolute border rounded-full p-[8px] top-[20px] left-[20px] lg:top-[34px] lg:left-[40px] z-[2] border-[#B3B3B3] hover:bg-white'
+          onClickCapture={toggleChatEnabled}
+          onContextMenuCapture={(event) => {
+            event.stopPropagation()
+          }}>
           <ChatIcon className='fill-primary-200' />
         </Button>
       ) : (
@@ -212,7 +216,14 @@ export default function Page(pageProps) {
       <Button
         color='white'
         className='absolute border rounded-full p-[8px] top-[20px] right-[20px] lg:top-[34px] lg:right-[40px] z-[2] border-[#B3B3B3] hover:bg-white'
-        onClick={toggleMenuEnabled}>
+        onClickCapture={(event) => {
+          event.stopPropagation()
+          toggleMenuEnabled()
+        }}
+        onContextMenuCapture={(event) => {
+          event.stopPropagation()
+          event.preventDefault()
+        }}>
         <Kebab className='fill-primary-200' />
       </Button>
       <BGM />
