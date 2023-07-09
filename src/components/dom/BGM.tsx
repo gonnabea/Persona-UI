@@ -23,7 +23,14 @@ const BGM = ({ bgmUrl = '/sounds/bgm/raon_raul.mp3' }) => {
   return (
     <button
       className='absolute p-4 text-center text-white rounded-full min-w-[150px] bg-[#8171C3] z-[2] bottom-[65px] right-[30px]'
-      onClick={togglePlay}>
+      onContextMenuCapture={(event) => {
+        event.stopPropagation()
+        event.preventDefault()
+      }}
+      onClickCapture={(event) => {
+        event.stopPropagation()
+        togglePlay()
+      }}>
       {play === true ? 'BGM OFF' : 'BGM ON'}
     </button>
   )
