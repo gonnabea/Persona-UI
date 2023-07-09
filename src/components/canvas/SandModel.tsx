@@ -1,6 +1,6 @@
 import { landClickPosState } from '@/recoil/landClickPos/atom'
 import { clone } from '@/utils/SkeletonUtils'
-import { TransformControls, useGLTF } from '@react-three/drei'
+import { TransformControls, useGLTF, useTexture } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useMemo, useRef, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
@@ -19,6 +19,8 @@ function SandModel(props) {
   const glb = useGLTF('/models/sand_1.glb')
   const targetObject = useRef()
   const directionalLight = useRef()
+
+  const wallTexture1 = useTexture('/img/wall_texture_2.jpg')
   
   
 
@@ -63,6 +65,9 @@ function SandModel(props) {
 }
 
   for(let i=0; i<200; i++) {
+    // console.log(glb.scene.children[0].children[0].children[0].children[0].children[0].material)
+    glb.scene.children[0].children[0].children[0].children[0].children[0].material.map = wallTexture1
+    glb.scene.children[0].children[0].children[0].children[0].children[0].material.rotation = 1.3
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const cloned = useMemo(() => clone(glb.scene), [scene])
@@ -83,6 +88,8 @@ function SandModel(props) {
       
     }))
 
+    
+
     clonedArr.push(cloned)
     boxColliders.push({mesh: mesh, api})
 
@@ -98,7 +105,7 @@ function SandModel(props) {
         if (newWall) {
           setBlockPositions([...blockPositions, newWall.position])
           
-          
+          console.log(clonedArr[landClickIndex])
           setSelectedItem(clonedArr[landClickIndex])
           setLandClickIndex(landClickIndex + 1)
 

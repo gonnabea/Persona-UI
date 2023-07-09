@@ -232,8 +232,9 @@ export default function Page(pageProps) {
       <Chat isMobile={pageProps.isMobile} />
       {/* 모바일 조이스틱 */}
       {pageProps.isMobile ? (
-        <div className='absolute bottom-[30px] left-[30px] z-[2]'>
+        <div  className='absolute bottom-[30px] left-[30px] z-[2]'>
           <Joystick
+            
             size={120}
             stickSize={60}
             baseColor='rgba(247, 247, 247, 0.5)'
