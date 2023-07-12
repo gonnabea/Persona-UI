@@ -123,7 +123,7 @@ const WorldItems = () => {
             )
           }
         })}
-        
+
         <Land></Land>
         <SoccerField></SoccerField>
         <MyCharacter />
@@ -173,8 +173,6 @@ const WorldItems = () => {
             args={[0.3]}
             type='Dynamic'
           /> */}
-
-        <SoccerBall />
       </Suspense>
     </>
   )

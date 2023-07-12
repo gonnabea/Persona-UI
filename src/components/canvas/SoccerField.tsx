@@ -2,13 +2,16 @@ import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef } from 'react'
 import { BoxCollider } from './Colliders'
+import SoccerBall from './SoccerBall'
+import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
+import { useRecoilValue } from 'recoil'
 
 function SoccerField(props) {
   const group = useRef()
   const glb = useGLTF('/models/soccer_field.glb')
   const targetObject = useRef()
   const directionalLight = useRef()
-  console.log(glb)
+  const colyseusRoom = useRecoilValue(colyseusRoomState)
 
   //   Object.keys(glb.materials).forEach(function(v){
   //     glb.materials[v].metalness = 1;
@@ -37,6 +40,14 @@ function SoccerField(props) {
     //   console.log(clickedPosition)
   }
 
+  useEffect(() => {
+    if (colyseusRoom) {
+      colyseusRoom.onMessage('soccerScore', (message) => {
+        console.log(message)
+      })
+    }
+  }, [])
+
   useFrame(({ clock }) => {
     const a = clock.getElapsedTime()
     // console.log("Hey, I'm executing every frame!");
@@ -53,12 +64,15 @@ function SoccerField(props) {
         object={glb.scene}
         // visible={false}
       />
+      {/* 축구공 */}
+      <SoccerBall />
+
       {/* 골대 1 */}
       <group>
         {/* top */}
         <BoxCollider position={[0, 1, -37.5]} args={[4, 0.1, 2]} />
         {/* bottom */}
-        <BoxCollider position={[0, -1, -37.5]} args={[4, 1, 2]} name='soccer' />
+        <BoxCollider position={[0, -1, -37.5]} args={[4, 1, 2]} name='team1' />
         {/* back */}
         <BoxCollider position={[0, 0, -36.5]} args={[4, 2, 0.1]} />
         {/* left */}
@@ -71,7 +85,7 @@ function SoccerField(props) {
         {/* top */}
         <BoxCollider position={[0, 1, -82.5]} args={[4, 0.1, 2]} />
         {/* bottom */}
-        <BoxCollider position={[0, -1, -82.5]} args={[4, 1, 2]} />
+        <BoxCollider position={[0, -1, -82.5]} args={[4, 1, 2]} name='team2' />
         {/* back */}
         <BoxCollider position={[0, 0, -83.5]} args={[4, 2, 0.1]} />
         {/* left */}
