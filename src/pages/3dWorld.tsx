@@ -37,6 +37,8 @@ import WallInstallPop from '@/components/dom/WallInstallPop'
 import EditModeBtn from '@/components/dom/EditModeBtn'
 import ChatIcon from '@/assets/icons/chat.svg'
 import ItemInstallPop from '@/components/dom/ItemInstallPop'
+import { itemsState } from '@/recoil/items/atom'
+import Door1 from '@/components/canvas/exteriorItems/Door1'
 
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
@@ -58,6 +60,7 @@ export default function Page(pageProps) {
   const [colyseusRoom, setColyseusRoom] = useRecoilState(colyseusRoomState)
   // 웹소켓으로 통신할 유저정보 (position, rotation ...)
   const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState)
+  const [items, setItems] = useRecoilState(itemsState);
 
   const menuList = [
     {
@@ -233,10 +236,27 @@ export default function Page(pageProps) {
       <EditModeBtn />
       <WallInstallPop itemName={'벽설치'} />
       <ItemInstallPop furnitures={
-      <div className='flex flex-col items-center cursor-pointer'>
-        <img src="/models/exterior_items/images/door_1.png" style={{width: 125, height: 125}}/>
-        <span>door_1</span>
-      </div>} />
+        <div onClick={() => {
+          const itemsState = items;
+          delete itemsState.door_1
+          itemsState.door_1 = {
+            position: [0,0,0],
+            rotation: [0,0,0],
+            installed: true
+          }
+          setItems(itemsState)
+        }}
+          onContextMenu={() => {
+            const itemsState = items;
+          itemsState.door_1.installed = false;
+          setItems(itemsState)
+          }}
+        className='flex flex-col items-center cursor-pointer'>
+          <img src="/models/exterior_items/images/door_1.png" style={{width: 125, height: 125}}/>
+          <span>door_1</span>
+        </div>} 
+      />
+      <Door1 />
       <Chat isMobile={pageProps.isMobile} />
       {/* 모바일 조이스틱 */}
       {pageProps.isMobile ? (
