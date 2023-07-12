@@ -32,9 +32,12 @@ import PositionTracker from '@/components/canvas/PositionTracker'
 import { Loader, useProgress } from '@react-three/drei'
 import Cube from '@/components/dom/CubeLoader'
 import WorldItems from '@/components/canvas/3dWorldItems'
-import ItemInstallPop from '@/components/dom/ItemInstallPop'
+import WallInstallPop from '@/components/dom/WallInstallPop'
+
 import EditModeBtn from '@/components/dom/EditModeBtn'
 import ChatIcon from '@/assets/icons/chat.svg'
+import ItemInstallPop from '@/components/dom/ItemInstallPop'
+
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -228,7 +231,12 @@ export default function Page(pageProps) {
       </Button>
       <BGM />
       <EditModeBtn />
-      <ItemInstallPop itemName={'모래벽'} />
+      <WallInstallPop itemName={'벽설치'} />
+      <ItemInstallPop furnitures={
+      <div className='flex flex-col items-center cursor-pointer'>
+        <img src="/models/exterior_items/images/door_1.png" style={{width: 125, height: 125}}/>
+        <span>door_1</span>
+      </div>} />
       <Chat isMobile={pageProps.isMobile} />
       {/* 모바일 조이스틱 */}
       {pageProps.isMobile ? (
