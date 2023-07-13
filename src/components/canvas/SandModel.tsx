@@ -12,6 +12,8 @@ import { isEditModeState } from '@/recoil/isEdisMode/atom'
 import { Vector3 } from 'three'
 import { landClickIndexState } from '@/recoil/landClickIndex/atom'
 import { newWallState } from '@/recoil/newWallPosition/atom'
+import { wallTextureState } from '@/recoil/wallTexture/atom'
+import * as THREE from 'three'
 
 
 function SandModel(props) {
@@ -20,7 +22,6 @@ function SandModel(props) {
   const targetObject = useRef()
   const directionalLight = useRef()
 
-  const wallTexture1 = useTexture('/img/wall_texture_2.jpg')
   
   
 
@@ -34,25 +35,27 @@ function SandModel(props) {
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
   const [newWall, setNewWall] = useRecoilState(newWallState)
-
+  const [wallTexture, setWallTexture] = useRecoilState(wallTextureState)
+  
   const [landClickIndex, setLandClickIndex] = useRecoilState(landClickIndexState);
-
+  
   const [blockPositions, setBlockPositions] = useState([]);
-
+  
   const [removedArr, setRemovedArr] = useState([]);
-
-
+  
+  
   const clonedArr = [];
   
   const boxColliders = [];
   
-
+  
+  
   const useBoxTest = useBox(() => ({
     mass: 1
   }))
-
+  
   console.log('useBoxTest:   ',useBoxTest)
-
+  
   function disposeMesh(mesh) {
     if(mesh) {
       console.log(mesh)
@@ -66,8 +69,7 @@ function SandModel(props) {
 
   for(let i=0; i<200; i++) {
     // console.log(glb.scene.children[0].children[0].children[0].children[0].children[0].material)
-    glb.scene.children[0].children[0].children[0].children[0].children[0].material.map = wallTexture1
-    glb.scene.children[0].children[0].children[0].children[0].children[0].material.rotation = 1.3
+   
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const cloned = useMemo(() => clone(glb.scene), [scene])
@@ -102,12 +104,18 @@ function SandModel(props) {
         
         
         console.log(newWall)
+
         if (newWall) {
-          setBlockPositions([...blockPositions, newWall.position])
+          console.log(wallTexture)
           
+          // clonedArr[landClickIndex].children[0].children[0].children[0].children[0].children[0].material.rotation = 1.3
+          setBlockPositions([...blockPositions, newWall.position])
+          console.log(landClickIndex)
           console.log(clonedArr[landClickIndex])
-          setSelectedItem(clonedArr[landClickIndex])
-          setLandClickIndex(landClickIndex + 1)
+          
+          
+          
+          
 
           if(newWall.rotation) {
             clonedArr[landClickIndex]?.rotation.set(
@@ -120,8 +128,6 @@ function SandModel(props) {
 
           }
          
-          
-            console.log(landClickIndex)
               if(landClickIndex > 200 && removedArr[0]) {
       
                 removedArr[0].collider.mesh.current.position.setX(newWall.position.x)
@@ -131,14 +137,21 @@ function SandModel(props) {
                 removedArr[0].collider.api.rotation.set(newWall.rotation.x,newWall.rotation.y,newWall.rotation.z)
                 removedArr[0].model.position.set(newWall.position.x,newWall.position.y,newWall.position.z)
                 
-                console.log(newWall)
-                console.log(clonedArr[landClickIndex])
 
-  
                 setRemovedArr(removedArr.slice(1))
   
               }
 
+              const texture = new THREE.TextureLoader().load(wallTexture);
+          texture.wrapS = THREE.RepeatWrapping;
+          texture.wrapT = THREE.RepeatWrapping;
+          texture.repeat.set( 4, 4 );
+          console.log(clonedArr[landClickIndex])
+          clonedArr[landClickIndex].children[0].children[0].children[0].children[0].children[0].material.map = texture
+            
+              
+              setSelectedItem(clonedArr[landClickIndex])
+              setLandClickIndex(landClickIndex + 1)
         }
 
 
@@ -318,7 +331,7 @@ function SandModel(props) {
               
                 // onMouseUp={boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)} 
                 
-                position={[parseFloat(blockPositions[index]?.x.toFixed(0)), parseFloat(blockPositions[index]?.y.toFixed(0)), parseFloat(blockPositions[index]?.z.toFixed(0))]}
+                position={[blockPositions[index]?.x, blockPositions[index]?.y, blockPositions[index]?.z]}
                 scale={[2.35,4.3,0.2]}
                 rotation={[0,0,0]}
                 object={cloned}
