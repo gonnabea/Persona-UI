@@ -96,6 +96,11 @@ function SoccerBall(props) {
         console.log('바닥과 충돌')
       } else if (e.body.name === 'stair') {
         console.log('계단과 충돌')
+      } else if (e.body.name === 'team1' || e.body.name === 'team2') {
+        // 위치 초기화
+        api.position.set(-1.5799805660188322, -0.5, -61.161431290782154)
+        api.angularVelocity.set(0, 0, 0)
+        api.velocity.set(0, 0, 0)
       } else {
         console.log('물체와 충돌')
         if (colyseusRoom) {
@@ -123,6 +128,11 @@ function SoccerBall(props) {
         console.log('바닥과 충돌')
       } else if (e.body.name === 'stair') {
         console.log('계단과 충돌')
+      } else if (e.body.name === 'team1' || e.body.name === 'team2') {
+        // 위치 초기화
+        api.position.set(-1.5799805660188322, -0.5, -61.161431290782154)
+        api.angularVelocity.set(0, 0, 0)
+        api.velocity.set(0, 0, 0)
       } else {
         console.log('물체와 충돌')
         if (colyseusRoom) {
