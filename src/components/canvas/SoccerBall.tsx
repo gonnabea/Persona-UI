@@ -59,14 +59,13 @@ function SoccerBall(props) {
             team: e.body.name,
             type: 'increase',
           }
-          const positionMessage = {
-            velocity: { x: -1.5799805660188322, y: -0.5, z: -61.161431290782154 },
-            angularVelocity: { x: 0, y: 0, z: 0 },
-            ballId: 'soccer_ball_1',
-          }
 
-          colyseusRoom.send('ballMove', positionMessage)
-          return colyseusRoom.send('soccerScore', scoreMessage)
+          // 점수 전송
+          colyseusRoom.send('soccerScore', scoreMessage)
+          // 위치 초기화
+          api.position.set(-1.5799805660188322, -0.5, -61.161431290782154)
+          api.angularVelocity.set(0, 0, 0)
+          api.velocity.set(0, 0, 0)
         }
       } else {
         console.log('물체와 충돌')
