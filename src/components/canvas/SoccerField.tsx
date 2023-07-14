@@ -115,9 +115,9 @@ function SoccerField(props) {
 
       {/* 전광판 1 */}
       <mesh position={[11, 10, -60]} rotation={[0, -1.570796, 0]}>
-        <Text position={[-1, 0, 0.2]}>{score.message?.team1 ?? 0}</Text>
+        <Text position={[-1, 0, 0.2]}>{score.message?.team2 ?? 0}</Text>
         <Text position={[0, 0, 0.2]}>:</Text>
-        <Text position={[1, 0, 0.2]}>0</Text>
+        <Text position={[1, 0, 0.2]}>{score.message?.team1 ?? 0}</Text>
         <boxGeometry args={[8, 4, 0.1]} />
         <meshStandardMaterial color='skyblue' opacity={0.3} />
       </mesh>
