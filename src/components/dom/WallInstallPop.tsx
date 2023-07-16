@@ -21,6 +21,7 @@ const WallInstallPop = ({ itemName }) => {
     if (selectedItem) {
       selectedItem.scale.x = e.target.value
       forceUpdate(updateIndex + 1)
+      console.log(selectedItem)
     }
   }
 
@@ -103,7 +104,7 @@ const WallInstallPop = ({ itemName }) => {
 
   return (
     <div
-      className='fixed top-0 z-10 p-4 bg-gray-200 right-24'
+      className='fixed top-0 z-10 p-3 bg-gray-200 right-24'
       onContextMenuCapture={(event) => {
         event.preventDefault()
         event.stopPropagation()
@@ -113,23 +114,26 @@ const WallInstallPop = ({ itemName }) => {
         event.preventDefault()
       }}>
       <span className='pb-2 text-lg font-bold '>{itemName}</span>
+      {
+        selectedItem?.modelInfo?.name !== "wall" ?
       <div className='flex flex-col'>
-        {/* <span>크기 조절</span>
+        <span>크기 조절</span>
             <div className='flex items-center justify-center'>
-                <span className='pr-2'>{`너비: ${selectedItem?.scale.x}`}</span>
-                <input type='range' step={0.5} min={0.5} max={20} name="scaleX" value={selectedItem ? selectedItem.scale.x : null}  onInput={(e) => handleScaleX(e)} />
+                <span className='pr-2'>{`가로: ${selectedItem?.scale.x}`}</span>
+                <input type='range' step={0.5} min={0.5} max={3} name="scaleX" value={selectedItem ? selectedItem.scale.x : null}  onInput={(e) => handleScaleX(e)} />
             </div>
 
             <div className='flex items-center justify-center'>
                 <span className='pr-2'>{`높이: ${selectedItem?.scale.y}`}</span>
                 <input type='range' step={0.5} min={0.5} max={10} name="scaleY" value={selectedItem ? selectedItem.scale.y : null}  onInput={(e) => handleScaleY(e)} />
-            </div> */}
+            </div>
 
-        {/* <div className='flex items-center justify-center'>
-                <span className='pr-2'>{`scaleZ: ${selectedItem?.scale.z}`}</span>
-                <input type='range' step={0.5} min={0.5} max={0.5} name="scaleZ" value={selectedItem ? selectedItem.scale.z : null}  onInput={(e) => handleScaleZ(e)} />
-            </div> */}
-      </div>
+        <div className='flex items-center justify-center'>
+                <span className='pr-2'>{`세로: ${selectedItem?.scale.z}`}</span>
+                <input type='range' step={0.5} min={0.5} max={3} name="scaleZ" value={selectedItem ? selectedItem.scale.z : null}  onInput={(e) => handleScaleZ(e)} />
+            </div>
+      </div> : null
+      }
 
       <div className='flex flex-col'>
         <span>회전 조절</span>
@@ -325,6 +329,8 @@ const WallInstallPop = ({ itemName }) => {
           <div className='w-10 h-10 mr-4 border border-black border-solid rounded-lg cursor-pointer' style={{backgroundImage: "url('/img/wall_texture_1.jpg')", backgroundSize: 'cover'}} onClick={() => setWallTexture('/img/wall_texture_1.jpg')}>{wallTexture === "/img/wall_texture_1.jpg" ? ' V' : ''}</div>
           <div className='w-10 h-10 mr-4 border border-black border-solid rounded-lg cursor-pointer' style={{backgroundImage: "url('/img/wall_texture_2.jpg')", backgroundSize: 'cover'}} onClick={() => setWallTexture('/img/wall_texture_2.jpg')}>{wallTexture === "/img/wall_texture_2.jpg" ? ' V' : ''}</div>
           <div className='w-10 h-10  border border-black border-solid rounded-lg cursor-pointer' style={{backgroundImage: "url('/img/wall_texture_3.jpeg')", backgroundSize: 'cover'}} onClick={() => setWallTexture('/img/wall_texture_3.jpeg')}>{wallTexture === "/img/wall_texture_3.jpeg" ? ' V' : ''}</div>
+          <div className='w-10 h-10  border border-black border-solid rounded-lg cursor-pointer' style={{backgroundImage: "url('/img/wall_texture_4.jpg')", backgroundSize: 'cover'}} onClick={() => setWallTexture('/img/wall_texture_4.jpg')}>{wallTexture === "/img/wall_texture_4.jpg" ? ' V' : ''}</div>
+          <div className='w-10 h-10  border border-black border-solid rounded-lg cursor-pointer' style={{backgroundImage: "url('/img/wall_texture_5.jpg')", backgroundSize: 'cover'}} onClick={() => setWallTexture('/img/wall_texture_5.jpg')}>{wallTexture === "/img/wall_texture_5.jpg" ? ' V' : ''}</div>
 
       </div>
 

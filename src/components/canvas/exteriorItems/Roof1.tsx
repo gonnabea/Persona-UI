@@ -27,9 +27,10 @@ function Roof1() {
             e.stopPropagation()
 
             if(raycaster.intersectObjects(scene.children)[0] && items.roof_1.installed === false && items.roof_1.installing === true) {
-            
-
+                
+                // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
                 const groundTarget = raycaster.intersectObjects(scene.children).find(target => target.object.name === 'ground1')
+                // console.log(wall)
 
             if(groundTarget) {
 
@@ -37,7 +38,7 @@ function Roof1() {
 
                     // if(items.roof_1.installing === true) 
                 
-                        setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z]);
+                        setInstallingPos([mousePosition.x, mousePosition.y + 4, mousePosition.z]);
                 
                     // setLandClickPos(clickedPosition)
             }
@@ -64,13 +65,13 @@ function Roof1() {
                 if(items.roof_1.installed === false && items.roof_1.installing === true) {
                   
 
-                   items.roof_1.position = [mousePosition.x, mousePosition.y, mousePosition.z]
+                   items.roof_1.position = [mousePosition.x, mousePosition.y + 4, mousePosition.z]
                    
                    items.roof_1.installed = true
                    items.roof_1.installing = false
 
-                    glb.scene.children[0].children[0].children[0].children.forEach(material => {
-                        material.opacity = 1;
+                    glb.scene.children[0].children[0].children[0].children.forEach(mesh => {
+                        mesh.material.opacity = 1;
                     })
                   
                  
@@ -119,14 +120,15 @@ function Roof1() {
     useEffect(() => {
         if(items.roof_1.installing === true) {
  
-            glb.scene.children[0].children[0].children[0].children.forEach(material => {
-                material.opacity = 0.7;
-                material.transparent = true
+            glb.scene.children[0].children[0].children[0].children.forEach(mesh => {
+                // console.log(material)
+                mesh.material.opacity = 0.5;
+                mesh.material.transparent = true
             })
         }
         else {
-            glb.scene.children[0].children[0].children[0].children.forEach(material => {
-                material.opacity = 1;
+            glb.scene.children[0].children[0].children[0].children.forEach(mesh => {
+                mesh.material.opacity = 1;
                 
             })
 
@@ -140,8 +142,13 @@ function Roof1() {
             <primitive 
               
                 onClick={(e) => {
-                    setSelectedItem((e.eventObject))
+                    // setSelectedItem((e.eventObject))
+                    findClickedPosition(e)
                 }} 
+
+                onDoubleClick={(e) => {
+                    setSelectedItem((e.eventObject))
+                }}
 
                     onPointerOver={() => {
                         document.body.style.cursor = 'pointer'

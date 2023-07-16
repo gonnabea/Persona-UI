@@ -238,72 +238,82 @@ export default function Page(pageProps) {
       <WallInstallPop itemName={'벽설치'} />
 
       <ItemInstallPop
+
+        furnitures={
+           <div
+            
+            // onContextMenu={(e) => {
+             
+            //   e.stopPropagation()
+            //   items.door_1.installing = false;
+            //   items.door_1.installed = false;
+
+            //   setSelectedItem(null)
+            // }}
+            className='flex flex-col items-center cursor-pointer'>
+              <img onClick={(e) => {
+             
+              e.stopPropagation()
+              items.bed_1.installing = true;
+              items.bed_1.installed = false;
+
+             
+            }} src='/models/exterior_items/images/bed_1.png' style={{ width: 100, height: 100 }} />
+            <span>bed_1</span>
+          </div>
+        }
+
         exteriors={
           <>
           <div
-            onClick={(e) => {
+            
+            // onContextMenu={(e) => {
+             
+            //   e.stopPropagation()
+            //   items.door_1.installing = false;
+            //   items.door_1.installed = false;
+
+            //   setSelectedItem(null)
+            // }}
+            className='flex flex-col items-center cursor-pointer'>
+              <img onClick={(e) => {
              
               e.stopPropagation()
               items.door_1.installing = true;
               items.door_1.installed = false;
 
              
-            }}
-            onContextMenu={(e) => {
-             
-              e.stopPropagation()
-              items.door_1.installing = false;
-              items.door_1.installed = false;
-
-              setSelectedItem(null)
-            }}
-            className='flex flex-col items-center cursor-pointer'>
-              <img src='/models/exterior_items/images/door_1.png' style={{ width: 100, height: 100 }} />
+            }} src='/models/exterior_items/images/door_1.png' style={{ width: 100, height: 100 }} />
             <span>door_1</span>
           </div>
-          <div onClick={(e) => {
+          <div 
+            className='flex flex-col items-center cursor-pointer'>
+               <img onClick={(e) => {
              
               
-     e.stopPropagation()
+              e.stopPropagation()
 
               items.roof_1.installing = true;
               items.roof_1.installed = false;
 
               
-            }}
-            onContextMenu={(e) => {
-             
-              e.stopPropagation()
-              items.roof_1.installing = false;
-              items.roof_1.installed = false;
-
-              setSelectedItem(null)
-            }}
-            className='flex flex-col items-center cursor-pointer'>
-               <img src='/models/exterior_items/images/roof_1.png' style={{ width: 100, height: 100 }} />
+            }} src='/models/exterior_items/images/roof_1.png' style={{ width: 100, height: 100 }} />
             <span>roof_1</span>
 
           </div>
           <div
-            onClick={(e) => {
-             
-e.stopPropagation()
-              items.floor_1.installing = true;
-              items.floor_1.installed = false;
-
-             
-            }}
-            onContextMenu={(e) => {
-             
-              e.stopPropagation()
-              items.floor_1.installing = false;
-              items.floor_1.installed = false;
-
-              setSelectedItem(null)
-            }}
+           
             className='flex flex-col items-center cursor-pointer'>
-              <img src='/models/exterior_items/images/floor_1.png' style={{ width: 100, height: 100 }} />
+              <img onClick={(e) => {e.stopPropagation();     items.floor_1.installing = true;
+              items.floor_1.installed = false; }} src='/models/exterior_items/images/floor_1.png' style={{ width: 100, height: 100 }} />
             <span>floor_1</span>
+          </div>
+                    <div
+           
+            className='flex flex-col items-center cursor-pointer'>
+              <img onClick={(e) => {e.stopPropagation();     items.window_1.installing = true;
+              items.window_1.installed = false; }} src='/models/exterior_items/images/window_1.png' style={{ width: 100, height: 100 }} />
+            <span>window_1</span>
           </div>
           </>
         }

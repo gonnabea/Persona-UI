@@ -8,9 +8,9 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
-function Floor1() {
+function Window1() {
     const group = useRef();
-    const glb = useGLTF("/models/exterior_items/floor_1.glb");
+    const glb = useGLTF("/models/exterior_items/window_1.glb");
 
     const [items, setItems] = useRecoilState(itemsState);
     const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
@@ -26,18 +26,19 @@ function Floor1() {
 
             e.stopPropagation()
 
-            if(raycaster.intersectObjects(scene.children)[0] && items.floor_1.installed === false && items.floor_1.installing === true) {
-            
-
+            if(raycaster.intersectObjects(scene.children)[0] && items.window_1.installed === false && items.window_1.installing === true) {
+                
+                // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
                 const groundTarget = raycaster.intersectObjects(scene.children).find(target => target.object.name === 'ground1')
+                // console.log(wall)
 
             if(groundTarget) {
 
                     const mousePosition = groundTarget.point
 
-                    // if(items.floor_1.installing === true) 
+                    // if(items.window_1.installing === true) 
                 
-                        setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z]);
+                        setInstallingPos([mousePosition.x, mousePosition.y + 4, mousePosition.z]);
                 
                     // setLandClickPos(clickedPosition)
             }
@@ -61,15 +62,15 @@ function Floor1() {
 
         
 
-                if(items.floor_1.installed === false && items.floor_1.installing === true) {
+                if(items.window_1.installed === false && items.window_1.installing === true) {
                   
 
-                   items.floor_1.position = [mousePosition.x, mousePosition.y, mousePosition.z]
+                   items.window_1.position = [mousePosition.x, mousePosition.y + 4, mousePosition.z]
                    
-                   items.floor_1.installed = true
-                   items.floor_1.installing = false
+                   items.window_1.installed = true
+                   items.window_1.installing = false
 
-                    glb.scene.children.forEach(mesh => {
+                    glb.scene.children[0].children[0].children[0].children.forEach(mesh => {
                         mesh.material.opacity = 1;
                     })
                   
@@ -109,39 +110,45 @@ function Floor1() {
     
 
     useEffect(() => {
-        console.log(items.floor_1)
+        console.log(items.window_1)
         console.log(glb.scene)
-        if(items.floor_1.installing === true) {
+        if(items.window_1.installing === true) {
             setSelectedItem(glb.scene)
         }
-    }, [items.floor_1])
+    }, [items.window_1])
 
     useEffect(() => {
-        if(items.floor_1.installing === true) {
+        if(items.window_1.installing === true) {
  
-            glb.scene.children.forEach(mesh => {
-                mesh.material.opacity = 0.7;
+            glb.scene.children[0].children[0].children[0].children.forEach(mesh => {
+                // console.log(material)
+                mesh.material.opacity = 0.5;
                 mesh.material.transparent = true
             })
         }
         else {
-            glb.scene.children.forEach(mesh => {
+            glb.scene.children[0].children[0].children[0].children.forEach(mesh => {
                 mesh.material.opacity = 1;
                 
             })
 
         }
-    }, [items.floor_1.installing])
+    }, [items.window_1.installing])
 
 
     return (
         
-        items.floor_1.installing === true || items.floor_1.installed === true ? <Suspense fallback={null}>
+        items.window_1.installing === true || items.window_1.installed === true ? <Suspense fallback={null}>
             <primitive 
               
                 onClick={(e) => {
-                    setSelectedItem((e.eventObject))
+                    // setSelectedItem((e.eventObject))
+                    findClickedPosition(e)
                 }} 
+
+                onDoubleClick={(e) => {
+                    setSelectedItem((e.eventObject))
+                }}
 
                     onPointerOver={() => {
                         document.body.style.cursor = 'pointer'
@@ -151,10 +158,10 @@ function Floor1() {
                     }}
 
                
-        scale={[1,1,1]}
-        position={items.floor_1.installing === true ? installingPos : items.floor_1.position} rotation={items.floor_1.rotation} object={glb.scene} />
+        scale={[0.017, 0.025, 0.015]}
+        position={items.window_1.installing === true ? installingPos : items.window_1.position} rotation={items.window_1.rotation} object={glb.scene} />
         </Suspense> : null
     );
 }
 
-export default Floor1;
+export default Window1;

@@ -21,6 +21,24 @@ export const itemsState = atom({
       installed: false,
       installing: false,
    },
+  window_1: {
+      position: [0,0,0],
+      rotation: [0,0,0],
+      installed: false,
+      installing: false,
+   },
+    window_2: {
+      position: [0,0,0],
+      rotation: [0,0,0],
+      installed: false,
+      installing: false,
+   },
+    bed_1: {
+      position: [0,0,0],
+      rotation: [0,0,0],
+      installed: false,
+      installing: false,
+   },
   changeIndex: 0
 },
 dangerouslyAllowMutability: true

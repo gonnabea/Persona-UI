@@ -12,17 +12,19 @@ interface props {
     beauties?: ReactElement<any, any>
     writes?: ReactElement<any, any>
     exteriors?: ReactElement<any, any>
+    furnitures?: ReactElement<any, any>
+
 }
 
 
-const ItemInstallPop = ({ chairs, lights, electronics, beauties, writes, exteriors }:props) => {
+const ItemInstallPop = ({ chairs, lights, electronics, beauties, writes, exteriors, furnitures }:props) => {
     
-    const categories = ["건축", "가전", "조명", "장식", "기록"]
+    const categories = ["건축", "가전", "조명", "장식", "기록", "가구"]
 
 
 
 
-    const [selectedCategory, setSelectedCategory] = useState("의자");
+    const [selectedCategory, setSelectedCategory] = useState("건축");
 
     const selectCategory = () => {
         switch (selectedCategory) {
@@ -47,6 +49,9 @@ const ItemInstallPop = ({ chairs, lights, electronics, beauties, writes, exterio
             case "건축" :
                 return exteriors
             
+            case "가구" :
+                return furnitures
+            
         
             default:
                 break;
@@ -55,7 +60,7 @@ const ItemInstallPop = ({ chairs, lights, electronics, beauties, writes, exterio
     }
 
     return (
-        <div className="fixed top-0 left-0 z-10 font-bold bg-white opacity-90" style={{height: 250, width: 250}}>
+        <div className="fixed top-0 left-0 z-10 font-bold bg-white opacity-90" style={{height: 150, width: 220}}>
             <header className=" w-full">
                 <ul className="flex justify-around w-full">
                     {

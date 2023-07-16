@@ -151,7 +151,7 @@ function Door1() {
                     }}
 
                
-        scale={[1,0.6,0.7]}
+        scale={[1,0.6,0.8]}
         position={items.door_1.installing === true ? installingPos : items.door_1.position} rotation={items.door_1.rotation} object={glb.scene} />
         </Suspense> : null
     );

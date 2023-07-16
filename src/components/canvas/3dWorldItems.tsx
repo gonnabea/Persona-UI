@@ -19,7 +19,7 @@ import Player4Character from './characters/worldCharacters/Player4'
 import { Suspense, useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
-import SandModel from './SandModel'
+import SandModel from './Wall'
 import SoccerTrophy from './SoccerTrophy'
 import ScreenModel from './ScreenModel'
 import NamePlate from './NamePlate'
@@ -28,6 +28,8 @@ import BlockGroup from './BlockGroup'
 import Door1 from './exteriorItems/Door1'
 import Roof1 from './exteriorItems/Roof1'
 import Floor1 from './exteriorItems/Floor1'
+import Window1 from './exteriorItems/Window1'
+import Bed1 from './interiorItems/Bed1'
 
 type User = {
   character: string
@@ -159,6 +161,8 @@ const WorldItems = () => {
         <Door1 />
         <Roof1 />
         <Floor1 />
+        <Window1 />
+        {/* <Bed1 /> */}
 
         {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
         {/* <SphereCollider
