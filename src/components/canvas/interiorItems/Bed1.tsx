@@ -10,7 +10,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 function Bed1() {
     const group = useRef();
-    const glb = useGLTF("/models/exterior_items/bed_1.glb");
+    const glb = useGLTF("/models/interior_items/bed_1.glb");
 
     const [items, setItems] = useRecoilState(itemsState);
     const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
@@ -70,7 +70,7 @@ function Bed1() {
                    items.bed_1.installed = true
                    items.bed_1.installing = false
 
-                    glb.scene.children[0].children[0].children[0].children.forEach(mesh => {
+                    glb.scene.children[0].children[0].children[0].children[0].children.forEach(mesh => {
                         mesh.material.opacity = 1;
                     })
                   
@@ -120,14 +120,14 @@ function Bed1() {
     useEffect(() => {
         if(items.bed_1.installing === true) {
  
-            glb.scene.children[0].children[0].children[0].children.forEach(mesh => {
+            glb.scene.children[0].children[0].children[0].children[0].children.forEach(mesh => {
                 // console.log(material)
                 mesh.material.opacity = 0.5;
                 mesh.material.transparent = true
             })
         }
         else {
-            glb.scene.children[0].children[0].children[0].children.forEach(mesh => {
+            glb.scene.children[0].children[0].children[0].children[0].children.forEach(mesh => {
                 mesh.material.opacity = 1;
                 
             })
@@ -158,7 +158,7 @@ function Bed1() {
                     }}
 
                
-        scale={[0.017, 0.025, 0.015]}
+        scale={[1, 1, 1]}
         position={items.bed_1.installing === true ? installingPos : items.bed_1.position} rotation={items.bed_1.rotation} object={glb.scene} />
         </Suspense> : null
     );

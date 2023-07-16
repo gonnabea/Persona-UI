@@ -258,7 +258,7 @@ export default function Page(pageProps) {
               items.bed_1.installed = false;
 
              
-            }} src='/models/exterior_items/images/bed_1.png' style={{ width: 100, height: 100 }} />
+            }} src='/models/interior_items/images/bed_1.png' style={{ width: 100, height: 100 }} />
             <span>bed_1</span>
           </div>
         }

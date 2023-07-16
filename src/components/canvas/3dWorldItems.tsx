@@ -162,7 +162,7 @@ const WorldItems = () => {
         <Roof1 />
         <Floor1 />
         <Window1 />
-        {/* <Bed1 /> */}
+        <Bed1 />
 
         {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
         {/* <SphereCollider
