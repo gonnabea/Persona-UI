@@ -25,6 +25,9 @@ import ScreenModel from './ScreenModel'
 import NamePlate from './NamePlate'
 import ChatBubble from './ChatBubble'
 import BlockGroup from './BlockGroup'
+import Door1 from './exteriorItems/Door1'
+import Roof1 from './exteriorItems/Roof1'
+import Floor1 from './exteriorItems/Floor1'
 
 type User = {
   character: string
@@ -47,7 +50,7 @@ const Loader = () => {
 
   console.log(active, progress, errors, item, loaded, total)
   return (
-    <Html center style={{ width: '300px' }}>
+    <Html center style={{ width: '300px', fontSize: "20px", fontWeight: 600 }}>
       {progress.toFixed(0)} % loaded
     </Html>
   )
@@ -152,6 +155,10 @@ const WorldItems = () => {
         {/* <BlockGroup /> */}
 
         <ScreenModel />
+
+        <Door1 />
+        <Roof1 />
+        <Floor1 />
 
         {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
         {/* <SphereCollider

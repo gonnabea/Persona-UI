@@ -11,13 +11,13 @@ interface props {
     electronics?: ReactElement<any, any>
     beauties?: ReactElement<any, any>
     writes?: ReactElement<any, any>
-    furnitures?: ReactElement<any, any>
+    exteriors?: ReactElement<any, any>
 }
 
 
-const ItemInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes, furnitures }:props) => {
+const ItemInstallPop = ({ chairs, lights, electronics, beauties, writes, exteriors }:props) => {
     
-    const categories = ["카페트", "가구", "가전", "조명", "장식", "기록"]
+    const categories = ["건축", "가전", "조명", "장식", "기록"]
 
 
 
@@ -27,8 +27,7 @@ const ItemInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes
     const selectCategory = () => {
         switch (selectedCategory) {
 
-            case "카페트":
-                return carpets
+        
                 
             case "의자":
                 return chairs
@@ -45,8 +44,8 @@ const ItemInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes
             case "기록":
                 return writes
 
-            case "가구" :
-                return furnitures
+            case "건축" :
+                return exteriors
             
         
             default:
@@ -73,7 +72,7 @@ const ItemInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes
                 </ul>
                 
             </header>
-            <section className="h-full overflow-y-auto bg-blue-300">
+            <section onClick={(e) => e.stopPropagation()} className="h-full p-2 overflow-y-auto text-white bg-white">
 
              {selectCategory()}
 

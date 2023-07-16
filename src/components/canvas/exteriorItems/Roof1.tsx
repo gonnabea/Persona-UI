@@ -8,14 +8,13 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
-function Door1() {
+function Roof1() {
     const group = useRef();
-    const glb = useGLTF("/models/exterior_items/door_1.glb");
+    const glb = useGLTF("/models/exterior_items/roof_1.glb");
 
     const [items, setItems] = useRecoilState(itemsState);
     const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
     const [installingPos, setInstallingPos] = useState([0,0,0]);
-    const [landClickPos, setLandClickPos] = useRecoilState(landClickPosState)
 
     const raycaster = useThree((state) => state.raycaster)
     const scene = useThree((state) => state.scene)
@@ -27,7 +26,7 @@ function Door1() {
 
             e.stopPropagation()
 
-            if(raycaster.intersectObjects(scene.children)[0] && items.door_1.installed === false && items.door_1.installing === true) {
+            if(raycaster.intersectObjects(scene.children)[0] && items.roof_1.installed === false && items.roof_1.installing === true) {
             
 
                 const groundTarget = raycaster.intersectObjects(scene.children).find(target => target.object.name === 'ground1')
@@ -36,7 +35,7 @@ function Door1() {
 
                     const mousePosition = groundTarget.point
 
-                    // if(items.door_1.installing === true) 
+                    // if(items.roof_1.installing === true) 
                 
                         setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z]);
                 
@@ -62,19 +61,18 @@ function Door1() {
 
         
 
-                if(items.door_1.installed === false && items.door_1.installing === true) {
+                if(items.roof_1.installed === false && items.roof_1.installing === true) {
                   
 
-                   items.door_1.position = [mousePosition.x, mousePosition.y, mousePosition.z]
+                   items.roof_1.position = [mousePosition.x, mousePosition.y, mousePosition.z]
                    
-                   items.door_1.installed = true
-                   items.door_1.installing = false
+                   items.roof_1.installed = true
+                   items.roof_1.installing = false
 
-
-                    glb.scene.children[0].material.opacity = 1;
-                   
-            
-                    glb.scene.children[1].material.opacity = 1;
+                    glb.scene.children[0].children[0].children[0].children.forEach(material => {
+                        material.opacity = 1;
+                    })
+                  
                  
 
                    removeEventListeners()
@@ -111,32 +109,34 @@ function Door1() {
     
 
     useEffect(() => {
-        console.log(items.door_1)
-        if(items.door_1.installing === true) {
+        console.log(items.roof_1)
+        console.log(glb.scene)
+        if(items.roof_1.installing === true) {
             setSelectedItem(glb.scene)
         }
-    }, [items.door_1])
+    }, [items.roof_1])
 
     useEffect(() => {
-        if(items.door_1.installing === true) {
-            glb.scene.children[0].material.opacity = 0.7;
-            glb.scene.children[0].material.transparent = true
-    
-            glb.scene.children[1].material.opacity = 0.7;
-            glb.scene.children[1].material.transparent = true
+        if(items.roof_1.installing === true) {
+ 
+            glb.scene.children[0].children[0].children[0].children.forEach(material => {
+                material.opacity = 0.7;
+                material.transparent = true
+            })
         }
         else {
-                glb.scene.children[0].material.opacity = 1;
-
-                glb.scene.children[1].material.opacity = 1;
+            glb.scene.children[0].children[0].children[0].children.forEach(material => {
+                material.opacity = 1;
+                
+            })
 
         }
-    }, [items.door_1.installing])
+    }, [items.roof_1.installing])
 
 
     return (
         
-        items.door_1.installing === true || items.door_1.installed === true ? <Suspense fallback={null}>
+        items.roof_1.installing === true || items.roof_1.installed === true ? <Suspense fallback={null}>
             <primitive 
               
                 onClick={(e) => {
@@ -151,10 +151,10 @@ function Door1() {
                     }}
 
                
-        scale={[1,0.6,0.7]}
-        position={items.door_1.installing === true ? installingPos : items.door_1.position} rotation={items.door_1.rotation} object={glb.scene} />
+        scale={[1,1,1]}
+        position={items.roof_1.installing === true ? installingPos : items.roof_1.position} rotation={items.roof_1.rotation} object={glb.scene} />
         </Suspense> : null
     );
 }
 
-export default Door1;
+export default Roof1;
