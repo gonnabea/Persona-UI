@@ -174,12 +174,12 @@ const WallInstallPop = ({ itemName }) => {
           onClickCapture={(event) => {
             event.stopPropagation()
             console.log(selectedItem.position)
-            if (selectedItem.rotation.y !== 0) {
+            if (selectedItem.position.x && selectedItem.rotation.y !== 0) {
               setNewWall({
                 position: { x: selectedItem.position.x, y: selectedItem.position.y, z: selectedItem.position.z - 2 },
                 rotation: { x: 0, y: -1.6, z: 0 },
               })
-            } else if (selectedItem.rotation.y === 0) {
+            } else if (selectedItem.position.x && selectedItem.rotation.y === 0) {
               setNewWall({
                 position: {
                   x: selectedItem.position.x - 1,
@@ -196,12 +196,12 @@ const WallInstallPop = ({ itemName }) => {
         <button
           onClickCapture={(event) => {
             event.stopPropagation()
-            if (selectedItem.rotation.y !== 0) {
+            if (selectedItem.position.x && selectedItem.rotation.y !== 0) {
               setNewWall({
                 position: { x: selectedItem.position.x, y: selectedItem.position.y, z: selectedItem.position.z - 2 },
                 rotation: { x: 0, y: -1.6, z: 0 },
               })
-            } else if (selectedItem.rotation.y === 0) {
+            } else if (selectedItem.position.x && selectedItem.rotation.y === 0) {
               setNewWall({
                 position: {
                   x: selectedItem.position.x + 1,
@@ -220,12 +220,12 @@ const WallInstallPop = ({ itemName }) => {
         <button
           onClickCapture={(event) => {
             event.stopPropagation()
-            if (selectedItem.rotation.y !== 0) {
+            if (selectedItem.position.x && selectedItem.rotation.y !== 0) {
               setNewWall({
                 position: { x: selectedItem.position.x, y: selectedItem.position.y, z: selectedItem.position.z + 2 },
                 rotation: { x: 0, y: -1.6, z: 0 },
               })
-            } else if (selectedItem.rotation.y === 0) {
+            } else if (selectedItem.position.x && selectedItem.rotation.y === 0) {
               setNewWall({
                 position: {
                   x: selectedItem.position.x - 1,
@@ -242,12 +242,12 @@ const WallInstallPop = ({ itemName }) => {
         <button
           onClickCapture={(event) => {
             event.stopPropagation()
-            if (selectedItem.rotation.y !== 0) {
+            if (selectedItem.position.x && selectedItem.rotation.y !== 0) {
               setNewWall({
                 position: { x: selectedItem.position.x, y: selectedItem.position.y, z: selectedItem.position.z + 2 },
                 rotation: { x: 0, y: -1.6, z: 0 },
               })
-            } else if (selectedItem.rotation.y === 0) {
+            } else if (selectedItem.position.x && selectedItem.rotation.y === 0) {
               
             setNewWall({
                 position: {
@@ -267,11 +267,11 @@ const WallInstallPop = ({ itemName }) => {
       <div className='flex justify-around w-full'>
         <button
           onClickCapture={() => {
-            if (selectedItem.rotation.y === 0) {
+            if (selectedItem.position.x && selectedItem.rotation.y === 0) {
               setNewWall({
                 position: { x: selectedItem.position.x - 2, y: selectedItem.position.y, z: selectedItem.position.z },
               })
-            } else if (selectedItem.rotation.y !== 0) {
+            } else if (selectedItem.position.x && selectedItem.rotation.y !== 0) {
               setNewWall({
                 position: {
                   x: selectedItem.position.x - 1,
@@ -285,7 +285,7 @@ const WallInstallPop = ({ itemName }) => {
         </button>
         <button
           onClickCapture={() => {
-            if (selectedItem.rotation.y !== 0) {
+            if (selectedItem.position.x && selectedItem.rotation.y !== 0) {
               setNewWall({
                 position: {
                   x: selectedItem.position.x + 1,
@@ -293,7 +293,7 @@ const WallInstallPop = ({ itemName }) => {
                   z: selectedItem.position.z + 1,
                 },
               })
-            } else if (selectedItem.rotation.y === 0) {
+            } else if (selectedItem.position.x && selectedItem.rotation.y === 0) {
               setNewWall({
                 position: { x: selectedItem.position.x + 2, y: selectedItem.position.y, z: selectedItem.position.z },
               })
@@ -307,19 +307,23 @@ const WallInstallPop = ({ itemName }) => {
         <button
           onClickCapture={(event) => {
             event.stopPropagation()
-            setNewWall({
-              position: { x: selectedItem.position.x, y: selectedItem.position.y + 3, z: selectedItem.position.z },
-              rotation: { x: selectedItem.rotation.x, y: selectedItem.rotation.y, z: selectedItem.rotation.z },
-            })
+            if(selectedItem.position.x) {
+              setNewWall({
+                position: { x: selectedItem.position.x, y: selectedItem.position.y + 3, z: selectedItem.position.z },
+                rotation: { x: selectedItem.rotation.x, y: selectedItem.rotation.y, z: selectedItem.rotation.z },
+              })
+            }
           }}>
           T
         </button>
         <button
           onClickCapture={(event) => {
             event.stopPropagation()
-            setNewWall({
-              position: { x: selectedItem.position.x, y: selectedItem.position.y - 3, z: selectedItem.position.z },
-            })
+            if(selectedItem.position.x) {
+              setNewWall({
+                position: { x: selectedItem.position.x, y: selectedItem.position.y - 3, z: selectedItem.position.z },
+              })
+            }
           }}>
           B
         </button>
