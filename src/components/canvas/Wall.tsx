@@ -48,7 +48,7 @@ function SandModel(props) {
   
   const boxColliders = [];
   
-  
+  console.log(wallTexture)
   
   const useBoxTest = useBox(() => ({
     mass: 1
@@ -146,6 +146,8 @@ function SandModel(props) {
           texture.wrapS = THREE.RepeatWrapping;
           texture.wrapT = THREE.RepeatWrapping;
           texture.repeat.set( 4, 4 );
+          texture.rotation = Math.PI / 2
+          console.log(texture)
           console.log(clonedArr[landClickIndex])
           clonedArr[landClickIndex].children[0].children[0].children[0].children[0].children[0].material.map = texture
             
@@ -336,7 +338,7 @@ function SandModel(props) {
                 rotation={[0,0,0]}
                 object={cloned}
                 modelInfo={{
-                  name: 'sand_box',
+                  name: 'wall',
                   index
                 }}
                 // visible={false}

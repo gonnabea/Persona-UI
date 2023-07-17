@@ -11,24 +11,25 @@ interface props {
     electronics?: ReactElement<any, any>
     beauties?: ReactElement<any, any>
     writes?: ReactElement<any, any>
+    exteriors?: ReactElement<any, any>
     furnitures?: ReactElement<any, any>
+
 }
 
 
-const ItemInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes, furnitures }:props) => {
+const ItemInstallPop = ({ chairs, lights, electronics, beauties, writes, exteriors, furnitures }:props) => {
     
-    const categories = ["카페트", "가구", "가전", "조명", "장식", "기록"]
+    const categories = ["건축", "가전", "조명", "장식", "기록", "가구"]
 
 
 
 
-    const [selectedCategory, setSelectedCategory] = useState("의자");
+    const [selectedCategory, setSelectedCategory] = useState("건축");
 
     const selectCategory = () => {
         switch (selectedCategory) {
 
-            case "카페트":
-                return carpets
+        
                 
             case "의자":
                 return chairs
@@ -45,6 +46,9 @@ const ItemInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes
             case "기록":
                 return writes
 
+            case "건축" :
+                return exteriors
+            
             case "가구" :
                 return furnitures
             
@@ -56,7 +60,7 @@ const ItemInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes
     }
 
     return (
-        <div className="fixed top-0 left-0 z-10 font-bold bg-white opacity-90" style={{height: 250, width: 250}}>
+        <div className="fixed top-0 left-0 z-10 font-bold bg-white opacity-90" style={{height: 150, width: 220}}>
             <header className=" w-full">
                 <ul className="flex justify-around w-full">
                     {
@@ -73,7 +77,7 @@ const ItemInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes
                 </ul>
                 
             </header>
-            <section className="h-full overflow-y-auto bg-blue-300">
+            <section onClick={(e) => e.stopPropagation()} className="h-full p-2 overflow-y-auto text-white bg-white">
 
              {selectCategory()}
 

@@ -129,7 +129,7 @@ function Block({blockState, setBlockStates}) {
             </TransformControls> */}
              <primitive
                 
-         
+                name={"wall"}
                 onPointerOver={() => {
                     document.body.style.cursor = "pointer"
                   api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)

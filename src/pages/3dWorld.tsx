@@ -39,6 +39,7 @@ import ChatIcon from '@/assets/icons/chat.svg'
 import ItemInstallPop from '@/components/dom/ItemInstallPop'
 import { itemsState } from '@/recoil/items/atom'
 import Door1 from '@/components/canvas/exteriorItems/Door1'
+import { selectedItemState } from '@/recoil/selectedItem/atom'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -60,6 +61,7 @@ export default function Page(pageProps) {
   // 웹소켓으로 통신할 유저정보 (position, rotation ...)
   const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState)
   const [items, setItems] = useRecoilState(itemsState)
+    const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
 
   const menuList = [
     {
@@ -236,27 +238,84 @@ export default function Page(pageProps) {
       <WallInstallPop itemName={'벽설치'} />
 
       <ItemInstallPop
+
         furnitures={
-          <div
-            onClick={() => {
-              const itemsState = items
-              delete itemsState.door_1
-              itemsState.door_1 = {
-                position: [0, 0, 0],
-                rotation: [0, 0, 0],
-                installed: true,
-              }
-              setItems(itemsState)
-            }}
-            onContextMenu={() => {
-              const itemsState = items
-              itemsState.door_1.installed = false
-              setItems(itemsState)
-            }}
+           <div
+            
+            // onContextMenu={(e) => {
+             
+            //   e.stopPropagation()
+            //   items.door_1.installing = false;
+            //   items.door_1.installed = false;
+
+            //   setSelectedItem(null)
+            // }}
             className='flex flex-col items-center cursor-pointer'>
-            <img src='/models/exterior_items/images/door_1.png' style={{ width: 125, height: 125 }} />
+              <img onClick={(e) => {
+             
+              e.stopPropagation()
+              items.bed_1.installing = true;
+              items.bed_1.installed = false;
+
+             
+            }} src='/models/interior_items/images/bed_1.png' style={{ width: 100, height: 100 }} />
+            <span>bed_1</span>
+          </div>
+        }
+
+        exteriors={
+          <>
+          <div
+            
+            // onContextMenu={(e) => {
+             
+            //   e.stopPropagation()
+            //   items.door_1.installing = false;
+            //   items.door_1.installed = false;
+
+            //   setSelectedItem(null)
+            // }}
+            className='flex flex-col items-center cursor-pointer'>
+              <img onClick={(e) => {
+             
+              e.stopPropagation()
+              items.door_1.installing = true;
+              items.door_1.installed = false;
+
+             
+            }} src='/models/exterior_items/images/door_1.png' style={{ width: 100, height: 100 }} />
             <span>door_1</span>
           </div>
+          <div 
+            className='flex flex-col items-center cursor-pointer'>
+               <img onClick={(e) => {
+             
+              
+              e.stopPropagation()
+
+              items.roof_1.installing = true;
+              items.roof_1.installed = false;
+
+              
+            }} src='/models/exterior_items/images/roof_1.png' style={{ width: 100, height: 100 }} />
+            <span>roof_1</span>
+
+          </div>
+          <div
+           
+            className='flex flex-col items-center cursor-pointer'>
+              <img onClick={(e) => {e.stopPropagation();     items.floor_1.installing = true;
+              items.floor_1.installed = false; }} src='/models/exterior_items/images/floor_1.png' style={{ width: 100, height: 100 }} />
+            <span>floor_1</span>
+          </div>
+                    <div
+           
+            className='flex flex-col items-center cursor-pointer'>
+              <img onClick={(e) => {e.stopPropagation();     items.window_1.installing = true;
+              items.window_1.installed = false; }} src='/models/exterior_items/images/window_1.png' style={{ width: 100, height: 100 }} />
+            <span>window_1</span>
+          </div>
+          </>
         }
       />
       {/* <Door1 /> */}
@@ -348,5 +407,5 @@ export const getServerSideProps = async ({ req }) => {
   const userAgent = req.headers['user-agent']
   const md = new MobileDetect(userAgent)
 
-  return { props: { title: '3dWorld', isMobile: !!md.mobile() } }
+  return { props: { title: '3dWorld', isMobile: !! md.mobile() } }
 }
