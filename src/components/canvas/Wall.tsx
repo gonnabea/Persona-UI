@@ -110,6 +110,7 @@ function SandModel(props) {
           
           // clonedArr[landClickIndex].children[0].children[0].children[0].children[0].children[0].material.rotation = 1.3
           setBlockPositions([...blockPositions, newWall.position])
+          console.log(blockPositions)
           console.log(landClickIndex)
           console.log(clonedArr[landClickIndex])
           
@@ -150,10 +151,25 @@ function SandModel(props) {
           console.log(texture)
           console.log(clonedArr[landClickIndex])
           clonedArr[landClickIndex].children[0].children[0].children[0].children[0].children[0].material.map = texture
-            
-              
+             setSelectedItem(clonedArr[landClickIndex])
+            setLandClickIndex(landClickIndex + 1)
+
+          if(blockPositions.length === landClickIndex) {
+            setSelectedItem(clonedArr[landClickIndex])
+            setLandClickIndex(landClickIndex + 1)
+          }
+          else {
+            blockPositions.push({x:landClickPos.x,y:landClickPos.y,z:landClickPos.z})
               setSelectedItem(clonedArr[landClickIndex])
-              setLandClickIndex(landClickIndex + 1)
+            setLandClickIndex(landClickIndex + 1)
+          }
+
+          
+        
+          
+        
+              
+             
         }
 
 
@@ -179,9 +195,12 @@ function SandModel(props) {
         console.log(landClickPos)
         setBlockPositions([...blockPositions, landClickPos])
         
+     
+          setSelectedItem(clonedArr[landClickIndex])
+          setLandClickIndex(landClickIndex + 1)
+
         
-        setSelectedItem(clonedArr[landClickIndex])
-        setLandClickIndex(landClickIndex + 1)
+       
        
       
 
@@ -328,9 +347,6 @@ function SandModel(props) {
                   
                 }}
 
-                
-
-              
                 // onMouseUp={boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)} 
                 
                 position={[blockPositions[index]?.x, blockPositions[index]?.y, blockPositions[index]?.z]}
