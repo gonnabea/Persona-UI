@@ -118,6 +118,11 @@ const Chat = ({ isMobile }: ChatProps) => {
       setChatMessages((prevChat) => [...prevChat, user.username + ' has joined'])
     })
 
+    colyseusRoom?.onMessage('leave', (client) => {
+      const username = client.username
+      setChatMessages((prevChat) => [...prevChat, username + ' has left'])
+    })
+
     // .catch((error) => {
     //   setChatMessages((prevMessages) => {
     //     return [...prevMessages, '채팅서버 연결실패']
