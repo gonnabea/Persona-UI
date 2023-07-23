@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 
 const EditModeBtn = () => {
-  const [isEditMode, setIsEdieMode] = useRecoilState(isEditModeState)
+  const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
 
   const handleExitEditMode = () => {
@@ -13,10 +13,10 @@ const EditModeBtn = () => {
 
   const toggleEditMode = () => {
     if (isEditMode === true) {
-      setIsEdieMode(false)
+      setIsEditMode(false)
       handleExitEditMode()
     } else {
-      setIsEdieMode(true)
+      setIsEditMode(true)
     }
   }
 

@@ -1,3 +1,4 @@
+import { isEditModeState } from '@/recoil/isEditMode/atom'
 import { itemsState } from '@/recoil/items/atom'
 import { landClickIndexState } from '@/recoil/landClickIndex/atom'
 import { landClickPosState } from '@/recoil/landClickPos/atom'
@@ -8,6 +9,7 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
+let isEditModeVar = false
 function Roof1() {
   const group = useRef()
   const glb = useGLTF('/models/exterior_items/roof_1.glb')
@@ -16,37 +18,48 @@ function Roof1() {
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
   const [installingPos, setInstallingPos] = useState([0, 0, 0])
 
+  const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
+
   const raycaster = useThree((state) => state.raycaster)
   const scene = useThree((state) => state.scene)
 
   // 마우스 무브 위치 얻기
   const findMousePosition = (e) => {
     // console.log(e)
+    if (isEditModeVar) {
+      e.stopPropagation()
 
-    e.stopPropagation()
+      if (
+        raycaster.intersectObjects(scene.children)[0] &&
+        items.roof_1.installed === false &&
+        items.roof_1.installing === true
+      ) {
+        // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
+        // console.log(wall)
 
-    if (
-      raycaster.intersectObjects(scene.children)[0] &&
-      items.roof_1.installed === false &&
-      items.roof_1.installing === true
-    ) {
-      // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
-      // console.log(wall)
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+          // if(items.roof_1.installing === true)
 
-        // if(items.roof_1.installing === true)
+          setInstallingPos([mousePosition.x, 2.25, mousePosition.z])
 
-        setInstallingPos([mousePosition.x, 2.25, mousePosition.z])
-
-        // setLandClickPos(clickedPosition)
+          // setLandClickPos(clickedPosition)
+        }
       }
     }
 
     //   console.log(clickedPosition)
   }
+
+  useEffect(() => {
+    // alert('sdasd')
+
+    isEditModeVar = isEditMode
+  }, [isEditMode])
 
   // 마우스 클릭한 위치 얻기
   const findClickedPosition = (e) => {

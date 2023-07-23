@@ -198,6 +198,7 @@ function SandModel(props) {
               <>
                 <TransformControls key={index} object={selectedItem} mode='translate'>
                   <primitive
+                    name={'wall'}
                     // onClick={(e) => findPosition(e)}
                     onPointerOver={() => {
                       document.body.style.cursor = 'pointer'

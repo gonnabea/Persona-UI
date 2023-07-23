@@ -476,8 +476,8 @@ export function MyCharacter(props: propTypes) {
       <OrbitControls
         ref={cameraRef}
         target={new Vector3(positionX, isEditMode ? positionY : positionY + 2, positionZ)}
-        maxDistance={isEditMode ? 10 : 2.5}
-        minDistance={isEditMode ? 10 : 2.5}
+        maxDistance={isEditMode ? 10 : 4}
+        minDistance={isEditMode ? 10 : 4}
         enableZoom={false}
         enablePan={false}
         maxPolarAngle={Math.PI / 2}

@@ -20,7 +20,7 @@ const WallInstallBtns = () => {
     }, 100)
   }, [selectedItem])
 
-  return selectedItem && selectedItemPos ? (
+  return selectedItem && selectedItem.name === 'wall' && selectedItemPos ? (
     <>
       <Html position={[selectedItemPos.x + 1, selectedItemPos.y + 2, selectedItemPos.z + 0]}>
         {selectedItem.rotation.y === 0 ? (

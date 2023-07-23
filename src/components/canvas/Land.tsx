@@ -4,7 +4,6 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useRef } from 'react'
 import { useRecoilState } from 'recoil'
 
-
 function Land(props) {
   const group = useRef()
   const glb = useGLTF('/models/beach_island.glb')
@@ -13,17 +12,9 @@ function Land(props) {
 
   const [landClickPos, setLandClickPos] = useRecoilState(landClickPosState)
 
- 
-
-
-
-  Object.values(glb.materials).forEach(material => {
-    
-    material.metalness = 0.5;
-    material.roughness = 0.2;
-
-
-
+  Object.values(glb.materials).forEach((material) => {
+    material.metalness = 0.5
+    material.roughness = 0.2
   })
   const raycaster = useThree((state) => state.raycaster)
   const scene = useThree((state) => state.scene)
@@ -34,16 +25,14 @@ function Land(props) {
 
     e.stopPropagation()
 
-    if(raycaster.intersectObjects(scene.children)[0]) {
+    if (raycaster.intersectObjects(scene.children)[0]) {
       // alert(raycaster.intersectObjects(scene.children)[0].object.name)
-      console.log(raycaster.intersectObjects(scene.children).map(target => target.object.parent.name))
-      const groundTarget = raycaster.intersectObjects(scene.children).find(target => target.object.name === 'ground1')
+      console.log(raycaster.intersectObjects(scene.children).map((target) => target.object.parent.name))
+      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
 
-      if(groundTarget) {
+      if (groundTarget) {
         const clickedPosition = groundTarget.point
-    
 
-    
         setLandClickPos(clickedPosition)
       }
     }
@@ -59,15 +48,17 @@ function Land(props) {
 
   return (
     <Suspense fallback={null}>
-      <Sky distance={45000} sunPosition={[4, 1, 0]} inclination={0} azimuth={0.25} {...props} />
+      <Sky distance={45000} sunPosition={[2, 1, 0]} inclination={0} azimuth={0.25} {...props} />
       <primitive
         onContextMenu={(e) => findPosition(e)}
-        position={[0,48,0]}
+        // onDoubleClick={(e) => findPosition(e)}
+
+        position={[0, 48, 0]}
         scale={0.1}
-        rotation={[0,0,0]}
+        rotation={[0, 0, 0]}
         object={glb.scene}
         modelInfo={{
-          name: 'land'
+          name: 'land',
         }}
         // visible={false}
       />
