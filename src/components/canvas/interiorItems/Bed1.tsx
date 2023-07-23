@@ -38,7 +38,7 @@ function Bed1() {
 
                     // if(items.bed_1.installing === true) 
                 
-                        setInstallingPos([mousePosition.x, mousePosition.y + 4, mousePosition.z]);
+                        setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z]);
                 
                     // setLandClickPos(clickedPosition)
             }
@@ -65,7 +65,7 @@ function Bed1() {
                 if(items.bed_1.installed === false && items.bed_1.installing === true) {
                   
 
-                   items.bed_1.position = [mousePosition.x, mousePosition.y + 4, mousePosition.z]
+                   items.bed_1.position = [mousePosition.x, mousePosition.y, mousePosition.z]
                    
                    items.bed_1.installed = true
                    items.bed_1.installing = false

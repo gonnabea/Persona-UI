@@ -7,6 +7,7 @@ import { landClickPosState } from '@/recoil/landClickPos/atom'
 import { landClickIndexState } from '@/recoil/landClickIndex/atom'
 import { newWallState } from '@/recoil/newWallPosition/atom'
 import { wallTextureState } from '@/recoil/wallTexture/atom'
+import { isEditModeState } from '@/recoil/isEditMode/atom'
 
 const WallInstallPop = ({ itemName }) => {
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
@@ -14,6 +15,8 @@ const WallInstallPop = ({ itemName }) => {
   const [landClickIndex, setLandClickIndex] = useRecoilState(landClickIndexState)
   const [newWall, setNewWall] = useRecoilState(newWallState)
   const [wallTexture, setWallTexture] = useRecoilState(wallTextureState)
+
+  const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
 
   const [updateIndex, forceUpdate] = useState(0)
 
@@ -102,7 +105,7 @@ const WallInstallPop = ({ itemName }) => {
     }
   }
 
-  return (
+  return isEditMode ? (
     <div
       className='fixed top-0 z-10 p-3 bg-gray-200 right-24'
       onContextMenuCapture={(event) => {
@@ -120,17 +123,17 @@ const WallInstallPop = ({ itemName }) => {
         <span>크기 조절</span>
             <div className='flex items-center justify-center'>
                 <span className='pr-2'>{`가로: ${selectedItem?.scale.x}`}</span>
-                <input type='range' step={0.5} min={0.5} max={3} name="scaleX" value={selectedItem ? selectedItem.scale.x : null}  onInput={(e) => handleScaleX(e)} />
+                <input type='range' step={0.1} min={0.5} max={3} name="scaleX" value={selectedItem ? selectedItem.scale.x : null}  onInput={(e) => handleScaleX(e)} />
             </div>
 
             <div className='flex items-center justify-center'>
                 <span className='pr-2'>{`높이: ${selectedItem?.scale.y}`}</span>
-                <input type='range' step={0.5} min={0.5} max={10} name="scaleY" value={selectedItem ? selectedItem.scale.y : null}  onInput={(e) => handleScaleY(e)} />
+                <input type='range' step={0.1} min={0.5} max={10} name="scaleY" value={selectedItem ? selectedItem.scale.y : null}  onInput={(e) => handleScaleY(e)} />
             </div>
 
         <div className='flex items-center justify-center'>
                 <span className='pr-2'>{`세로: ${selectedItem?.scale.z}`}</span>
-                <input type='range' step={0.5} min={0.5} max={3} name="scaleZ" value={selectedItem ? selectedItem.scale.z : null}  onInput={(e) => handleScaleZ(e)} />
+                <input type='range' step={0.1} min={0.5} max={3} name="scaleZ" value={selectedItem ? selectedItem.scale.z : null}  onInput={(e) => handleScaleZ(e)} />
             </div>
       </div> : null
       }
@@ -140,10 +143,10 @@ const WallInstallPop = ({ itemName }) => {
         <div className='flex items-center justify-center'>
           <span className='pr-2'>{`가로축: ${selectedItem?.rotation.x}`}</span>
           <input
-            step={3.141592 / 8}
+            step={Math.PI / 8}
             type='range'
             min={0}
-            max={3.141592}
+            max={Math.PI}
             name='rotationX'
             value={selectedItem ? selectedItem.rotation.x : null}
             onInput={(e) => handleRotationX(e)}
@@ -153,10 +156,10 @@ const WallInstallPop = ({ itemName }) => {
         <div className='flex items-center justify-center'>
           <span className='pr-2'>{`세로축: ${selectedItem?.rotation.y}`}</span>
           <input
-            step={3.141592 / 8}
+            step={Math.PI / 8}
             type='range'
             min={0}
-            max={3.141592}
+            max={Math.PI}
             name='rotationY'
             value={selectedItem ? selectedItem.rotation.y : null}
             onInput={(e) => handleRotationY(e)}
@@ -369,7 +372,7 @@ const WallInstallPop = ({ itemName }) => {
             </div>
         </div> */}
     </div>
-  )
+  ) : null
 }
 
 export default WallInstallPop

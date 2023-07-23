@@ -8,7 +8,7 @@ import Indicator from "./Indicator"
 import { selectedItemState } from '@/recoil/selectedItem/atom'
 import { useBox } from '@react-three/cannon'
 import { BoxCollider } from './Colliders'
-import { isEditModeState } from '@/recoil/isEdisMode/atom'
+import { isEditModeState } from '@/recoil/isEditMode/atom'
 import { Vector3 } from 'three'
 
 

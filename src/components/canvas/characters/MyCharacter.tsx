@@ -14,6 +14,7 @@ import { clone as SkeletonUtilsClone } from '../../../utils/SkeletonUtils'
 import { enterSoccerIndexState } from '@/recoil/enterSoccer/atom'
 import NamePlate from '../NamePlate'
 import ChatBubble from '../ChatBubble'
+import { isEditModeState } from '@/recoil/isEditMode/atom'
 
 // GLTF Actions Type
 type ActionName = 'run'
@@ -115,7 +116,7 @@ export function MyCharacter(props: propTypes) {
   // 캐릭터 이동 구현
   const { forward, backward, left, right, jump } = useCharacterControl()
   // const { forward, backward, left, right, jump } = get()
-  
+
   const [positionX, setPositionX] = useState(-0.3)
   const [positionY, setPositionY] = useState(0.75)
   const [positionZ, setPositionZ] = useState(5)
@@ -124,6 +125,8 @@ export function MyCharacter(props: propTypes) {
   const [updateIndex, forceUpdate] = useState(0)
 
   const [enterSoccerIndex, setEnterSoccerIndex] = useRecoilState(enterSoccerIndexState)
+
+  const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
 
   const frontVector = new Vector3(0, 0, 0)
   const sideVector = new Vector3(0, 0, 0)
@@ -134,7 +137,7 @@ export function MyCharacter(props: propTypes) {
     mass: 1,
     type: 'Dynamic',
     args: [0.4],
-    position: [50,0,0],
+    position: [50, 0, 0],
     onCollideBegin: (e) => {
       if (e.body.name === 'ground1') {
         console.log('바닥과 충돌')
@@ -209,116 +212,127 @@ export function MyCharacter(props: propTypes) {
 
     // console.log(cameraRef.current)
 
-    if (character === 'amy') {
-      setAmyAnimationStatus()
+    if (!isEditMode) {
+      if (character === 'amy') {
+        setAmyAnimationStatus()
 
-      // if(cameraRef.current.object.rotation.y > 0 && cameraRef.current.object.rotation.y < 1.7) {
-      //   frontVector.set(0, 0, Number(forward) - Number(backward))
-      //   sideVector.set(Number(forward), 0, 0)
-      // }
-      // else {
-      // }
-     frontVector.set(0, 0, Number(backward) - Number(forward))
-    sideVector.set(Number(left) - Number(right), 0, 0)
-    direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED).applyEuler(cameraRef.current.object.rotation)
+        // if(cameraRef.current.object.rotation.y > 0 && cameraRef.current.object.rotation.y < 1.7) {
+        //   frontVector.set(0, 0, Number(forward) - Number(backward))
+        //   sideVector.set(Number(forward), 0, 0)
+        // }
+        // else {
+        // }
+        frontVector.set(0, 0, Number(backward) - Number(forward))
+        sideVector.set(Number(left) - Number(right), 0, 0)
+        direction
+          .subVectors(frontVector, sideVector)
+          .normalize()
+          .multiplyScalar(MOVESPEED)
+          .applyEuler(cameraRef.current.object.rotation)
 
-    // console.log(cameraRef.current.getAzimuthalAngle())
-    // console.log(Math.atan2(direction.x, direction.z))
+        // console.log(cameraRef.current.getAzimuthalAngle())
+        // console.log(Math.atan2(direction.x, direction.z))
 
-    
+        // amyCharacterRef.current.rotation.z < 1.7 ? (amyCharacterRef.current.rotation.z += Number(right) / 5) : null
+        // amyCharacterRef.current.rotation.z > -1.7 ? (amyCharacterRef.current.rotation.z -= Number(left) / 5) : null
+        // amyCharacterRef.current.rotation.z > -3.4 ? (amyCharacterRef.current.rotation.z -= Number(backward) / 5) : null
+        // amyCharacterRef.current.rotation.z < 0 ? (amyCharacterRef.current.rotation.z += Number(forward) / 5) : null
 
-      // amyCharacterRef.current.rotation.z < 1.7 ? (amyCharacterRef.current.rotation.z += Number(right) / 5) : null
-      // amyCharacterRef.current.rotation.z > -1.7 ? (amyCharacterRef.current.rotation.z -= Number(left) / 5) : null
-      // amyCharacterRef.current.rotation.z > -3.4 ? (amyCharacterRef.current.rotation.z -= Number(backward) / 5) : null
-      // amyCharacterRef.current.rotation.z < 0 ? (amyCharacterRef.current.rotation.z += Number(forward) / 5) : null
-      
-      
-    //     amyCharacterRef.current.rotation.z = THREE.MathUtils.lerp(
-    //   amyCharacterRef.current.rotation.z,
-    //   Math.sin((MOVESPEED > 1) * state.clock.elapsedTime * 10) / 6,
-    //   0.1,
-    // )
+        //     amyCharacterRef.current.rotation.z = THREE.MathUtils.lerp(
+        //   amyCharacterRef.current.rotation.z,
+        //   Math.sin((MOVESPEED > 1) * state.clock.elapsedTime * 10) / 6,
+        //   0.1,
+        // )
 
-    // amyCharacterRef.current.rotation.copy(cameraRef.current.object.rotation)
-    // amyCharacterRef.current.rotation.y=0
-    if(forward || backward || left || right)
-      amyCharacterRef.current.rotation.z = -(Math.atan2(direction.x, direction.z))
+        // amyCharacterRef.current.rotation.copy(cameraRef.current.object.rotation)
+        // amyCharacterRef.current.rotation.y=0
+        if (forward || backward || left || right) {
+          amyCharacterRef.current.rotation.z = -Math.atan2(direction.x, direction.z)
+          console.log(cameraRef)
+        }
 
-    // if (store.currentAngle > Math.PI) store.currentAngle -= Math.PI * 2;
-    // if (store.currentAngle < -Math.PI) store.currentAngle += Math.PI * 2;
+        // if (store.currentAngle > Math.PI) store.currentAngle -= Math.PI * 2;
+        // if (store.currentAngle < -Math.PI) store.currentAngle += Math.PI * 2;
 
-    // amyCharacterRef.current.lookAt(new Vector3(cameraRef.current.target.x +1, cameraRef.current.target.y +2, cameraRef.current.target.z - 1))
-      // amyCharacterRef.current.quaternion.rotateTowards(cameraRef.current.object.quaternion, 1)
-      // console.log(cameraRef.current.target.z)
+        // amyCharacterRef.current.lookAt(new Vector3(cameraRef.current.target.x +1, cameraRef.current.target.y +2, cameraRef.current.target.z - 1))
+        // amyCharacterRef.current.quaternion.rotateTowards(cameraRef.current.object.quaternion, 1)
+        // console.log(cameraRef.current.target.z)
         api.velocity.set(direction.x, 0, direction.z)
-      // amyCharacterRef.current.rotation.z = cameraRef.current.object.rotation.z
-      mesh.current.getWorldPosition(amyCharacterRef.current.position)
-      setPositionX(amyCharacterRef.current.position.x)
-      setPositionY(amyCharacterRef.current.position.y)
-      setPositionZ(amyCharacterRef.current.position.z)
-      setRotationZ(amyCharacterRef.current.rotation.z)
-    }
+        // amyCharacterRef.current.rotation.z = cameraRef.current.object.rotation.z
+        mesh.current.getWorldPosition(amyCharacterRef.current.position)
+        setPositionX(amyCharacterRef.current.position.x)
+        setPositionY(amyCharacterRef.current.position.y)
+        setPositionZ(amyCharacterRef.current.position.z)
+        setRotationZ(amyCharacterRef.current.rotation.z)
+      }
 
-    if (character === 'mutant') {
-      setMutantAnimationStatus()
-       frontVector.set(0, 0, Number(backward) - Number(forward))
-      sideVector.set(Number(left) - Number(right), 0, 0)
-      direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED).applyEuler(cameraRef.current.object.rotation)
-      // mutantCharacterRef.current.rotation.z < 1.7 ? (mutantCharacterRef.current.rotation.z += Number(right) / 5) : null
-      // mutantCharacterRef.current.rotation.z > -1.7 ? (mutantCharacterRef.current.rotation.z -= Number(left) / 5) : null
-      // mutantCharacterRef.current.rotation.z > -3.4
-      //   ? (mutantCharacterRef.current.rotation.z -= Number(backward) / 5)
-      //   : null
-      // mutantCharacterRef.current.rotation.z < 0 ? (mutantCharacterRef.current.rotation.z += Number(forward) / 5) : null
+      if (character === 'mutant') {
+        setMutantAnimationStatus()
+        frontVector.set(0, 0, Number(backward) - Number(forward))
+        sideVector.set(Number(left) - Number(right), 0, 0)
+        direction
+          .subVectors(frontVector, sideVector)
+          .normalize()
+          .multiplyScalar(MOVESPEED)
+          .applyEuler(cameraRef.current.object.rotation)
+        // mutantCharacterRef.current.rotation.z < 1.7 ? (mutantCharacterRef.current.rotation.z += Number(right) / 5) : null
+        // mutantCharacterRef.current.rotation.z > -1.7 ? (mutantCharacterRef.current.rotation.z -= Number(left) / 5) : null
+        // mutantCharacterRef.current.rotation.z > -3.4
+        //   ? (mutantCharacterRef.current.rotation.z -= Number(backward) / 5)
+        //   : null
+        // mutantCharacterRef.current.rotation.z < 0 ? (mutantCharacterRef.current.rotation.z += Number(forward) / 5) : null
 
-    if(forward || backward || left || right)
-      mutantCharacterRef.current.rotation.z = -(Math.atan2(direction.x, direction.z))
+        if (forward || backward || left || right)
+          mutantCharacterRef.current.rotation.z = -Math.atan2(direction.x, direction.z)
 
-      api.velocity.set(direction.x, 0, direction.z)
-      mesh.current.getWorldPosition(mutantCharacterRef.current.position)
-      setPositionX(mutantCharacterRef.current.position.x)
-      setPositionY(mutantCharacterRef.current.position.y)
-      setPositionZ(mutantCharacterRef.current.position.z)
-      setRotationZ(mutantCharacterRef.current.rotation.z)
-    }
+        api.velocity.set(direction.x, 0, direction.z)
+        mesh.current.getWorldPosition(mutantCharacterRef.current.position)
+        setPositionX(mutantCharacterRef.current.position.x)
+        setPositionY(mutantCharacterRef.current.position.y)
+        setPositionZ(mutantCharacterRef.current.position.z)
+        setRotationZ(mutantCharacterRef.current.rotation.z)
+      }
 
-    if (character === 'louise') {
-      setLouiseAnimationStatus()
-       frontVector.set(0, 0, Number(backward) - Number(forward))
-      sideVector.set(Number(left) - Number(right), 0, 0)
-      direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVESPEED).applyEuler(cameraRef.current.object.rotation)
-      // louiseCharacterRef.current.rotation.z < 1.7 ? (louiseCharacterRef.current.rotation.z += Number(right) / 5) : null
-      // louiseCharacterRef.current.rotation.z > -1.7 ? (louiseCharacterRef.current.rotation.z -= Number(left) / 5) : null
-      // louiseCharacterRef.current.rotation.z > -3.4
-      //   ? (louiseCharacterRef.current.rotation.z -= Number(backward) / 5)
-      //   : null
-      // louiseCharacterRef.current.rotation.z < 0 ? (louiseCharacterRef.current.rotation.z += Number(forward) / 5) : null
+      if (character === 'louise') {
+        setLouiseAnimationStatus()
+        frontVector.set(0, 0, Number(backward) - Number(forward))
+        sideVector.set(Number(left) - Number(right), 0, 0)
+        direction
+          .subVectors(frontVector, sideVector)
+          .normalize()
+          .multiplyScalar(MOVESPEED)
+          .applyEuler(cameraRef.current.object.rotation)
+        // louiseCharacterRef.current.rotation.z < 1.7 ? (louiseCharacterRef.current.rotation.z += Number(right) / 5) : null
+        // louiseCharacterRef.current.rotation.z > -1.7 ? (louiseCharacterRef.current.rotation.z -= Number(left) / 5) : null
+        // louiseCharacterRef.current.rotation.z > -3.4
+        //   ? (louiseCharacterRef.current.rotation.z -= Number(backward) / 5)
+        //   : null
+        // louiseCharacterRef.current.rotation.z < 0 ? (louiseCharacterRef.current.rotation.z += Number(forward) / 5) : null
 
-      if(forward || backward || left || right)
-        louiseCharacterRef.current.rotation.z = -(Math.atan2(direction.x, direction.z))
+        if (forward || backward || left || right)
+          louiseCharacterRef.current.rotation.z = -Math.atan2(direction.x, direction.z)
 
-      api.velocity.set(direction.x, 0, direction.z)
-      mesh.current.getWorldPosition(louiseCharacterRef.current.position)
-      setPositionX(louiseCharacterRef.current.position.x)
-      setPositionY(louiseCharacterRef.current.position.y)
-      setPositionZ(louiseCharacterRef.current.position.z)
-      setRotationZ(louiseCharacterRef.current.rotation.z)
-    }
+        api.velocity.set(direction.x, 0, direction.z)
+        mesh.current.getWorldPosition(louiseCharacterRef.current.position)
+        setPositionX(louiseCharacterRef.current.position.x)
+        setPositionY(louiseCharacterRef.current.position.y)
+        setPositionZ(louiseCharacterRef.current.position.z)
+        setRotationZ(louiseCharacterRef.current.rotation.z)
+      }
 
-    if (forward || backward || left || right) {
-
-      
-      // console.log("moving")
-      colyseusRoom?.send('move', {
-        user: {
-          email: me.email,
-          username: me.username,
-        },
-        positionX,
-        positionY,
-        positionZ,
-        rotationZ,
-      })
+      if (forward || backward || left || right) {
+        // console.log("moving")
+        colyseusRoom?.send('move', {
+          user: {
+            email: me.email,
+            username: me.username,
+          },
+          positionX,
+          positionY,
+          positionZ,
+          rotationZ,
+        })
+      }
     }
   })
 
@@ -363,7 +377,6 @@ export function MyCharacter(props: propTypes) {
             onPointerOut={() => {
               document.body.style.cursor = 'default'
             }}>
-        
             <primitive object={amyNodes.mixamorigHips} />
             <skinnedMesh
               geometry={amyNodes.Ch46.geometry}
@@ -387,7 +400,6 @@ export function MyCharacter(props: propTypes) {
             rotation={[Math.PI / 2, 0, 0]}
             position={[-0.3, 6, 5]}
             ref={mutantCharacterRef}>
-       
             <primitive object={mutantNodes.mixamorigHips} />
             <skinnedMesh
               material={mutantMaterials.mutant_M}
@@ -460,8 +472,16 @@ export function MyCharacter(props: propTypes) {
           </group>
         </group>
       ) : null}
-      
-      <OrbitControls ref={cameraRef} target={new Vector3(positionX, positionY + 2, positionZ)} maxDistance={5} minDistance={5} enableZoom={false} enablePan={false}  />
+
+      <OrbitControls
+        ref={cameraRef}
+        target={new Vector3(positionX, isEditMode ? positionY : positionY + 2, positionZ)}
+        maxDistance={isEditMode ? 10 : 2.5}
+        minDistance={isEditMode ? 10 : 2.5}
+        enableZoom={false}
+        enablePan={false}
+        maxPolarAngle={Math.PI / 2}
+      />
 
       {/* @ts-ignore */}
 

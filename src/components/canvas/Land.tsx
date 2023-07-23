@@ -36,7 +36,7 @@ function Land(props) {
 
     if(raycaster.intersectObjects(scene.children)[0]) {
       // alert(raycaster.intersectObjects(scene.children)[0].object.name)
-
+      console.log(raycaster.intersectObjects(scene.children).map(target => target.object.parent.name))
       const groundTarget = raycaster.intersectObjects(scene.children).find(target => target.object.name === 'ground1')
 
       if(groundTarget) {
@@ -59,7 +59,7 @@ function Land(props) {
 
   return (
     <Suspense fallback={null}>
-      <Sky distance={450000} sunPosition={[0, 1, 0]} inclination={0} azimuth={0.25} {...props} />
+      <Sky distance={45000} sunPosition={[4, 1, 0]} inclination={0} azimuth={0.25} {...props} />
       <primitive
         onContextMenu={(e) => findPosition(e)}
         position={[0,48,0]}

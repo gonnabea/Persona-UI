@@ -1,13 +1,20 @@
-import { isEditModeState } from '@/recoil/isEdisMode/atom'
+import { isEditModeState } from '@/recoil/isEditMode/atom'
+import { selectedItemState } from '@/recoil/selectedItem/atom'
 import { useState, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 
 const EditModeBtn = () => {
   const [isEditMode, setIsEdieMode] = useRecoilState(isEditModeState)
+  const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
+
+  const handleExitEditMode = () => {
+    setSelectedItem(null)
+  }
 
   const toggleEditMode = () => {
     if (isEditMode === true) {
       setIsEdieMode(false)
+      handleExitEditMode()
     } else {
       setIsEdieMode(true)
     }

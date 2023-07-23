@@ -30,6 +30,7 @@ import Roof1 from './exteriorItems/Roof1'
 import Floor1 from './exteriorItems/Floor1'
 import Window1 from './exteriorItems/Window1'
 import Bed1 from './interiorItems/Bed1'
+import InstallArea from './exteriorItems/InstallArea'
 
 type User = {
   character: string
@@ -143,7 +144,7 @@ const WorldItems = () => {
           <Mutant scale={[0.01,0.01,0.01]} rotation={[Math.PI / 2, 0, 0]} position={[-0.3, 6, 5]} />   */}
         {/* <CharacterGroup /> */}
         {/* <AmyOthers /> */}
-        <BoxCollider position={[-0.5, -1, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
+        <BoxCollider position={[-0.5, -1.5, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
 
         {/* 축구장 벽 콜라이더 */}
         <BoxCollider position={[16.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 55]} visible={false} />
@@ -163,6 +164,7 @@ const WorldItems = () => {
         <Floor1 />
         <Window1 />
         <Bed1 />
+        {/* <InstallArea /> */}
 
         {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
         {/* <SphereCollider

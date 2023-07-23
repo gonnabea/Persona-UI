@@ -1,5 +1,7 @@
 
+import { isEditModeState } from "@/recoil/isEditMode/atom"
 import { ReactElement, useState } from "react"
+import { useRecoilState } from "recoil"
 import { JsxElement } from "typescript"
 
 
@@ -21,16 +23,12 @@ const ItemInstallPop = ({ chairs, lights, electronics, beauties, writes, exterio
     
     const categories = ["건축", "가전", "조명", "장식", "기록", "가구"]
 
-
-
-
     const [selectedCategory, setSelectedCategory] = useState("건축");
+    const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState);
 
     const selectCategory = () => {
         switch (selectedCategory) {
 
-        
-                
             case "의자":
                 return chairs
 
@@ -56,10 +54,9 @@ const ItemInstallPop = ({ chairs, lights, electronics, beauties, writes, exterio
             default:
                 break;
         }
-           
     }
 
-    return (
+     return isEditMode ?  (
         <div className="fixed top-0 left-0 z-10 font-bold bg-white opacity-90" style={{height: 150, width: 220}}>
             <header className=" w-full">
                 <ul className="flex justify-around w-full">
@@ -85,7 +82,7 @@ const ItemInstallPop = ({ chairs, lights, electronics, beauties, writes, exterio
             </section>
 
         </div>
-    )
+    ) : null
 }
 
 export default ItemInstallPop;

@@ -8,9 +8,9 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
-function Floor1() {
+function InstallArea() {
     const group = useRef();
-    const glb = useGLTF("/models/exterior_items/floor_1.glb");
+    const glb = useGLTF("/models/exterior_items/install_area.glb");
 
     const [items, setItems] = useRecoilState(itemsState);
     const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
@@ -152,10 +152,10 @@ function Floor1() {
                     }}
 
                 name={'floor_1'}
-                scale={[0.5,0.5,0.5]}
+                scale={[1,0.05,1]}
                 position={items.floor_1.installing === true ? installingPos : items.floor_1.position} rotation={items.floor_1.rotation} object={glb.scene} />
         </Suspense> : null
     );
 }
 
-export default Floor1;
+export default InstallArea;
