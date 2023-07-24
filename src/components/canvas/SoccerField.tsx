@@ -5,6 +5,7 @@ import { BoxCollider } from './Colliders'
 import SoccerBall from './SoccerBall'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { useRecoilValue } from 'recoil'
+import { CollideBeginEvent } from '@react-three/cannon'
 
 type ScoreType = {
   clientId: string
@@ -48,6 +49,21 @@ function SoccerField(props) {
   const raycaster = useThree((state) => state.raycaster)
   const scene = useThree((state) => state.scene)
 
+  const onGoal = (e: CollideBeginEvent, team: 'team1' | 'team2') => {
+    // 골대바닥에 축구공 충돌 여부와 콜리세우스 객체 있는지 확인
+    if (colyseusRoom && e.body.name === 'soccer_ball_1') {
+      const scoreMessage = {
+        soccerScoreId: 'soccer_score_1',
+        ballId: 'soccer_ball_1',
+        team,
+        type: 'increase',
+      }
+
+      // 점수 전송
+      colyseusRoom.send('soccerScore', scoreMessage)
+    }
+  }
+
   const findPosition = (e) => {
     // 마우스 클릭한 지점 위치 얻기
     const clickedPosition = raycaster.intersectObjects(scene.children)[0]?.point
@@ -90,7 +106,14 @@ function SoccerField(props) {
         {/* top */}
         <BoxCollider position={[0, 1, -37.5]} args={[4, 0.1, 2]} />
         {/* bottom */}
-        <BoxCollider position={[0, -1, -37.5]} args={[4, 1, 2]} name='team1' />
+        <BoxCollider
+          position={[0, -1.5, -37.5]}
+          args={[4, 1, 2]}
+          name='team1'
+          onCollideBegin={(e: CollideBeginEvent) => {
+            onGoal(e, 'team1')
+          }}
+        />
         {/* back */}
         <BoxCollider position={[0, 0, -36.5]} args={[4, 2, 0.1]} />
         {/* left */}
@@ -103,7 +126,14 @@ function SoccerField(props) {
         {/* top */}
         <BoxCollider position={[0, 1, -82.5]} args={[4, 0.1, 2]} />
         {/* bottom */}
-        <BoxCollider position={[0, -1, -82.5]} args={[4, 1, 2]} name='team2' />
+        <BoxCollider
+          position={[0, -1.5, -82.5]}
+          args={[4, 1, 2]}
+          name='team2'
+          onCollideBegin={(e: CollideBeginEvent) => {
+            onGoal(e, 'team2')
+          }}
+        />
         {/* back */}
         <BoxCollider position={[0, 0, -83.5]} args={[4, 2, 0.1]} />
         {/* left */}

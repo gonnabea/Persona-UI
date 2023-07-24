@@ -485,7 +485,7 @@ export function MyCharacter(props: propTypes) {
 
       {/* @ts-ignore */}
 
-      <mesh ref={mesh} visible={false}>
+      <mesh ref={mesh} visible={false} name='player'>
         <sphereGeometry args={[0.4]} />
         <meshStandardMaterial color='orange' />
       </mesh>

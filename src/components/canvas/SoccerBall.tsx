@@ -4,7 +4,6 @@ import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { SphereCollider } from './Colliders'
 
 let velocity = null
 let angularVelocity = null
@@ -29,64 +28,41 @@ function SoccerBall(props) {
     args: [0.3],
     position: [-1.5799805660188322, -0.5, -61.161431290782154],
     onCollideBegin: (e) => {
+      // 콜라이더 id에 따른 분기
       if (e.body.name === 'ground1') {
         console.log('바닥과 충돌')
-        if (colyseusRoom) {
-          const me = JSON.parse(localStorage.getItem('me'))
-          const usersArr = Array.from(colyseusRoom.state.players.$items.values())
-
-          const message = {
-            position: ballModelRef.current.position,
-            ballId: 'soccer_ball_1',
-          }
-          colyseusRoom.send('ballSync', message)
-
-          if (velocity) {
-            const message = {
-              velocity: { x: velocity[0], y: velocity[1], z: velocity[2] },
-              angularVelocity: { x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2] },
-              ballId: 'soccer_ball_1',
-            }
-            colyseusRoom.send('ballMove', message)
-          }
-        }
       } else if (e.body.name === 'stair') {
         console.log('계단과 충돌')
       } else if (e.body.name === 'team1' || e.body.name === 'team2') {
-        if (colyseusRoom) {
-          const scoreMessage = {
-            soccerScoreId: 'soccer_score_1',
-            team: e.body.name,
-            type: 'increase',
-          }
-
-          // 점수 전송
-          colyseusRoom.send('soccerScore', scoreMessage)
-          // 위치 초기화
-          api.position.set(-1.5799805660188322, -0.5, -61.161431290782154)
-          api.angularVelocity.set(0, 0, 0)
-          api.velocity.set(0, 0, 0)
-        }
+        api.position.set(-1.5799805660188322, -0.5, -61.161431290782154)
       } else {
         console.log('물체와 충돌')
-        if (colyseusRoom) {
-          const me = JSON.parse(localStorage.getItem('me'))
-          const usersArr = Array.from(colyseusRoom.state.players.$items.values())
+      }
 
-          const message = {
-            position: ballModelRef.current.position,
+      // Send ball position
+      if (colyseusRoom) {
+        const positionMessage = {
+          position: ballModelRef.current.position,
+          ballId: 'soccer_ball_1',
+        }
+
+        colyseusRoom.send('ballSync', positionMessage)
+
+        if (velocity) {
+          const velocityMessage = {
+            velocity: { x: velocity[0], y: velocity[1], z: velocity[2] },
+            angularVelocity: { x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2] },
             ballId: 'soccer_ball_1',
           }
-          colyseusRoom.send('ballSync', message)
+          colyseusRoom.send('ballMove', velocityMessage)
+        }
 
-          if (velocity) {
-            const message = {
-              velocity: { x: velocity[0], y: velocity[1], z: velocity[2] },
-              angularVelocity: { x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2] },
-              ballId: 'soccer_ball_1',
-            }
-            colyseusRoom.send('ballMove', message)
+        if (e.body.name === 'player') {
+          const touchMessage = {
+            ballId: 'soccer_ball_1',
+            reset: false,
           }
+          colyseusRoom.send('ballTouch', touchMessage)
         }
       }
     },
@@ -97,10 +73,8 @@ function SoccerBall(props) {
       } else if (e.body.name === 'stair') {
         console.log('계단과 충돌')
       } else if (e.body.name === 'team1' || e.body.name === 'team2') {
-        // 위치 초기화
-        api.position.set(-1.5799805660188322, -0.5, -61.161431290782154)
-        api.angularVelocity.set(0, 0, 0)
         api.velocity.set(0, 0, 0)
+        api.angularVelocity.set(0, 0, 0)
       } else {
         console.log('물체와 충돌')
         if (colyseusRoom) {
@@ -128,11 +102,6 @@ function SoccerBall(props) {
         console.log('바닥과 충돌')
       } else if (e.body.name === 'stair') {
         console.log('계단과 충돌')
-      } else if (e.body.name === 'team1' || e.body.name === 'team2') {
-        // 위치 초기화
-        api.position.set(-1.5799805660188322, -0.5, -61.161431290782154)
-        api.angularVelocity.set(0, 0, 0)
-        api.velocity.set(0, 0, 0)
       } else {
         console.log('물체와 충돌')
         if (colyseusRoom) {
@@ -187,8 +156,6 @@ function SoccerBall(props) {
       })
 
       colyseusRoom?.onMessage('ballSync', ({ message, clientId }) => {
-        console.log(message)
-
         const position = message.position
 
         ballModelRef.current?.position?.setX(position.x)
@@ -229,6 +196,11 @@ function SoccerBall(props) {
 
       //     } )
     }, 1000)
+  }, [])
+
+  // 공 초기 위치 지정
+  useEffect(() => {
+    console.log(mesh.current.position)
   }, [])
 
   useFrame(({ clock }) => {
