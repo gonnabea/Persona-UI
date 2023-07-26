@@ -14,16 +14,18 @@ interface FormValues {
   signInValues: {
     email: string
     password: string
+    username: string
   }
-  keepSignIn: boolean
+  guestSignIn: boolean
 }
 
 const defaultValues: DefaultValues<FormValues> = {
   signInValues: {
     email: '',
     password: '',
+    username: '', // 사용자명
   },
-  keepSignIn: false,
+  guestSignIn: false,
 }
 
 const SignIn = () => {
@@ -33,12 +35,27 @@ const SignIn = () => {
     handleSubmit,
     getValues,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues,
   })
 
-  const onSubmit = async () => {
+  const signInSubmit = async () => {
+    // 비회원 로그인 시 로컬스토리지에 사용자명만 기록하고 캐릭터 창으로 리다이렉트 처리
+    if (getValues('guestSignIn')) {
+      const userInfo = {
+        data: {
+          username: `guest-${getValues('signInValues.username')}`,
+          isGuest: true,
+        },
+      }
+      localStorage.setItem('me', JSON.stringify(userInfo))
+
+      return router.push('/characters')
+    }
+
+    // 회원 로그인 시 API 요청
     try {
       const { data } = await axiosClient.post('/auth/sign-in', getValues('signInValues'))
       localStorage.setItem('me', JSON.stringify(data))
@@ -59,41 +76,59 @@ const SignIn = () => {
             <PersonaBI className='w-[200px] mb-[60px] fill-primary-200' />
           </div>
           <div className='w-full'>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Input
-                type='email'
-                id='email'
-                label='이메일'
-                className='w-full'
-                errorMessage={errors.signInValues?.email?.message}
-                {...register('signInValues.email', {
-                  required: '이메일을 입력해주세요',
-                  pattern: {
-                    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-                    message: '이메일 형식이 아닙니다.',
-                  },
-                })}
-              />
-              <Input
-                type='password'
-                id='password'
-                label='비밀번호'
-                className='w-full'
-                errorMessage={errors.signInValues?.password?.message}
-                {...register('signInValues.password', {
-                  required: '비밀번호를 입력해주세요',
-                })}
-              />
-              {/* Login options (Always login, find accounts) */}
+            <form onSubmit={handleSubmit(signInSubmit)}>
+              {watch('guestSignIn') ? (
+                <>
+                  <Input
+                    type='text'
+                    id='username'
+                    label='닉네임'
+                    className='w-full'
+                    errorMessage={errors.signInValues?.username?.message}
+                    {...register('signInValues.username', {
+                      required: '닉네임을 입력해주세요',
+                    })}
+                  />
+                </>
+              ) : (
+                <>
+                  <Input
+                    type='email'
+                    id='email'
+                    label='이메일'
+                    className='w-full'
+                    errorMessage={errors.signInValues?.email?.message}
+                    {...register('signInValues.email', {
+                      required: '이메일을 입력해주세요',
+                      pattern: {
+                        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                        message: '이메일 형식이 아닙니다.',
+                      },
+                    })}
+                  />
+                  <Input
+                    type='password'
+                    id='password'
+                    label='비밀번호'
+                    className='w-full'
+                    errorMessage={errors.signInValues?.password?.message}
+                    {...register('signInValues.password', {
+                      required: '비밀번호를 입력해주세요',
+                    })}
+                  />
+                </>
+              )}
+
+              {/* Login options (Guest sign in, find accounts) */}
               <div className='flex items-center justify-between w-full mb-[20px]'>
                 <div>
                   <Checkbox
-                    label='로그인 상태 유지'
+                    label='비회원 로그인'
                     labelPosition='right'
-                    id='always-login'
-                    {...register('keepSignIn')}
+                    id='guest-signin'
+                    {...register('guestSignIn')}
                     onChange={(e) => {
-                      setValue('keepSignIn', e.target.checked)
+                      setValue('guestSignIn', e.target.checked)
                     }}
                   />
                 </div>
