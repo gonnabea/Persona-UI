@@ -44,6 +44,11 @@ const SignIn = () => {
   const signInSubmit = async () => {
     // 비회원 로그인 시 로컬스토리지에 사용자명만 기록하고 캐릭터 창으로 리다이렉트 처리
     if (getValues('guestSignIn')) {
+      // 기존에 로그인했던 기록이 있다면 삭제 처리
+      if (localStorage.getItem('me')) {
+        localStorage.removeItem('me')
+      }
+
       const userInfo = {
         data: {
           username: `guest-${getValues('signInValues.username')}`,
