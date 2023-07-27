@@ -53,7 +53,7 @@ const Loader = () => {
 
   console.log(active, progress, errors, item, loaded, total)
   return (
-    <Html center style={{ width: '300px', fontSize: "20px", fontWeight: 600 }}>
+    <Html center style={{ width: '300px', fontSize: '20px', fontWeight: 600 }}>
       {progress.toFixed(0)} % loaded
     </Html>
   )
@@ -70,6 +70,9 @@ const WorldItems = () => {
       // 나의 정보
       const me = JSON.parse(localStorage.getItem('me'))
       const myClientId = me.colyseusSessionId
+
+      console.log(Array.from(colyseusRoom.state.players.$items.values()))
+
       // 나의 정보를 제외하고 다른 유저의 정보를 State로 지정함
       setOtherUserList(
         Array.from(colyseusRoom.state.players.$items.values()).filter((user: User) => {

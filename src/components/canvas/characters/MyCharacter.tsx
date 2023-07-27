@@ -179,11 +179,11 @@ export function MyCharacter(props: propTypes) {
     // console.log(mutantActions)
 
     if (forward || backward || left || right) {
-      mutantActions['run_Armature.001_Armature']?.play()
+      mutantActions['mutant_run.001']?.play()
       mutantActions['Armature|mixamo.com|Layer0']?.stop()
     } else {
       mutantActions['Armature|mixamo.com|Layer0']?.play()
-      mutantActions['run_Armature.001_Armature']?.stop()
+      mutantActions['mutant_run.001']?.stop()
     }
   }
 
@@ -402,9 +402,9 @@ export function MyCharacter(props: propTypes) {
             ref={mutantCharacterRef}>
             <primitive object={mutantNodes.mixamorigHips} />
             <skinnedMesh
-              material={mutantMaterials.mutant_M}
-              geometry={mutantNodes.MutantMesh.geometry}
-              skeleton={mutantNodes.MutantMesh.skeleton}
+              material={mutantMaterials['mutant_M.001']}
+              geometry={mutantNodes.MutantMesh001.geometry}
+              skeleton={mutantNodes.MutantMesh001.skeleton}
             />
           </group>
         </group>

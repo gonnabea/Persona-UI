@@ -31,7 +31,11 @@ const Mutant = (props: JSX.IntrinsicElements['group']) => {
   const { nodes, materials, animations } = useGLTF('/models/characters/Mutant.glb') as unknown as GLTFResult
   const { actions } = useAnimations<GLTFActions>(animations, groupRef)
 
+  console.log(nodes)
+  console.log(materials)
+
   useEffect(() => {
+    console.log(actions)
     actions['Armature|mixamo.com|Layer0'].play()
   }, [actions])
 
@@ -40,9 +44,9 @@ const Mutant = (props: JSX.IntrinsicElements['group']) => {
       <group ref={characterRef} rotation={[Math.PI / 2, 0, 0]} scale={0.03}>
         <primitive object={nodes.mixamorigHips} />
         <skinnedMesh
-          material={materials.mutant_M}
-          geometry={nodes.MutantMesh.geometry}
-          skeleton={nodes.MutantMesh.skeleton}
+          material={materials['mutant_M.001']}
+          geometry={nodes.MutantMesh001.geometry}
+          skeleton={nodes.MutantMesh001.skeleton}
         />
       </group>
     </group>
