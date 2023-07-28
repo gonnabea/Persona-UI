@@ -10,7 +10,7 @@ const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement
 
   useEffect(() => {
     const authState = JSON.parse(localStorage.getItem('me'))
-    const isSignIn = authState?.data?.token
+    const isSignIn = authState?.token
     const ignoreRedirectList = [
       '/signup',
       '/signup/create',
