@@ -4,9 +4,9 @@ import Router from 'next/router'
 export default function Page() {
   useEffect(() => {
     const authState = JSON.parse(localStorage.getItem('me'))
-    const isSignIn = authState?.token
+    const isSignIn = authState?.data.token
 
-    if (authState?.data.isGuest) {
+    if (authState?.data?.isGuest) {
       localStorage.removeItem('me')
     }
 
