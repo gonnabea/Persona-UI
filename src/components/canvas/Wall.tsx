@@ -196,7 +196,7 @@ function SandModel(props) {
           if (index <= landClickIndex) {
             return (
               <>
-                <TransformControls key={index} object={selectedItem} mode='translate'>
+                <TransformControls key={index}>
                   <primitive
                     name={'wall'}
                     // onClick={(e) => findPosition(e)}

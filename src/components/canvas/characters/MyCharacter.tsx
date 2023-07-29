@@ -128,6 +128,8 @@ export function MyCharacter(props: propTypes) {
 
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
 
+  const [isMoving, setIsMoving] = useState(false)
+
   const frontVector = new Vector3(0, 0, 0)
   const sideVector = new Vector3(0, 0, 0)
   const direction = new Vector3(0, 0, 0)
@@ -332,6 +334,12 @@ export function MyCharacter(props: propTypes) {
           positionZ,
           rotationZ,
         })
+        setIsMoving(true)
+      } else {
+        if (isMoving === true) {
+          colyseusRoom?.send('moveStop')
+          setIsMoving(false)
+        }
       }
     }
   })
@@ -476,11 +484,12 @@ export function MyCharacter(props: propTypes) {
       <OrbitControls
         ref={cameraRef}
         target={new Vector3(positionX, isEditMode ? positionY : positionY + 2, positionZ)}
-        maxDistance={isEditMode ? 10 : 4}
-        minDistance={isEditMode ? 10 : 4}
+        maxDistance={isEditMode ? 15 : 4}
+        minDistance={isEditMode ? 15 : 4}
         enableZoom={false}
         enablePan={false}
-        maxPolarAngle={Math.PI / 2}
+        maxPolarAngle={isEditMode ? Math.PI / 4 : Math.PI / 2}
+        minPolarAngle={isEditMode ? Math.PI / 4 : 0}
       />
 
       {/* @ts-ignore */}

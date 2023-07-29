@@ -1,7 +1,7 @@
 // Player2의 캐릭터 모델
 
 import { useFrame, useGraph, useLoader, useThree } from '@react-three/fiber'
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState, useEffect } from 'react'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { clone as SkeletonUtilsClone } from '../../../../utils/SkeletonUtils'
 import { GLTF } from 'three-stdlib'
@@ -64,9 +64,42 @@ const Player2Character = () => {
   } = useGLTF(`models/characters/player2/Louise.glb`)
   const { actions: louiseActions } = useAnimations(louiseAnimations, louiseGroupRef)
 
-  amyActions.run?.play()
-  mutantActions['mutant_run.001']?.play()
-  louiseActions['Armature|mixamo.com|Layer0.001']?.play()
+  // amyActions.run?.play()
+  // mutantActions['mutant_run.001']?.play()
+  // louiseActions['Armature|mixamo.com|Layer0.001']?.play()
+
+  const setAmyAnimationStatus = () => {
+    if (otherUsers && otherUsers[0]?.isRunning === true) {
+      amyActions['run']?.play()
+      amyActions['idle']?.stop()
+    } else {
+      amyActions['idle']?.play()
+      amyActions['run']?.stop()
+    }
+  }
+
+  const setMutantAnimationStatus = () => {
+    // console.log(mutantActions)
+
+    if (otherUsers && otherUsers[0]?.isRunning === true) {
+      mutantActions['mutant_run.001']?.play()
+      mutantActions['Armature|mixamo.com|Layer0']?.stop()
+    } else {
+      mutantActions['Armature|mixamo.com|Layer0']?.play()
+      mutantActions['mutant_run.001']?.stop()
+    }
+  }
+
+  const setLouiseAnimationStatus = () => {
+    // console.log(louiseActions)
+    if (otherUsers && otherUsers[0]?.isRunning === true) {
+      louiseActions['run']?.play()
+      // louiseActions['Armature|mixamo.com|Layer0.001']?.stop();
+    } else {
+      louiseActions['Armature|mixamo.com|Layer0.001']?.play()
+      louiseActions['run']?.stop()
+    }
+  }
 
   useFrame(() => {
     if (colyseusRoom) {
@@ -77,6 +110,10 @@ const Player2Character = () => {
       otherUsers[0] ? setCharacter(otherUsers[0].character) : null
 
       setOtherUSers(otherUsers)
+
+      setAmyAnimationStatus()
+      setMutantAnimationStatus()
+      setLouiseAnimationStatus()
     }
   })
 

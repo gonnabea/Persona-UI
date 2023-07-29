@@ -64,9 +64,38 @@ const Player3Character = () => {
   } = useGLTF(`/models/characters/player3/Louise.glb`)
   const { actions: louiseActions } = useAnimations(louiseAnimations, louiseGroupRef)
 
-  amyActions.run?.play()
-  mutantActions['mutant_run.001']?.play()
-  louiseActions['Armature|mixamo.com|Layer0.001']?.play()
+  const setAmyAnimationStatus = () => {
+    if (otherUsers && otherUsers[1]?.isRunning === true) {
+      amyActions['run']?.play()
+      amyActions['idle']?.stop()
+    } else {
+      amyActions['idle']?.play()
+      amyActions['run']?.stop()
+    }
+  }
+
+  const setMutantAnimationStatus = () => {
+    // console.log(mutantActions)
+
+    if (otherUsers && otherUsers[1]?.isRunning === true) {
+      mutantActions['mutant_run.001']?.play()
+      mutantActions['Armature|mixamo.com|Layer0']?.stop()
+    } else {
+      mutantActions['Armature|mixamo.com|Layer0']?.play()
+      mutantActions['mutant_run.001']?.stop()
+    }
+  }
+
+  const setLouiseAnimationStatus = () => {
+    // console.log(louiseActions)
+    if (otherUsers && otherUsers[1]?.isRunning === true) {
+      louiseActions['run']?.play()
+      // louiseActions['Armature|mixamo.com|Layer0.001']?.stop();
+    } else {
+      louiseActions['Armature|mixamo.com|Layer0.001']?.play()
+      louiseActions['run']?.stop()
+    }
+  }
 
   useFrame(() => {
     if (colyseusRoom) {
@@ -78,6 +107,10 @@ const Player3Character = () => {
       otherUsers[1] ? setCharacter(otherUsers[1].character) : null
 
       setOtherUSers(otherUsers)
+
+      setAmyAnimationStatus()
+      setMutantAnimationStatus()
+      setLouiseAnimationStatus()
     }
   })
 
@@ -136,7 +169,7 @@ const Player3Character = () => {
               ref={louiseCharacterRef}
               position={
                 otherUsers && otherUsers[1]
-                  ? [otherUsers[1]?.positionX, otherUsers[1]?.positionY, otherUsers[2]?.positionZ]
+                  ? [otherUsers[1]?.positionX, otherUsers[1]?.positionY, otherUsers[1]?.positionZ]
                   : null
               }
               rotation={otherUsers && otherUsers[1] ? [Math.PI / 2, 0, otherUsers[1]?.rotationZ] : null}
