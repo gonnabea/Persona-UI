@@ -169,7 +169,7 @@ const Player3Character = () => {
               ref={louiseCharacterRef}
               position={
                 otherUsers && otherUsers[1]
-                  ? [otherUsers[1]?.positionX, otherUsers[1]?.positionY, otherUsers[2]?.positionZ]
+                  ? [otherUsers[1]?.positionX, otherUsers[1]?.positionY, otherUsers[1]?.positionZ]
                   : null
               }
               rotation={otherUsers && otherUsers[1] ? [Math.PI / 2, 0, otherUsers[1]?.rotationZ] : null}

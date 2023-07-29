@@ -22,7 +22,8 @@ const WallInstallBtns = () => {
 
   return selectedItem && selectedItem.name === 'wall' && selectedItemPos ? (
     <>
-      <Html position={[selectedItemPos.x + 1, selectedItemPos.y + 2, selectedItemPos.z + 0]}>
+      {/* side1 */}
+      <Html position={[selectedItemPos.x + 2, selectedItemPos.y + 2, selectedItemPos.z + 0]}>
         {selectedItem.rotation.y === 0 ? (
           <div
             onClick={() => {
@@ -30,10 +31,16 @@ const WallInstallBtns = () => {
                 position: { x: selectedItem.position.x + 2, y: selectedItem.position.y, z: selectedItem.position.z },
               })
             }}
-            style={{ cursor: 'pointer', backgroundColor: 'white', padding: '10px', borderRadius: '20px' }}></div>
+            style={{
+              cursor: 'pointer',
+              backgroundColor: 'rgba(20, 255, 0, 0.50)',
+              padding: '10px',
+              borderRadius: '20px',
+            }}></div>
         ) : null}
       </Html>
-      <Html position={[selectedItemPos.x - 1, selectedItemPos.y + 2, selectedItemPos.z + 0]}>
+      {/* side2 */}
+      <Html position={[selectedItemPos.x - 2, selectedItemPos.y + 2, selectedItemPos.z + 0]}>
         {selectedItem.rotation.y === 0 ? (
           <div
             onClick={() => {
@@ -45,9 +52,15 @@ const WallInstallBtns = () => {
                 },
               })
             }}
-            style={{ cursor: 'pointer', backgroundColor: 'white', padding: '10px', borderRadius: '20px' }}></div>
+            style={{
+              cursor: 'pointer',
+              backgroundColor: 'rgba(20, 255, 0, 0.50)',
+              padding: '10px',
+              borderRadius: '20px',
+            }}></div>
         ) : null}
       </Html>
+
       <Html position={[selectedItemPos.x - 1, selectedItemPos.y + 2, selectedItemPos.z + 1]}>
         <div
           onClickCapture={(event) => {
@@ -72,7 +85,12 @@ const WallInstallBtns = () => {
               })
             }
           }}
-          style={{ cursor: 'pointer', backgroundColor: 'white', padding: '10px', borderRadius: '20px' }}></div>
+          style={{
+            cursor: 'pointer',
+            backgroundColor: 'rgba(0, 10, 253, .5)',
+            padding: '10px',
+            borderRadius: '20px',
+          }}></div>
       </Html>
       <Html position={[selectedItemPos.x - 1, selectedItemPos.y + 2, selectedItemPos.z - 1]}>
         <div
@@ -99,7 +117,13 @@ const WallInstallBtns = () => {
               })
             }
           }}
-          style={{ cursor: 'pointer', backgroundColor: 'white', padding: '10px', borderRadius: '20px' }}></div>
+          style={{
+            cursor: 'pointer',
+            backgroundColor: 'rgba(0, 10, 253, .5)',
+
+            padding: '10px',
+            borderRadius: '20px',
+          }}></div>
       </Html>
       <Html position={[selectedItemPos.x + 1, selectedItemPos.y + 2, selectedItemPos.z + 1]}>
         <div
@@ -125,7 +149,12 @@ const WallInstallBtns = () => {
               })
             }
           }}
-          style={{ cursor: 'pointer', backgroundColor: 'white', padding: '10px', borderRadius: '20px' }}></div>
+          style={{
+            cursor: 'pointer',
+            backgroundColor: 'rgba(0, 10, 253, .5)',
+            padding: '10px',
+            borderRadius: '20px',
+          }}></div>
       </Html>
       <Html
         onClickCapture={(event) => {
@@ -170,7 +199,12 @@ const WallInstallBtns = () => {
               })
             }
           }}
-          style={{ cursor: 'pointer', backgroundColor: 'white', padding: '10px', borderRadius: '20px' }}></div>
+          style={{
+            cursor: 'pointer',
+            backgroundColor: 'rgba(0, 10, 253, .5)',
+            padding: '10px',
+            borderRadius: '20px',
+          }}></div>
       </Html>
       <Html position={[selectedItemPos.x + 0, selectedItemPos.y + 4, selectedItemPos.z + 0]}>
         <div
@@ -183,7 +217,12 @@ const WallInstallBtns = () => {
               })
             }
           }}
-          style={{ cursor: 'pointer', backgroundColor: 'white', padding: '10px', borderRadius: '20px' }}></div>
+          style={{
+            cursor: 'pointer',
+            backgroundColor: 'rgba(255, 215, 6, 0.50)',
+            padding: '10px',
+            borderRadius: '20px',
+          }}></div>
       </Html>
       <Html position={[selectedItemPos.x + 0, selectedItemPos.y - 2, selectedItemPos.z + 0]}>
         <div
@@ -195,7 +234,12 @@ const WallInstallBtns = () => {
               })
             }
           }}
-          style={{ cursor: 'pointer', backgroundColor: 'white', padding: '10px', borderRadius: '20px' }}></div>
+          style={{
+            cursor: 'pointer',
+            backgroundColor: 'rgba(255, 215, 6, 0.50)',
+            padding: '10px',
+            borderRadius: '20px',
+          }}></div>
       </Html>
       <Html position={[selectedItemPos.x + 0, selectedItemPos.y + 2, selectedItemPos.z + 2]}>
         {selectedItem.rotation.y !== 0 ? (
@@ -209,7 +253,12 @@ const WallInstallBtns = () => {
                 })
               }
             }}
-            style={{ cursor: 'pointer', backgroundColor: 'white', padding: '10px', borderRadius: '20px' }}></div>
+            style={{
+              cursor: 'pointer',
+              backgroundColor: 'rgba(20, 255, 0, 0.50)',
+              padding: '10px',
+              borderRadius: '20px',
+            }}></div>
         ) : null}
       </Html>
       <Html position={[selectedItemPos.x + 0, selectedItemPos.y + 2, selectedItemPos.z - 2]}>
@@ -224,7 +273,12 @@ const WallInstallBtns = () => {
                 })
               }
             }}
-            style={{ cursor: 'pointer', backgroundColor: 'white', padding: '10px', borderRadius: '20px' }}></div>
+            style={{
+              cursor: 'pointer',
+              backgroundColor: 'rgba(20, 255, 0, 0.50)',
+              padding: '10px',
+              borderRadius: '20px',
+            }}></div>
         ) : null}
       </Html>
     </>
