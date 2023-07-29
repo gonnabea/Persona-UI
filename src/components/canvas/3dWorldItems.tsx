@@ -31,6 +31,7 @@ import Floor1 from './exteriorItems/Floor1'
 import Window1 from './exteriorItems/Window1'
 import Bed1 from './interiorItems/Bed1'
 import InstallArea from './exteriorItems/InstallArea'
+import PersonaIcon from '@/assets/icons/persona-icon.svg'
 
 type User = {
   character: string
@@ -53,8 +54,27 @@ const Loader = () => {
 
   console.log(active, progress, errors, item, loaded, total)
   return (
-    <Html center style={{ width: '300px', fontSize: '20px', fontWeight: 600 }}>
-      {progress.toFixed(0)} % loaded
+    <Html center className='fixed w-screen h-screen'>
+      <div className='flex flex-col w-full h-full bg-center bg-[url("/img/loading-bg.png")]'>
+        {/* Content container (팁, 로딩 인디케이터 출력 컨테이너) */}
+        <div className='flex items-end justify-between flex-1 from-[#121130] bg-gradient-to-t p-[20px] lg:p-[40px]'>
+          {/* 팁 */}
+          <div className='flex flex-col [&>*]:text-white'>
+            <p className='uppercase font-[900]'>tip</p>
+            <p>팁입니다...</p>
+          </div>
+          {/* 로딩 인디케이터 */}
+          <div className='flex items-center [&>*]:text-white'>
+            <PersonaIcon fill='#fff' className='w-[20px] h-[20px] mr-[4px] lg:w-[28px] lg:h-[28px] lg:mr-[10px] ' />
+            <p className='uppercase font-[900]'>loading...</p>
+          </div>
+        </div>
+        {/* Progress bar container */}
+        <div className='w-full bg-black h-[10px]'>
+          {/* Progress bar */}
+          <div className='h-full bg-white' style={{ width: `${progress.toFixed(0)}%` }}></div>
+        </div>
+      </div>
     </Html>
   )
 }
