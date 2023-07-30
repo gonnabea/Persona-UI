@@ -108,6 +108,13 @@ const WorldItems = () => {
         return { ...prevState, [client.id]: client }
       })
     })
+
+    // 사용자 퇴장 이벤트 (퇴장 시 닉네임 표시 삭제)
+    colyseusRoom?.onMessage('leave', (client) => {
+      setOtherUserList((prevState) => {
+        return prevState.filter((otherUser) => otherUser.username !== client.username)
+      })
+    })
   }, [colyseusRoom])
 
   return (
