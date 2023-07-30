@@ -25,15 +25,6 @@ function Floor1() {
   const raycaster = useThree((state) => state.raycaster)
   const scene = useThree((state) => state.scene)
 
-  const clonedArr = []
-
-  for (let i = 0; i < 10; i++) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const cloned = useMemo(() => clone(glb.scene), [scene])
-
-    clonedArr.push(cloned)
-  }
-
   // 마우스 무브 위치 얻기
   const findMousePosition = (e) => {
     if (isEditModeVar) {

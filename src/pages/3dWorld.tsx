@@ -250,10 +250,16 @@ export default function Page(pageProps) {
             // }}
             className='flex flex-col items-center cursor-pointer'>
             <img
+              alt='bed_1'
               onClick={(e) => {
                 e.stopPropagation()
-                items.bed_1.installing = true
-                items.bed_1.installed = false
+                // items.bed_1.installing = true
+                // items.bed_1.installed = false
+                // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                const installItem = items.bed_1.find((bed_1) => bed_1.installed === false)
+                if (installItem) {
+                  installItem.installing = true
+                }
               }}
               src='/models/interior_items/images/bed_1.png'
               style={{ width: 100, height: 100 }}
