@@ -116,7 +116,7 @@ const CharactersList = ({
             </div>
             {title ? (
               <div className={`text-center mt-[26px] ${titleClassName}`}>
-                <h5>여행ㄱ</h5>
+                <h5>Mutant</h5>
               </div>
             ) : (
               ''
