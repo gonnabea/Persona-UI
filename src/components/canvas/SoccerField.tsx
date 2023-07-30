@@ -7,29 +7,12 @@ import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { useRecoilValue } from 'recoil'
 import { CollideBeginEvent } from '@react-three/cannon'
 
-type ScoreType = {
-  clientId: string
-  message: {
-    id: string
-    team1: number
-    team2: number
-  }
-}
-
 function SoccerField(props) {
   const group = useRef()
   const glb = useGLTF('/models/soccer_field.glb')
   const targetObject = useRef()
   const directionalLight = useRef()
   const colyseusRoom = useRecoilValue(colyseusRoomState)
-  const [score, setScore] = useState<ScoreType>({
-    clientId: '',
-    message: {
-      id: '',
-      team1: 0,
-      team2: 0,
-    },
-  })
 
   //   Object.keys(glb.materials).forEach(function(v){
   //     glb.materials[v].metalness = 1;
@@ -72,15 +55,6 @@ function SoccerField(props) {
 
     //   console.log(clickedPosition)
   }
-
-  useEffect(() => {
-    if (colyseusRoom) {
-      colyseusRoom.onMessage('soccerScore', (message) => {
-        setScore(message)
-        console.log(message)
-      })
-    }
-  }, [])
 
   useFrame(({ clock }) => {
     const a = clock.getElapsedTime()
@@ -142,15 +116,6 @@ function SoccerField(props) {
         <BoxCollider position={[-2, -1, -82.5]} args={[0.1, 4, 2]} />
       </group>
       {/* <directionalLight position={[0, 0, 0]} intensity={10} target={targetObject.current} /> */}
-
-      {/* 전광판 1 */}
-      <mesh position={[11, 10, -60]} rotation={[0, -1.570796, 0]}>
-        <Text position={[-1, 0, 0.2]}>{score.message?.team2 ?? 0}</Text>
-        <Text position={[0, 0, 0.2]}>:</Text>
-        <Text position={[1, 0, 0.2]}>{score.message?.team1 ?? 0}</Text>
-        <boxGeometry args={[8, 4, 0.1]} />
-        <meshStandardMaterial color='skyblue' opacity={0.3} />
-      </mesh>
     </Suspense>
   )
 }

@@ -10,7 +10,7 @@ const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement
 
   useEffect(() => {
     const authState = JSON.parse(localStorage.getItem('me'))
-    const isSignIn = authState?.token || authState?.data.isGuest
+    const isSignIn = authState?.token
     const ignoreRedirectList = [
       '/signup',
       '/signup/create',
@@ -19,6 +19,10 @@ const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement
       '/resetPassword',
       '/resetPassword/set',
     ]
+
+    if (authState?.data?.isGuest) {
+      localStorage.removeItem('me')
+    }
 
     if (!ignoreRedirectList.includes(router.pathname)) {
       if (!isSignIn) {
