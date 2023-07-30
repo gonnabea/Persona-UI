@@ -1,84 +1,63 @@
-import { enterSoccerIndexState } from '@/recoil/enterSoccer/atom'
-import { useGLTF, useTexture, useVideoTexture } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
-import { Suspense, useRef, useState, useEffect } from 'react'
-import { useRecoilState } from 'recoil'
+import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
+import { Text, useGLTF } from '@react-three/drei'
+import { useRef, useState, useEffect } from 'react'
+import { useRecoilValue } from 'recoil'
 
+type ScoreType = {
+  clientId: string
+  message: {
+    id: string
+    team1: number
+    team2: number
+  }
+}
 
 function ScreenModel(props) {
   const group = useRef()
   const gltf = useGLTF('/models/tv.glb')
-  const videoTextureRef = useRef()
-  const videoTexture1 = useVideoTexture("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-  console.log(gltf)
-  // gltf.materials.M_0136_Charcoal.metalness = 1;
-  // gltf.materials.M_0136_Charcoal.roughness = 0.5;
-
-    //   const [video, setVideo] = useState(() => {
-    //   const vid = document.createElement("video");
-    //   vid.src = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
-    //   vid.crossOrigin = "Anonymous";
-    //   vid.loop = true;
-    //   vid.play()
-    //   return vid;
-    //     });
-
-
-//   Object.keys(glb.materials).forEach(function(v){
-//     glb.materials[v].metalness = 1;
-//     glb.materials[v].roughness = 0.8;
-
-
-    
-  Object.values(gltf.materials).forEach(material => {
-
-    console.log(material)
-    
-    material.metalness = 0.5;
-    material.roughness = 0.3;
-
-   material.emissiveMap = videoTexture1
-
+  const colyseusRoom = useRecoilValue(colyseusRoomState)
+  const [score, setScore] = useState<ScoreType>({
+    clientId: '',
+    message: {
+      id: '',
+      team1: 0,
+      team2: 0,
+    },
   })
 
   useEffect(() => {
-      console.log(gltf)
-      setTimeout(() => {
-          gltf.scene.children[0].children[0].children[0].children[1].children[0].material.map = videoTexture1;
-          console.log(videoTexture1, "color: red;")
-          videoTexture1.source.data.play()
-        //   video.play()
-      }, 0)
-    //    video.play()
+    if (colyseusRoom) {
+      colyseusRoom.onMessage('soccerScore', (message) => {
+        setScore(message)
+        console.log(message)
+      })
+    }
   }, [])
 
+  return (
+    <>
+      <group
+        position={[30.022834499063098, -2, -20.51774623131295]}
+        scale={[1.5, 1.2, 1]}
+        rotation={[0, 3.8, 0]}
+        ref={group}>
+        <primitive object={gltf.scene} />
+        {/* <mesh scale={[16, 9, 0.1]} position={[0, 6.5, 3]}>
+          <planeBufferGeometry />
+          <meshStandardMaterial color='orange' />
+        </mesh> */}
 
-        return (
-            <>
-                <primitive 
-                    onClick={() => {
-                        videoTexture1.source.data.paused ? videoTexture1.source.data.play() : videoTexture1.source.data.pause()
-                    }} 
-                    
-                    position={[30.022834499063098,-2,-20.51774623131295]} scale={[1.5, 1.2 ,1]} 
-                    object={gltf.scene} 
-                    rotation={[0, 3.8, 0]}
-                    onPointerOver={() => {
-                        document.body.style.cursor = "pointer"
-                    }}
-                    onPointerOut={() => {
-                        document.body.style.cursor = "default"
-    
-                    }}
-                />
-                    {/* <mesh  scale={[0,5.8,6]} rotation={[0,3.9,0]} position={[-1,1.7,-0.6]}>
-                        <planeBufferGeometry />
-                        <meshBasicMaterial>
-                            <videoTexture ref={videoTextureRef} attach="map" args={[video]} />
-                        </meshBasicMaterial>
-                    </mesh> */}
-            </>
-        )
+        {/* 전광판 1 */}
+        <mesh position={[0, 6.5, 3]}>
+          <Text position={[-1, 0, 0.2]}>{score.message?.team2 ?? 0}</Text>
+          <Text position={[0, 0, 0.2]}>:</Text>
+          <Text position={[1, 0, 0.2]}>{score.message?.team1 ?? 0}</Text>
+          <boxGeometry args={[16, 9, 0.1]} />
+          <meshStandardMaterial color='skyblue' opacity={0.3} />
+        </mesh>
+      </group>
+    </>
+  )
 }
 
 export default ScreenModel
@@ -95,7 +74,6 @@ export default ScreenModel
 // import { useReactiveVar } from '@apollo/client';
 // import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 
-
 // interface tvModelOpts extends ThreeModelOpts {
 //     videoUrl?: string;
 
@@ -105,7 +83,6 @@ export default ScreenModel
 
 //     const allModelsStatus = useReactiveVar(applyThreeModels);
 //     const { installed, scale, rotateY, isFocused, position, videoUrl } = allModelsStatus.tv[0]
-
 
 //     const createModelStatus = async () => {
 //         const modelStatus = {
@@ -119,24 +96,21 @@ export default ScreenModel
 //       }
 
 //     const size = useAspect(18 * scale, 10 * scale);
-    // const [video, setVideo] = useState(() => {
-    //   const vid = document.createElement("video");
-    //   vid.src = videoUrl;
-    //   vid.crossOrigin = "Anonymous";
-    //   vid.loop = true;
-    //   return vid;
-    // });
-
+// const [video, setVideo] = useState(() => {
+//   const vid = document.createElement("video");
+//   vid.src = videoUrl;
+//   vid.crossOrigin = "Anonymous";
+//   vid.loop = true;
+//   return vid;
+// });
 
 //     const gltf = useLoader(GLTFLoader, modelList.tv);
 
 //     const raycaster = useThree((state) => state.raycaster);
 //     const scene = useThree((state) => state.scene)
 
-
-
 //     const installModel = (e) => {
-        
+
 //             // 마우스 클릭한 지점 위치 얻기
 //             const closedObjPosition = raycaster.intersectObjects(scene.children)[0]?.point
 //             console.dir(e.target.tagName)
@@ -157,24 +131,23 @@ export default ScreenModel
 //                         rotateY,
 //                         isFocused,
 //                         position: {x: closedObjPosition.x, y: 0.4, z: closedObjPosition.z},
-                
+
 //                     }
 //                 })
 //                 setRerender(value => value + 1)
 //             }
-        
+
 //   };
 
-  
 //     useEffect(() => {
 //         window.addEventListener("click", installModel)
 //         video.pause()
 //         createModelStatus()
 //         return () => window.removeEventListener("click", installModel);
 //     }, [
-//         isFocused, 
-//         video, 
-//         video.paused, 
+//         isFocused,
+//         video,
+//         video.paused,
 //         video.src,
 //         installed,
 //         scale,
@@ -184,32 +157,32 @@ export default ScreenModel
 
 //     if(installed === true){
 //         video.play()
-        // return (
-        //     <>
-        //         <primitive 
-        //             onClick={() => {
-        //                 video.paused ? video.play() : video.pause()
-        //             }} 
-                    
-        //             position={[position.x, position.y, position.z]} scale={scale} 
-        //             object={gltf.scene} 
-        //             rotation={[0, rotateY, 0]}
-        //             onPointerOver={() => {
-        //                 document.body.style.cursor = "pointer"
-        //             }}
-        //             onPointerOut={() => {
-        //                 document.body.style.cursor = "default"
-    
-        //             }}
-        //         />
-        //             <mesh onClick={() => video.paused ? video.play() : video.pause()} scale={[scale * 25, scale * 15, scale* 25]} rotation={[0,rotateY+2 *3/4,0]} position={new Vector3(position.x,position.y+1 *5,position.z)}>
-        //                 <planeBufferGeometry />
-        //                 <meshBasicMaterial>
-        //                     <videoTexture attach="map" args={[video]} />
-        //                 </meshBasicMaterial>
-        //             </mesh>
-        //     </>
-        // )
+// return (
+//     <>
+//         <primitive
+//             onClick={() => {
+//                 video.paused ? video.play() : video.pause()
+//             }}
+
+//             position={[position.x, position.y, position.z]} scale={scale}
+//             object={gltf.scene}
+//             rotation={[0, rotateY, 0]}
+//             onPointerOver={() => {
+//                 document.body.style.cursor = "pointer"
+//             }}
+//             onPointerOut={() => {
+//                 document.body.style.cursor = "default"
+
+//             }}
+//         />
+//             <mesh onClick={() => video.paused ? video.play() : video.pause()} scale={[scale * 25, scale * 15, scale* 25]} rotation={[0,rotateY+2 *3/4,0]} position={new Vector3(position.x,position.y+1 *5,position.z)}>
+//                 <planeBufferGeometry />
+//                 <meshBasicMaterial>
+//                     <videoTexture attach="map" args={[video]} />
+//                 </meshBasicMaterial>
+//             </mesh>
+//     </>
+// )
 //     }
 //     else{
 //         video.pause()

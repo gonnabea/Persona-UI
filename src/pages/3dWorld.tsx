@@ -4,7 +4,7 @@ import MobileDetect from 'mobile-detect'
 
 import Land from '@/components/canvas/Land'
 import { MyCharacter } from '@/components/canvas/characters/MyCharacter'
-import { Physics } from '@react-three/cannon'
+import { Physics, Debug } from '@react-three/cannon'
 import { Chat } from '@/components/dom/ChatBox'
 import { BoxCollider, SphereCollider } from '@/components/canvas/Colliders'
 import Button from '@/components/dom/Button'
@@ -61,7 +61,7 @@ export default function Page(pageProps) {
   // 웹소켓으로 통신할 유저정보 (position, rotation ...)
   const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState)
   const [items, setItems] = useRecoilState(itemsState)
-    const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
+  const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
 
   const menuList = [
     {
@@ -238,12 +238,10 @@ export default function Page(pageProps) {
       <WallInstallPop itemName={'벽설치'} />
 
       <ItemInstallPop
-
         furnitures={
-           <div
-            
+          <div
             // onContextMenu={(e) => {
-             
+
             //   e.stopPropagation()
             //   items.door_1.installing = false;
             //   items.door_1.installed = false;
@@ -251,70 +249,78 @@ export default function Page(pageProps) {
             //   setSelectedItem(null)
             // }}
             className='flex flex-col items-center cursor-pointer'>
-              <img onClick={(e) => {
-             
-              e.stopPropagation()
-              items.bed_1.installing = true;
-              items.bed_1.installed = false;
-
-             
-            }} src='/models/interior_items/images/bed_1.png' style={{ width: 100, height: 100 }} />
+            <img
+              onClick={(e) => {
+                e.stopPropagation()
+                items.bed_1.installing = true
+                items.bed_1.installed = false
+              }}
+              src='/models/interior_items/images/bed_1.png'
+              style={{ width: 100, height: 100 }}
+            />
             <span>bed_1</span>
           </div>
         }
-
         exteriors={
           <>
-          <div
-            
-            // onContextMenu={(e) => {
-             
-            //   e.stopPropagation()
-            //   items.door_1.installing = false;
-            //   items.door_1.installed = false;
+            <div
+              // onContextMenu={(e) => {
 
-            //   setSelectedItem(null)
-            // }}
-            className='flex flex-col items-center cursor-pointer'>
-              <img onClick={(e) => {
-             
-              e.stopPropagation()
-              items.door_1.installing = true;
-              items.door_1.installed = false;
+              //   e.stopPropagation()
+              //   items.door_1.installing = false;
+              //   items.door_1.installed = false;
 
-             
-            }} src='/models/exterior_items/images/door_1.png' style={{ width: 100, height: 100 }} />
-            <span>door_1</span>
-          </div>
-          <div 
-            className='flex flex-col items-center cursor-pointer'>
-               <img onClick={(e) => {
-             
-              
-              e.stopPropagation()
+              //   setSelectedItem(null)
+              // }}
+              className='flex flex-col items-center cursor-pointer'>
+              <img
+                onClick={(e) => {
+                  e.stopPropagation()
+                  items.door_1.installing = true
+                  items.door_1.installed = false
+                }}
+                src='/models/exterior_items/images/door_1.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>door_1</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                onClick={(e) => {
+                  e.stopPropagation()
 
-              items.roof_1.installing = true;
-              items.roof_1.installed = false;
-
-              
-            }} src='/models/exterior_items/images/roof_1.png' style={{ width: 100, height: 100 }} />
-            <span>roof_1</span>
-
-          </div>
-          <div
-           
-            className='flex flex-col items-center cursor-pointer'>
-              <img onClick={(e) => {e.stopPropagation();     items.floor_1.installing = true;
-              items.floor_1.installed = false; }} src='/models/exterior_items/images/floor_1.png' style={{ width: 100, height: 100 }} />
-            <span>floor_1</span>
-          </div>
-                    <div
-           
-            className='flex flex-col items-center cursor-pointer'>
-              <img onClick={(e) => {e.stopPropagation();     items.window_1.installing = true;
-              items.window_1.installed = false; }} src='/models/exterior_items/images/window_1.png' style={{ width: 100, height: 100 }} />
-            <span>window_1</span>
-          </div>
+                  items.roof_1.installing = true
+                  items.roof_1.installed = false
+                }}
+                src='/models/exterior_items/images/roof_1.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>roof_1</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                onClick={(e) => {
+                  e.stopPropagation()
+                  items.floor_1.installing = true
+                  items.floor_1.installed = false
+                }}
+                src='/models/exterior_items/images/floor_1.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>floor_1</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                onClick={(e) => {
+                  e.stopPropagation()
+                  items.window_1.installing = true
+                  items.window_1.installed = false
+                }}
+                src='/models/exterior_items/images/window_1.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>window_1</span>
+            </div>
           </>
         }
       />
@@ -392,12 +398,14 @@ Page.canvas = (pageProps) => {
   return (
     <>
       <Physics gravity={[0, -100, 0]}>
-        <Suspense fallback={null}>
-          <WorldItems />
+        <Debug>
+          <Suspense fallback={null}>
+            <WorldItems />
 
-          {/* <object3D name={'dirLightTarget'} position={[-4, 0, 0]} />
+            {/* <object3D name={'dirLightTarget'} position={[-4, 0, 0]} />
       <directionalLight  position={[0, 0, 0]} intensity={11} target={'dirLightTarget'} /> */}
-        </Suspense>
+          </Suspense>
+        </Debug>
       </Physics>
     </>
   )
@@ -407,5 +415,5 @@ export const getServerSideProps = async ({ req }) => {
   const userAgent = req.headers['user-agent']
   const md = new MobileDetect(userAgent)
 
-  return { props: { title: '3dWorld', isMobile: !! md.mobile() } }
+  return { props: { title: '3dWorld', isMobile: !!md.mobile() } }
 }
