@@ -78,7 +78,9 @@ const CharactersList = ({
           ${carouselClassName}
         `)}>
         <div className='flex h-full' ref={carouselItemsRef}>
-          <div className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%] character' id='amy'>
+          <div
+            className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%] character mb-[38px]'
+            id='amy'>
             <div
               className={twMerge(`
                 mx-auto
@@ -93,14 +95,13 @@ const CharactersList = ({
             {title ? (
               <div className={`text-center mt-[26px] ${titleClassName}`}>
                 <h5>Amy</h5>
-                <p className='opacity-50 mb-[38px] mt-[10px]'>ENTJ</p>
               </div>
             ) : (
               ''
             )}
           </div>
           <div
-            className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%] character'
+            className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%] character mb-[38px]'
             id='mutant'>
             <div
               className={twMerge(`
@@ -115,52 +116,7 @@ const CharactersList = ({
             </div>
             {title ? (
               <div className={`text-center mt-[26px] ${titleClassName}`}>
-                <h5>여행ㄱ</h5>
-                <p className='opacity-50 mb-[38px] mt-[10px]'>ENFP</p>
-              </div>
-            ) : (
-              ''
-            )}
-          </div>
-          <div className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%] character' id='ramy'>
-            <div
-              className={twMerge(`
-                mx-auto
-                w-[210px]
-                h-[300px]
-                ${carouselItemClassName}
-              `)}>
-              <Scene>
-                <Remy position-y={-2.75} />
-              </Scene>
-            </div>
-            {title ? (
-              <div className={`text-center mt-[26px] ${titleClassName}`}>
-                <h5>집에 있을래</h5>
-                <p className='opacity-50 mb-[38px] mt-[10px]'>INTJ</p>
-              </div>
-            ) : (
-              ''
-            )}
-          </div>
-          <div
-            className='flex flex-col items-center justify-center h-full min-w-0 flex-[0_0_100%] character'
-            id='louise'>
-            <div
-              className={twMerge(`
-                mx-auto
-                w-[210px]
-                h-[300px]
-                ${carouselItemClassName}
-              `)}>
-              <Scene>
-                <Louise position-y={-3} />
-              </Scene>
-            </div>
-            {title ? (
-              <div className={`text-center mt-[26px] ${titleClassName}`}>
-                <h5>나도 집에 있을래...</h5>
-                <p className='opacity-50 mb-[38px] mt-[10px]'>ISTJ</p>
+                <h5>Mutant</h5>
               </div>
             ) : (
               ''
