@@ -3,9 +3,11 @@ import { itemsState } from '@/recoil/items/atom'
 import { landClickIndexState } from '@/recoil/landClickIndex/atom'
 import { landClickPosState } from '@/recoil/landClickPos/atom'
 import { selectedItemState } from '@/recoil/selectedItem/atom'
+import { clone } from '@/utils/SkeletonUtils'
+import { useBox } from '@react-three/cannon'
 import { useGLTF } from '@react-three/drei'
 import { useLoader, useThree } from '@react-three/fiber'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState, useMemo } from 'react'
 import { useRecoilState } from 'recoil'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
@@ -22,6 +24,15 @@ function Floor1() {
 
   const raycaster = useThree((state) => state.raycaster)
   const scene = useThree((state) => state.scene)
+
+  const clonedArr = []
+
+  for (let i = 0; i < 10; i++) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const cloned = useMemo(() => clone(glb.scene), [scene])
+
+    clonedArr.push(cloned)
+  }
 
   // 마우스 무브 위치 얻기
   const findMousePosition = (e) => {

@@ -150,9 +150,9 @@ const WorldItems = () => {
         <BoxCollider position={[-0.5, -1.5, 0]} args={[1000, 1, 1000]} isGround={true} visible={false} />
 
         {/* 축구장 벽 콜라이더 */}
-        <BoxCollider position={[16.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 55]} visible={false} />
-        <BoxCollider position={[-17.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 55]} visible={false} />
-        <BoxCollider position={[-0.7667139636867977, -0.5, -87.62388279411937]} args={[45, 3, 3]} visible={false} />
+        <BoxCollider position={[16.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 50]} visible={false} />
+        <BoxCollider position={[-17.035457210710149, -0.5, -60.83751896223613]} args={[3, 3, 50]} visible={false} />
+        <BoxCollider position={[-0.7667139636867977, -0.5, -87.62388279411937]} args={[35, 3, 3]} visible={false} />
         <BoxCollider position={[0.7667139636867977, -0.5, -34.62388279411937]} args={[35, 3, 0.2]} visible={false} />
 
         <SoccerTrophy />

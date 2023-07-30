@@ -250,7 +250,6 @@ export function MyCharacter(props: propTypes) {
         // amyCharacterRef.current.rotation.y=0
         if (forward || backward || left || right) {
           amyCharacterRef.current.rotation.z = -Math.atan2(direction.x, direction.z)
-          console.log(cameraRef)
         }
 
         // if (store.currentAngle > Math.PI) store.currentAngle -= Math.PI * 2;

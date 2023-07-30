@@ -386,6 +386,18 @@ const WallInstallPop = ({ itemName }) => {
           onClick={() => setWallTexture('/img/wall_texture_5.jpg')}>
           {wallTexture === '/img/wall_texture_5.jpg' ? ' V' : ''}
         </div>
+        <div
+          className='w-10 h-10  border border-black border-solid rounded-lg cursor-pointer'
+          style={{ backgroundImage: "url('/img/wall_texture_6.jpg')", backgroundSize: 'cover' }}
+          onClick={() => setWallTexture('/img/wall_texture_6.jpg')}>
+          {wallTexture === '/img/wall_texture_6.jpg' ? ' V' : ''}
+        </div>
+        <div
+          className='w-10 h-10  border border-black border-solid rounded-lg cursor-pointer'
+          style={{ backgroundImage: "url('/img/wall_wood.jpg')", backgroundSize: 'cover' }}
+          onClick={() => setWallTexture('/img/wall_wood.jpg')}>
+          {wallTexture === '/img/wall_wood.jpg' ? ' V' : ''}
+        </div>
       </div>
 
       {/* <div className="flex flex-col">
