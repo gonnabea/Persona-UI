@@ -28,7 +28,8 @@ const defaultValues: DefaultValues<FormValues> = {
 }
 
 const SignUpTerms = () => {
-  const [isTermsToggled, toggleTerms] = useToggle(false)
+  const [isServiceTermsToggled, toggleServiceTerms] = useToggle(false)
+  const [isPrivacyTermsToggled, togglePrivacyTerms] = useToggle(false)
 
   const {
     register,
@@ -46,15 +47,13 @@ const SignUpTerms = () => {
     {
       title: '서비스 이용약관 동의(필수)',
       description: '',
-      onSideButtonClick: toggleTerms,
+      onSideButtonClick: toggleServiceTerms,
       highlight: false,
       value: 'serviceTerms',
     },
     {
       title: '개인정보 수집 및 이용동의(필수)',
-      onSideButtonClick: () => {
-        console.log('clicked 1')
-      },
+      onSideButtonClick: togglePrivacyTerms,
       highlight: false,
       value: 'privacyTerms',
     },
@@ -139,17 +138,12 @@ const SignUpTerms = () => {
       </Container>
       <Footer>© BIGINNING All Rights Reserved.</Footer>
       <Modal
-        active={isTermsToggled}
-        toggle={toggleTerms}
-        headerChildren={
-          <>
-            <h3 className='text-center break-keep'>서비스 이용약관 동의(필수)</h3>
-          </>
-        }
+        active={isServiceTermsToggled}
+        toggle={toggleServiceTerms}
+        headerChildren={<h3 className='text-center break-keep'>서비스 이용약관 동의(필수)</h3>}
         bodyChildren={
           <ScrollBox className='h-full lg:w-[440px] lg:h-[330px]'>
             <>
-              <h2 className='my-[10px]'>서비스 이용약관</h2>
               <h3 className='my-[10px]'>제1조(목적)</h3>이 약관은 페르소나 (이하 &apos;회사&apos; 라고 합니다)가
               제공하는 제반 서비스의 이용과 관련하여 회사와 회원과의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을
               목적으로 합니다.
@@ -491,11 +485,53 @@ const SignUpTerms = () => {
         }
         footerChildren={
           <div className='flex flex-col-reverse gap-x-[10px] gap-y-[10px]'>
-            <Button
-              color='secondary'
-              onClick={() => {
-                toggleTerms()
-              }}>
+            <Button color='secondary' onClick={toggleServiceTerms}>
+              닫기
+            </Button>
+          </div>
+        }
+      />
+      <Modal
+        active={isPrivacyTermsToggled}
+        toggle={togglePrivacyTerms}
+        headerChildren={<h3 className='text-center break-keep'>개인정보 수집 및 이용동의(필수)</h3>}
+        bodyChildren={
+          <ScrollBox className='h-full lg:w-[440px] lg:h-[330px]'>
+            <>
+              페르소나(이하 &apos;회사&apos;라고 합니다)는 개인정보보호법 등 관련 법령상의 개인정보보호 규정을 준수하며
+              귀하의 개인정보보호에 최선을 다하고 있습니다. 회사는 개인정보보호법에 근거하여 다음과 같은 내용으로
+              개인정보를 수집 및 처리하고자 합니다. 다음의 내용을 자세히 읽어보시고 모든 내용을 이해하신 후에 동의
+              여부를 결정해주시기 바랍니다.
+              <h3 className='my-[10px]'>제1조(개인정보 수집 및 이용 목적)</h3>
+              이용자가 제공한 모든 정보는 다음의 목적을 위해 활용하며, 목적 이외의 용도로는 사용되지 않습니다.
+              <ul>
+                <li>본인확인</li>
+              </ul>
+              <h3 className='my-[10px]'>제2조(개인정보 수집 및 이용 항목)</h3>
+              회사는 개인정보 수집 목적을 위하여 다음과 같은 정보를 수집합니다.
+              <ul>
+                <li>이메일 및 닉네임</li>
+              </ul>
+              <h3 className='my-[10px]'>제3조(개인정보 보유 및 이용 기간)</h3>
+              <ol>
+                <li>
+                  수집한 개인정보는 수집·이용 동의일로부터 개인정보 수집·이용 목적을 달성할 때까지 보관 및 이용합니다.
+                </li>
+                <li>
+                  개인정보 보유기간의 경과, 처리목적의 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당
+                  개인정보를 파기합니다.
+                </li>
+              </ol>
+              <h3 className='my-[10px]'>제4조(동의 거부 관리)</h3>
+              귀하는 본 안내에 따른 개인정보 수집·이용에 대하여 동의를 거부할 권리가 있습니다. 다만, 귀하가 개인정보
+              동의를 거부하시는 경우에 서비스 이용 중 일부제한의 불이익이 발생할 수 있음을 알려드립니다. 본인은 위의
+              동의서 내용을 충분히 숙지하였으며,위와 같이 개인정보를 수집·이용하는데 동의합니다.
+            </>
+          </ScrollBox>
+        }
+        footerChildren={
+          <div className='flex flex-col-reverse gap-x-[10px] gap-y-[10px]'>
+            <Button color='secondary' onClick={togglePrivacyTerms}>
               닫기
             </Button>
           </div>
