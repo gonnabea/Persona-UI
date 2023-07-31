@@ -32,6 +32,19 @@ import Window1 from './exteriorItems/Window1'
 import Bed1 from './interiorItems/Bed1'
 import InstallArea from './exteriorItems/InstallArea'
 import PersonaIcon from '@/assets/icons/persona-icon.svg'
+import TV1 from './interiorItems/TV1'
+import Lamp2 from './interiorItems/Lamp2'
+import Box1 from './interiorItems/Box1'
+import CoffeeTable1 from './interiorItems/CoffeTable1'
+import Flower1 from './interiorItems/Flower1'
+import Fridge1 from './interiorItems/Fridge1'
+import KitchenChair1 from './interiorItems/KitchenChair1'
+import MicrowaveOven1 from './interiorItems/MicrowaveOven1'
+import Sofa1 from './interiorItems/Sofa1'
+import TrainingItem1 from './interiorItems/TraningItem1'
+import TrainingItem2 from './interiorItems/TrainingItem2'
+import WashingMachine1 from './interiorItems/WashingMachine1'
+import Camera1 from './interiorItems/Camera1'
 
 type User = {
   character: string
@@ -194,6 +207,19 @@ const WorldItems = () => {
         <Floor1 />
         <Window1 />
         <Bed1 />
+        <TV1 />
+        <Lamp2 />
+        <Box1 />
+        <CoffeeTable1 />
+        <Flower1 />
+        <Fridge1 />
+        <KitchenChair1 />
+        <MicrowaveOven1 />
+        <Sofa1 />
+        <TrainingItem1 />
+        <TrainingItem2 />
+        <WashingMachine1 />
+        <Camera1 />
         {/* <InstallArea /> */}
 
         {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}

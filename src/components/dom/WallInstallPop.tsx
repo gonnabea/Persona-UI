@@ -107,7 +107,7 @@ const WallInstallPop = ({ itemName }) => {
 
   return isEditMode ? (
     <div
-      className='fixed top-0 z-10 p-3 bg-gray-200 right-24'
+      className='fixed top-0 z-10 p-3 bg-gray-200 w-60 right-24'
       onContextMenuCapture={(event) => {
         event.preventDefault()
         event.stopPropagation()
@@ -163,7 +163,7 @@ const WallInstallPop = ({ itemName }) => {
 
       <div className='flex flex-col'>
         <span>회전 조절</span>
-        <div className='flex items-center justify-center'>
+        {/* <div className='flex items-center justify-center'>
           <span className='pr-2'>{`가로축: ${selectedItem?.rotation.x}`}</span>
           <input
             step={Math.PI / 8}
@@ -174,15 +174,17 @@ const WallInstallPop = ({ itemName }) => {
             value={selectedItem ? selectedItem.rotation.x : null}
             onInput={(e) => handleRotationX(e)}
           />
-        </div>
+        </div> */}
 
         <div className='flex items-center justify-center'>
-          <span className='pr-2'>{`세로축: ${selectedItem?.rotation.y}`}</span>
+          {/* <span className='pr-2'>{`세로축: ${Math.floor(selectedItem?.rotation.y / Math.PI)}`}</span> */}
+          <span className='pr-2'>{`세로축`}</span>
+
           <input
             step={Math.PI / 8}
             type='range'
             min={0}
-            max={Math.PI}
+            max={3.1416}
             name='rotationY'
             value={selectedItem ? selectedItem.rotation.y : null}
             onInput={(e) => handleRotationY(e)}

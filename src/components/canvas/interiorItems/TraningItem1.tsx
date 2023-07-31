@@ -10,9 +10,9 @@ import { Suspense, useEffect, useRef, useState, useMemo } from 'react'
 import { useRecoilState } from 'recoil'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
-function Floor1() {
+function TrainingItem1() {
   const group = useRef()
-  const glb = useGLTF('/models/exterior_items/floor_1.glb')
+  const glb = useGLTF('/models/interior_items/training_item_001.glb')
 
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
@@ -27,7 +27,7 @@ function Floor1() {
 
   const clonedArr = []
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 3; i++) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const cloned = useMemo(() => clone(glb.scene), [scene])
 
@@ -41,7 +41,7 @@ function Floor1() {
 
     e.stopPropagation()
 
-    const installingModel = items.floor_1.find((floor_1) => floor_1.installing === true)
+    const installingModel = items.training_item_1.find((training_item_1) => training_item_1.installing === true)
 
     if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
       // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
@@ -51,7 +51,7 @@ function Floor1() {
       if (groundTarget) {
         const mousePosition = groundTarget.point
 
-        // if(items.floor_1.installing === true)
+        // if(items.training_item_1.installing === true)
 
         setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
 
@@ -74,8 +74,12 @@ function Floor1() {
       if (groundTarget) {
         const mousePosition = groundTarget.point
 
-        const installingModelState = items.floor_1.find((floor_1) => floor_1.installing === true)
-        const installingModelStateIndex = items.floor_1.findIndex((floor_1) => floor_1.installing === true)
+        const installingModelState = items.training_item_1.find(
+          (training_item_1) => training_item_1.installing === true,
+        )
+        const installingModelStateIndex = items.training_item_1.findIndex(
+          (training_item_1) => training_item_1.installing === true,
+        )
         const installingModel = clonedArr[installingModelStateIndex]
 
         if (installingModelState && installingModelState.installed === false) {
@@ -115,17 +119,17 @@ function Floor1() {
   }, [])
 
   //   useEffect(() => {
-  //     console.log(items.floor_1)
+  //     console.log(items.training_item_1)
   //     console.log(glb.scene)
-  //     if (items.floor_1.installing === true) {
+  //     if (items.training_item_1.installing === true) {
   //       setSelectedItem(glb.scene)
   //     }
-  //   }, [items.floor_1])
+  //   }, [items.training_item_1])
 
   // 가구 설치중일 시 투명하게 보이게 하는 로직.
   //   useEffect(() => {
-  //     const installingModel = items.floor_1.find((floor_1) => floor_1.installing === true)
-  //     const installingModelIndex = items.floor_1.findIndex((floor_1) => floor_1.installing === true)
+  //     const installingModel = items.training_item_1.find((training_item_1) => training_item_1.installing === true)
+  //     const installingModelIndex = items.training_item_1.findIndex((training_item_1) => training_item_1.installing === true)
   //     if (installingModel) {
   //       clonedArr[installingModelIndex].children[0].children[0].children[0].children[0].children.forEach((mesh) => {
   //         // console.log(material)
@@ -133,12 +137,12 @@ function Floor1() {
   //         mesh.material.transparent = true
   //       })
   //     }
-  //   }, [items.floor_1])
+  //   }, [items.training_item_1])
 
   return (
     <>
-      {clonedArr.map((floor_1_scene, index) => {
-        if (items.floor_1[index].installing === true || items.floor_1[index].installed === true) {
+      {clonedArr.map((training_item_1_scene, index) => {
+        if (items.training_item_1[index].installing === true || items.training_item_1[index].installed === true) {
           return (
             <>
               <Suspense key={index} fallback={null}>
@@ -154,8 +158,8 @@ function Floor1() {
                     e.stopPropagation()
                     if (isEditMode) {
                       // e.stopPropagation()
-                      items.floor_1[index].installed = false
-                      items.floor_1[index].installing = false
+                      items.training_item_1[index].installed = false
+                      items.training_item_1[index].installing = false
                       forceUpdate(updateIndex + 1)
                     }
                   }}
@@ -164,19 +168,23 @@ function Floor1() {
                     e.stopPropagation()
                     if (isEditMode) {
                       console.log(e)
-                      items.floor_1[index].installed = false
-                      items.floor_1[index].installing = true
+                      items.training_item_1[index].installed = false
+                      items.training_item_1[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
-                      // setItems({ ...items, floor_1: items.floor_1 })
-                      console.log(items.floor_1[index])
+                      // setItems({ ...items, training_item_1: items.training_item_1 })
+                      console.log(items.training_item_1[index])
                     }
                   }}
-                  scale={[1, 2, 1]}
-                  position={items.floor_1[index].installing == true ? installingPos : items.floor_1[index].position}
-                  rotation={items.floor_1[index].rotation}
-                  object={floor_1_scene}
+                  scale={[1, 1, 1]}
+                  position={
+                    items.training_item_1[index].installing == true
+                      ? installingPos
+                      : items.training_item_1[index].position
+                  }
+                  rotation={items.training_item_1[index].rotation}
+                  object={training_item_1_scene}
                 />
               </Suspense>
               {/*  */}(
@@ -184,20 +192,20 @@ function Floor1() {
                 <>
                   <Html
                     position={
-                      items.floor_1[index].installing == true
+                      items.training_item_1[index].installing == true
                         ? [installingPos[0], installingPos[1] + 2, installingPos[2]]
                         : [
-                            items.floor_1[index].position[0],
-                            items.floor_1[index].position[1] + 2,
-                            items.floor_1[index].position[2],
+                            items.training_item_1[index].position[0],
+                            items.training_item_1[index].position[1] + 2,
+                            items.training_item_1[index].position[2],
                           ]
                     }>
                     <button
                       onClick={() => {
-                        items.floor_1[index].position = [
-                          items.floor_1[index].position[0],
-                          items.floor_1[index].position[1] + 3,
-                          items.floor_1[index].position[2],
+                        items.training_item_1[index].position = [
+                          items.training_item_1[index].position[0],
+                          items.training_item_1[index].position[1] + 3,
+                          items.training_item_1[index].position[2],
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
@@ -205,20 +213,20 @@ function Floor1() {
                   </Html>{' '}
                   <Html
                     position={
-                      items.floor_1[index].installing == true
+                      items.training_item_1[index].installing == true
                         ? [installingPos[0], installingPos[1] - 2, installingPos[2]]
                         : [
-                            items.floor_1[index].position[0],
-                            items.floor_1[index].position[1] - 2,
-                            items.floor_1[index].position[2],
+                            items.training_item_1[index].position[0],
+                            items.training_item_1[index].position[1] - 2,
+                            items.training_item_1[index].position[2],
                           ]
                     }>
                     <button
                       onClick={() => {
-                        items.floor_1[index].position = [
-                          items.floor_1[index].position[0],
-                          items.floor_1[index].position[1] - 3,
-                          items.floor_1[index].position[2],
+                        items.training_item_1[index].position = [
+                          items.training_item_1[index].position[0],
+                          items.training_item_1[index].position[1] - 3,
+                          items.training_item_1[index].position[2],
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
@@ -226,20 +234,20 @@ function Floor1() {
                   </Html>
                   <Html
                     position={
-                      items.floor_1[index].installing == true
+                      items.training_item_1[index].installing == true
                         ? [installingPos[0] - 2.5, installingPos[1] + 1, installingPos[2]]
                         : [
-                            items.floor_1[index].position[0] - 2.5,
-                            items.floor_1[index].position[1] + 1,
-                            items.floor_1[index].position[2],
+                            items.training_item_1[index].position[0] - 2.5,
+                            items.training_item_1[index].position[1] + 1,
+                            items.training_item_1[index].position[2],
                           ]
                     }>
                     <button
                       onClick={() => {
-                        items.floor_1[index].rotation = [
-                          items.floor_1[index].rotation[0],
-                          items.floor_1[index].rotation[1] + Math.PI / 4,
-                          items.floor_1[index].rotation[2],
+                        items.training_item_1[index].rotation = [
+                          items.training_item_1[index].rotation[0],
+                          items.training_item_1[index].rotation[1] + Math.PI / 4,
+                          items.training_item_1[index].rotation[2],
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
@@ -247,20 +255,20 @@ function Floor1() {
                   </Html>
                   <Html
                     position={
-                      items.floor_1[index].installing == true
+                      items.training_item_1[index].installing == true
                         ? [installingPos[0] + 2, installingPos[1] + 1, installingPos[2]]
                         : [
-                            items.floor_1[index].position[0] + 2,
-                            items.floor_1[index].position[1] + 1,
-                            items.floor_1[index].position[2],
+                            items.training_item_1[index].position[0] + 2,
+                            items.training_item_1[index].position[1] + 1,
+                            items.training_item_1[index].position[2],
                           ]
                     }>
                     <button
                       onClick={() => {
-                        items.floor_1[index].rotation = [
-                          items.floor_1[index].rotation[0],
-                          items.floor_1[index].rotation[1] - Math.PI / 4,
-                          items.floor_1[index].rotation[2],
+                        items.training_item_1[index].rotation = [
+                          items.training_item_1[index].rotation[0],
+                          items.training_item_1[index].rotation[1] - Math.PI / 4,
+                          items.training_item_1[index].rotation[2],
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
@@ -277,4 +285,4 @@ function Floor1() {
   )
 }
 
-export default Floor1
+export default TrainingItem1

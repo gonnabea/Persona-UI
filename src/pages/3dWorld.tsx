@@ -238,34 +238,288 @@ export default function Page(pageProps) {
       <WallInstallPop itemName={'벽설치'} />
 
       <ItemInstallPop
+        tranings={
+          <>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='training_item_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.training_item_1.find(
+                    (training_item_1) => training_item_1.installed === false,
+                  )
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/training_item_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>training_item_1</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='training_item_2'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.training_item_2.find(
+                    (training_item_2) => training_item_2.installed === false,
+                  )
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/training_item_002.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>training_item_2</span>
+            </div>
+          </>
+        }
+        lights={
+          <>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='lamp_2'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.lamp_2.find((lamp_2) => lamp_2.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/lamp_002.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>lamp_2</span>
+            </div>
+          </>
+        }
+        beauties={
+          <>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='flower_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.flower_1.find((flower_1) => flower_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/flower_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>box1</span>
+            </div>
+          </>
+        }
+        electronics={
+          <>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='tv_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.tv_1.find((tv_1) => tv_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/tv_wall_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>tv_1</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='box_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.camera_1.find((camera_1) => camera_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/camera_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>camera_1</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='fridge_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.fridge_1.find((fridge_1) => fridge_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/fridge_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>fridge_1</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='microwave_oven_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.microwave_oven_1.find(
+                    (microwave_oven_1) => microwave_oven_1.installed === false,
+                  )
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/microwave_oven_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>microwave_oven_1</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='washing_machine_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.washing_machine_1.find(
+                    (washing_machine_1) => washing_machine_1.installed === false,
+                  )
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/washing_machine_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>washing_machine_1</span>
+            </div>
+          </>
+        }
         furnitures={
-          <div
-            // onContextMenu={(e) => {
+          <>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='bed_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.bed_1.find((bed_1) => bed_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/bed_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>bed_1</span>
+            </div>
 
-            //   e.stopPropagation()
-            //   items.door_1.installing = false;
-            //   items.door_1.installed = false;
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='sofa_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.sofa_1.installing = true
+                  // items.sofa_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.sofa_1.find((sofa_1) => sofa_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/sofa_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>sofa_1</span>
+            </div>
 
-            //   setSelectedItem(null)
-            // }}
-            className='flex flex-col items-center cursor-pointer'>
-            <img
-              alt='bed_1'
-              onClick={(e) => {
-                e.stopPropagation()
-                // items.bed_1.installing = true
-                // items.bed_1.installed = false
-                // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
-                const installItem = items.bed_1.find((bed_1) => bed_1.installed === false)
-                if (installItem) {
-                  installItem.installing = true
-                }
-              }}
-              src='/models/interior_items/images/bed_1.png'
-              style={{ width: 100, height: 100 }}
-            />
-            <span>bed_1</span>
-          </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='box_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.box_1.find((box_1) => box_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/box_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>box_1</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='coffee_table_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.coffee_table_1.find((coffee_table_1) => coffee_table_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/coffee_table_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>coffee_table_1</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                alt='kitchen_chair_1'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // items.bed_1.installing = true
+                  // items.bed_1.installed = false
+                  // 아직 설치되지 않은 모델을 찾아 설치중 상태로 변경
+                  const installItem = items.kitchen_chair_1.find(
+                    (kitchen_chair_1) => kitchen_chair_1.installed === false,
+                  )
+                  if (installItem) {
+                    installItem.installing = true
+                  }
+                }}
+                src='/models/interior_items/images/kitchen_chair_001.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>kitchen_chair_1</span>
+            </div>
+          </>
         }
         exteriors={
           <>
@@ -307,8 +561,10 @@ export default function Page(pageProps) {
               <img
                 onClick={(e) => {
                   e.stopPropagation()
-                  items.floor_1.installing = true
-                  items.floor_1.installed = false
+                  const installItem = items.floor_1.find((floor_1) => floor_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                  }
                 }}
                 src='/models/exterior_items/images/floor_1.png'
                 style={{ width: 100, height: 100 }}
