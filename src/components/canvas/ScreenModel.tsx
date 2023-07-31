@@ -31,6 +31,19 @@ function ScreenModel(props) {
         setScore(message)
         console.log(message)
       })
+
+      console.log(Array.from(colyseusRoom.state.soccerScores.$items.values())[0].id)
+
+      setScore((prevState) => {
+        return {
+          ...prevState,
+          message: {
+            id: Array.from(colyseusRoom.state.soccerScores.$items.values())[0].id || ('' as string),
+            team1: Array.from(colyseusRoom.state.soccerScores.$items.values())[0].team1 || (0 as Number),
+            team2: Array.from(colyseusRoom.state.soccerScores.$items.values())[0].team2 || (0 as Number),
+          },
+        }
+      })
     }
   }, [])
 
