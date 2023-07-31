@@ -115,6 +115,28 @@ const WorldItems = () => {
         return prevState.filter((otherUser) => otherUser.username !== client.username)
       })
     })
+
+    // 최초 랜더링 시 기존 사용자의 위치 얻어오기
+    if (colyseusRoom) {
+      // 나의 정보
+      const me = JSON.parse(localStorage.getItem('me'))
+      const myClientId = me.colyseusSessionId
+
+      // 나의 정보를 제외하고 다른 유저의 정보를 State로 지정함
+      setOtherUserList(
+        Array.from(colyseusRoom.state.players.$items.values()).filter((user: User) => {
+          if (user.id !== myClientId) {
+            return user
+          }
+        }) as User[],
+      )
+    }
+    // 새로운 유저가 들어왔을 때 사용자의 위치 얻어오기
+    colyseusRoom?.onMessage('join', (client) => {
+      setOtherUserList((prevState) => {
+        return [...prevState, client]
+      })
+    })
   }, [colyseusRoom])
 
   return (
