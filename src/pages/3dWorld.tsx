@@ -207,6 +207,10 @@ export default function Page(pageProps) {
 
   return (
     <div className='[&>*]:select-none'>
+      {/* 현재 접속하고 있는 룸 ID */}
+      <div className='absolute bg-black right-[30px] bottom-[10px] z-[1] p-[10px] bg-opacity-50'>
+        <p className='text-white'>Current Room ID: {colyseusRoom?.id}</p>
+      </div>
       {/* 모바일 채팅버튼 */}
       {pageProps.isMobile ? (
         <Button
