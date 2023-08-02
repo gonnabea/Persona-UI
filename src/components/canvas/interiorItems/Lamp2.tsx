@@ -188,7 +188,7 @@ function Lamp2() {
                           items.lamp_2[index].position[2],
                         ]
                   }
-                  distance={20}
+                  distance={10}
                   color={'orange'}
                 />
               </Suspense>

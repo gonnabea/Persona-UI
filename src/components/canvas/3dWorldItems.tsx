@@ -19,7 +19,7 @@ import Player4Character from './characters/worldCharacters/Player4'
 import { Suspense, useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
-import SandModel from './Wall'
+import Wall from './Wall'
 import SoccerTrophy from './SoccerTrophy'
 import ScreenModel from './ScreenModel'
 import NamePlate from './NamePlate'
@@ -45,6 +45,7 @@ import TrainingItem1 from './interiorItems/TraningItem1'
 import TrainingItem2 from './interiorItems/TrainingItem2'
 import WashingMachine1 from './interiorItems/WashingMachine1'
 import Camera1 from './interiorItems/Camera1'
+import Floor from './Floor'
 
 type User = {
   character: string
@@ -219,7 +220,9 @@ const WorldItems = () => {
 
         <SoccerTrophy />
 
-        <SandModel />
+        <Wall />
+
+        <Floor />
         {/* <BlockGroup /> */}
 
         <ScreenModel />

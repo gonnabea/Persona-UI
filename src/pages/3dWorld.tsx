@@ -40,6 +40,7 @@ import ItemInstallPop from '@/components/dom/ItemInstallPop'
 import { itemsState } from '@/recoil/items/atom'
 import Door1 from '@/components/canvas/exteriorItems/Door1'
 import { selectedItemState } from '@/recoil/selectedItem/atom'
+import { selectedExteriorItemState } from '@/recoil/selectedExteriorItem/atom'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -62,6 +63,8 @@ export default function Page(pageProps) {
   const [colyseusPlayers, setColyseusPlayers] = useRecoilState(colyseusPlayersState)
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
+
+  const [selectedExteriorItem, setSelectedExteriorItem] = useRecoilState(selectedExteriorItemState)
 
   const menuList = [
     {
@@ -549,8 +552,10 @@ export default function Page(pageProps) {
                 onClick={(e) => {
                   e.stopPropagation()
 
-                  items.roof_1.installing = true
-                  items.roof_1.installed = false
+                  const installItem = items.roof_1.find((roof_1) => roof_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                  }
                 }}
                 src='/models/exterior_items/images/roof_1.png'
                 style={{ width: 100, height: 100 }}
@@ -561,15 +566,31 @@ export default function Page(pageProps) {
               <img
                 onClick={(e) => {
                   e.stopPropagation()
-                  const installItem = items.floor_1.find((floor_1) => floor_1.installed === false)
-                  if (installItem) {
-                    installItem.installing = true
-                  }
+                  // const installItem = items.floor_1.find((floor_1) => floor_1.installed === false)
+                  // if (installItem) {
+                  //   installItem.installing = true
+                  // }
+                  setSelectedExteriorItem('floor')
                 }}
                 src='/models/exterior_items/images/floor_1.png'
                 style={{ width: 100, height: 100 }}
               />
               <span>floor_1</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // const installItem = items.floor_1.find((floor_1) => floor_1.installed === false)
+                  // if (installItem) {
+                  //   installItem.installing = true
+                  // }
+                  setSelectedExteriorItem('wall')
+                }}
+                src='/models/exterior_items/images/floor_1.png'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>wall</span>
             </div>
             <div className='flex flex-col items-center cursor-pointer'>
               <img
