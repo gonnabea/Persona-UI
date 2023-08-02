@@ -40,6 +40,7 @@ import ItemInstallPop from '@/components/dom/ItemInstallPop'
 import { itemsState } from '@/recoil/items/atom'
 import Door1 from '@/components/canvas/exteriorItems/Door1'
 import { selectedItemState } from '@/recoil/selectedItem/atom'
+import X from '@/assets/icons/x.svg'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -220,6 +221,15 @@ export default function Page(pageProps) {
       ) : (
         ''
       )}
+      {pageProps.isMobile && chatEnabled ? (
+        <Button
+          color='white'
+          className='absolute border rounded-full p-[8px] top-[20px] right-[20px] lg:top-[34px] lg:right-[40px] z-[21] border-[#B3B3B3] hover:bg-white'
+          type='button'
+          onClick={toggleChatEnabled}>
+          <X className='stroke-primary-200' />
+        </Button>
+      ) : null}
       <Button
         color='white'
         className='absolute border rounded-full p-[8px] top-[20px] right-[20px] lg:top-[34px] lg:right-[40px] z-[2] border-[#B3B3B3] hover:bg-white'
