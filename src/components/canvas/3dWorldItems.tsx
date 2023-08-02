@@ -75,7 +75,7 @@ const Loader = () => {
           {/* 팁 */}
           <div className='flex flex-col [&>*]:text-white'>
             <p className='uppercase font-[900]'>tip</p>
-            <p>팁입니다...</p>
+            <p>현재 구동중인 PERSONA는 시연용이므로 일부 기능이 불안정하거나 동작하지 않을 수 있습니다.</p>
           </div>
           {/* 로딩 인디케이터 */}
           <div className='flex items-center [&>*]:text-white'>

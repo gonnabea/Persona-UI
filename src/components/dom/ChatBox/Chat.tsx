@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { DefaultValues, useForm } from 'react-hook-form'
 
-import X from '@/assets/icons/x.svg'
 import { Input } from '@/components/dom/Forms'
 import ScrollBox from '@/components/dom/ScrollBox'
 import Button from '@/components/dom/Button'
@@ -159,18 +158,6 @@ const Chat = ({ isMobile }: ChatProps) => {
         event.stopPropagation()
       }}>
       <form onSubmit={handleSubmit(submitChatMesssage)} className={isMobile ? 'h-full flex flex-col px-[10px]' : ''}>
-        {isMobile ? (
-          <div className='flex w-full pt-[20px] pr-[10px] lg:pt-[34px] lg:pr-[30px]'>
-            <Button
-              color='white'
-              className='ml-auto border rounded-full p-[8px] border-[#B3B3B3]'
-              type='button'
-              onClick={toggleChatEnabled}>
-              <X className='stroke-primary-200' />
-            </Button>
-          </div>
-        ) : null}
-
         <ScrollBox
           ref={chatBoxRef}
           className={`flex flex-col items-start px-0 bg-transparent pb-[10px] [&>*]:text-white no-scrollbar ${

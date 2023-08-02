@@ -41,6 +41,7 @@ import { itemsState } from '@/recoil/items/atom'
 import Door1 from '@/components/canvas/exteriorItems/Door1'
 import { selectedItemState } from '@/recoil/selectedItem/atom'
 import { selectedExteriorItemState } from '@/recoil/selectedExteriorItem/atom'
+import X from '@/assets/icons/x.svg'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -209,6 +210,10 @@ export default function Page(pageProps) {
 
   return (
     <div className='[&>*]:select-none'>
+      {/* 현재 접속하고 있는 룸 ID */}
+      <div className='absolute bg-black right-[30px] bottom-[10px] z-[1] p-[10px] bg-opacity-50'>
+        <p className='text-white'>Current Room ID: {colyseusRoom?.id}</p>
+      </div>
       {/* 모바일 채팅버튼 */}
       {pageProps.isMobile ? (
         <Button
@@ -223,6 +228,15 @@ export default function Page(pageProps) {
       ) : (
         ''
       )}
+      {pageProps.isMobile && chatEnabled ? (
+        <Button
+          color='white'
+          className='absolute border rounded-full p-[8px] top-[20px] right-[20px] lg:top-[34px] lg:right-[40px] z-[21] border-[#B3B3B3] hover:bg-white'
+          type='button'
+          onClick={toggleChatEnabled}>
+          <X className='stroke-primary-200' />
+        </Button>
+      ) : null}
       <Button
         color='white'
         className='absolute border rounded-full p-[8px] top-[20px] right-[20px] lg:top-[34px] lg:right-[40px] z-[2] border-[#B3B3B3] hover:bg-white'
