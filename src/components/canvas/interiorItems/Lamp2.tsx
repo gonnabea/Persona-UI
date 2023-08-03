@@ -190,6 +190,8 @@ function Lamp2() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('lamp_2')
+
                       // setItems({ ...items, lamp_2: items.lamp_2 })
                       console.log(items.lamp_2[index])
                     }
@@ -219,10 +221,10 @@ function Lamp2() {
                   <Html
                     position={
                       items.lamp_2[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.lamp_2[index].position[0],
-                            items.lamp_2[index].position[1] + 1,
+                            items.lamp_2[index].position[1] + 3,
                             items.lamp_2[index].position[2],
                           ]
                     }>

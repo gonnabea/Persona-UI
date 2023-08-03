@@ -188,6 +188,8 @@ function Camera1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('camera_1')
+
                       // setItems({ ...items, camera_1: items.camera_1 })
                       console.log(items.camera_1[index])
                     }
@@ -204,10 +206,10 @@ function Camera1() {
                   <Html
                     position={
                       items.camera_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.camera_1[index].position[0],
-                            items.camera_1[index].position[1] + 1,
+                            items.camera_1[index].position[1] + 3,
                             items.camera_1[index].position[2],
                           ]
                     }>

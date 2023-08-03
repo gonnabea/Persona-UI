@@ -188,6 +188,8 @@ function Flower1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('flower_1')
+
                       // setItems({ ...items, flower_1: items.flower_1 })
                       console.log(items.flower_1[index])
                     }
@@ -204,10 +206,10 @@ function Flower1() {
                   <Html
                     position={
                       items.flower_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.flower_1[index].position[0],
-                            items.flower_1[index].position[1] + 1,
+                            items.flower_1[index].position[1] + 3,
                             items.flower_1[index].position[2],
                           ]
                     }>

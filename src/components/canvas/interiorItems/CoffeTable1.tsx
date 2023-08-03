@@ -191,6 +191,8 @@ function CoffeeTable1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('coffee_table_1')
+
                       // setItems({ ...items, coffee_table_1: items.coffee_table_1 })
                       console.log(items.coffee_table_1[index])
                     }
@@ -211,10 +213,10 @@ function CoffeeTable1() {
                   <Html
                     position={
                       items.coffee_table_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.coffee_table_1[index].position[0],
-                            items.coffee_table_1[index].position[1] + 1,
+                            items.coffee_table_1[index].position[1] + 3,
                             items.coffee_table_1[index].position[2],
                           ]
                     }>

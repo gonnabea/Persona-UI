@@ -191,6 +191,8 @@ function Sofa1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('sofa_1')
+
                       // setItems({ ...items, sofa_1: items.sofa_1 })
                       console.log(items.sofa_1[index])
                     }
@@ -207,10 +209,10 @@ function Sofa1() {
                   <Html
                     position={
                       items.sofa_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.sofa_1[index].position[0],
-                            items.sofa_1[index].position[1] + 1,
+                            items.sofa_1[index].position[1] + 3,
                             items.sofa_1[index].position[2],
                           ]
                     }>

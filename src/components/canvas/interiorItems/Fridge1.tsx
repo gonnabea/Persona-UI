@@ -190,6 +190,8 @@ function Fridge1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('fridge_1')
+
                       // setItems({ ...items, fridge_1: items.fridge_1 })
                       console.log(items.fridge_1[index])
                     }
@@ -206,10 +208,10 @@ function Fridge1() {
                   <Html
                     position={
                       items.fridge_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.fridge_1[index].position[0],
-                            items.fridge_1[index].position[1] + 1,
+                            items.fridge_1[index].position[1] + 3,
                             items.fridge_1[index].position[2],
                           ]
                     }>

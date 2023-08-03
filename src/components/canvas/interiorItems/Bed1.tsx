@@ -189,6 +189,8 @@ function Bed1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('bed_1')
+
                       // setItems({ ...items, bed_1: items.bed_1 })
                       console.log(items.bed_1[index])
                     }
@@ -252,10 +254,10 @@ function Bed1() {
                   <Html
                     position={
                       items.bed_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.bed_1[index].position[0],
-                            items.bed_1[index].position[1] + 1,
+                            items.bed_1[index].position[1] + 3,
                             items.bed_1[index].position[2],
                           ]
                     }>

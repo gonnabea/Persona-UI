@@ -195,6 +195,8 @@ function WashingMachine1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('washing_machine_1')
+
                       // setItems({ ...items, washing_machine_1: items.washing_machine_1 })
                       console.log(items.washing_machine_1[index])
                     }
@@ -215,10 +217,10 @@ function WashingMachine1() {
                   <Html
                     position={
                       items.washing_machine_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.washing_machine_1[index].position[0],
-                            items.washing_machine_1[index].position[1] + 1,
+                            items.washing_machine_1[index].position[1] + 3,
                             items.washing_machine_1[index].position[2],
                           ]
                     }>

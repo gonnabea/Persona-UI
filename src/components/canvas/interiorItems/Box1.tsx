@@ -189,6 +189,8 @@ function Box1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('box_1')
+
                       // setItems({ ...items, box_1: items.box_1 })
                       console.log(items.box_1[index])
                     }
@@ -205,10 +207,10 @@ function Box1() {
                   <Html
                     position={
                       items.box_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.box_1[index].position[0],
-                            items.box_1[index].position[1] + 1,
+                            items.box_1[index].position[1] + 3,
                             items.box_1[index].position[2],
                           ]
                     }>

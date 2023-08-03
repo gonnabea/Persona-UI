@@ -191,6 +191,8 @@ function TV1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('tv_1')
+
                       // setItems({ ...items, tv_1: items.tv_1 })
                       console.log(items.tv_1[index])
                     }
@@ -207,10 +209,10 @@ function TV1() {
                   <Html
                     position={
                       items.tv_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.tv_1[index].position[0],
-                            items.tv_1[index].position[1] + 1,
+                            items.tv_1[index].position[1] + 3,
                             items.tv_1[index].position[2],
                           ]
                     }>

@@ -195,6 +195,8 @@ function TrainingItem1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('training_item_1')
+
                       // setItems({ ...items, training_item_1: items.training_item_1 })
                       console.log(items.training_item_1[index])
                     }
@@ -215,10 +217,10 @@ function TrainingItem1() {
                   <Html
                     position={
                       items.training_item_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.training_item_1[index].position[0],
-                            items.training_item_1[index].position[1] + 1,
+                            items.training_item_1[index].position[1] + 3,
                             items.training_item_1[index].position[2],
                           ]
                     }>

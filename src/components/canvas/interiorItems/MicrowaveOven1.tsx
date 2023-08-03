@@ -194,6 +194,8 @@ function MicrowaveOven1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('microwave_oven_1')
+
                       // setItems({ ...items, microwave_oven_1: items.microwave_oven_1 })
                       console.log(items.microwave_oven_1[index])
                     }
@@ -214,10 +216,10 @@ function MicrowaveOven1() {
                   <Html
                     position={
                       items.microwave_oven_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.microwave_oven_1[index].position[0],
-                            items.microwave_oven_1[index].position[1] + 1,
+                            items.microwave_oven_1[index].position[1] + 3,
                             items.microwave_oven_1[index].position[2],
                           ]
                     }>

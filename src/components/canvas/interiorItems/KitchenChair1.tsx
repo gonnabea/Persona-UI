@@ -194,6 +194,8 @@ function KitchenChair1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('kitchen_chair_1')
+
                       // setItems({ ...items, kitchen_chair_1: items.kitchen_chair_1 })
                       console.log(items.kitchen_chair_1[index])
                     }
@@ -214,10 +216,10 @@ function KitchenChair1() {
                   <Html
                     position={
                       items.kitchen_chair_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.kitchen_chair_1[index].position[0],
-                            items.kitchen_chair_1[index].position[1] + 1,
+                            items.kitchen_chair_1[index].position[1] + 3,
                             items.kitchen_chair_1[index].position[2],
                           ]
                     }>
