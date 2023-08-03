@@ -1,3 +1,4 @@
+import { installingModelNameState } from '@/recoil/intallingModelName/atom'
 import { isEditModeState } from '@/recoil/isEditMode/atom'
 import { itemsState } from '@/recoil/items/atom'
 import { landClickIndexState } from '@/recoil/landClickIndex/atom'
@@ -10,6 +11,9 @@ import { Suspense, useEffect, useRef, useState, useMemo } from 'react'
 import { useRecoilState } from 'recoil'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
+let isEditModeVar = false
+let installingModelNameVar = ''
+
 function Bed1() {
   const group = useRef()
   const glb = useGLTF('/models/interior_items/bed_001.glb')
@@ -19,6 +23,8 @@ function Bed1() {
   const [installingPos, setInstallingPos] = useState([0, 0, 0])
 
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
+
+  const [installingModelName, setInstallingModelName] = useRecoilState(installingModelNameState)
 
   const [updateIndex, forceUpdate] = useState(0)
 
@@ -34,15 +40,22 @@ function Bed1() {
     clonedArr.push(cloned)
   }
 
+  useEffect(() => {
+    isEditModeVar = isEditMode
+  }, [isEditMode])
+
+  useEffect(() => {
+    installingModelNameVar = installingModelName
+  }, [installingModelName])
+
   // 마우스 무브 위치 얻기
   // 가구 설치 위치 미리보기
   const findMousePosition = (e) => {
     // console.log(e)
-    console.log('bed1: mousemove listener active')
-    console.log(isEditMode)
-    if (isEditMode) {
-      e.stopPropagation()
 
+    e.stopPropagation()
+
+    if (isEditModeVar === true && installingModelNameVar === 'bed_1') {
       const installingModel = items.bed_1.find((bed_1) => bed_1.installing === true)
 
       if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
@@ -72,34 +85,37 @@ function Bed1() {
     // console.log(e)
 
     e.stopPropagation()
+    if (isEditModeVar === true && installingModelNameVar === 'bed_1') {
+      if (raycaster.intersectObjects(scene.children)[0]) {
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
 
-    if (raycaster.intersectObjects(scene.children)[0]) {
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+          const installingModelState = items.bed_1.find((bed_1) => bed_1.installing === true)
+          const installingModelStateIndex = items.bed_1.findIndex((bed_1) => bed_1.installing === true)
+          const installingModel = clonedArr[installingModelStateIndex]
 
-        const installingModelState = items.bed_1.find((bed_1) => bed_1.installing === true)
-        const installingModelStateIndex = items.bed_1.findIndex((bed_1) => bed_1.installing === true)
-        const installingModel = clonedArr[installingModelStateIndex]
+          if (installingModelState && installingModelState.installed === false) {
+            installingModelState.position = [mousePosition.x, mousePosition.y, mousePosition.z]
 
-        if (installingModelState && installingModelState.installed === false) {
-          installingModelState.position = [mousePosition.x, mousePosition.y, mousePosition.z]
+            installingModelState.installed = true
+            installingModelState.installing = false
 
-          installingModelState.installed = true
-          installingModelState.installing = false
+            setSelectedItem(installingModel)
+            forceUpdate(updateIndex + 1)
 
-          setSelectedItem(installingModel)
-          forceUpdate(updateIndex + 1)
+            //   installingModel.scene.children[0].children[0].children[0].children[0].children.forEach((mesh) => {
+            //     mesh.material.opacity = 1
+            //   })
 
-          //   installingModel.scene.children[0].children[0].children[0].children[0].children.forEach((mesh) => {
-          //     mesh.material.opacity = 1
-          //   })
+            removeEventListeners()
+          }
 
-          removeEventListeners()
+          //    setSelectedItem(null)
         }
-
-        //    setSelectedItem(null)
       }
     }
   }
