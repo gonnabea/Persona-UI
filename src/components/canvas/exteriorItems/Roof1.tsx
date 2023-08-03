@@ -213,7 +213,12 @@ function Roof1() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      style={{
+                        backgroundColor: 'white',
+                        borderRadius: '100%',
+                        padding: '10px',
+                        opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
+                      }}>
                       ⬆️
                     </button>
                   </Html>{' '}
@@ -237,7 +242,12 @@ function Roof1() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      style={{
+                        backgroundColor: 'white',
+                        borderRadius: '100%',
+                        padding: '10px',
+                        opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
+                      }}>
                       ⬇️
                     </button>
                   </Html>
@@ -266,7 +276,12 @@ function Roof1() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      style={{
+                        backgroundColor: 'white',
+                        borderRadius: '100%',
+                        padding: '10px',
+                        opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
+                      }}>
                       🔄️
                     </button>
                   </Html>
@@ -293,7 +308,12 @@ function Roof1() {
                           forceUpdate(updateIndex + 1)
                         }
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      style={{
+                        backgroundColor: 'white',
+                        borderRadius: '100%',
+                        padding: '10px',
+                        opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
+                      }}>
                       +
                     </button>
                   </Html>
@@ -320,7 +340,12 @@ function Roof1() {
                           forceUpdate(updateIndex + 1)
                         }
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      style={{
+                        backgroundColor: 'white',
+                        borderRadius: '100%',
+                        padding: '10px',
+                        opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
+                      }}>
                       -
                     </button>
                   </Html>

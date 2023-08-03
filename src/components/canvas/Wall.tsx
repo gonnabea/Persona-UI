@@ -127,11 +127,6 @@ function Wall(props) {
   }, [isEditMode])
 
   useEffect(() => {
-    const clickedPosition = raycaster.intersectObjects(scene.children)[0]?.point
-    const floorModel = raycaster
-      .intersectObjects(scene.children)
-      .find((target) => target.object.parent.name === 'floor_1')
-
     if (isEditMode && selectedExteriorItem === 'wall') {
       Object.values(glb.materials).forEach((material) => {
         material.metalness = 0.5
@@ -142,6 +137,14 @@ function Wall(props) {
 
       setSelectedItem(clonedArr[landClickIndex])
       setLandClickIndex(landClickIndex + 1)
+
+      const texture = new THREE.TextureLoader().load(wallTexture)
+      texture.wrapS = THREE.RepeatWrapping
+      texture.wrapT = THREE.RepeatWrapping
+      texture.repeat.set(4, 4)
+      texture.rotation = Math.PI / 2
+
+      clonedArr[landClickIndex].children[0].children[0].children[0].children[0].children[0].material.map = texture
 
       if (landClickIndex > 200 && removedArr[0]) {
         removedArr[0].collider.mesh.current.position.setX(landClickPos.x)

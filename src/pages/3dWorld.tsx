@@ -621,7 +621,7 @@ export default function Page(pageProps) {
                   setSelectedExteriorItem('wall')
                   setInstallingModelName('wall')
                 }}
-                src='/models/exterior_items/images/floor_1.png'
+                src='/img/wall_wood.jpg'
                 style={{ width: 100, height: 100 }}
               />
               <span>wall</span>

@@ -357,7 +357,7 @@ const WallInstallPop = ({ itemName }) => {
         </button>
       </div> */}
 
-      <div className='flex justify-center w-full'>
+      {/* <div className='flex justify-center w-full'>
         <div
           className='w-10 h-10 mr-4 border border-black border-solid rounded-lg cursor-pointer'
           style={{ backgroundImage: "url('/img/wall_texture_1.jpg')", backgroundSize: 'cover' }}
@@ -400,7 +400,7 @@ const WallInstallPop = ({ itemName }) => {
           onClick={() => setWallTexture('/img/wall_wood.jpg')}>
           {wallTexture === '/img/wall_wood.jpg' ? ' V' : ''}
         </div>
-      </div>
+      </div> */}
 
       {/* <div className="flex flex-col">
             <span>위치 조정</span>
