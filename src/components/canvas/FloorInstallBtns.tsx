@@ -26,7 +26,8 @@ const FloorInstallBtns = () => {
       <Html position={[selectedItemPos.x + 2, selectedItemPos.y + 2, selectedItemPos.z + 0]}>
         {selectedItem.rotation.y === 0 ? (
           <div
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               setNewFloor({
                 position: { x: selectedItem.position.x + 2, y: selectedItem.position.y, z: selectedItem.position.z },
               })
@@ -43,7 +44,8 @@ const FloorInstallBtns = () => {
       <Html position={[selectedItemPos.x - 2, selectedItemPos.y + 2, selectedItemPos.z + 0]}>
         {selectedItem.rotation.y === 0 ? (
           <div
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               setNewFloor({
                 position: {
                   x: selectedItem.position.x - 2,
@@ -64,7 +66,8 @@ const FloorInstallBtns = () => {
       <Html position={[selectedItemPos.x, selectedItemPos.y + 2, selectedItemPos.z + 2]}>
         {selectedItem.rotation.y === 0 ? (
           <div
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               setNewFloor({
                 position: {
                   x: selectedItem.position.x,
@@ -84,7 +87,8 @@ const FloorInstallBtns = () => {
       <Html position={[selectedItemPos.x, selectedItemPos.y + 2, selectedItemPos.z - 2]}>
         {selectedItem.rotation.y === 0 ? (
           <div
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               setNewFloor({
                 position: {
                   x: selectedItem.position.x,

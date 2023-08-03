@@ -38,27 +38,29 @@ function CoffeeTable1() {
   // 가구 설치 위치 미리보기
   const findMousePosition = (e) => {
     // console.log(e)
+    if (isEditMode) {
+      e.stopPropagation()
 
-    e.stopPropagation()
+      const installingModel = items.coffee_table_1.find((coffee_table_1) => coffee_table_1.installing === true)
 
-    const installingModel = items.coffee_table_1.find((coffee_table_1) => coffee_table_1.installing === true)
+      if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
+        // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
+        // console.log(wall)
 
-    if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
-      // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
-      // console.log(wall)
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+          // if(items.coffee_table_1.installing === true)
 
-        // if(items.coffee_table_1.installing === true)
+          setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
 
-        setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
-
-        // setLandClickPos(clickedPosition)
+          // setLandClickPos(clickedPosition)
+        }
       }
     }
-
     //   console.log(clickedPosition)
   }
 
@@ -191,57 +193,16 @@ function CoffeeTable1() {
                   <Html
                     position={
                       items.coffee_table_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 2, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
                         : [
                             items.coffee_table_1[index].position[0],
-                            items.coffee_table_1[index].position[1] + 2,
-                            items.coffee_table_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.coffee_table_1[index].position = [
-                          items.coffee_table_1[index].position[0],
-                          items.coffee_table_1[index].position[1] + 3,
-                          items.coffee_table_1[index].position[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>{' '}
-                  <Html
-                    position={
-                      items.coffee_table_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] - 2, installingPos[2]]
-                        : [
-                            items.coffee_table_1[index].position[0],
-                            items.coffee_table_1[index].position[1] - 2,
-                            items.coffee_table_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.coffee_table_1[index].position = [
-                          items.coffee_table_1[index].position[0],
-                          items.coffee_table_1[index].position[1] - 3,
-                          items.coffee_table_1[index].position[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.coffee_table_1[index].installing == true
-                        ? [installingPos[0] - 2.5, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.coffee_table_1[index].position[0] - 2.5,
                             items.coffee_table_1[index].position[1] + 1,
                             items.coffee_table_1[index].position[2],
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.coffee_table_1[index].rotation = [
                           items.coffee_table_1[index].rotation[0],
                           items.coffee_table_1[index].rotation[1] + Math.PI / 4,
@@ -249,28 +210,9 @@ function CoffeeTable1() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.coffee_table_1[index].installing == true
-                        ? [installingPos[0] + 2, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.coffee_table_1[index].position[0] + 2,
-                            items.coffee_table_1[index].position[1] + 1,
-                            items.coffee_table_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.coffee_table_1[index].rotation = [
-                          items.coffee_table_1[index].rotation[0],
-                          items.coffee_table_1[index].rotation[1] - Math.PI / 4,
-                          items.coffee_table_1[index].rotation[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
+                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      🔄️
+                    </button>
                   </Html>
                 </>
               ) : null}

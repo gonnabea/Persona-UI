@@ -164,44 +164,45 @@ function Door1() {
           }}
           onDoubleClick={(e) => {
             e.stopPropagation()
+            if (!isEditMode) {
+              // 문이 닫혀있을 경우
+              if (!isDoorOpened) {
+                // 문 열기
+                door1Actions['door_close'].stop()
+                door1Actions['door_open'].play()
 
-            // 문이 닫혀있을 경우
-            if (!isDoorOpened) {
-              // 문 열기
-              door1Actions['door_close'].stop()
-              door1Actions['door_open'].play()
+                if (items.door_1.installing === false) {
+                  api.position.set(10000, 10000, 10000)
+                }
+                setTimeout(() => {
+                  door1Actions['door_open'].paused = true
+                  setIsDoorOpened(true)
+                }, 1500)
 
-              if (items.door_1.installing === false) {
-                api.position.set(10000, 10000, 10000)
+                if (isEditMode) {
+                  setSelectedItem(e.eventObject)
+                }
               }
-              setTimeout(() => {
-                door1Actions['door_open'].paused = true
-                setIsDoorOpened(true)
-              }, 1500)
+              // 문이 열려있을 경우
+              else if (isDoorOpened) {
+                // 문 닫기
+                e.stopPropagation()
+                door1Actions['door_open'].stop()
+                door1Actions['door_close'].play()
 
-              if (isEditMode) {
-                setSelectedItem(e.eventObject)
+                if (items.door_1.installing === false) {
+                  console.log(installingPos)
+                  console.log(items.door_1.rotation)
+
+                  api.position.set(installingPos[0] + 1, 0, installingPos[2])
+                  api.rotation.set(items.door_1.rotation[0], items.door_1.rotation[1], items.door_1.rotation[2])
+                }
+
+                setTimeout(() => {
+                  door1Actions['door_close'].paused = true
+                  setIsDoorOpened(false)
+                }, 1500)
               }
-            }
-            // 문이 열려있을 경우
-            else if (isDoorOpened) {
-              // 문 닫기
-              e.stopPropagation()
-              door1Actions['door_open'].stop()
-              door1Actions['door_close'].play()
-
-              if (items.door_1.installing === false) {
-                console.log(installingPos)
-                console.log(items.door_1.rotation)
-
-                api.position.set(installingPos[0] + 1, 0, installingPos[2])
-                api.rotation.set(items.door_1.rotation[0], items.door_1.rotation[1], items.door_1.rotation[2])
-              }
-
-              setTimeout(() => {
-                door1Actions['door_close'].paused = true
-                setIsDoorOpened(false)
-              }, 1500)
             }
           }}
           scale={[1.8, 1.4, 0.8]}

@@ -41,21 +41,25 @@ function TrainingItem1() {
 
     e.stopPropagation()
 
-    const installingModel = items.training_item_1.find((training_item_1) => training_item_1.installing === true)
+    if (isEditMode) {
+      const installingModel = items.training_item_1.find((training_item_1) => training_item_1.installing === true)
 
-    if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
-      // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
-      // console.log(wall)
+      if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
+        // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
+        // console.log(wall)
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-        // if(items.training_item_1.installing === true)
+          // if(items.training_item_1.installing === true)
 
-        setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
+          setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
 
-        // setLandClickPos(clickedPosition)
+          // setLandClickPos(clickedPosition)
+        }
       }
     }
 
@@ -193,57 +197,16 @@ function TrainingItem1() {
                   <Html
                     position={
                       items.training_item_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 2, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
                         : [
                             items.training_item_1[index].position[0],
-                            items.training_item_1[index].position[1] + 2,
-                            items.training_item_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.training_item_1[index].position = [
-                          items.training_item_1[index].position[0],
-                          items.training_item_1[index].position[1] + 3,
-                          items.training_item_1[index].position[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>{' '}
-                  <Html
-                    position={
-                      items.training_item_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] - 2, installingPos[2]]
-                        : [
-                            items.training_item_1[index].position[0],
-                            items.training_item_1[index].position[1] - 2,
-                            items.training_item_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.training_item_1[index].position = [
-                          items.training_item_1[index].position[0],
-                          items.training_item_1[index].position[1] - 3,
-                          items.training_item_1[index].position[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.training_item_1[index].installing == true
-                        ? [installingPos[0] - 2.5, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.training_item_1[index].position[0] - 2.5,
                             items.training_item_1[index].position[1] + 1,
                             items.training_item_1[index].position[2],
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.training_item_1[index].rotation = [
                           items.training_item_1[index].rotation[0],
                           items.training_item_1[index].rotation[1] + Math.PI / 4,
@@ -251,28 +214,9 @@ function TrainingItem1() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.training_item_1[index].installing == true
-                        ? [installingPos[0] + 2, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.training_item_1[index].position[0] + 2,
-                            items.training_item_1[index].position[1] + 1,
-                            items.training_item_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.training_item_1[index].rotation = [
-                          items.training_item_1[index].rotation[0],
-                          items.training_item_1[index].rotation[1] - Math.PI / 4,
-                          items.training_item_1[index].rotation[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
+                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      🔄️
+                    </button>
                   </Html>
                 </>
               ) : null}

@@ -41,21 +41,25 @@ function Roof1() {
 
     e.stopPropagation()
 
-    const installingModel = items.roof_1.find((roof_1) => roof_1.installing === true)
+    if (isEditMode) {
+      const installingModel = items.roof_1.find((roof_1) => roof_1.installing === true)
 
-    if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
-      // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
-      // console.log(wall)
+      if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
+        // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
+        // console.log(wall)
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-        // if(items.roof_1.installing === true)
+          // if(items.roof_1.installing === true)
 
-        setInstallingPos([mousePosition.x, mousePosition.y + 3, mousePosition.z])
+          setInstallingPos([mousePosition.x, mousePosition.y + 3, mousePosition.z])
 
-        // setLandClickPos(clickedPosition)
+          // setLandClickPos(clickedPosition)
+        }
       }
     }
 
@@ -193,7 +197,8 @@ function Roof1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.roof_1[index].position = [
                           items.roof_1[index].position[0],
                           items.roof_1[index].position[1] + 3,
@@ -216,7 +221,8 @@ function Roof1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.roof_1[index].position = [
                           items.roof_1[index].position[0],
                           items.roof_1[index].position[1] - 3,
@@ -239,7 +245,8 @@ function Roof1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.roof_1[index].position = [
                           items.roof_1[index].position[0],
                           items.roof_1[index].position[1],
@@ -267,7 +274,8 @@ function Roof1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         if (items.roof_1[index].scale[0] < 1.6) {
                           items.roof_1[index].scale = [
                             items.roof_1[index].scale[0] + 0.2,
@@ -293,7 +301,8 @@ function Roof1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         if (items.roof_1[index].scale[0] >= 0.8) {
                           items.roof_1[index].scale = [
                             items.roof_1[index].scale[0] - 0.2,

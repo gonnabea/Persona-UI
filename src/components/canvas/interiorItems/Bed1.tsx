@@ -38,24 +38,29 @@ function Bed1() {
   // 가구 설치 위치 미리보기
   const findMousePosition = (e) => {
     // console.log(e)
+    console.log('bed1: mousemove listener active')
+    console.log(isEditMode)
+    if (isEditMode) {
+      e.stopPropagation()
 
-    e.stopPropagation()
+      const installingModel = items.bed_1.find((bed_1) => bed_1.installing === true)
 
-    const installingModel = items.bed_1.find((bed_1) => bed_1.installing === true)
+      if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
+        // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
+        // console.log(wall)
 
-    if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
-      // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
-      // console.log(wall)
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+          // if(items.bed_1.installing === true)
 
-        // if(items.bed_1.installing === true)
+          setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
 
-        setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
-
-        // setLandClickPos(clickedPosition)
+          // setLandClickPos(clickedPosition)
+        }
       }
     }
 
@@ -106,7 +111,6 @@ function Bed1() {
 
   useEffect(() => {
     window.addEventListener('mousemove', (e) => findMousePosition(e))
-
     window.addEventListener('click', (e) => findClickedPosition(e))
 
     return () => {
@@ -182,7 +186,8 @@ function Bed1() {
               {/*  */}(
               {selectedItem && clonedArr[index] === selectedItem ? (
                 <>
-                  <Html
+                  {/* 높이 조정 UI: 가구 설치 시 불필요 */}
+                  {/* <Html
                     position={
                       items.bed_1[index].installing == true
                         ? [installingPos[0], installingPos[1] + 2, installingPos[2]]
@@ -193,7 +198,8 @@ function Bed1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.bed_1[index].position = [
                           items.bed_1[index].position[0],
                           items.bed_1[index].position[1] + 3,
@@ -214,7 +220,8 @@ function Bed1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.bed_1[index].position = [
                           items.bed_1[index].position[0],
                           items.bed_1[index].position[1] - 3,
@@ -222,14 +229,16 @@ function Bed1() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
+                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+
+                      </button>
+                  </Html> */}
                   <Html
                     position={
                       items.bed_1[index].installing == true
-                        ? [installingPos[0] - 2.5, installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 1, installingPos[2]]
                         : [
-                            items.bed_1[index].position[0] - 2.5,
+                            items.bed_1[index].position[0],
                             items.bed_1[index].position[1] + 1,
                             items.bed_1[index].position[2],
                           ]
@@ -243,28 +252,9 @@ function Bed1() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.bed_1[index].installing == true
-                        ? [installingPos[0] + 2, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.bed_1[index].position[0] + 2,
-                            items.bed_1[index].position[1] + 1,
-                            items.bed_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.bed_1[index].rotation = [
-                          items.bed_1[index].rotation[0],
-                          items.bed_1[index].rotation[1] - Math.PI / 4,
-                          items.bed_1[index].rotation[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
+                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      🔄️
+                    </button>
                   </Html>
                 </>
               ) : null}
