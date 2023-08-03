@@ -180,6 +180,9 @@ function Lamp2() {
                       forceUpdate(updateIndex + 1)
                     }
                   }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                  }}
                   // 수정 모드에서 마우스 왼쪽 더블 클릭 시 배치했던 가구 재배치
                   onDoubleClick={(e) => {
                     e.stopPropagation()

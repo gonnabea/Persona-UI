@@ -1,4 +1,5 @@
 import { isEditModeState } from '@/recoil/isEditMode/atom'
+import { isExteriorInstallingState } from '@/recoil/isExteriorInstalling/atom'
 import { itemsState } from '@/recoil/items/atom'
 import { landClickIndexState } from '@/recoil/landClickIndex/atom'
 import { landClickPosState } from '@/recoil/landClickPos/atom'
@@ -19,6 +20,8 @@ function Roof1() {
   const [installingPos, setInstallingPos] = useState([0, 0, 0])
 
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
+
+  const [isExteriorInstalling, setIsExteriorInstalling] = useRecoilState(isExteriorInstallingState)
 
   const [updateIndex, forceUpdate] = useState(0)
 
@@ -147,6 +150,7 @@ function Roof1() {
             <>
               <Suspense key={index} fallback={null}>
                 <primitive
+                  visible={!isEditMode || isExteriorInstalling}
                   onPointerOver={() => {
                     document.body.style.cursor = 'pointer'
                   }}
@@ -162,6 +166,9 @@ function Roof1() {
                       items.roof_1[index].installing = false
                       forceUpdate(updateIndex + 1)
                     }
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation()
                   }}
                   // 수정 모드에서 마우스 왼쪽 더블 클릭 시 배치했던 가구 재배치
                   onDoubleClick={(e) => {

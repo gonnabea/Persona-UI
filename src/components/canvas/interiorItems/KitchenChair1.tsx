@@ -174,6 +174,9 @@ function KitchenChair1() {
                   onPointerOut={() => {
                     document.body.style.cursor = 'default'
                   }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                  }}
                   // 수정 모드에서 가구 마우스 오른쪽 클릭 시 가구 제거
                   onContextMenu={(e) => {
                     e.stopPropagation()

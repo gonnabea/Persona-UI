@@ -1,4 +1,5 @@
 import { isEditModeState } from '@/recoil/isEditMode/atom'
+import { isExteriorInstallingState } from '@/recoil/isExteriorInstalling/atom'
 import { ReactElement, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { JsxElement } from 'typescript'
@@ -20,6 +21,8 @@ const ItemInstallPop = ({ tranings, lights, electronics, beauties, writes, exter
 
   const [selectedCategory, setSelectedCategory] = useState('건축')
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
+
+  const [isExteriorInstalling, setIsExteriorInstalling] = useRecoilState(isExteriorInstallingState)
 
   const selectCategory = () => {
     switch (selectedCategory) {
@@ -63,7 +66,15 @@ const ItemInstallPop = ({ tranings, lights, electronics, beauties, writes, exter
             }
 
             return (
-              <span key={key} onClick={() => setSelectedCategory(category)} className='cursor-pointer'>
+              <span
+                key={key}
+                onClick={() => {
+                  setSelectedCategory(category)
+                  console.log(category)
+                  if (category === '건축') setIsExteriorInstalling(true)
+                  else setIsExteriorInstalling(false)
+                }}
+                className='cursor-pointer'>
                 {category}
               </span>
             )
