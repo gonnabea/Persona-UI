@@ -103,18 +103,20 @@ const WorldItems = () => {
     colyseusRoom?.onMessage('move', () => {
       // 나의 정보
       const me = JSON.parse(localStorage.getItem('me'))
-      const myClientId = me.colyseusSessionId
+      if (me) {
+        const myClientId = me.colyseusSessionId
 
-      console.log(Array.from(colyseusRoom.state.players.$items.values()))
+        console.log(Array.from(colyseusRoom.state.players.$items.values()))
 
-      // 나의 정보를 제외하고 다른 유저의 정보를 State로 지정함
-      setOtherUserList(
-        Array.from(colyseusRoom.state.players.$items.values()).filter((user: User) => {
-          if (user.id !== myClientId) {
-            return user
-          }
-        }) as User[],
-      )
+        // 나의 정보를 제외하고 다른 유저의 정보를 State로 지정함
+        setOtherUserList(
+          Array.from(colyseusRoom.state.players.$items.values()).filter((user: User) => {
+            if (user.id !== myClientId) {
+              return user
+            }
+          }) as User[],
+        )
+      }
     })
     // 채팅 이벤트
     colyseusRoom?.onMessage('chat', (client) => {
@@ -134,16 +136,18 @@ const WorldItems = () => {
     if (colyseusRoom) {
       // 나의 정보
       const me = JSON.parse(localStorage.getItem('me'))
-      const myClientId = me.colyseusSessionId
+      if (me) {
+        const myClientId = me.colyseusSessionId
 
-      // 나의 정보를 제외하고 다른 유저의 정보를 State로 지정함
-      setOtherUserList(
-        Array.from(colyseusRoom.state.players.$items.values()).filter((user: User) => {
-          if (user.id !== myClientId) {
-            return user
-          }
-        }) as User[],
-      )
+        // 나의 정보를 제외하고 다른 유저의 정보를 State로 지정함
+        setOtherUserList(
+          Array.from(colyseusRoom.state.players.$items.values()).filter((user: User) => {
+            if (user.id !== myClientId) {
+              return user
+            }
+          }) as User[],
+        )
+      }
     }
     // 새로운 유저가 들어왔을 때 사용자의 위치 얻어오기
     colyseusRoom?.onMessage('join', (client) => {

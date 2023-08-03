@@ -77,7 +77,7 @@ function Wall(props) {
       args: [2.35, 4, 0.2],
 
       onCollide: (e) => {
-        console.log(e)
+        // console.log(e)
       },
     }))
 

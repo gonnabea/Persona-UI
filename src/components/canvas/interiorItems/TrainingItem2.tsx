@@ -69,7 +69,7 @@ function TrainingItem2() {
 
           // if(items.training_item_2.installing === true)
 
-          setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
+          setInstallingPos([mousePosition.x + 1, mousePosition.y, mousePosition.z + 1])
 
           // setLandClickPos(clickedPosition)
         }
@@ -103,7 +103,7 @@ function TrainingItem2() {
           const installingModel = clonedArr[installingModelStateIndex]
 
           if (installingModelState && installingModelState.installed === false) {
-            installingModelState.position = [mousePosition.x, mousePosition.y, mousePosition.z]
+            installingModelState.position = [mousePosition.x + 1, mousePosition.y, mousePosition.z + 1]
 
             installingModelState.installed = true
             installingModelState.installing = false

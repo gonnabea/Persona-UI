@@ -69,7 +69,7 @@ function CoffeeTable1() {
 
           // if(items.coffee_table_1.installing === true)
 
-          setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
+          setInstallingPos([mousePosition.x + 1, mousePosition.y, mousePosition.z + 1])
 
           // setLandClickPos(clickedPosition)
         }
@@ -100,7 +100,7 @@ function CoffeeTable1() {
           const installingModel = clonedArr[installingModelStateIndex]
 
           if (installingModelState && installingModelState.installed === false) {
-            installingModelState.position = [mousePosition.x, mousePosition.y, mousePosition.z]
+            installingModelState.position = [mousePosition.x + 1, mousePosition.y, mousePosition.z + 1]
 
             installingModelState.installed = true
             installingModelState.installing = false

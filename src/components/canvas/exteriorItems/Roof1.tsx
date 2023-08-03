@@ -1,3 +1,4 @@
+import { installingModelNameState } from '@/recoil/intallingModelName/atom'
 import { isEditModeState } from '@/recoil/isEditMode/atom'
 import { isExteriorInstallingState } from '@/recoil/isExteriorInstalling/atom'
 import { itemsState } from '@/recoil/items/atom'
@@ -13,7 +14,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 function Roof1() {
   const group = useRef()
-  const glb = useGLTF('/models/exterior_items/roof_1.glb')
+  const glb = useGLTF('/models/exterior_items/roof_2.glb')
 
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
@@ -22,6 +23,7 @@ function Roof1() {
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
 
   const [isExteriorInstalling, setIsExteriorInstalling] = useRecoilState(isExteriorInstallingState)
+  const [installingModelName, setInstallingModelName] = useRecoilState(installingModelNameState)
 
   const [updateIndex, forceUpdate] = useState(0)
 
@@ -44,7 +46,7 @@ function Roof1() {
 
     e.stopPropagation()
 
-    if (isEditMode) {
+    if (isEditMode && installingModelName === 'roof_1') {
       const installingModel = items.roof_1.find((roof_1) => roof_1.installing === true)
 
       if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
@@ -179,6 +181,8 @@ function Roof1() {
                       items.roof_1[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
+
+                      setInstallingModelName('roof_1')
 
                       // setItems({ ...items, roof_1: items.roof_1 })
                       console.log(items.roof_1[index])

@@ -369,7 +369,7 @@ export function MyCharacter(props: propTypes) {
         positionX={positionX + 0.2}
         positionY={positionY + 2}
         positionZ={positionZ}
-        username={me.data.username}
+        username={me.data?.username}
       />
       {character === 'amy' ? (
         <group ref={amyGroupRef} dispose={null}>

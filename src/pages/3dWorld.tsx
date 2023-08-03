@@ -83,34 +83,37 @@ export default function Page(pageProps) {
 
   const connectToColyseus = () => {
     const me = JSON.parse(localStorage.getItem('me'))
-    // 본인이 colyseus 접속 시
-    colyseusClient
-      .joinOrCreate('main', {
-        user: {
-          email: me.data.email,
-          username: me.data.username,
-          character: me.character ? me.character : 'amy',
-        }, // amy || mutant || Louise ...
-      })
-      .then((room) => {
-        console.log(room)
 
-        // const me = JSON.parse(localStorage.getItem("me"));
-        // // 접속 시 서버에 유저정보 넘겨주기
-        // room.send("join", {
-        //   email: me.email,
-        //   username: me.username,
-        // })
+    if (me) {
+      // 본인이 colyseus 접속 시
+      colyseusClient
+        .joinOrCreate('main', {
+          user: {
+            email: me.data?.email,
+            username: me.data?.username,
+            character: me.character ? me.character : 'amy',
+          }, // amy || mutant || Louise ...
+        })
+        .then((room) => {
+          console.log(room)
 
-        setColyseusRoom(room) // 전역 store에 연결된 coyseus room 담기
-        onColyseusConnection(room) // 타 유저 colysus room 접속 시 처리 함수
-        onMoveCharacters(room) // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
-        getColyseusSessionId(room)
-        toast('네트워크 연결됨')
-      })
-      .catch((error) => {
-        toast('네트워크 연결 실패')
-      })
+          // const me = JSON.parse(localStorage.getItem("me"));
+          // // 접속 시 서버에 유저정보 넘겨주기
+          // room.send("join", {
+          //   email: me.email,
+          //   username: me.username,
+          // })
+
+          setColyseusRoom(room) // 전역 store에 연결된 coyseus room 담기
+          onColyseusConnection(room) // 타 유저 colysus room 접속 시 처리 함수
+          onMoveCharacters(room) // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
+          getColyseusSessionId(room)
+          toast('네트워크 연결됨')
+        })
+        .catch((error) => {
+          toast('네트워크 연결 실패')
+        })
+    }
   }
 
   const getColyseusSessionId = (room) => {
@@ -197,7 +200,7 @@ export default function Page(pageProps) {
     }
 
     // me 객체 중에서 캐릭터 정보 있을 때만 colyseus 연결 시도
-    if (me.character) {
+    if (me?.character) {
       connectToColyseus()
     }
   }, [])
