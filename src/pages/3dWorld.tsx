@@ -41,6 +41,7 @@ import { itemsState } from '@/recoil/items/atom'
 import Door1 from '@/components/canvas/exteriorItems/Door1'
 import { selectedItemState } from '@/recoil/selectedItem/atom'
 import X from '@/assets/icons/x.svg'
+import { createPortal } from 'react-dom'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -53,6 +54,55 @@ import X from '@/assets/icons/x.svg'
 const colyseusClient = new Colyseus.Client(process.env.NEXT_PUBLIC_SOCKET_URL)
 // const joinRoom = (roomName: string, options?: { [key: string]: any }) =>
 //   colyseusClient.joinOrCreate(roomName, { accessToken: localStorage.getItem("accessToken"), ...options })
+
+const JoyStickWithPortal = () => {
+  const ref = useRef<Element | null>(null)
+  const [mounted, setMounted] = useState<boolean>(false)
+
+  useEffect(() => {
+    ref.current = document.body
+    setMounted(true)
+  }, [])
+
+  // 조이스틱 이벤트
+  const joystickMoveEvent = (event) => {
+    const direction = event.direction
+
+    const arrowKeys = {
+      FORWARD: { code: 'KeyW', key: 'w' },
+      BACKWARD: { code: 'KeyS', key: 's' },
+      LEFT: { code: 'KeyA', key: 'a' },
+      RIGHT: { code: 'KeyD', key: 'd' },
+    }
+
+    for (const [key, value] of Object.entries(arrowKeys)) {
+      if (key === direction) {
+        document.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, cancelable: true, ...value }))
+      } else {
+        document.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, cancelable: true, ...value }))
+      }
+    }
+  }
+
+  if (mounted && ref.current) {
+    return createPortal(
+      <div className='fixed bottom-[30px] left-[30px] z-[2]'>
+        <Joystick
+          size={120}
+          stickSize={60}
+          baseColor='rgba(247, 247, 247, 0.5)'
+          stickColor='#808080'
+          move={joystickMoveEvent}
+          stop={joystickMoveEvent}
+          throttle={100}
+        />
+      </div>,
+      ref.current,
+    )
+  }
+
+  return null
+}
 
 export default function Page(pageProps) {
   const router = useRouter()
@@ -155,26 +205,6 @@ export default function Page(pageProps) {
   const toggleChatEnabled = (event) => {
     event.stopPropagation()
     setChatEnabled(!chatEnabled)
-  }
-
-  // 조이스틱 이벤트
-  const joystickMoveEvent = (event) => {
-    const direction = event.direction
-
-    const arrowKeys = {
-      FORWARD: { code: 'KeyW', key: 'w' },
-      BACKWARD: { code: 'KeyS', key: 's' },
-      LEFT: { code: 'KeyA', key: 'a' },
-      RIGHT: { code: 'KeyD', key: 'd' },
-    }
-
-    for (const [key, value] of Object.entries(arrowKeys)) {
-      if (key === direction) {
-        document.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, cancelable: true, ...value }))
-      } else {
-        document.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, cancelable: true, ...value }))
-      }
-    }
   }
 
   useEffect(() => {
@@ -603,21 +633,7 @@ export default function Page(pageProps) {
       {/* <Door1 /> */}
       <Chat isMobile={pageProps.isMobile} />
       {/* 모바일 조이스틱 */}
-      {pageProps.isMobile ? (
-        <div className='absolute bottom-[30px] left-[30px] z-[2]'>
-          <Joystick
-            size={120}
-            stickSize={60}
-            baseColor='rgba(247, 247, 247, 0.5)'
-            stickColor='#808080'
-            move={joystickMoveEvent}
-            stop={joystickMoveEvent}
-            throttle={100}
-          />
-        </div>
-      ) : (
-        ''
-      )}
+      {pageProps.isMobile ? <JoyStickWithPortal /> : ''}
       <ModalWithoutDim
         active={menuEnabled}
         toggle={toggleMenuEnabled}
