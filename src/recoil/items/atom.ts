@@ -9,12 +9,48 @@ export const itemsState = atom({
       installed: false,
       installing: false,
    },
-   roof_1: {
-      position: [0,0,0],
-      rotation: [0,0,0],
-      installed: false,
-      installing: false,
-   },
+   roof_1: [
+      {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         scale: [1,1,1],
+
+         installed: false,
+         installing: false,
+      },
+      {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         scale: [1,1,1],
+
+         installed: false,
+         installing: false,
+      },
+      {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         scale: [1,1,1],
+
+         installed: false,
+         installing: false,
+      },
+      {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         scale: [1,1,1],
+
+         installed: false,
+         installing: false,
+      },
+      {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         scale: [1,1,1],
+
+         installed: false,
+         installing: false,
+      }
+],
       sofa_1: [
    {
       position: [0,0,0],

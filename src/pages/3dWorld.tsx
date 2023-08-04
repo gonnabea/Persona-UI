@@ -40,8 +40,10 @@ import ItemInstallPop from '@/components/dom/ItemInstallPop'
 import { itemsState } from '@/recoil/items/atom'
 import Door1 from '@/components/canvas/exteriorItems/Door1'
 import { selectedItemState } from '@/recoil/selectedItem/atom'
+import { selectedExteriorItemState } from '@/recoil/selectedExteriorItem/atom'
 import X from '@/assets/icons/x.svg'
 import { createPortal } from 'react-dom'
+import { installingModelNameState } from '@/recoil/intallingModelName/atom'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -114,6 +116,10 @@ export default function Page(pageProps) {
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
 
+  const [selectedExteriorItem, setSelectedExteriorItem] = useRecoilState(selectedExteriorItemState)
+
+  const [installingModelName, setInstallingModelName] = useRecoilState(installingModelNameState)
+
   const menuList = [
     {
       title: '로그아웃',
@@ -127,34 +133,37 @@ export default function Page(pageProps) {
 
   const connectToColyseus = () => {
     const me = JSON.parse(localStorage.getItem('me'))
-    // 본인이 colyseus 접속 시
-    colyseusClient
-      .joinOrCreate('main', {
-        user: {
-          email: me.data.email,
-          username: me.data.username,
-          character: me.character ? me.character : 'amy',
-        }, // amy || mutant || Louise ...
-      })
-      .then((room) => {
-        console.log(room)
 
-        // const me = JSON.parse(localStorage.getItem("me"));
-        // // 접속 시 서버에 유저정보 넘겨주기
-        // room.send("join", {
-        //   email: me.email,
-        //   username: me.username,
-        // })
+    if (me) {
+      // 본인이 colyseus 접속 시
+      colyseusClient
+        .joinOrCreate('main', {
+          user: {
+            email: me.data?.email,
+            username: me.data?.username,
+            character: me.character ? me.character : 'amy',
+          }, // amy || mutant || Louise ...
+        })
+        .then((room) => {
+          console.log(room)
 
-        setColyseusRoom(room) // 전역 store에 연결된 coyseus room 담기
-        onColyseusConnection(room) // 타 유저 colysus room 접속 시 처리 함수
-        onMoveCharacters(room) // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
-        getColyseusSessionId(room)
-        toast('네트워크 연결됨')
-      })
-      .catch((error) => {
-        toast('네트워크 연결 실패')
-      })
+          // const me = JSON.parse(localStorage.getItem("me"));
+          // // 접속 시 서버에 유저정보 넘겨주기
+          // room.send("join", {
+          //   email: me.email,
+          //   username: me.username,
+          // })
+
+          setColyseusRoom(room) // 전역 store에 연결된 coyseus room 담기
+          onColyseusConnection(room) // 타 유저 colysus room 접속 시 처리 함수
+          onMoveCharacters(room) // 타 유저 캐릭터 이동 메세지 리스너 세팅 함수
+          getColyseusSessionId(room)
+          toast('네트워크 연결됨')
+        })
+        .catch((error) => {
+          toast('네트워크 연결 실패')
+        })
+    }
   }
 
   const getColyseusSessionId = (room) => {
@@ -221,7 +230,7 @@ export default function Page(pageProps) {
     }
 
     // me 객체 중에서 캐릭터 정보 있을 때만 colyseus 연결 시도
-    if (me.character) {
+    if (me?.character) {
       connectToColyseus()
     }
   }, [])
@@ -297,6 +306,7 @@ export default function Page(pageProps) {
                   )
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('training_item_1')
                   }
                 }}
                 src='/models/interior_items/images/training_item_001.png'
@@ -317,6 +327,7 @@ export default function Page(pageProps) {
                   )
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('training_item_2')
                   }
                 }}
                 src='/models/interior_items/images/training_item_002.png'
@@ -339,6 +350,7 @@ export default function Page(pageProps) {
                   const installItem = items.lamp_2.find((lamp_2) => lamp_2.installed === false)
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('lamp_2')
                   }
                 }}
                 src='/models/interior_items/images/lamp_002.png'
@@ -361,6 +373,7 @@ export default function Page(pageProps) {
                   const installItem = items.flower_1.find((flower_1) => flower_1.installed === false)
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('flower_1')
                   }
                 }}
                 src='/models/interior_items/images/flower_001.png'
@@ -382,6 +395,7 @@ export default function Page(pageProps) {
                   const installItem = items.tv_1.find((tv_1) => tv_1.installed === false)
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('tv_1')
                   }
                 }}
                 src='/models/interior_items/images/tv_wall_001.png'
@@ -391,7 +405,7 @@ export default function Page(pageProps) {
             </div>
             <div className='flex flex-col items-center cursor-pointer'>
               <img
-                alt='box_1'
+                alt='camera_1'
                 onClick={(e) => {
                   e.stopPropagation()
                   // items.bed_1.installing = true
@@ -400,6 +414,7 @@ export default function Page(pageProps) {
                   const installItem = items.camera_1.find((camera_1) => camera_1.installed === false)
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('camera_1')
                   }
                 }}
                 src='/models/interior_items/images/camera_001.png'
@@ -418,6 +433,7 @@ export default function Page(pageProps) {
                   const installItem = items.fridge_1.find((fridge_1) => fridge_1.installed === false)
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('fridge_1')
                   }
                 }}
                 src='/models/interior_items/images/fridge_001.png'
@@ -438,6 +454,7 @@ export default function Page(pageProps) {
                   )
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('microwave_oven_1')
                   }
                 }}
                 src='/models/interior_items/images/microwave_oven_001.png'
@@ -458,6 +475,7 @@ export default function Page(pageProps) {
                   )
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('washing_machine_1')
                   }
                 }}
                 src='/models/interior_items/images/washing_machine_001.png'
@@ -480,6 +498,7 @@ export default function Page(pageProps) {
                   const installItem = items.bed_1.find((bed_1) => bed_1.installed === false)
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('bed_1')
                   }
                 }}
                 src='/models/interior_items/images/bed_001.png'
@@ -499,6 +518,7 @@ export default function Page(pageProps) {
                   const installItem = items.sofa_1.find((sofa_1) => sofa_1.installed === false)
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('sofa_1')
                   }
                 }}
                 src='/models/interior_items/images/sofa_001.png'
@@ -518,6 +538,7 @@ export default function Page(pageProps) {
                   const installItem = items.box_1.find((box_1) => box_1.installed === false)
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('box_1')
                   }
                 }}
                 src='/models/interior_items/images/box_001.png'
@@ -536,6 +557,7 @@ export default function Page(pageProps) {
                   const installItem = items.coffee_table_1.find((coffee_table_1) => coffee_table_1.installed === false)
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('coffee_table_1')
                   }
                 }}
                 src='/models/interior_items/images/coffee_table_001.png'
@@ -556,6 +578,7 @@ export default function Page(pageProps) {
                   )
                   if (installItem) {
                     installItem.installing = true
+                    setInstallingModelName('kitchen_chair_1')
                   }
                 }}
                 src='/models/interior_items/images/kitchen_chair_001.png'
@@ -593,8 +616,11 @@ export default function Page(pageProps) {
                 onClick={(e) => {
                   e.stopPropagation()
 
-                  items.roof_1.installing = true
-                  items.roof_1.installed = false
+                  const installItem = items.roof_1.find((roof_1) => roof_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                    setInstallingModelName('roof_1')
+                  }
                 }}
                 src='/models/exterior_items/images/roof_1.png'
                 style={{ width: 100, height: 100 }}
@@ -605,10 +631,12 @@ export default function Page(pageProps) {
               <img
                 onClick={(e) => {
                   e.stopPropagation()
-                  const installItem = items.floor_1.find((floor_1) => floor_1.installed === false)
-                  if (installItem) {
-                    installItem.installing = true
-                  }
+                  // const installItem = items.floor_1.find((floor_1) => floor_1.installed === false)
+                  // if (installItem) {
+                  //   installItem.installing = true
+                  // }
+                  setSelectedExteriorItem('floor')
+                  setInstallingModelName('floor')
                 }}
                 src='/models/exterior_items/images/floor_1.png'
                 style={{ width: 100, height: 100 }}
@@ -619,8 +647,25 @@ export default function Page(pageProps) {
               <img
                 onClick={(e) => {
                   e.stopPropagation()
+                  // const installItem = items.floor_1.find((floor_1) => floor_1.installed === false)
+                  // if (installItem) {
+                  //   installItem.installing = true
+                  // }
+                  setSelectedExteriorItem('wall')
+                  setInstallingModelName('wall')
+                }}
+                src='/img/wall_wood.jpg'
+                style={{ width: 100, height: 100 }}
+              />
+              <span>wall</span>
+            </div>
+            <div className='flex flex-col items-center cursor-pointer'>
+              <img
+                onClick={(e) => {
+                  e.stopPropagation()
                   items.window_1.installing = true
                   items.window_1.installed = false
+                  setInstallingModelName('window_1')
                 }}
                 src='/models/exterior_items/images/window_1.png'
                 style={{ width: 100, height: 100 }}

@@ -9,6 +9,10 @@ import { useLoader, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef, useState, useMemo } from 'react'
 import { useRecoilState } from 'recoil'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { installingModelNameState } from '@/recoil/intallingModelName/atom'
+
+let isEditModeVar = false
+let installingModelNameVar = ''
 
 function TrainingItem2() {
   const group = useRef()
@@ -19,6 +23,8 @@ function TrainingItem2() {
   const [installingPos, setInstallingPos] = useState([0, 0, 0])
 
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
+
+  const [installingModelName, setInstallingModelName] = useRecoilState(installingModelNameState)
 
   const [updateIndex, forceUpdate] = useState(0)
 
@@ -34,28 +40,39 @@ function TrainingItem2() {
     clonedArr.push(cloned)
   }
 
+  useEffect(() => {
+    isEditModeVar = isEditMode
+  }, [isEditMode])
+
+  useEffect(() => {
+    installingModelNameVar = installingModelName
+  }, [installingModelName])
+
   // 마우스 무브 위치 얻기
   // 가구 설치 위치 미리보기
   const findMousePosition = (e) => {
     // console.log(e)
 
     e.stopPropagation()
+    if (isEditModeVar && installingModelNameVar === 'training_item_2') {
+      const installingModel = items.training_item_2.find((training_item_2) => training_item_2.installing === true)
 
-    const installingModel = items.training_item_2.find((training_item_2) => training_item_2.installing === true)
+      if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
+        // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
+        // console.log(wall)
 
-    if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
-      // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
-      // console.log(wall)
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+          // if(items.training_item_2.installing === true)
 
-        // if(items.training_item_2.installing === true)
+          setInstallingPos([mousePosition.x + 1, mousePosition.y, mousePosition.z + 1])
 
-        setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
-
-        // setLandClickPos(clickedPosition)
+          // setLandClickPos(clickedPosition)
+        }
       }
     }
 
@@ -68,37 +85,41 @@ function TrainingItem2() {
 
     e.stopPropagation()
 
-    if (raycaster.intersectObjects(scene.children)[0]) {
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
+    if (isEditModeVar === true && installingModelNameVar === 'training_item_2') {
+      if (raycaster.intersectObjects(scene.children)[0]) {
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-        const installingModelState = items.training_item_2.find(
-          (training_item_2) => training_item_2.installing === true,
-        )
-        const installingModelStateIndex = items.training_item_2.findIndex(
-          (training_item_2) => training_item_2.installing === true,
-        )
-        const installingModel = clonedArr[installingModelStateIndex]
+          const installingModelState = items.training_item_2.find(
+            (training_item_2) => training_item_2.installing === true,
+          )
+          const installingModelStateIndex = items.training_item_2.findIndex(
+            (training_item_2) => training_item_2.installing === true,
+          )
+          const installingModel = clonedArr[installingModelStateIndex]
 
-        if (installingModelState && installingModelState.installed === false) {
-          installingModelState.position = [mousePosition.x, mousePosition.y, mousePosition.z]
+          if (installingModelState && installingModelState.installed === false) {
+            installingModelState.position = [mousePosition.x + 1, mousePosition.y, mousePosition.z + 1]
 
-          installingModelState.installed = true
-          installingModelState.installing = false
+            installingModelState.installed = true
+            installingModelState.installing = false
 
-          setSelectedItem(installingModel)
-          forceUpdate(updateIndex + 1)
+            setSelectedItem(installingModel)
+            forceUpdate(updateIndex + 1)
 
-          //   installingModel.scene.children[0].children[0].children[0].children[0].children.forEach((mesh) => {
-          //     mesh.material.opacity = 1
-          //   })
+            //   installingModel.scene.children[0].children[0].children[0].children[0].children.forEach((mesh) => {
+            //     mesh.material.opacity = 1
+            //   })
 
-          removeEventListeners()
+            removeEventListeners()
+          }
+
+          //    setSelectedItem(null)
         }
-
-        //    setSelectedItem(null)
       }
     }
   }
@@ -153,6 +174,9 @@ function TrainingItem2() {
                   onPointerOut={() => {
                     document.body.style.cursor = 'default'
                   }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                  }}
                   // 수정 모드에서 가구 마우스 오른쪽 클릭 시 가구 제거
                   onContextMenu={(e) => {
                     e.stopPropagation()
@@ -172,6 +196,8 @@ function TrainingItem2() {
                       items.training_item_2[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
+
+                      setInstallingModelName('training_item_2')
 
                       // setItems({ ...items, training_item_2: items.training_item_2 })
                       console.log(items.training_item_2[index])
@@ -193,57 +219,16 @@ function TrainingItem2() {
                   <Html
                     position={
                       items.training_item_2[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 2, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.training_item_2[index].position[0],
-                            items.training_item_2[index].position[1] + 2,
+                            items.training_item_2[index].position[1] + 3,
                             items.training_item_2[index].position[2],
                           ]
                     }>
                     <button
-                      onClick={() => {
-                        items.training_item_2[index].position = [
-                          items.training_item_2[index].position[0],
-                          items.training_item_2[index].position[1] + 3,
-                          items.training_item_2[index].position[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>{' '}
-                  <Html
-                    position={
-                      items.training_item_2[index].installing == true
-                        ? [installingPos[0], installingPos[1] - 2, installingPos[2]]
-                        : [
-                            items.training_item_2[index].position[0],
-                            items.training_item_2[index].position[1] - 2,
-                            items.training_item_2[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.training_item_2[index].position = [
-                          items.training_item_2[index].position[0],
-                          items.training_item_2[index].position[1] - 3,
-                          items.training_item_2[index].position[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.training_item_2[index].installing == true
-                        ? [installingPos[0] - 2.5, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.training_item_2[index].position[0] - 2.5,
-                            items.training_item_2[index].position[1] + 1,
-                            items.training_item_2[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.training_item_2[index].rotation = [
                           items.training_item_2[index].rotation[0],
                           items.training_item_2[index].rotation[1] + Math.PI / 4,
@@ -251,28 +236,9 @@ function TrainingItem2() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.training_item_2[index].installing == true
-                        ? [installingPos[0] + 2, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.training_item_2[index].position[0] + 2,
-                            items.training_item_2[index].position[1] + 1,
-                            items.training_item_2[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.training_item_2[index].rotation = [
-                          items.training_item_2[index].rotation[0],
-                          items.training_item_2[index].rotation[1] - Math.PI / 4,
-                          items.training_item_2[index].rotation[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
+                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      🔄️
+                    </button>
                   </Html>
                 </>
               ) : null}

@@ -41,21 +41,25 @@ function Floor1() {
 
     e.stopPropagation()
 
-    const installingModel = items.floor_1.find((floor_1) => floor_1.installing === true)
+    if (isEditMode) {
+      const installingModel = items.floor_1.find((floor_1) => floor_1.installing === true)
 
-    if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
-      // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
-      // console.log(wall)
+      if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
+        // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
+        // console.log(wall)
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-        // if(items.floor_1.installing === true)
+          // if(items.floor_1.installing === true)
 
-        setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
+          setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
 
-        // setLandClickPos(clickedPosition)
+          // setLandClickPos(clickedPosition)
+        }
       }
     }
 
@@ -193,7 +197,8 @@ function Floor1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.floor_1[index].position = [
                           items.floor_1[index].position[0],
                           items.floor_1[index].position[1] + 3,
@@ -214,7 +219,8 @@ function Floor1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.floor_1[index].position = [
                           items.floor_1[index].position[0],
                           items.floor_1[index].position[1] - 3,
@@ -235,7 +241,8 @@ function Floor1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.floor_1[index].rotation = [
                           items.floor_1[index].rotation[0],
                           items.floor_1[index].rotation[1] + Math.PI / 4,
@@ -256,7 +263,8 @@ function Floor1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.floor_1[index].rotation = [
                           items.floor_1[index].rotation[0],
                           items.floor_1[index].rotation[1] - Math.PI / 4,

@@ -1,4 +1,5 @@
 import { isEditModeState } from '@/recoil/isEditMode/atom'
+import { isExteriorInstallingState } from '@/recoil/isExteriorInstalling/atom'
 import { ReactElement, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { JsxElement } from 'typescript'
@@ -16,10 +17,12 @@ interface props {
 }
 
 const ItemInstallPop = ({ tranings, lights, electronics, beauties, writes, exteriors, furnitures }: props) => {
-  const categories = ['건축', '가전', '조명', '장식', '기록', '가구']
+  const categories = ['건축', '가전', '조명', '장식', '기록', '가구', '훈련']
 
   const [selectedCategory, setSelectedCategory] = useState('건축')
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
+
+  const [isExteriorInstalling, setIsExteriorInstalling] = useRecoilState(isExteriorInstallingState)
 
   const selectCategory = () => {
     switch (selectedCategory) {
@@ -50,25 +53,33 @@ const ItemInstallPop = ({ tranings, lights, electronics, beauties, writes, exter
   }
 
   return isEditMode ? (
-    <div className='fixed top-0 left-0 z-10 font-bold bg-white opacity-90' style={{ height: 150, width: 220 }}>
+    <div className='fixed top-0 left-0 z-10 font-bold bg-white opacity-90' style={{ height: 150, width: 240 }}>
       <header className=' w-full'>
-        <ul className='flex justify-around w-full'>
+        <div className='flex justify-around w-full'>
           {categories.map((category, key) => {
             if (category === selectedCategory) {
               return (
-                <li key={key} className='text-lg cursor-pointer text-fuchsia-600'>
+                <span key={key} className='cursor-pointer text-md text-fuchsia-600'>
                   {selectedCategory}
-                </li>
+                </span>
               )
             }
 
             return (
-              <li key={key} onClick={() => setSelectedCategory(category)} className='cursor-pointer'>
+              <span
+                key={key}
+                onClick={() => {
+                  setSelectedCategory(category)
+                  console.log(category)
+                  if (category === '건축') setIsExteriorInstalling(true)
+                  else setIsExteriorInstalling(false)
+                }}
+                className='cursor-pointer'>
                 {category}
-              </li>
+              </span>
             )
           })}
-        </ul>
+        </div>
       </header>
       <section onClick={(e) => e.stopPropagation()} className='h-full p-2 overflow-y-auto text-white bg-white'>
         {selectCategory()}

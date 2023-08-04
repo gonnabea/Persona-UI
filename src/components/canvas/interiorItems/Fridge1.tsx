@@ -9,6 +9,10 @@ import { useLoader, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef, useState, useMemo } from 'react'
 import { useRecoilState } from 'recoil'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { installingModelNameState } from '@/recoil/intallingModelName/atom'
+
+let isEditModeVar = false
+let installingModelNameVar = ''
 
 function Fridge1() {
   const group = useRef()
@@ -19,6 +23,8 @@ function Fridge1() {
   const [installingPos, setInstallingPos] = useState([0, 0, 0])
 
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
+
+  const [installingModelName, setInstallingModelName] = useRecoilState(installingModelNameState)
 
   const [updateIndex, forceUpdate] = useState(0)
 
@@ -34,28 +40,39 @@ function Fridge1() {
     clonedArr.push(cloned)
   }
 
+  useEffect(() => {
+    isEditModeVar = isEditMode
+  }, [isEditMode])
+
+  useEffect(() => {
+    installingModelNameVar = installingModelName
+  }, [installingModelName])
+
   // 마우스 무브 위치 얻기
   // 가구 설치 위치 미리보기
   const findMousePosition = (e) => {
     // console.log(e)
+    if (isEditModeVar && installingModelNameVar === 'fridge_1') {
+      e.stopPropagation()
 
-    e.stopPropagation()
+      const installingModel = items.fridge_1.find((fridge_1) => fridge_1.installing === true)
 
-    const installingModel = items.fridge_1.find((fridge_1) => fridge_1.installing === true)
+      if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
+        // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
+        // console.log(wall)
 
-    if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
-      // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
-      // console.log(wall)
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+          // if(items.fridge_1.installing === true)
 
-        // if(items.fridge_1.installing === true)
+          setInstallingPos([mousePosition.x + 1, mousePosition.y, mousePosition.z + 1])
 
-        setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
-
-        // setLandClickPos(clickedPosition)
+          // setLandClickPos(clickedPosition)
+        }
       }
     }
 
@@ -68,33 +85,37 @@ function Fridge1() {
 
     e.stopPropagation()
 
-    if (raycaster.intersectObjects(scene.children)[0]) {
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
+    if (isEditModeVar === true && installingModelNameVar === 'fridge_1') {
+      if (raycaster.intersectObjects(scene.children)[0]) {
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-        const installingModelState = items.fridge_1.find((fridge_1) => fridge_1.installing === true)
-        const installingModelStateIndex = items.fridge_1.findIndex((fridge_1) => fridge_1.installing === true)
-        const installingModel = clonedArr[installingModelStateIndex]
+          const installingModelState = items.fridge_1.find((fridge_1) => fridge_1.installing === true)
+          const installingModelStateIndex = items.fridge_1.findIndex((fridge_1) => fridge_1.installing === true)
+          const installingModel = clonedArr[installingModelStateIndex]
 
-        if (installingModelState && installingModelState.installed === false) {
-          installingModelState.position = [mousePosition.x, mousePosition.y, mousePosition.z]
+          if (installingModelState && installingModelState.installed === false) {
+            installingModelState.position = [mousePosition.x + 1, mousePosition.y, mousePosition.z + 1]
 
-          installingModelState.installed = true
-          installingModelState.installing = false
+            installingModelState.installed = true
+            installingModelState.installing = false
 
-          setSelectedItem(installingModel)
-          forceUpdate(updateIndex + 1)
+            setSelectedItem(installingModel)
+            forceUpdate(updateIndex + 1)
 
-          //   installingModel.scene.children[0].children[0].children[0].children[0].children.forEach((mesh) => {
-          //     mesh.material.opacity = 1
-          //   })
+            //   installingModel.scene.children[0].children[0].children[0].children[0].children.forEach((mesh) => {
+            //     mesh.material.opacity = 1
+            //   })
 
-          removeEventListeners()
+            removeEventListeners()
+          }
+
+          //    setSelectedItem(null)
         }
-
-        //    setSelectedItem(null)
       }
     }
   }
@@ -149,6 +170,9 @@ function Fridge1() {
                   onPointerOut={() => {
                     document.body.style.cursor = 'default'
                   }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                  }}
                   // 수정 모드에서 가구 마우스 오른쪽 클릭 시 가구 제거
                   onContextMenu={(e) => {
                     e.stopPropagation()
@@ -169,6 +193,8 @@ function Fridge1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('fridge_1')
+
                       // setItems({ ...items, fridge_1: items.fridge_1 })
                       console.log(items.fridge_1[index])
                     }
@@ -185,57 +211,16 @@ function Fridge1() {
                   <Html
                     position={
                       items.fridge_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 2, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.fridge_1[index].position[0],
-                            items.fridge_1[index].position[1] + 2,
+                            items.fridge_1[index].position[1] + 3,
                             items.fridge_1[index].position[2],
                           ]
                     }>
                     <button
-                      onClick={() => {
-                        items.fridge_1[index].position = [
-                          items.fridge_1[index].position[0],
-                          items.fridge_1[index].position[1] + 3,
-                          items.fridge_1[index].position[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>{' '}
-                  <Html
-                    position={
-                      items.fridge_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] - 2, installingPos[2]]
-                        : [
-                            items.fridge_1[index].position[0],
-                            items.fridge_1[index].position[1] - 2,
-                            items.fridge_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.fridge_1[index].position = [
-                          items.fridge_1[index].position[0],
-                          items.fridge_1[index].position[1] - 3,
-                          items.fridge_1[index].position[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.fridge_1[index].installing == true
-                        ? [installingPos[0] - 2.5, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.fridge_1[index].position[0] - 2.5,
-                            items.fridge_1[index].position[1] + 1,
-                            items.fridge_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.fridge_1[index].rotation = [
                           items.fridge_1[index].rotation[0],
                           items.fridge_1[index].rotation[1] + Math.PI / 4,
@@ -243,28 +228,9 @@ function Fridge1() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.fridge_1[index].installing == true
-                        ? [installingPos[0] + 2, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.fridge_1[index].position[0] + 2,
-                            items.fridge_1[index].position[1] + 1,
-                            items.fridge_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.fridge_1[index].rotation = [
-                          items.fridge_1[index].rotation[0],
-                          items.fridge_1[index].rotation[1] - Math.PI / 4,
-                          items.fridge_1[index].rotation[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
+                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      🔄️
+                    </button>
                   </Html>
                 </>
               ) : null}

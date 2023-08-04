@@ -1,3 +1,4 @@
+import { installingModelNameState } from '@/recoil/intallingModelName/atom'
 import { isEditModeState } from '@/recoil/isEditMode/atom'
 import { itemsState } from '@/recoil/items/atom'
 import { landClickIndexState } from '@/recoil/landClickIndex/atom'
@@ -10,6 +11,9 @@ import { Suspense, useEffect, useRef, useState, useMemo } from 'react'
 import { useRecoilState } from 'recoil'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
+let isEditModeVar = false
+let installingModelNameVar = ''
+
 function Bed1() {
   const group = useRef()
   const glb = useGLTF('/models/interior_items/bed_001.glb')
@@ -19,6 +23,8 @@ function Bed1() {
   const [installingPos, setInstallingPos] = useState([0, 0, 0])
 
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
+
+  const [installingModelName, setInstallingModelName] = useRecoilState(installingModelNameState)
 
   const [updateIndex, forceUpdate] = useState(0)
 
@@ -34,6 +40,14 @@ function Bed1() {
     clonedArr.push(cloned)
   }
 
+  useEffect(() => {
+    isEditModeVar = isEditMode
+  }, [isEditMode])
+
+  useEffect(() => {
+    installingModelNameVar = installingModelName
+  }, [installingModelName])
+
   // 마우스 무브 위치 얻기
   // 가구 설치 위치 미리보기
   const findMousePosition = (e) => {
@@ -41,21 +55,25 @@ function Bed1() {
 
     e.stopPropagation()
 
-    const installingModel = items.bed_1.find((bed_1) => bed_1.installing === true)
+    if (isEditModeVar === true && installingModelNameVar === 'bed_1') {
+      const installingModel = items.bed_1.find((bed_1) => bed_1.installing === true)
 
-    if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
-      // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
-      // console.log(wall)
+      if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
+        // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
+        // console.log(wall)
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-        // if(items.bed_1.installing === true)
+          // if(items.bed_1.installing === true)
 
-        setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
+          setInstallingPos([mousePosition.x + 1, mousePosition.y, mousePosition.z + 1])
 
-        // setLandClickPos(clickedPosition)
+          // setLandClickPos(clickedPosition)
+        }
       }
     }
 
@@ -67,34 +85,37 @@ function Bed1() {
     // console.log(e)
 
     e.stopPropagation()
+    if (isEditModeVar === true && installingModelNameVar === 'bed_1') {
+      if (raycaster.intersectObjects(scene.children)[0]) {
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
 
-    if (raycaster.intersectObjects(scene.children)[0]) {
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+          const installingModelState = items.bed_1.find((bed_1) => bed_1.installing === true)
+          const installingModelStateIndex = items.bed_1.findIndex((bed_1) => bed_1.installing === true)
+          const installingModel = clonedArr[installingModelStateIndex]
 
-        const installingModelState = items.bed_1.find((bed_1) => bed_1.installing === true)
-        const installingModelStateIndex = items.bed_1.findIndex((bed_1) => bed_1.installing === true)
-        const installingModel = clonedArr[installingModelStateIndex]
+          if (installingModelState && installingModelState.installed === false) {
+            installingModelState.position = [mousePosition.x + 1, mousePosition.y, mousePosition.z + 1]
 
-        if (installingModelState && installingModelState.installed === false) {
-          installingModelState.position = [mousePosition.x, mousePosition.y, mousePosition.z]
+            installingModelState.installed = true
+            installingModelState.installing = false
 
-          installingModelState.installed = true
-          installingModelState.installing = false
+            setSelectedItem(installingModel)
+            forceUpdate(updateIndex + 1)
 
-          setSelectedItem(installingModel)
-          forceUpdate(updateIndex + 1)
+            //   installingModel.scene.children[0].children[0].children[0].children[0].children.forEach((mesh) => {
+            //     mesh.material.opacity = 1
+            //   })
 
-          //   installingModel.scene.children[0].children[0].children[0].children[0].children.forEach((mesh) => {
-          //     mesh.material.opacity = 1
-          //   })
+            removeEventListeners()
+          }
 
-          removeEventListeners()
+          //    setSelectedItem(null)
         }
-
-        //    setSelectedItem(null)
       }
     }
   }
@@ -106,7 +127,6 @@ function Bed1() {
 
   useEffect(() => {
     window.addEventListener('mousemove', (e) => findMousePosition(e))
-
     window.addEventListener('click', (e) => findClickedPosition(e))
 
     return () => {
@@ -149,6 +169,9 @@ function Bed1() {
                   onPointerOut={() => {
                     document.body.style.cursor = 'default'
                   }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                  }}
                   // 수정 모드에서 가구 마우스 오른쪽 클릭 시 가구 제거
                   onContextMenu={(e) => {
                     e.stopPropagation()
@@ -169,6 +192,8 @@ function Bed1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('bed_1')
+
                       // setItems({ ...items, bed_1: items.bed_1 })
                       console.log(items.bed_1[index])
                     }
@@ -182,7 +207,8 @@ function Bed1() {
               {/*  */}(
               {selectedItem && clonedArr[index] === selectedItem ? (
                 <>
-                  <Html
+                  {/* 높이 조정 UI: 가구 설치 시 불필요 */}
+                  {/* <Html
                     position={
                       items.bed_1[index].installing == true
                         ? [installingPos[0], installingPos[1] + 2, installingPos[2]]
@@ -193,7 +219,8 @@ function Bed1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.bed_1[index].position = [
                           items.bed_1[index].position[0],
                           items.bed_1[index].position[1] + 3,
@@ -214,7 +241,8 @@ function Bed1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.bed_1[index].position = [
                           items.bed_1[index].position[0],
                           items.bed_1[index].position[1] - 3,
@@ -222,15 +250,17 @@ function Bed1() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
+                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+
+                      </button>
+                  </Html> */}
                   <Html
                     position={
                       items.bed_1[index].installing == true
-                        ? [installingPos[0] - 2.5, installingPos[1] + 1, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
-                            items.bed_1[index].position[0] - 2.5,
-                            items.bed_1[index].position[1] + 1,
+                            items.bed_1[index].position[0],
+                            items.bed_1[index].position[1] + 3,
                             items.bed_1[index].position[2],
                           ]
                     }>
@@ -243,28 +273,9 @@ function Bed1() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.bed_1[index].installing == true
-                        ? [installingPos[0] + 2, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.bed_1[index].position[0] + 2,
-                            items.bed_1[index].position[1] + 1,
-                            items.bed_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.bed_1[index].rotation = [
-                          items.bed_1[index].rotation[0],
-                          items.bed_1[index].rotation[1] - Math.PI / 4,
-                          items.bed_1[index].rotation[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
+                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      🔄️
+                    </button>
                   </Html>
                 </>
               ) : null}

@@ -14,12 +14,14 @@ import { landClickIndexState } from '@/recoil/landClickIndex/atom'
 import { newWallState } from '@/recoil/newWallPosition/atom'
 import { wallTextureState } from '@/recoil/wallTexture/atom'
 import * as THREE from 'three'
-import WallInstallBtns from './WallInstallBtns'
+import { landClickIndexForFloorState } from '@/recoil/landClickIndexForFloor/atom'
+import FloorInstallBtns from './FloorInstallBtns'
+import { newFloorState } from '@/recoil/newFloorPosition/atom'
 import { selectedExteriorItemState } from '@/recoil/selectedExteriorItem/atom'
 
-function Wall(props) {
+function Floor(props) {
   const group = useRef()
-  const glb = useGLTF('/models/sand_1.glb')
+  const glb = useGLTF('/models/exterior_items/floor_1.glb')
   const targetObject = useRef()
   const directionalLight = useRef()
 
@@ -29,28 +31,17 @@ function Wall(props) {
   const [landClickPos, setLandClickPos] = useRecoilState(landClickPosState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
-  const [newWall, setNewWall] = useRecoilState(newWallState)
-  const [wallTexture, setWallTexture] = useRecoilState(wallTextureState)
+  const [newFloor, setNewWall] = useRecoilState(newFloorState)
 
-  const [landClickIndex, setLandClickIndex] = useRecoilState(landClickIndexState)
+  const [landClickIndex, setLandClickIndex] = useRecoilState(landClickIndexForFloorState)
 
-  const [blockPositions, setBlockPositions] = useState([])
+  const [selectedExteriorItem, setSelectedExteriorItem] = useRecoilState(selectedExteriorItemState)
+
+  const [floorPositions, setFloorPositions] = useState([])
 
   const [removedArr, setRemovedArr] = useState([])
 
   const clonedArr = []
-
-  const boxColliders = []
-
-  const [selectedExteriorItem, setSelectedExteriorItem] = useRecoilState(selectedExteriorItemState)
-
-  console.log(wallTexture)
-
-  const useBoxTest = useBox(() => ({
-    mass: 1,
-  }))
-
-  console.log('useBoxTest:   ', useBoxTest)
 
   function disposeMesh(mesh) {
     if (mesh) {
@@ -69,82 +60,48 @@ function Wall(props) {
     const cloned = useMemo(() => clone(glb.scene), [scene])
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [mesh, api] = useBox(() => ({
-      mass: 1,
-      type: 'Static',
-      rotation: [0, 0, 0],
-      position: [0, 0, 0],
-      args: [2.35, 4, 0.2],
-
-      onCollide: (e) => {
-        // console.log(e)
-      },
-    }))
 
     clonedArr.push(cloned)
-    boxColliders.push({ mesh: mesh, api })
   }
 
   useEffect(() => {
-    if (newWall && isEditMode && selectedExteriorItem === 'wall') {
-      setBlockPositions([...blockPositions, newWall.position])
+    if (newFloor && isEditMode && selectedExteriorItem === 'floor') {
+      setFloorPositions([...floorPositions, newFloor.position])
 
-      if (newWall.rotation) {
-        clonedArr[landClickIndex]?.rotation.set(newWall.rotation.x, newWall.rotation.y, newWall.rotation.z)
+      if (newFloor.rotation) {
+        clonedArr[landClickIndex]?.rotation.set(newFloor.rotation.x, newFloor.rotation.y, newFloor.rotation.z)
       }
 
       if (landClickIndex > 200 && removedArr[0]) {
-        removedArr[0].collider.mesh.current.position.setX(newWall.position.x)
-        removedArr[0].collider.mesh.current.position.setY(newWall.position.y)
-        removedArr[0].collider.mesh.current.position.setZ(newWall.position.z)
-        removedArr[0].collider.api.position.set(newWall.position.x, newWall.position.y, newWall.position.z)
-        removedArr[0].collider.api.rotation.set(newWall.rotation.x, newWall.rotation.y, newWall.rotation.z)
-        removedArr[0].model.position.set(newWall.position.x, newWall.position.y, newWall.position.z)
+        // removedArr[0].collider.mesh.current.position.setX(newFloor.position.x)
+        // removedArr[0].collider.mesh.current.position.setY(newFloor.position.y)
+        // removedArr[0].collider.mesh.current.position.setZ(newFloor.position.z)
+        // removedArr[0].collider.api.position.set(newFloor.position.x, newFloor.position.y, newFloor.position.z)
+        // removedArr[0].collider.api.rotation.set(newFloor.rotation.x, newFloor.rotation.y, newFloor.rotation.z)
+        removedArr[0].model.position.set(newFloor.position.x, newFloor.position.y, newFloor.position.z)
 
         setRemovedArr(removedArr.slice(1))
       }
 
-      const texture = new THREE.TextureLoader().load(wallTexture)
-      texture.wrapS = THREE.RepeatWrapping
-      texture.wrapT = THREE.RepeatWrapping
-      texture.repeat.set(4, 4)
-      texture.rotation = Math.PI / 2
-
-      clonedArr[landClickIndex].children[0].children[0].children[0].children[0].children[0].material.map = texture
       setSelectedItem(clonedArr[landClickIndex])
       setLandClickIndex(landClickIndex + 1)
 
       setSelectedItem(clonedArr[landClickIndex])
       setLandClickIndex(landClickIndex + 1)
     }
-  }, [newWall])
+  }, [newFloor])
 
   useEffect(() => {
-    clonedArr.forEach((cloned, index) => {
-      boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)
-      boxColliders[index].api.rotation.set(cloned.rotation.x, cloned.rotation.y, cloned.rotation.z)
-    })
-  }, [isEditMode])
+    const clickedPosition = raycaster.intersectObjects(scene.children)[0]?.point
+    const floorModel = raycaster
+      .intersectObjects(scene.children)
+      .find((target) => target.object.parent.name === 'floor_1')
 
-  useEffect(() => {
-    if (isEditMode && selectedExteriorItem === 'wall') {
-      Object.values(glb.materials).forEach((material) => {
-        material.metalness = 0.5
-        material.roughness = 0.2
-      })
-
-      setBlockPositions([...blockPositions, landClickPos])
+    if (isEditMode && selectedExteriorItem === 'floor') {
+      setFloorPositions([...floorPositions, { x: landClickPos.x, y: landClickPos.y + 0.5, z: landClickPos.z }])
 
       setSelectedItem(clonedArr[landClickIndex])
       setLandClickIndex(landClickIndex + 1)
-
-      const texture = new THREE.TextureLoader().load(wallTexture)
-      texture.wrapS = THREE.RepeatWrapping
-      texture.wrapT = THREE.RepeatWrapping
-      texture.repeat.set(4, 4)
-      texture.rotation = Math.PI / 2
-
-      clonedArr[landClickIndex].children[0].children[0].children[0].children[0].children[0].material.map = texture
 
       if (landClickIndex > 200 && removedArr[0]) {
         removedArr[0].collider.mesh.current.position.setX(landClickPos.x)
@@ -204,34 +161,26 @@ function Wall(props) {
               <>
                 <TransformControls key={index}>
                   <primitive
-                    name={'wall'}
+                    name={'floor'}
                     // onClick={(e) => findPosition(e)}
                     onPointerOver={() => {
                       document.body.style.cursor = 'pointer'
                       // boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)
-
-                      boxColliders[index].mesh.current.position.setX(cloned.position.x)
-                      boxColliders[index].mesh.current.position.setY(cloned.position.y)
-                      boxColliders[index].mesh.current.position.setZ(cloned.position.z)
                     }}
                     onPointerOut={() => {
                       document.body.style.cursor = 'default'
                     }}
-                    // 마우스 오른쪽 클릭 시 벽 제거
+                    // 마우스 오른쪽 클릭 시 바닥 제거
                     onContextMenu={(e) => {
-                      console.log(e)
                       e.stopPropagation()
                       // disposeMesh(clonedArr[index])
                       // clonedArr[index].clear()
                       if (isEditMode) {
                         cloned.position.set(1000, 1000, 1000)
-                        boxColliders[index].mesh.current.position.setX(1000)
-                        boxColliders[index].mesh.current.position.setY(1000)
-                        boxColliders[index].mesh.current.position.setZ(1000)
-                        console.log(clonedArr[index])
-                        boxColliders[index].api.position.set(1000, 1000, 1000)
 
-                        setRemovedArr([...removedArr, { collider: boxColliders[index], model: cloned }])
+                        console.log(clonedArr[index])
+
+                        setRemovedArr([...removedArr, { model: cloned }])
                         console.log(removedArr)
                       }
                     }}
@@ -244,12 +193,12 @@ function Wall(props) {
                     }}
                     // onMouseUp={boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)}
 
-                    position={[blockPositions[index]?.x, blockPositions[index]?.y, blockPositions[index]?.z]}
-                    scale={[2.35, 4.3, 0.2]}
+                    position={[floorPositions[index]?.x, floorPositions[index]?.y, floorPositions[index]?.z]}
+                    scale={[0.222, 1, 0.222]}
                     rotation={[0, 0, 0]}
                     object={cloned}
                     modelInfo={{
-                      name: 'wall',
+                      name: 'floor',
                       index,
                     }}
                     // visible={false}
@@ -258,14 +207,6 @@ function Wall(props) {
               </>
             )
           }
-          ;<mesh ref={boxColliders[index].mesh} visible={true}>
-            <boxGeometry
-              // args={clonedArr[index]}
-
-              args={[1, 1, 0.5]}
-            />
-            <meshStandardMaterial color='orange' visible={true} />
-          </mesh>
         })
       }
 
@@ -276,9 +217,9 @@ function Wall(props) {
                 visible={true}
             /> */}
       {/* <directionalLight position={[0, 0, 0]} intensity={10} target={targetObject.current} /> */}
-      <WallInstallBtns />
+      <FloorInstallBtns />
     </>
   )
 }
 
-export default Wall
+export default Floor

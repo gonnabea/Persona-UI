@@ -9,6 +9,10 @@ import { useLoader, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef, useState, useMemo } from 'react'
 import { useRecoilState } from 'recoil'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { installingModelNameState } from '@/recoil/intallingModelName/atom'
+
+let isEditModeVar = false
+let installingModelNameVar = ''
 
 function Flower1() {
   const group = useRef()
@@ -19,6 +23,8 @@ function Flower1() {
   const [installingPos, setInstallingPos] = useState([0, 0, 0])
 
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
+
+  const [installingModelName, setInstallingModelName] = useRecoilState(installingModelNameState)
 
   const [updateIndex, forceUpdate] = useState(0)
 
@@ -34,31 +40,41 @@ function Flower1() {
     clonedArr.push(cloned)
   }
 
+  useEffect(() => {
+    isEditModeVar = isEditMode
+  }, [isEditMode])
+
+  useEffect(() => {
+    installingModelNameVar = installingModelName
+  }, [installingModelName])
+
   // 마우스 무브 위치 얻기
   // 가구 설치 위치 미리보기
   const findMousePosition = (e) => {
     // console.log(e)
+    if (isEditModeVar && installingModelNameVar === 'flower_1') {
+      e.stopPropagation()
 
-    e.stopPropagation()
+      const installingModel = items.flower_1.find((flower_1) => flower_1.installing === true)
 
-    const installingModel = items.flower_1.find((flower_1) => flower_1.installing === true)
+      if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
+        // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
+        // console.log(wall)
 
-    if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
-      // const wall = raycaster.intersectObjects(scene.children).find(target => target.object.modelInfo?.name === "wall");
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
-      // console.log(wall)
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+          // if(items.flower_1.installing === true)
 
-        // if(items.flower_1.installing === true)
+          setInstallingPos([mousePosition.x + 1, mousePosition.y, mousePosition.z + 1])
 
-        setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
-
-        // setLandClickPos(clickedPosition)
+          // setLandClickPos(clickedPosition)
+        }
       }
     }
-
     //   console.log(clickedPosition)
   }
 
@@ -67,34 +83,37 @@ function Flower1() {
     // console.log(e)
 
     e.stopPropagation()
+    if (isEditModeVar === true && installingModelNameVar === 'flower_1') {
+      if (raycaster.intersectObjects(scene.children)[0]) {
+        const groundTarget = raycaster
+          .intersectObjects(scene.children)
+          .find((target) => target.object.name === 'ground1')
 
-    if (raycaster.intersectObjects(scene.children)[0]) {
-      const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
+        if (groundTarget) {
+          const mousePosition = groundTarget.point
 
-      if (groundTarget) {
-        const mousePosition = groundTarget.point
+          const installingModelState = items.flower_1.find((flower_1) => flower_1.installing === true)
+          const installingModelStateIndex = items.flower_1.findIndex((flower_1) => flower_1.installing === true)
+          const installingModel = clonedArr[installingModelStateIndex]
 
-        const installingModelState = items.flower_1.find((flower_1) => flower_1.installing === true)
-        const installingModelStateIndex = items.flower_1.findIndex((flower_1) => flower_1.installing === true)
-        const installingModel = clonedArr[installingModelStateIndex]
+          if (installingModelState && installingModelState.installed === false) {
+            installingModelState.position = [mousePosition.x + 1, mousePosition.y, mousePosition.z + 1]
 
-        if (installingModelState && installingModelState.installed === false) {
-          installingModelState.position = [mousePosition.x, mousePosition.y, mousePosition.z]
+            installingModelState.installed = true
+            installingModelState.installing = false
 
-          installingModelState.installed = true
-          installingModelState.installing = false
+            setSelectedItem(installingModel)
+            forceUpdate(updateIndex + 1)
 
-          setSelectedItem(installingModel)
-          forceUpdate(updateIndex + 1)
+            //   installingModel.scene.children[0].children[0].children[0].children[0].children.forEach((mesh) => {
+            //     mesh.material.opacity = 1
+            //   })
 
-          //   installingModel.scene.children[0].children[0].children[0].children[0].children.forEach((mesh) => {
-          //     mesh.material.opacity = 1
-          //   })
+            removeEventListeners()
+          }
 
-          removeEventListeners()
+          //    setSelectedItem(null)
         }
-
-        //    setSelectedItem(null)
       }
     }
   }
@@ -149,6 +168,9 @@ function Flower1() {
                   onPointerOut={() => {
                     document.body.style.cursor = 'default'
                   }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                  }}
                   // 수정 모드에서 가구 마우스 오른쪽 클릭 시 가구 제거
                   onContextMenu={(e) => {
                     e.stopPropagation()
@@ -169,6 +191,8 @@ function Flower1() {
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
                       setSelectedItem(e.eventObject)
 
+                      setInstallingModelName('flower_1')
+
                       // setItems({ ...items, flower_1: items.flower_1 })
                       console.log(items.flower_1[index])
                     }
@@ -185,57 +209,16 @@ function Flower1() {
                   <Html
                     position={
                       items.flower_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 2, installingPos[2]]
+                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
                         : [
                             items.flower_1[index].position[0],
-                            items.flower_1[index].position[1] + 2,
+                            items.flower_1[index].position[1] + 3,
                             items.flower_1[index].position[2],
                           ]
                     }>
                     <button
-                      onClick={() => {
-                        items.flower_1[index].position = [
-                          items.flower_1[index].position[0],
-                          items.flower_1[index].position[1] + 3,
-                          items.flower_1[index].position[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>{' '}
-                  <Html
-                    position={
-                      items.flower_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] - 2, installingPos[2]]
-                        : [
-                            items.flower_1[index].position[0],
-                            items.flower_1[index].position[1] - 2,
-                            items.flower_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.flower_1[index].position = [
-                          items.flower_1[index].position[0],
-                          items.flower_1[index].position[1] - 3,
-                          items.flower_1[index].position[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.flower_1[index].installing == true
-                        ? [installingPos[0] - 2.5, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.flower_1[index].position[0] - 2.5,
-                            items.flower_1[index].position[1] + 1,
-                            items.flower_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.flower_1[index].rotation = [
                           items.flower_1[index].rotation[0],
                           items.flower_1[index].rotation[1] + Math.PI / 4,
@@ -243,28 +226,9 @@ function Flower1() {
                         ]
                         forceUpdate(updateIndex + 1)
                       }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
-                  </Html>
-                  <Html
-                    position={
-                      items.flower_1[index].installing == true
-                        ? [installingPos[0] + 2, installingPos[1] + 1, installingPos[2]]
-                        : [
-                            items.flower_1[index].position[0] + 2,
-                            items.flower_1[index].position[1] + 1,
-                            items.flower_1[index].position[2],
-                          ]
-                    }>
-                    <button
-                      onClick={() => {
-                        items.flower_1[index].rotation = [
-                          items.flower_1[index].rotation[0],
-                          items.flower_1[index].rotation[1] - Math.PI / 4,
-                          items.flower_1[index].rotation[2],
-                        ]
-                        forceUpdate(updateIndex + 1)
-                      }}
-                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}></button>
+                      style={{ backgroundColor: 'white', borderRadius: '100%', padding: '10px' }}>
+                      🔄️
+                    </button>
                   </Html>
                 </>
               ) : null}
