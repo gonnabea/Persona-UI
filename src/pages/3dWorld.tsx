@@ -120,6 +120,8 @@ export default function Page(pageProps) {
 
   const [installingModelName, setInstallingModelName] = useRecoilState(installingModelNameState)
 
+  const [currentPlayersNumber, setCurrentPlayersNumber] = useState(0)
+
   const menuList = [
     {
       title: '로그아웃',
@@ -180,6 +182,10 @@ export default function Page(pageProps) {
       const newColyseusPlayer = message
       setColyseusPlayers([...colyseusPlayers, newColyseusPlayer])
       console.log(colyseusPlayers)
+      if (colyseusRoom) {
+        const newPlayersNumber = colyseusPlayers.length
+        setCurrentPlayersNumber(newPlayersNumber)
+      }
     })
   }
 
@@ -247,8 +253,9 @@ export default function Page(pageProps) {
   return (
     <div className='[&>*]:select-none'>
       {/* 현재 접속하고 있는 룸 ID */}
-      <div className='absolute bg-black right-[30px] bottom-[10px] z-[1] p-[10px] bg-opacity-50'>
+      <div className='absolute text-white bg-black right-[30px] bottom-[10px] z-[1] p-[10px] bg-opacity-50'>
         <p className='text-white'>Current Room ID: {colyseusRoom?.id}</p>
+        {/* <p className='text-white'>월드 접속 유저수: {colyseusRoom ? colyseusPlayers.length : null}</p> */}
       </div>
       {/* 모바일 채팅버튼 */}
       {pageProps.isMobile ? (
