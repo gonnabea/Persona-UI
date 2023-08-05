@@ -610,8 +610,11 @@ export default function Page(pageProps) {
               <img
                 onClick={(e) => {
                   e.stopPropagation()
-                  items.door_1.installing = true
-                  items.door_1.installed = false
+                  const installItem = items.door_1.find((door_1) => door_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                    setInstallingModelName('door_1')
+                  }
                 }}
                 src='/models/exterior_items/images/door_1.png'
                 style={{ width: 100, height: 100 }}
@@ -670,9 +673,12 @@ export default function Page(pageProps) {
               <img
                 onClick={(e) => {
                   e.stopPropagation()
-                  items.window_1.installing = true
-                  items.window_1.installed = false
-                  setInstallingModelName('window_1')
+
+                  const installItem = items.window_1.find((window_1) => window_1.installed === false)
+                  if (installItem) {
+                    installItem.installing = true
+                    setInstallingModelName('window_1')
+                  }
                 }}
                 src='/models/exterior_items/images/window_1.png'
                 style={{ width: 100, height: 100 }}

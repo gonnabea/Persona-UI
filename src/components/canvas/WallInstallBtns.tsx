@@ -208,6 +208,8 @@ const WallInstallBtns = () => {
             borderRadius: '20px',
           }}></div>
       </Html>
+
+      {/* 상단으로 벽 설치 */}
       <Html position={[selectedItemPos.x + 0, selectedItemPos.y + 4, selectedItemPos.z + 0]}>
         <div
           onClickCapture={(event) => {
@@ -226,6 +228,8 @@ const WallInstallBtns = () => {
             borderRadius: '20px',
           }}></div>
       </Html>
+
+      {/* 하단으로 벽 설치 */}
       <Html position={[selectedItemPos.x + 0, selectedItemPos.y - 2, selectedItemPos.z + 0]}>
         <div
           onClickCapture={(event) => {
@@ -241,8 +245,10 @@ const WallInstallBtns = () => {
             backgroundColor: 'rgba(255, 215, 6, 0.50)',
             padding: '10px',
             borderRadius: '20px',
+            opacity: selectedItem.position.y < 1 ? 0 : 1,
           }}></div>
       </Html>
+
       <Html position={[selectedItemPos.x + 0, selectedItemPos.y + 2, selectedItemPos.z + 2]}>
         {selectedItem.rotation.y !== 0 ? (
           <div

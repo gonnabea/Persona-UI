@@ -35,7 +35,7 @@ function Roof1() {
 
   const clonedArr = []
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 20; i++) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const cloned = useMemo(() => clone(glb.scene), [scene])
 
@@ -164,12 +164,15 @@ function Roof1() {
   return (
     <>
       {clonedArr.map((box_1_scene, index) => {
-        if (items.roof_1[index].installing === true || items.roof_1[index].installed === true) {
+        if (
+          items.roof_1[index]?.installing === true ||
+          (items.roof_1[index]?.installed === true && !isEditMode) ||
+          isExteriorInstalling
+        ) {
           return (
             <>
               <Suspense key={index} fallback={null}>
                 <primitive
-                  visible={!isEditMode || isExteriorInstalling}
                   onPointerOver={() => {
                     document.body.style.cursor = 'pointer'
                   }}
@@ -205,9 +208,13 @@ function Roof1() {
                       console.log(items.roof_1[index])
                     }
                   }}
-                  scale={items.roof_1[index].scale}
-                  position={items.roof_1[index].installing == true ? installingPos : items.roof_1[index].position}
-                  rotation={items.roof_1[index].rotation}
+                  scale={[
+                    items.roof_1[index]?.scale[0],
+                    items.roof_1[index]?.scale[1] + 0.5,
+                    items.roof_1[index]?.scale[2],
+                  ]}
+                  position={items.roof_1[index]?.installing == true ? installingPos : items.roof_1[index]?.position}
+                  rotation={items.roof_1[index]?.rotation}
                   object={box_1_scene}
                 />
               </Suspense>

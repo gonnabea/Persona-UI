@@ -85,9 +85,6 @@ function Floor(props) {
 
       setSelectedItem(clonedArr[landClickIndex])
       setLandClickIndex(landClickIndex + 1)
-
-      setSelectedItem(clonedArr[landClickIndex])
-      setLandClickIndex(landClickIndex + 1)
     }
   }, [newFloor])
 

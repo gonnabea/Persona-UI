@@ -3,12 +3,50 @@ import { atom } from 'recoil'
 export const itemsState = atom({
   key: 'items',
   default: {
-    door_1: {
-      position: [0,0,0],
-      rotation: [0,0,0],
-      installed: false,
-      installing: false,
-   },
+    door_1: [
+      {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         installed: false,
+         installing: false,
+      },
+            {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         installed: false,
+         installing: false,
+      },
+            {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         installed: false,
+         installing: false,
+      },
+            {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         installed: false,
+         installing: false,
+      },
+            {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         installed: false,
+         installing: false,
+      },
+            {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         installed: false,
+         installing: false,
+      },
+            {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         installed: false,
+         installing: false,
+      },
+],
    // heightIndex: 설치 높이 설정할 수 있는 모델의 설정값
    roof_1: [
       {
@@ -44,6 +82,30 @@ export const itemsState = atom({
          installing: false,
       },
       {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         scale: [1,1,1],
+         heightIndex: 0, 
+         installed: false,
+         installing: false,
+      },
+            {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         scale: [1,1,1],
+         heightIndex: 0, 
+         installed: false,
+         installing: false,
+      },
+            {
+         position: [0,0,0],
+         rotation: [0,0,0],
+         scale: [1,1,1],
+         heightIndex: 0, 
+         installed: false,
+         installing: false,
+      },
+            {
          position: [0,0,0],
          rotation: [0,0,0],
          scale: [1,1,1],
@@ -472,12 +534,56 @@ export const itemsState = atom({
       installing: false,
    },
 ],
-  window_1: {
+  window_1: [
+   {
+      position: [0,0,0],
+      rotation: [0,0,0],
+      installed: false,
+      installing: false,
+      heightIndex: 0,
+   },
+      {
       position: [0,0,0],
       rotation: [0,0,0],
       installed: false,
       installing: false,
    },
+      {
+      position: [0,0,0],
+      rotation: [0,0,0],
+      installed: false,
+      installing: false,
+   },
+      {
+      position: [0,0,0],
+      rotation: [0,0,0],
+      installed: false,
+      installing: false,
+   },
+      {
+      position: [0,0,0],
+      rotation: [0,0,0],
+      installed: false,
+      installing: false,
+   },
+      {
+      position: [0,0,0],
+      rotation: [0,0,0],
+      installed: false,
+      installing: false,
+   },   {
+      position: [0,0,0],
+      rotation: [0,0,0],
+      installed: false,
+      installing: false,
+   },
+      {
+      position: [0,0,0],
+      rotation: [0,0,0],
+      installed: false,
+      installing: false,
+   }
+],
     window_2: {
       position: [0,0,0],
       rotation: [0,0,0],
