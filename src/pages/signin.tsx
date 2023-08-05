@@ -71,12 +71,8 @@ const SignIn = () => {
 
   return (
     <div className='relative flex justify-center w-full h-full lg:grid lg:grid-cols-2 lg:divide-x-0 lg:static'>
-      <div className='absolute lg:h-screen lg:relative'>
-        <img
-          className='object-cover w-screen h-screen lg:w-full lg:h-full'
-          src='/img/signin-bg.png'
-          alt='signin-background'
-        />
+      <div className='absolute w-full h-full lg:h-screen lg:relative'>
+        <img className='object-cover w-full h-full' src='/img/signin-bg.png' alt='signin-background' />
       </div>
       <Container className='lg:items-center lg:justify-center z-[2] lg:block'>
         <div className='flex flex-col items-center justify-center w-full mx-auto bg-white lg:h-full lg:w-[320px] p-[20px] lg:p-0 rounded-[20px] lg:rounded-none'>
