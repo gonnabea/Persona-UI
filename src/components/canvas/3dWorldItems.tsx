@@ -224,13 +224,15 @@ const WorldItems = () => {
 
         <SoccerTrophy />
 
+        {/* 투명 벽 */}
         <Wall />
 
         <Floor />
-        {/* <BlockGroup /> */}
+        {/* <BlockGroup /> 원래 주석처리됨.. */}
 
         <ScreenModel />
 
+        {/* 투명 벽 */}
         <Door1 />
         <Roof1 />
         <Floor1 />
@@ -249,6 +251,7 @@ const WorldItems = () => {
         <TrainingItem2 />
         <WashingMachine1 />
         <Camera1 />
+
         {/* <InstallArea /> */}
 
         {/* <BoxCollider position={[0, -1, 0]} rotation={[0, 0, 0]} args={[10, 5, 10]} isStair={true} visible={false} /> */}
