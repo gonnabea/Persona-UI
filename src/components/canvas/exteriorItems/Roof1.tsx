@@ -12,6 +12,9 @@ import { Suspense, useEffect, useRef, useState, useMemo } from 'react'
 import { useRecoilState } from 'recoil'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
+let isEditModeVar = false
+let installingModelNameVar = ''
+
 function Roof1() {
   const group = useRef()
   const glb = useGLTF('/models/exterior_items/roof_2.glb')
@@ -46,7 +49,7 @@ function Roof1() {
 
     e.stopPropagation()
 
-    if (isEditMode && installingModelName === 'roof_1') {
+    if (isEditModeVar && installingModelNameVar === 'roof_1') {
       const installingModel = items.roof_1.find((roof_1) => roof_1.installing === true)
 
       if (raycaster.intersectObjects(scene.children)[0] && installingModel && installingModel.installed === false) {
@@ -61,7 +64,7 @@ function Roof1() {
 
           // if(items.roof_1.installing === true)
 
-          setInstallingPos([mousePosition.x, mousePosition.y + 3, mousePosition.z])
+          setInstallingPos([mousePosition.x, mousePosition.y + 3.2 + installingModel.heightIndex * 3, mousePosition.z])
 
           // setLandClickPos(clickedPosition)
         }
@@ -70,6 +73,16 @@ function Roof1() {
 
     //   console.log(clickedPosition)
   }
+
+  useEffect(() => {
+    // alert('sdasd')
+
+    isEditModeVar = isEditMode
+  }, [isEditMode])
+
+  useEffect(() => {
+    installingModelNameVar = installingModelName
+  }, [installingModelName])
 
   // 마우스 클릭한 위치 얻기 - 모델 설치할 곳 선택
   const findClickedPosition = (e) => {
@@ -86,9 +99,13 @@ function Roof1() {
         const installingModelState = items.roof_1.find((roof_1) => roof_1.installing === true)
         const installingModelStateIndex = items.roof_1.findIndex((roof_1) => roof_1.installing === true)
         const installingModel = clonedArr[installingModelStateIndex]
-
+        // console.log(mousePosition.y + 3.2 + installingModelState.heightIndex * 3)
         if (installingModelState && installingModelState.installed === false) {
-          installingModelState.position = [mousePosition.x, mousePosition.y + 3, mousePosition.z]
+          installingModelState.position = [
+            mousePosition.x,
+            mousePosition.y + 3.2 + installingModelState.heightIndex * 3,
+            mousePosition.z,
+          ]
 
           installingModelState.installed = true
           installingModelState.installing = false
@@ -197,6 +214,7 @@ function Roof1() {
               {/*  */}(
               {selectedItem && clonedArr[index] === selectedItem ? (
                 <>
+                  {/* 높이 위로 올리는 버튼 */}
                   <Html
                     position={
                       items.roof_1[index].installing == true
@@ -215,6 +233,9 @@ function Roof1() {
                           items.roof_1[index].position[1] + 3,
                           items.roof_1[index].position[2],
                         ]
+
+                        items.roof_1[index].heightIndex += 1
+
                         forceUpdate(updateIndex + 1)
                       }}
                       style={{
@@ -226,6 +247,7 @@ function Roof1() {
                       ⬆️
                     </button>
                   </Html>{' '}
+                  {/* 높이 아래로 내리는 버튼 */}
                   <Html
                     position={
                       items.roof_1[index].installing == true
@@ -244,6 +266,9 @@ function Roof1() {
                           items.roof_1[index].position[1] - 3,
                           items.roof_1[index].position[2],
                         ]
+
+                        items.roof_1[index].heightIndex -= 1
+
                         forceUpdate(updateIndex + 1)
                       }}
                       style={{
@@ -255,7 +280,8 @@ function Roof1() {
                       ⬇️
                     </button>
                   </Html>
-                  <Html
+                  {/* 모델 회전 버튼 */}
+                  {/* <Html
                     position={
                       items.roof_1[index].installing == true
                         ? [installingPos[0], installingPos[1], installingPos[2]]
@@ -288,13 +314,14 @@ function Roof1() {
                       }}>
                       🔄️
                     </button>
-                  </Html>
+                  </Html> */}
+                  {/* 가로 크기 키우기 버튼 */}
                   <Html
                     position={
                       items.roof_1[index].installing == true
                         ? [installingPos[0] + 3, installingPos[1], installingPos[2]]
                         : [
-                            items.roof_1[index].position[0] + 3,
+                            items.roof_1[index].position[0] + 3 + items.roof_1[index].scale[0],
                             items.roof_1[index].position[1],
                             items.roof_1[index].position[2],
                           ]
@@ -302,10 +329,43 @@ function Roof1() {
                     <button
                       onClick={(e) => {
                         e.stopPropagation()
-                        if (items.roof_1[index].scale[0] < 1.6) {
+                        if (items.roof_1[index].scale[0] < 15) {
                           items.roof_1[index].scale = [
                             items.roof_1[index].scale[0] + 0.2,
-                            items.roof_1[index].scale[1] + 0.2,
+                            items.roof_1[index].scale[1],
+                            items.roof_1[index].scale[2],
+                          ]
+
+                          forceUpdate(updateIndex + 1)
+                        }
+                      }}
+                      style={{
+                        backgroundColor: 'white',
+                        borderRadius: '100%',
+                        padding: '10px',
+                        opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
+                      }}>
+                      ➕ (가로)
+                    </button>
+                  </Html>
+                  {/* 세로 크기 키우기 버튼 */}
+                  <Html
+                    position={
+                      items.roof_1[index].installing == true
+                        ? [installingPos[0], installingPos[1], installingPos[2] + 3]
+                        : [
+                            items.roof_1[index].position[0],
+                            items.roof_1[index].position[1],
+                            items.roof_1[index].position[2] + 3 + items.roof_1[index].scale[2],
+                          ]
+                    }>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        if (items.roof_1[index].scale[2] < 15) {
+                          items.roof_1[index].scale = [
+                            items.roof_1[index].scale[0],
+                            items.roof_1[index].scale[1],
                             items.roof_1[index].scale[2] + 0.2,
                           ]
 
@@ -318,15 +378,16 @@ function Roof1() {
                         padding: '10px',
                         opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
                       }}>
-                      +
+                      ➕ (세로)
                     </button>
                   </Html>
+                  {/* 가로 크기 축소 버튼 */}
                   <Html
                     position={
                       items.roof_1[index].installing == true
                         ? [installingPos[0] - 3, installingPos[1], installingPos[2]]
                         : [
-                            items.roof_1[index].position[0] - 3,
+                            items.roof_1[index].position[0] - 3 - items.roof_1[index].scale[0],
                             items.roof_1[index].position[1],
                             items.roof_1[index].position[2],
                           ]
@@ -334,10 +395,43 @@ function Roof1() {
                     <button
                       onClick={(e) => {
                         e.stopPropagation()
-                        if (items.roof_1[index].scale[0] >= 0.8) {
+                        if (items.roof_1[index].scale[0] > 1) {
                           items.roof_1[index].scale = [
                             items.roof_1[index].scale[0] - 0.2,
-                            items.roof_1[index].scale[1] - 0.2,
+                            items.roof_1[index].scale[1],
+                            items.roof_1[index].scale[2],
+                          ]
+
+                          forceUpdate(updateIndex + 1)
+                        }
+                      }}
+                      style={{
+                        backgroundColor: 'white',
+                        borderRadius: '100%',
+                        padding: '10px',
+                        opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
+                      }}>
+                      ➖ (가로)
+                    </button>
+                  </Html>
+                  {/* 세로 크기 축소 버튼 */}
+                  <Html
+                    position={
+                      items.roof_1[index].installing == true
+                        ? [installingPos[0], installingPos[1], installingPos[2] - 3]
+                        : [
+                            items.roof_1[index].position[0],
+                            items.roof_1[index].position[1],
+                            items.roof_1[index].position[2] - 3 - items.roof_1[index].scale[2],
+                          ]
+                    }>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        if (items.roof_1[index].scale[2] > 1) {
+                          items.roof_1[index].scale = [
+                            items.roof_1[index].scale[0],
+                            items.roof_1[index].scale[1],
                             items.roof_1[index].scale[2] - 0.2,
                           ]
 
@@ -350,7 +444,7 @@ function Roof1() {
                         padding: '10px',
                         opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
                       }}>
-                      -
+                      ➖ (세로)
                     </button>
                   </Html>
                 </>

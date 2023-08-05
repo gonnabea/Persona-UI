@@ -9,12 +9,13 @@ export const itemsState = atom({
       installed: false,
       installing: false,
    },
+   // heightIndex: 설치 높이 설정할 수 있는 모델의 설정값
    roof_1: [
       {
          position: [0,0,0],
          rotation: [0,0,0],
          scale: [1,1,1],
-
+         heightIndex: 0,
          installed: false,
          installing: false,
       },
@@ -22,7 +23,7 @@ export const itemsState = atom({
          position: [0,0,0],
          rotation: [0,0,0],
          scale: [1,1,1],
-
+         heightIndex: 0,
          installed: false,
          installing: false,
       },
@@ -30,7 +31,7 @@ export const itemsState = atom({
          position: [0,0,0],
          rotation: [0,0,0],
          scale: [1,1,1],
-
+         heightIndex: 0,
          installed: false,
          installing: false,
       },
@@ -38,7 +39,7 @@ export const itemsState = atom({
          position: [0,0,0],
          rotation: [0,0,0],
          scale: [1,1,1],
-
+         heightIndex: 0,
          installed: false,
          installing: false,
       },
@@ -46,7 +47,7 @@ export const itemsState = atom({
          position: [0,0,0],
          rotation: [0,0,0],
          scale: [1,1,1],
-
+         heightIndex: 0, 
          installed: false,
          installing: false,
       }
