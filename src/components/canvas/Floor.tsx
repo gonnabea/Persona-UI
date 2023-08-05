@@ -156,51 +156,50 @@ function Floor(props) {
           if (index <= landClickIndex) {
             return (
               <>
-                <TransformControls key={index}>
-                  <primitive
-                    name={'floor'}
-                    // onClick={(e) => findPosition(e)}
-                    onPointerOver={() => {
-                      document.body.style.cursor = 'pointer'
-                      // boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)
-                    }}
-                    onPointerOut={() => {
-                      document.body.style.cursor = 'default'
-                    }}
-                    // 마우스 오른쪽 클릭 시 바닥 제거
-                    onContextMenu={(e) => {
-                      e.stopPropagation()
-                      // disposeMesh(clonedArr[index])
-                      // clonedArr[index].clear()
-                      if (isEditMode) {
-                        cloned.position.set(1000, 1000, 1000)
+                <primitive
+                  key={index}
+                  name={'floor'}
+                  // onClick={(e) => findPosition(e)}
+                  onPointerOver={() => {
+                    document.body.style.cursor = 'pointer'
+                    // boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)
+                  }}
+                  onPointerOut={() => {
+                    document.body.style.cursor = 'default'
+                  }}
+                  // 마우스 오른쪽 클릭 시 바닥 제거
+                  onContextMenu={(e) => {
+                    e.stopPropagation()
+                    // disposeMesh(clonedArr[index])
+                    // clonedArr[index].clear()
+                    if (isEditMode) {
+                      cloned.position.set(1000, 1000, 1000)
 
-                        console.log(clonedArr[index])
+                      console.log(clonedArr[index])
 
-                        setRemovedArr([...removedArr, { model: cloned }])
-                        console.log(removedArr)
-                      }
-                    }}
-                    onClick={(e) => {
-                      e.stopPropagation()
+                      setRemovedArr([...removedArr, { model: cloned }])
+                      console.log(removedArr)
+                    }
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation()
 
-                      if (isEditMode) {
-                        setSelectedItem(e.eventObject)
-                      }
-                    }}
-                    // onMouseUp={boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)}
+                    if (isEditMode) {
+                      setSelectedItem(e.eventObject)
+                    }
+                  }}
+                  // onMouseUp={boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)}
 
-                    position={[floorPositions[index]?.x, floorPositions[index]?.y, floorPositions[index]?.z]}
-                    scale={[0.222, 1, 0.222]}
-                    rotation={[0, 0, 0]}
-                    object={cloned}
-                    modelInfo={{
-                      name: 'floor',
-                      index,
-                    }}
-                    // visible={false}
-                  />
-                </TransformControls>
+                  position={[floorPositions[index]?.x, floorPositions[index]?.y, floorPositions[index]?.z]}
+                  scale={[0.222, 1, 0.222]}
+                  rotation={[0, 0, 0]}
+                  object={cloned}
+                  modelInfo={{
+                    name: 'floor',
+                    index,
+                  }}
+                  // visible={false}
+                />
               </>
             )
           }
