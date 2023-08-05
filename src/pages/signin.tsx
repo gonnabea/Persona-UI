@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { useForm, DefaultValues } from 'react-hook-form'
 
 import PersonaBI from '@/assets/icons/persona-bi.svg'
-import signinBg from '@/assets/images/signin-bg.png'
 import Container from '@/components/dom/Container'
 import Button from '@/components/dom/Button'
 import { Input, Checkbox } from '@/components/dom/Forms'
@@ -72,10 +71,14 @@ const SignIn = () => {
 
   return (
     <div className='relative flex justify-center w-full h-full lg:grid lg:grid-cols-2 lg:divide-x-0 lg:static'>
-      <div className='absolute w-full h-full lg:relative lg:w-auto lg:h-auto'>
-        <Image className='object-cover' src={signinBg} alt='signin-background' fill />
+      <div className='absolute lg:h-screen lg:relative'>
+        <img
+          className='object-cover w-screen h-screen lg:w-full lg:h-full'
+          src='/img/signin-bg.png'
+          alt='signin-background'
+        />
       </div>
-      <Container className='flex items-center justify-center z-[2] lg:block'>
+      <Container className='lg:items-center lg:justify-center z-[2] lg:block'>
         <div className='flex flex-col items-center justify-center w-full mx-auto bg-white lg:h-full lg:w-[320px] p-[20px] lg:p-0 rounded-[20px] lg:rounded-none'>
           <div>
             <PersonaBI className='w-[200px] mb-[60px] fill-primary-200' />
