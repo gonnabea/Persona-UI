@@ -46,6 +46,7 @@ import TrainingItem2 from './interiorItems/TrainingItem2'
 import WashingMachine1 from './interiorItems/WashingMachine1'
 import Camera1 from './interiorItems/Camera1'
 import Floor from './Floor'
+import { TransformControls } from 'three-stdlib'
 
 type User = {
   character: string
@@ -266,6 +267,131 @@ const WorldItems = () => {
             args={[0.3]}
             type='Dynamic'
           /> */}
+
+        {/* 지형 콜라이더 */}
+        <BoxCollider
+          args={[100, 2, 1]}
+          position={[-38.7878303527832, -0.6001151204109192, -87.49119567871094]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[150, 2, 1]}
+          position={[-38.7878303527832, -0.6001151204109192, -87.49119567871094]}
+          rotation={[0, -100, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[1, 2, 30]}
+          position={[-115.03746032714844, -0.6001151204109192, -56.58184814453125]}
+          rotation={[0, 45, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[1, 2, 24]}
+          position={[-127.9855499267578, -0.6001151204109192, -75.3402481079101]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[12, 2, 1]}
+          position={[-124.57302856445312, -0.6001151204109192, -92.36568450927734]}
+          rotation={[0, -40, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[72, 2, 1]}
+          position={[-92.6622085571289, -0.6001151204109192, -112.29365539550781]}
+          rotation={[0, 10, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[1, 1, 20]}
+          position={[-64.93544006347656, -0.6001151204109192, -140.5526123046875]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[100, 1, 1]}
+          position={[-99.98423767089844, -0.6001151204109192, -128.0631408691406]}
+          rotation={[0, 10, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[1, 2, 50]}
+          position={[-140.75332641601562, -0.6001151204109192, -75.62220001220703]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[1, 2, 80]}
+          position={[-130.6601104736328, -0.6001151204109192, -36.623260498046875]}
+          rotation={[0, 10, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[1, 2, 100]}
+          position={[-96.12845611572266, -0.6001151204109192, 5]}
+          rotation={[0, 45, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[90, 1, 1]}
+          position={[-15.332093238830566, -0.6001151204109192, 30.75225257873535]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[100, 2, 1]}
+          position={[55.73100280761719, -0.6001151204109192, 22.325807571411133]}
+          rotation={[0, 60, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[20, 2, 1]}
+          position={[111.57001495361328, -0.6001151204109192, 0.695167541503906]}
+          rotation={[0, 10, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[100, 2, 1]}
+          position={[135.5371856689453, -0.6001151204109192, -29.679838180541992]}
+          rotation={[0, 45, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[50, 2, 1]}
+          position={[140.64149475097656, -0.6001151204109192, -72.2412338256836]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[1, 2, 10]}
+          position={[119.33563232421875, -0.6001151204109192, -67.02662658691406]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[20, 2, 1]}
+          position={[115.18716430664062, -0.6001151204109192, -53.56449890136719]}
+          rotation={[0, 20, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[70, 2, 1]}
+          position={[30.11223030090332, -0.6001151204109192, -87.3530502319336]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[30, 2, 1]}
+          position={[66.8280258178711, -0.6001151204109192, -75.750129699707]}
+          rotation={[0, 30, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[30, 2, 1]}
+          position={[78.82693481445312, -0.6001151204109192, -54.15626525878906]}
+          rotation={[0, -7, 0]}
+          visible={false}
+        />
+        <BoxCollider
+          args={[22, 2, 1]}
+          position={[100.0007553100586, -0.6001151204109192, -45.634246826171875]}
+          visible={false}
+        />
       </Suspense>
     </>
   )
