@@ -16,7 +16,7 @@ let installingModelNameVar = ''
 
 function TrainingItem1() {
   const group = useRef()
-  const glb = useGLTF('/models/interior_items/training_item_001.glb')
+  const glb = useGLTF('/models/interior_items/dumbbell_small_01.glb')
 
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
@@ -204,7 +204,7 @@ function TrainingItem1() {
                       console.log(items.training_item_1[index])
                     }
                   }}
-                  scale={[1, 1, 1]}
+                  scale={[3, 3, 3]}
                   position={
                     items.training_item_1[index].installing == true
                       ? installingPos

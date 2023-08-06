@@ -16,7 +16,7 @@ let installingModelNameVar = ''
 
 function CoffeeTable1() {
   const group = useRef()
-  const glb = useGLTF('/models/interior_items/coffee_table_001.glb')
+  const glb = useGLTF('/models/interior_items/coffee_table_01.glb')
 
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
@@ -69,7 +69,7 @@ function CoffeeTable1() {
 
           // if(items.coffee_table_1.installing === true)
 
-          setInstallingPos([mousePosition.x + 1, mousePosition.y, mousePosition.z + 1])
+          setInstallingPos([mousePosition.x + 1, mousePosition.y + 0.2, mousePosition.z + 1])
 
           // setLandClickPos(clickedPosition)
         }
@@ -100,7 +100,7 @@ function CoffeeTable1() {
           const installingModel = clonedArr[installingModelStateIndex]
 
           if (installingModelState && installingModelState.installed === false) {
-            installingModelState.position = [mousePosition.x + 1, mousePosition.y, mousePosition.z + 1]
+            installingModelState.position = [mousePosition.x + 1, mousePosition.y + 0.2, mousePosition.z + 1]
 
             installingModelState.installed = true
             installingModelState.installing = false

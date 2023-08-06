@@ -16,7 +16,7 @@ let installingModelNameVar = ''
 
 function Lamp2() {
   const group = useRef()
-  const glb = useGLTF('/models/interior_items/lamp_002.glb')
+  const glb = useGLTF('/models/interior_items/lamp_02.glb')
 
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
