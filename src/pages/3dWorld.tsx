@@ -695,9 +695,9 @@ export default function Page(pageProps) {
       <ModalWithoutDim
         active={menuEnabled}
         toggle={toggleMenuEnabled}
-        containerClassName='top-[20px] right-[20px] lg:top-[34px] lg:right-[40px] z-[2] lg:w-[230px]'
+        containerClassName='min-w-[150px] lg:min-w-auto top-[20px] right-[20px] lg:top-[34px] lg:right-[40px] z-[2] lg:w-[230px]'
         headerChildren={<>메뉴</>}
-        bodyClassName='mx-[-10px] lg:mx-[-30px] lg:pb-0 lg:pt-[8px]'
+        bodyClassName=' mx-[-10px] lg:mx-[-30px] lg:pb-0 lg:pt-[8px]'
         bodyChildren={
           <div className='flex flex-col'>
             {menuList.map((item, index) => {
@@ -707,7 +707,7 @@ export default function Page(pageProps) {
                   key={`menu-${index}`}
                   color='white'
                   onClick={callback}
-                  className='flex text-left rounded-none lg:px-[30px] lg:py-[10px] stroke-typo-black-primary hover:stroke-primary-200 stroke-2'>
+                  className='flex text-left rounded-none px-[10px] py-[5px] lg:px-[30px] lg:py-[10px] stroke-typo-black-primary hover:stroke-primary-200 stroke-2'>
                   {Icon ? <Icon /> : ''}
                   <p className='pl-[10px] text-inherit'>{title}</p>
                 </Button>
