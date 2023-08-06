@@ -39,7 +39,7 @@ const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement
     <div
       {...props}
       ref={localRef}
-      className={`h-full text-[14px] lg:text-[16px] ${
+      className={`h-full text-[14px] lg:text-[16px] relative ${
         canvasFixedPaths.includes(router.pathname) ? 'fixed top-0 left-0 right-0 bottom-0' : ''
       }`}>
       {children}

@@ -74,8 +74,8 @@ const SignIn = () => {
       <div className='absolute w-full h-full lg:h-screen lg:relative'>
         <img className='object-cover w-full h-full' src='/img/signin-bg.png' alt='signin-background' />
       </div>
-      <Container className='lg:items-center lg:justify-center z-[2] lg:block'>
-        <div className='flex flex-col items-center justify-center w-full mx-auto bg-white lg:h-full lg:w-[320px] p-[20px] lg:p-0 rounded-[20px] lg:rounded-none'>
+      <Container className='flex items-center justify-center overflow-auto lg:items-center lg:justify-center z-[2] lg:block'>
+        <div className='flex flex-col items-center justify-center w-full m-auto mx-auto bg-white lg:h-full lg:w-[320px] p-[20px] lg:p-0 rounded-[20px] lg:rounded-none'>
           <div>
             <PersonaBI className='w-[200px] mb-[60px] fill-primary-200' />
           </div>

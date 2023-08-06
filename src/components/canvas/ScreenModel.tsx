@@ -65,13 +65,13 @@ function ScreenModel(props) {
 
         {/* 전광판 1 */}
         <mesh position={[0, 6.5, 3]}>
-          <Text position={[-1, 0, 0.2]} characters='abcdefghijklmnopqrstuvwxyz0123456789!'>
+          <Text position={[-1.5, 0, 0.2]} characters='abcdefghijklmnopqrstuvwxyz0123456789!' scale={[2, 2, 2]}>
             {score.message?.team2 ?? 0}
           </Text>
-          <Text position={[0, 0, 0.2]} characters='abcdefghijklmnopqrstuvwxyz0123456789!'>
+          <Text position={[0, 0, 0.2]} characters='abcdefghijklmnopqrstuvwxyz0123456789!' scale={[2, 2, 2]}>
             :
           </Text>
-          <Text position={[1, 0, 0.2]} characters='abcdefghijklmnopqrstuvwxyz0123456789!'>
+          <Text position={[1.5, 0, 0.2]} characters='abcdefghijklmnopqrstuvwxyz0123456789!' scale={[2, 2, 2]}>
             {score.message?.team1 ?? 0}
           </Text>
           <boxGeometry args={[16, 9, 0.1]} />
