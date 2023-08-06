@@ -165,9 +165,11 @@ function Roof1() {
     <>
       {clonedArr.map((roof_1_scene, index) => {
         if (
-          (items.roof_1[index]?.installing === true || items.roof_1[index]?.installed === true) &&
-          installingModelName !== 'floor' &&
-          installingModelName !== 'wall'
+          ((items.roof_1[index]?.installing === true || items.roof_1[index]?.installed === true) &&
+            installingModelName !== 'floor' &&
+            installingModelName !== 'wall' &&
+            isExteriorInstalling === true) ||
+          isEditMode === false
         ) {
           return (
             <>
