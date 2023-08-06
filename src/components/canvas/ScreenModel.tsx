@@ -1,7 +1,9 @@
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import { Text, useGLTF } from '@react-three/drei'
+import { useLoader } from '@react-three/fiber'
 import { useRef, useState, useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
+import * as THREE from 'three'
 
 type ScoreType = {
   clientId: string
@@ -16,6 +18,7 @@ function ScreenModel(props) {
   const group = useRef()
   const gltf = useGLTF('/models/tv.glb')
   const colyseusRoom = useRecoilValue(colyseusRoomState)
+  const texture = useLoader(THREE.TextureLoader, '/img/scoreboard.png')
   const [score, setScore] = useState<ScoreType>({
     clientId: '',
     message: {
@@ -62,11 +65,17 @@ function ScreenModel(props) {
 
         {/* 전광판 1 */}
         <mesh position={[0, 6.5, 3]}>
-          <Text position={[-1, 0, 0.2]}>{score.message?.team2 ?? 0}</Text>
-          <Text position={[0, 0, 0.2]}>:</Text>
-          <Text position={[1, 0, 0.2]}>{score.message?.team1 ?? 0}</Text>
+          <Text position={[-1, 0, 0.2]} characters='abcdefghijklmnopqrstuvwxyz0123456789!'>
+            {score.message?.team2 ?? 0}
+          </Text>
+          <Text position={[0, 0, 0.2]} characters='abcdefghijklmnopqrstuvwxyz0123456789!'>
+            :
+          </Text>
+          <Text position={[1, 0, 0.2]} characters='abcdefghijklmnopqrstuvwxyz0123456789!'>
+            {score.message?.team1 ?? 0}
+          </Text>
           <boxGeometry args={[16, 9, 0.1]} />
-          <meshStandardMaterial color='skyblue' opacity={0.3} />
+          <meshStandardMaterial attach='material' map={texture} />
         </mesh>
       </group>
     </>
