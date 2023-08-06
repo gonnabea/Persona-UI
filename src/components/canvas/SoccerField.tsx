@@ -78,7 +78,7 @@ function SoccerField(props) {
       {/* 골대 1 */}
       <group>
         {/* top */}
-        <BoxCollider position={[0, 1, -37.5]} args={[4, 0.1, 2]} />
+        <BoxCollider position={[0, 1, -37.5]} args={[4, 0.1, 2]} visible={false} />
         {/* bottom */}
         <BoxCollider
           position={[0, -1.5, -37.5]}
@@ -87,18 +87,19 @@ function SoccerField(props) {
           onCollideBegin={(e: CollideBeginEvent) => {
             onGoal(e, 'team1')
           }}
+          visible={false}
         />
         {/* back */}
-        <BoxCollider position={[0, 0, -36.5]} args={[4, 2, 0.1]} />
+        <BoxCollider position={[0, 0, -36.5]} args={[4, 2, 0.1]} visible={false} />
         {/* left */}
-        <BoxCollider position={[2, -1, -37.5]} args={[0.1, 4, 2]} />
+        <BoxCollider position={[2, -1, -37.5]} args={[0.1, 4, 2]} visible={false} />
         {/* right */}
-        <BoxCollider position={[-2, -1, -37.5]} args={[0.1, 4, 2]} />
+        <BoxCollider position={[-2, -1, -37.5]} args={[0.1, 4, 2]} visible={false} />
       </group>
       {/* 골대 2 */}
       <group>
         {/* top */}
-        <BoxCollider position={[0, 1, -82.5]} args={[4, 0.1, 2]} />
+        <BoxCollider position={[0, 1, -82.5]} args={[4, 0.1, 2]} visible={false} />
         {/* bottom */}
         <BoxCollider
           position={[0, -1.5, -82.5]}
@@ -107,13 +108,42 @@ function SoccerField(props) {
           onCollideBegin={(e: CollideBeginEvent) => {
             onGoal(e, 'team2')
           }}
+          visible={false}
         />
         {/* back */}
-        <BoxCollider position={[0, 0, -83.5]} args={[4, 2, 0.1]} />
+        <BoxCollider position={[0, 0, -83.5]} args={[4, 2, 0.1]} visible={false} />
         {/* left */}
-        <BoxCollider position={[2, -1, -82.5]} args={[0.1, 4, 2]} />
+        <BoxCollider position={[2, -1, -82.5]} args={[0.1, 4, 2]} visible={false} />
         {/* right */}
-        <BoxCollider position={[-2, -1, -82.5]} args={[0.1, 4, 2]} />
+        <BoxCollider position={[-2, -1, -82.5]} args={[0.1, 4, 2]} visible={false} />
+      </group>
+
+      {/* 축구장을 두르고 있는 바닥 콜라이더 */}
+      <group>
+        <BoxCollider
+          position={[16.035457210710149, -1, -60.83751896223613]}
+          args={[3, 0.1, 50]}
+          visible={false}
+          name='soccerfield-border-1'
+        />
+        <BoxCollider
+          position={[-16, -1, -60.83751896223613]}
+          args={[3, 0.1, 50]}
+          visible={false}
+          name='soccerfield-border-2'
+        />
+        <BoxCollider
+          position={[-0.7667139636867977, -1, -87.62388279411937]}
+          args={[35, 0.1, 3]}
+          visible={false}
+          name='soccerfield-border-3'
+        />
+        <BoxCollider
+          position={[0.7667139636867977, -1, -34.62388279411937]}
+          args={[35, 0.1, 3]}
+          visible={false}
+          name='soccerfield-border-4'
+        />
       </group>
       {/* <directionalLight position={[0, 0, 0]} intensity={10} target={targetObject.current} /> */}
     </Suspense>
