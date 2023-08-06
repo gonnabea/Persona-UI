@@ -16,7 +16,7 @@ let installingModelNameVar = ''
 
 function Fridge1() {
   const group = useRef()
-  const glb = useGLTF('/models/interior_items/fridge_001.glb')
+  const glb = useGLTF('/models/interior_items/fridge_01.glb')
 
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)

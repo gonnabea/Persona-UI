@@ -16,7 +16,7 @@ let installingModelNameVar = ''
 
 function KitchenChair1() {
   const group = useRef()
-  const glb = useGLTF('/models/interior_items/kitchen_chair_001.glb')
+  const glb = useGLTF('/models/interior_items/kitchen_chair_01.glb')
 
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)

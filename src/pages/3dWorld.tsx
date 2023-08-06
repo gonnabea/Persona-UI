@@ -44,6 +44,7 @@ import { selectedExteriorItemState } from '@/recoil/selectedExteriorItem/atom'
 import X from '@/assets/icons/x.svg'
 import { createPortal } from 'react-dom'
 import { installingModelNameState } from '@/recoil/intallingModelName/atom'
+import ViewModeBtn from '@/components/dom/ViewModeBtn'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -294,8 +295,8 @@ export default function Page(pageProps) {
         <Kebab className='fill-primary-200' />
       </Button>
       <BGM />
+      <ViewModeBtn />
       <EditModeBtn />
-      <WallInstallPop itemName={'벽설치'} />
 
       <ItemInstallPop
         tranings={

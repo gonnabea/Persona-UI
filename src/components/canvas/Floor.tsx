@@ -184,7 +184,7 @@ function Floor(props) {
                   onClick={(e) => {
                     e.stopPropagation()
 
-                    if (isEditMode) {
+                    if (isEditMode && selectedExteriorItem === 'floor') {
                       setSelectedItem(e.eventObject)
                     }
                   }}

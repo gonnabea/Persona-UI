@@ -58,7 +58,7 @@ function Door1() {
 
     clonedArr.push(cloned)
 
-    console.log(cloned)
+    // console.log(cloned)
 
     cloned.children[0].children[0].material.transparency = true
     cloned.children[0].children[0].material.opacity = 0.4

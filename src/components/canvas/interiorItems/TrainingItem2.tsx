@@ -16,7 +16,7 @@ let installingModelNameVar = ''
 
 function TrainingItem2() {
   const group = useRef()
-  const glb = useGLTF('/models/interior_items/training_item_002.glb')
+  const glb = useGLTF('/models/interior_items/dumbbell_big_01.glb')
 
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
@@ -69,7 +69,7 @@ function TrainingItem2() {
 
           // if(items.training_item_2.installing === true)
 
-          setInstallingPos([mousePosition.x + 1, mousePosition.y, mousePosition.z + 1])
+          setInstallingPos([mousePosition.x + 1, mousePosition.y + 0.5, mousePosition.z + 1])
 
           // setLandClickPos(clickedPosition)
         }
@@ -203,7 +203,7 @@ function TrainingItem2() {
                       console.log(items.training_item_2[index])
                     }
                   }}
-                  scale={[1, 1, 1]}
+                  scale={[1.5, 1.5, 1.5]}
                   position={
                     items.training_item_2[index].installing == true
                       ? installingPos

@@ -547,41 +547,55 @@ export const itemsState = atom({
       rotation: [0,0,0],
       installed: false,
       installing: false,
+      heightIndex: 0,
+
    },
       {
       position: [0,0,0],
       rotation: [0,0,0],
       installed: false,
       installing: false,
+      heightIndex: 0,
+
    },
       {
       position: [0,0,0],
       rotation: [0,0,0],
       installed: false,
       installing: false,
+      heightIndex: 0,
+
    },
       {
       position: [0,0,0],
       rotation: [0,0,0],
       installed: false,
       installing: false,
+      heightIndex: 0,
+
    },
       {
       position: [0,0,0],
       rotation: [0,0,0],
       installed: false,
       installing: false,
+      heightIndex: 0,
+
    },   {
       position: [0,0,0],
       rotation: [0,0,0],
       installed: false,
       installing: false,
+      heightIndex: 0,
+
    },
       {
       position: [0,0,0],
       rotation: [0,0,0],
       installed: false,
       installing: false,
+      heightIndex: 0,
+
    }
 ],
     window_2: {
@@ -589,6 +603,8 @@ export const itemsState = atom({
       rotation: [0,0,0],
       installed: false,
       installing: false,
+      heightIndex: 0,
+
    },
     bed_1: [
       {

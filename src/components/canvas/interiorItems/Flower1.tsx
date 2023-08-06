@@ -197,7 +197,7 @@ function Flower1() {
                       console.log(items.flower_1[index])
                     }
                   }}
-                  scale={[1, 1, 1]}
+                  scale={[2, 2, 2]}
                   position={items.flower_1[index].installing == true ? installingPos : items.flower_1[index].position}
                   rotation={items.flower_1[index].rotation}
                   object={flower_1_scene}

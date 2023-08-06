@@ -24,7 +24,7 @@ const EditModeBtn = () => {
 
   return (
     <button
-      className='absolute p-4 text-center text-white rounded-full min-w-[150px] bg-[#8171C3] z-[2] bottom-[150px] right-[30px]'
+      className='absolute p-4 text-center text-white rounded-full min-w-[150px] bg-[#8171C3] z-[2] bottom-[240px] right-[30px]'
       onClick={(event) => {
         event.stopPropagation()
         toggleEditMode()

@@ -15,6 +15,7 @@ import { enterSoccerIndexState } from '@/recoil/enterSoccer/atom'
 import NamePlate from '../NamePlate'
 import ChatBubble from '../ChatBubble'
 import { isEditModeState } from '@/recoil/isEditMode/atom'
+import { viewModeState } from '@/recoil/viewMode/atom'
 
 // GLTF Actions Type
 type ActionName = 'run'
@@ -128,6 +129,8 @@ export function MyCharacter(props: propTypes) {
 
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
 
+  const [viewMode, setViewMode] = useRecoilState(viewModeState)
+
   const [isMoving, setIsMoving] = useState(false)
 
   const frontVector = new Vector3(0, 0, 0)
@@ -175,6 +178,52 @@ export function MyCharacter(props: propTypes) {
       amyActions['idle']?.play()
       amyActions['run']?.stop()
     }
+  }
+
+  // 카메라 시점 상황에 따라 처리하는 함수
+  const handleViewMode = () => {
+    //   ref={cameraRef}
+    // target={new Vector3(positionX, isEditMode ? positionY : positionY + 2, positionZ)}
+    // maxDistance={isEditMode ? 15 : 4}
+    // minDistance={isEditMode ? 15 : 4}
+    // enableZoom={false}
+    // enablePan={false}
+    // maxPolarAngle={isEditMode ? Math.PI / 4 : Math.PI / 2}
+    // minPolarAngle={isEditMode ? Math.PI / 4 : 0}
+
+    const result = {
+      maxDistance: 4,
+      minDistance: 4,
+      maxPolarAngle: Math.PI / 2,
+      minPolarAngle: 0,
+    }
+
+    if (isEditMode) {
+      result.maxDistance = 15
+      result.minDistance = 15
+      result.maxPolarAngle = Math.PI / 4
+      result.minPolarAngle = Math.PI / 4
+    }
+
+    if (!isEditMode) {
+      // 3인칭 뷰 모드일 경우
+      if (viewMode === 0) {
+        result.maxDistance = 4
+        result.minDistance = 4
+        result.maxPolarAngle = Math.PI / 2
+        result.minPolarAngle = 0
+      }
+
+      // 1인칭 뷰 모드일 경우
+      if (viewMode === 1) {
+        result.maxDistance = 0.8
+        result.minDistance = 0.8
+        result.maxPolarAngle = Math.PI / 2
+        result.minPolarAngle = 0
+      }
+    }
+
+    return result
   }
 
   const setMutantAnimationStatus = () => {
@@ -483,12 +532,12 @@ export function MyCharacter(props: propTypes) {
       <OrbitControls
         ref={cameraRef}
         target={new Vector3(positionX, isEditMode ? positionY : positionY + 2, positionZ)}
-        maxDistance={isEditMode ? 15 : 4}
-        minDistance={isEditMode ? 15 : 4}
+        maxDistance={handleViewMode().maxDistance}
+        minDistance={handleViewMode().minDistance}
         enableZoom={false}
         enablePan={false}
-        maxPolarAngle={isEditMode ? Math.PI / 4 : Math.PI / 2}
-        minPolarAngle={isEditMode ? Math.PI / 4 : 0}
+        maxPolarAngle={handleViewMode().maxPolarAngle}
+        minPolarAngle={handleViewMode().minPolarAngle}
       />
 
       {/* @ts-ignore */}

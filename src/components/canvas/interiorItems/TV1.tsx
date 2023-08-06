@@ -16,7 +16,7 @@ let installingModelNameVar = ''
 
 function TV1() {
   const group = useRef()
-  const glb = useGLTF('/models/interior_items/tv_wall_001.glb')
+  const glb = useGLTF('/models/interior_items/tv_01.glb')
 
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
