@@ -67,7 +67,7 @@ function Window1() {
     cloned.children[1].children[0].material.transparency = true
     cloned.children[1].children[0].material.opacity = 0.7
 
-    console.log(cloned)
+    // console.log(cloned)
 
     isDoorOpenedArr.push([isDoorOpened, setIsDoorOpened])
   }

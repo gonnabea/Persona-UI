@@ -238,7 +238,7 @@ function Wall(props) {
                   onClick={(e) => {
                     e.stopPropagation()
 
-                    if (isEditMode) {
+                    if (isEditMode && selectedExteriorItem === 'wall') {
                       setSelectedItem(e.eventObject)
                     }
                   }}

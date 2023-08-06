@@ -295,7 +295,7 @@ export default function Page(pageProps) {
       </Button>
       <BGM />
       <EditModeBtn />
-      <WallInstallPop itemName={'벽설치'} />
+      {/* <WallInstallPop itemName={'벽설치'} /> */}
 
       <ItemInstallPop
         tranings={
