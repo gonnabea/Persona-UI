@@ -4,7 +4,7 @@ import MobileDetect from 'mobile-detect'
 
 import Land from '@/components/canvas/Land'
 import { MyCharacter } from '@/components/canvas/characters/MyCharacter'
-import { Physics, Debug } from '@react-three/cannon'
+import { Physics } from '@react-three/cannon'
 import { Chat } from '@/components/dom/ChatBox'
 import { BoxCollider, SphereCollider } from '@/components/canvas/Colliders'
 import Button from '@/components/dom/Button'
@@ -748,14 +748,12 @@ Page.canvas = (pageProps) => {
   return (
     <>
       <Physics gravity={[0, -100, 0]}>
-        <Debug>
-          <Suspense fallback={null}>
-            <WorldItems />
+        <Suspense fallback={null}>
+          <WorldItems />
 
-            {/* <object3D name={'dirLightTarget'} position={[-4, 0, 0]} />
+          {/* <object3D name={'dirLightTarget'} position={[-4, 0, 0]} />
       <directionalLight  position={[0, 0, 0]} intensity={11} target={'dirLightTarget'} /> */}
-          </Suspense>
-        </Debug>
+        </Suspense>
       </Physics>
     </>
   )
