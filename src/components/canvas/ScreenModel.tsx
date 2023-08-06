@@ -77,6 +77,11 @@ function ScreenModel(props) {
           <boxGeometry args={[16, 9, 0.1]} />
           <meshStandardMaterial attach='material' map={texture} />
         </mesh>
+        {/* 전광판 뒷편 */}
+        <mesh position={[0, 6.5, 2]}>
+          <boxGeometry args={[16, 9, 0.1]} />
+          <meshStandardMaterial color='black' />
+        </mesh>
       </group>
     </>
   )
