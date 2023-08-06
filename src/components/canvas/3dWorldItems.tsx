@@ -67,9 +67,8 @@ interface Chat extends User {
 const Loader = () => {
   const { active, progress, errors, item, loaded, total } = useProgress()
 
-  console.log(active, progress, errors, item, loaded, total)
   return (
-    <Html center className='fixed w-screen h-screen'>
+    <Html center className='fixed w-screen h-screen z-[999999]'>
       <div className='flex flex-col w-full h-full bg-center bg-[url("/img/loading-bg.png")]'>
         {/* Content container (팁, 로딩 인디케이터 출력 컨테이너) */}
         <div className='flex items-end justify-between flex-1 from-[#121130] bg-gradient-to-t p-[20px] lg:p-[40px]'>
