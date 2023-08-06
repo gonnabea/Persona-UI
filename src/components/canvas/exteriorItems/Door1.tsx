@@ -50,7 +50,7 @@ function Door1() {
     const { actions: doorActions } = useAnimations(glb.animations, doorRef)
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [isDoorOpened, setIsDoorOpened] = useState(false)
+    const [isDoorOpened, setIsDoorOpened] = useState(true)
 
     doorRefArr.push(doorRef)
 
@@ -229,6 +229,7 @@ function Door1() {
                       console.log(animationActionArr[index].door_open01)
                       const [isDoorOpened, setIsDoorOpened] = isDoorOpenedArr[index]
                       if (isDoorOpened === true) {
+                        // 문 닫기 애니메이션
                         animationActionArr[index].door_open01.stop()
 
                         animationActionArr[index].door_close.repetitions = 0
@@ -240,13 +241,14 @@ function Door1() {
                       }
 
                       if (isDoorOpened === false) {
+                        // 문 열기 애니메이션
                         animationActionArr[index].door_close.stop()
 
                         animationActionArr[index].door_open01.repetitions = 0
                         animationActionArr[index].door_open01.play()
 
                         setIsDoorOpened(true)
-                        animationActionArr[index].door_close.clampWhenFinished = true
+                        animationActionArr[index].door_open01.clampWhenFinished = true
                         animationActionArr[index].door_open01.reset()
                       }
                     }

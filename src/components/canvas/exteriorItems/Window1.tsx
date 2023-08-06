@@ -16,7 +16,7 @@ let installingModelNameVar = ''
 
 function Window1() {
   const group = useRef()
-  const glb = useGLTF('/models/exterior_items/window_01.glb')
+  const glb = useGLTF('/models/exterior_items/window_001.glb')
 
   const [items, setItems] = useRecoilState(itemsState)
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState)
@@ -57,6 +57,17 @@ function Window1() {
     animationActionArr.push(windowActions)
 
     clonedArr.push(cloned)
+
+    // cloned.children[0].material.transparency = true
+    // cloned.children[0].material.opacity = 0.7
+
+    cloned.children[0].children[0].material.transparency = true
+    cloned.children[0].children[0].material.opacity = 0.7
+
+    cloned.children[1].children[0].material.transparency = true
+    cloned.children[1].children[0].material.opacity = 0.7
+
+    console.log(cloned)
 
     isDoorOpenedArr.push([isDoorOpened, setIsDoorOpened])
   }
@@ -231,30 +242,52 @@ function Window1() {
                     if (!isEditMode) {
                       console.log(animationActionArr[index])
                       const [isDoorOpened, setIsDoorOpened] = isDoorOpenedArr[index]
-                      // if (isDoorOpened === true) {
-                      //   animationActionArr[index].door_open01.stop()
+                      if (isDoorOpened === true) {
+                        // 오른쪽 창문 닫기 애니메이션 재생
+                        animationActionArr[index].door_open_right.stop()
 
-                      //   animationActionArr[index].door_close.repetitions = 0
-                      //   animationActionArr[index].door_close.play()
+                        animationActionArr[index].door_close_right.repetitions = 0
+                        animationActionArr[index].door_close_right.play()
 
-                      //   setIsDoorOpened(false)
-                      //   animationActionArr[index].door_close.clampWhenFinished = true
-                      //   animationActionArr[index].door_close.reset()
-                      // }
+                        animationActionArr[index].door_close_right.clampWhenFinished = true
+                        animationActionArr[index].door_close_right.reset()
 
-                      // if (isDoorOpened === false) {
-                      //   animationActionArr[index].door_close.stop()
+                        // 왼쪽 창문 닫기 애니메이션 재생
+                        animationActionArr[index].door_open_left.stop()
 
-                      //   animationActionArr[index].door_open01.repetitions = 0
-                      //   animationActionArr[index].door_open01.play()
+                        animationActionArr[index].door_close_left.repetitions = 0
+                        animationActionArr[index].door_close_left.play()
 
-                      //   setIsDoorOpened(true)
-                      //   animationActionArr[index].door_close.clampWhenFinished = true
-                      //   animationActionArr[index].door_open01.reset()
-                      // }
+                        animationActionArr[index].door_close_left.clampWhenFinished = true
+                        animationActionArr[index].door_close_left.reset()
+
+                        setIsDoorOpened(false)
+                      }
+
+                      if (isDoorOpened === false) {
+                        // 오른쪽 창문 열기 애니메이션 재생
+                        animationActionArr[index].door_close_right.stop()
+
+                        animationActionArr[index].door_open_right.repetitions = 0
+                        animationActionArr[index].door_open_right.play()
+
+                        animationActionArr[index].door_open_right.clampWhenFinished = true
+                        animationActionArr[index].door_open_right.reset()
+
+                        // 왼쪽 창문 열기 애니메이션 재생
+                        animationActionArr[index].door_close_left.stop()
+
+                        animationActionArr[index].door_open_left.repetitions = 0
+                        animationActionArr[index].door_open_left.play()
+
+                        animationActionArr[index].door_open_left.clampWhenFinished = true
+                        animationActionArr[index].door_open_left.reset()
+
+                        setIsDoorOpened(true)
+                      }
                     }
                   }}
-                  scale={[1, 1, 1]}
+                  scale={[2, 1.1, 0.9]}
                   position={items.window_1[index].installing == true ? installingPos : items.window_1[index].position}
                   rotation={items.window_1[index].rotation}
                   object={window_1_scene}

@@ -352,7 +352,7 @@ function Roof1() {
                         padding: '10px',
                         opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
                       }}>
-                      ➕ (가로)
+                      ➕
                     </button>
                   </Html>
                   {/* 세로 크기 키우기 버튼 */}
@@ -385,7 +385,7 @@ function Roof1() {
                         padding: '10px',
                         opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
                       }}>
-                      ➕ (세로)
+                      ➕
                     </button>
                   </Html>
                   {/* 가로 크기 축소 버튼 */}
@@ -418,7 +418,7 @@ function Roof1() {
                         padding: '10px',
                         opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
                       }}>
-                      ➖ (가로)
+                      ➖
                     </button>
                   </Html>
                   {/* 세로 크기 축소 버튼 */}
@@ -451,7 +451,7 @@ function Roof1() {
                         padding: '10px',
                         opacity: !isEditMode || isExteriorInstalling ? 1 : 0,
                       }}>
-                      ➖ (세로)
+                      ➖
                     </button>
                   </Html>
                 </>

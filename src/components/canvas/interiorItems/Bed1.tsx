@@ -265,7 +265,8 @@ function Bed1() {
                           ]
                     }>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         items.bed_1[index].rotation = [
                           items.bed_1[index].rotation[0],
                           items.bed_1[index].rotation[1] + Math.PI / 4,
