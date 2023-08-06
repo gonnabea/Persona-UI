@@ -124,7 +124,7 @@ export default function Page(pageProps) {
 
   const [currentPlayersNumber, setCurrentPlayersNumber] = useState(0)
 
-  const [isEditMode, setIsEditMode] = useState(isEditModeState)
+  const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
 
   const menuList = [
     {
@@ -300,6 +300,42 @@ export default function Page(pageProps) {
       <BGM />
       {isEditMode === true ? null : <ViewModeBtn />}
       <EditModeBtn />
+
+      <div
+        className='fixed z-10'
+        style={{ display: isEditMode ? 'flex' : 'none', width: 300, height: 150, bottom: 0, left: '40vw' }}>
+        <div
+          style={{ border: installingModelName === 'floor' ? 'solid 4px #9C7FEF' : '' }}
+          className='flex flex-col items-center p-2 bg-white rounded-lg cursor-pointer'
+          onClick={(e) => {
+            e.stopPropagation()
+            // const installItem = items.floor_1.find((floor_1) => floor_1.installed === false)
+            // if (installItem) {
+            //   installItem.installing = true
+            // }
+            console.log(isEditMode)
+            setSelectedExteriorItem('floor')
+            setInstallingModelName('floor')
+          }}>
+          <img src='/models/exterior_items/images/floor_1.png' style={{ width: 100, height: 100 }} />
+          <span>floor_1</span>
+        </div>
+        <div
+          style={{ border: installingModelName === 'wall' ? 'solid 4px #9C7FEF' : '' }}
+          className='flex flex-col items-center p-2 bg-white rounded-lg cursor-pointer'
+          onClick={(e) => {
+            e.stopPropagation()
+            // const installItem = items.floor_1.find((floor_1) => floor_1.installed === false)
+            // if (installItem) {
+            //   installItem.installing = true
+            // }
+            setSelectedExteriorItem('wall')
+            setInstallingModelName('wall')
+          }}>
+          <img src='/img/wall_wood.jpg' style={{ width: 100, height: 100 }} />
+          <span>wall</span>
+        </div>
+      </div>
 
       <ItemInstallPop
         tranings={
@@ -635,36 +671,7 @@ export default function Page(pageProps) {
               <img src='/models/exterior_items/images/roof_1.png' style={{ width: 100, height: 100 }} />
               <span>roof_1</span>
             </div>
-            <div
-              style={{ border: installingModelName === 'floor' ? 'solid 4px #9C7FEF' : '' }}
-              className='flex flex-col items-center p-2 bg-white rounded-lg cursor-pointer'
-              onClick={(e) => {
-                e.stopPropagation()
-                // const installItem = items.floor_1.find((floor_1) => floor_1.installed === false)
-                // if (installItem) {
-                //   installItem.installing = true
-                // }
-                setSelectedExteriorItem('floor')
-                setInstallingModelName('floor')
-              }}>
-              <img src='/models/exterior_items/images/floor_1.png' style={{ width: 100, height: 100 }} />
-              <span>floor_1</span>
-            </div>
-            <div
-              style={{ border: installingModelName === 'wall' ? 'solid 4px #9C7FEF' : '' }}
-              className='flex flex-col items-center p-2 bg-white rounded-lg cursor-pointer'
-              onClick={(e) => {
-                e.stopPropagation()
-                // const installItem = items.floor_1.find((floor_1) => floor_1.installed === false)
-                // if (installItem) {
-                //   installItem.installing = true
-                // }
-                setSelectedExteriorItem('wall')
-                setInstallingModelName('wall')
-              }}>
-              <img src='/img/wall_wood.jpg' style={{ width: 100, height: 100 }} />
-              <span>wall</span>
-            </div>
+
             <div
               style={{ border: installingModelName === 'window_1' ? 'solid 4px #9C7FEF' : '' }}
               className='flex flex-col items-center p-2 bg-white rounded-lg cursor-pointer'
