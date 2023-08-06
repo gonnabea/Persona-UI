@@ -17,7 +17,7 @@ interface props {
 }
 
 const ItemInstallPop = ({ tranings, lights, electronics, beauties, writes, exteriors, furnitures }: props) => {
-  const categories = ['건축', '가전', '조명', '장식', '기록', '가구', '훈련']
+  const categories = ['건축', '가전', '조명', '장식', '가구', '훈련']
 
   const [selectedCategory, setSelectedCategory] = useState('건축')
   const [isEditMode, setIsEditMode] = useRecoilState(isEditModeState)
@@ -38,8 +38,8 @@ const ItemInstallPop = ({ tranings, lights, electronics, beauties, writes, exter
       case '장식':
         return beauties
 
-      case '기록':
-        return writes
+      // case '기록':
+      //   return writes
 
       case '건축':
         return exteriors
@@ -54,19 +54,19 @@ const ItemInstallPop = ({ tranings, lights, electronics, beauties, writes, exter
 
   return isEditMode ? (
     <div
-      className='fixed top-0 left-0 z-10 font-bold bg-white opacity-90'
+      className='fixed top-0 left-0 z-10 mt-2 ml-6 font-bold rounded-lg opacity-90'
       style={{
-        height: 150,
+        height: 250,
         width: 240,
 
         background: 'linear-gradient(90deg, #9C7FEF, #CEC4EA)',
       }}>
       <header className='w-full'>
-        <div className='flex justify-around w-full'>
+        <div className='flex justify-around w-full pt-4 pb-4 pl-1 pr-1'>
           {categories.map((category, key) => {
             if (category === selectedCategory) {
               return (
-                <span key={key} className='cursor-pointer text-md text-fuchsia-600'>
+                <span key={key} className='text-white cursor-pointer text-md'>
                   {selectedCategory}
                 </span>
               )
@@ -88,7 +88,10 @@ const ItemInstallPop = ({ tranings, lights, electronics, beauties, writes, exter
           })}
         </div>
       </header>
-      <section onClick={(e) => e.stopPropagation()} className='h-full p-2 overflow-y-auto text-white bg-white'>
+      <section
+        onClick={(e) => e.stopPropagation()}
+        className='h-full p-2 overflow-y-auto text-white'
+        style={{ backgroundColor: 'rgba(255,255,255,0.7)' }}>
         {selectCategory()}
       </section>
     </div>
