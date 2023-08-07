@@ -78,6 +78,20 @@ function SoccerBall(props) {
     onCollide: (e) => {
       if (e.body.name === 'ground1') {
         console.log('바닥과 충돌')
+
+        if (colyseusRoom) {
+          const me = JSON.parse(localStorage.getItem('me'))
+          const usersArr = Array.from(colyseusRoom.state.players.$items.values())
+
+          if (velocity) {
+            const message = {
+              velocity: { x: velocity[0], y: velocity[1], z: velocity[2] },
+              angularVelocity: { x: angularVelocity[0], y: angularVelocity[1], z: angularVelocity[2] },
+              ballId: 'soccer_ball_1',
+            }
+            colyseusRoom.send('ballMove', message)
+          }
+        }
       } else if (e.body.name === 'stair') {
         console.log('계단과 충돌')
       } else if (e.body.name === 'team1' || e.body.name === 'team2') {
@@ -94,13 +108,6 @@ function SoccerBall(props) {
       } else {
         console.log('물체와 충돌')
         if (colyseusRoom) {
-          const me = JSON.parse(localStorage.getItem('me'))
-          const usersArr = Array.from(colyseusRoom.state.players.$items.values())
-
-          console.log(e)
-
-          console.log(usersArr)
-
           if (velocity) {
             const message = {
               velocity: { x: velocity[0], y: velocity[1], z: velocity[2] },
@@ -129,13 +136,6 @@ function SoccerBall(props) {
       } else {
         console.log('물체와 충돌')
         if (colyseusRoom) {
-          const me = JSON.parse(localStorage.getItem('me'))
-          const usersArr = Array.from(colyseusRoom.state.players.$items.values())
-
-          console.log(e)
-
-          console.log(usersArr)
-
           if (velocity) {
             const message = {
               velocity: { x: velocity[0], y: velocity[1], z: velocity[2] },
@@ -226,15 +226,6 @@ function SoccerBall(props) {
   useEffect(() => {
     console.log(mesh.current.position)
   }, [])
-
-  useFrame(({ clock }) => {
-    const a = clock.getElapsedTime()
-
-    // console.log("Hey, I'm executing every frame!");
-    // console.log(a)
-
-    // ballModelRef.current.position.set([mesh.current.position.x, mesh.current.position.y, mesh.current.position.z])
-  })
 
   return (
     <Suspense fallback={null}>

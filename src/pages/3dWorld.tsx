@@ -302,8 +302,8 @@ export default function Page(pageProps) {
       <EditModeBtn />
 
       <div
-        className='fixed z-10'
-        style={{ display: isEditMode ? 'flex' : 'none', width: 300, height: 150, bottom: 0, left: '40vw' }}>
+        className='absolute z-10'
+        style={{ display: isEditMode ? 'flex' : 'none', width: 300, height: 150, bottom: 30, left: '40vw' }}>
         <div
           style={{ border: installingModelName === 'floor' ? 'solid 4px #9C7FEF' : '' }}
           className='flex flex-col items-center p-2 bg-white rounded-lg cursor-pointer'

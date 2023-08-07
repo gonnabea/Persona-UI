@@ -113,12 +113,6 @@ function Floor(props) {
     }
   }, [landClickPos])
 
-  useFrame(({ clock }) => {
-    const a = clock.getElapsedTime()
-    // console.log("Hey, I'm executing every frame!");
-    // console.log(a)
-  })
-
   return (
     <>
       {/* <primitive

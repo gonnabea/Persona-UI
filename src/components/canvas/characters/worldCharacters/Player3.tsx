@@ -97,7 +97,7 @@ const Player3Character = () => {
     }
   }
 
-  useFrame(() => {
+  setInterval(() => {
     if (colyseusRoom) {
       const usersArr = Array.from(colyseusRoom.state.players.$items.values())
 
@@ -112,7 +112,7 @@ const Player3Character = () => {
       setMutantAnimationStatus()
       setLouiseAnimationStatus()
     }
-  })
+  }, 300)
 
   return (
     <>

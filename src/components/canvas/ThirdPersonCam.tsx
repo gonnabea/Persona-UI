@@ -30,10 +30,6 @@ const ThirdPersonCamera = ({ positionX, positionY, positionZ, rotationZ }) => {
     }
   }, [positionX, positionZ])
 
-  useFrame(() => {
-    // controls.update()
-  })
-
   return null
 }
 

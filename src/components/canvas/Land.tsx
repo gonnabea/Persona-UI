@@ -40,12 +40,6 @@ function Land(props) {
     //   console.log(clickedPosition)
   }
 
-  useFrame(({ clock }) => {
-    const a = clock.getElapsedTime()
-    // console.log("Hey, I'm executing every frame!");
-    // console.log(a)
-  })
-
   return (
     <Suspense fallback={null}>
       <Sky distance={45000} sunPosition={[2, 1, 0]} inclination={0} azimuth={0.25} {...props} />

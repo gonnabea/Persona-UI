@@ -56,12 +56,6 @@ function SoccerField(props) {
     //   console.log(clickedPosition)
   }
 
-  useFrame(({ clock }) => {
-    const a = clock.getElapsedTime()
-    // console.log("Hey, I'm executing every frame!");
-    // console.log(a)
-  })
-
   return (
     <Suspense fallback={null}>
       <primitive
