@@ -205,7 +205,7 @@ const WorldItems = () => {
         <Player2Character />
         <Player3Character />
         <Player4Character />
-        <PositionTracker />
+        {/* <PositionTracker /> */}
         {/* <OtherUserAmy /> */}
         {/* <WorldLouise />
           <WorldMutant /> */}

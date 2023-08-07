@@ -374,8 +374,8 @@ export function MyCharacter(props: propTypes) {
         // console.log("moving")
         colyseusRoom?.send('move', {
           user: {
-            email: me.email,
-            username: me.username,
+            email: me?.email,
+            username: me?.username,
           },
           positionX,
           positionY,
@@ -396,7 +396,7 @@ export function MyCharacter(props: propTypes) {
   useEffect(() => {
     colyseusRoom?.onMessage('chat', (client: Chat) => {
       setMyChat(() => {
-        if (client.id === me.colyseusSessionId) return client
+        if (client.id === me?.colyseusSessionId) return client
       })
     })
   }, [colyseusRoom])
@@ -408,7 +408,7 @@ export function MyCharacter(props: propTypes) {
           positionX={positionX}
           positionY={positionY + 2.5}
           positionZ={positionZ}
-          username={me.data.username}
+          username={me?.data.username}
           text={myChat?.chatMessage}
         />
       ) : (
