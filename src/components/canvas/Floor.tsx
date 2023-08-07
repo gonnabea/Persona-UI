@@ -169,10 +169,7 @@ function Floor(props) {
                     if (isEditMode) {
                       cloned.position.set(1000, 1000, 1000)
 
-                      console.log(clonedArr[index])
-
                       setRemovedArr([...removedArr, { model: cloned }])
-                      console.log(removedArr)
                     }
                   }}
                   onClick={(e) => {

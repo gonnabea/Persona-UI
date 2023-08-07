@@ -99,12 +99,10 @@ function Block({ blockState, setBlockStates }) {
           }}
           onClick={(e) => {
             e.stopPropagation()
-            console.log(e.eventObject)
+
             setSelectedItem(e.eventObject)
             api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)
             api.rotation.set(cloned.rotation.x, cloned.rotation.y, cloned.rotation.z)
-
-            console.log(api)
 
             mesh.current.position.setX(cloned.position.x)
             mesh.current.position.setY(cloned.position.y)

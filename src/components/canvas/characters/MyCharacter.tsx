@@ -252,9 +252,6 @@ export function MyCharacter(props: propTypes) {
   const me = JSON.parse(localStorage.getItem('me'))
 
   useFrame((state, delta, frame) => {
-    console.log(state)
-    console.log(delta)
-    console.log(frame)
     // let characterRef
 
     // if (characterRef === 'amy')

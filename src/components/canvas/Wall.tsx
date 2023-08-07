@@ -44,8 +44,6 @@ function Wall(props) {
 
   const [selectedExteriorItem, setSelectedExteriorItem] = useRecoilState(selectedExteriorItemState)
 
-  console.log(wallTexture)
-
   const useBoxTest = useBox(() => ({
     mass: 1,
   }))

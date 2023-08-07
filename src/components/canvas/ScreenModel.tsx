@@ -32,10 +32,7 @@ function ScreenModel(props) {
     if (colyseusRoom) {
       colyseusRoom.onMessage('soccerScore', (message) => {
         setScore(message)
-        console.log(message)
       })
-
-      console.log(Array.from(colyseusRoom.state.soccerScores.$items.values())[0].id)
 
       setScore((prevState) => {
         return {
