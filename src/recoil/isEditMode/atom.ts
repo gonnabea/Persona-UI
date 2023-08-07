@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
 export const isEditModeState = atom({
-  key: 'isEditMode',
+  key: 'isEditModeState',
   default: false,
 })

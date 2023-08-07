@@ -163,11 +163,13 @@ function Roof1() {
 
   return (
     <>
-      {clonedArr.map((box_1_scene, index) => {
+      {clonedArr.map((roof_1_scene, index) => {
         if (
-          items.roof_1[index]?.installing === true ||
-          (items.roof_1[index]?.installed === true && !isEditMode) ||
-          isExteriorInstalling
+          ((items.roof_1[index]?.installing === true || items.roof_1[index]?.installed === true) &&
+            installingModelName !== 'floor' &&
+            installingModelName !== 'wall' &&
+            isExteriorInstalling === true) ||
+          isEditMode === false
         ) {
           return (
             <>
@@ -215,7 +217,7 @@ function Roof1() {
                   ]}
                   position={items.roof_1[index]?.installing == true ? installingPos : items.roof_1[index]?.position}
                   rotation={items.roof_1[index]?.rotation}
-                  object={box_1_scene}
+                  object={roof_1_scene}
                 />
               </Suspense>
               {/*  */}(
