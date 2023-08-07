@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil'
 
 const CharacterGroup = (props) => {
   const [colyseusRoom, _] = useRecoilState(colyseusRoomState)
-  const [otherUsers, setOtherUSers] = useState(null);
+  const [otherUsers, setOtherUSers] = useState(null)
 
   useEffect(() => {
     onMoveCharacters()
@@ -22,21 +22,14 @@ const CharacterGroup = (props) => {
     //   }
     // }
     // 타 유저 캐릭터 이동 메세지 리스너
-    colyseusRoom.onMessage("move", (message) => {
-
-      const me = JSON.parse(localStorage.getItem("me"))
-      const usersArr = Array.from(colyseusRoom.state.players.$items.values())
-    
-      const otherUsers = usersArr.filter(player => player.key !== me.colyseusSessionId)
-     
-      setOtherUSers(otherUsers)
-    })
+    // colyseusRoom.onMessage("move", (message) => {
+    //   const me = JSON.parse(localStorage.getItem("me"))
+    //   const usersArr = Array.from(colyseusRoom.state.players.$items.values())
+    //   const otherUsers = usersArr.filter(player => player.key !== me.colyseusSessionId)
+    //   setOtherUSers(otherUsers)
+    // })
   }
-  
-  return (
-    <>
-     
-    </>
-  )
+
+  return <></>
 }
 export default CharacterGroup

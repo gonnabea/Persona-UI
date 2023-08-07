@@ -213,11 +213,9 @@ export default function Page(pageProps) {
       // console.log(room)
       // console.log(colyseusPlayers)
       // console.log(message);
-
-      const me = JSON.parse(localStorage.getItem('me'))
-      const usersArr = Array.from(room.state.players.$items.values())
-
-      const otherUsers = usersArr.filter((player) => player.key !== me.colyseusClientId)
+      // const me = JSON.parse(localStorage.getItem('me'))
+      // const usersArr = Array.from(room.state.players.$items.values())
+      // const otherUsers = usersArr.filter((player) => player.key !== me.colyseusClientId)
     })
   }
 

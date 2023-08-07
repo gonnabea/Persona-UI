@@ -95,11 +95,11 @@ function SoccerBall(props) {
         console.log('물체와 충돌')
         if (colyseusRoom) {
           const me = JSON.parse(localStorage.getItem('me'))
-          const usersArr = Array.from(colyseusRoom.state.players.$items.values())
+          // const usersArr = Array.from(colyseusRoom.state.players.$items.values())
 
-          console.log(e)
+          // console.log(e)
 
-          console.log(usersArr)
+          // console.log(usersArr)
 
           if (velocity) {
             const message = {
@@ -130,11 +130,11 @@ function SoccerBall(props) {
         console.log('물체와 충돌')
         if (colyseusRoom) {
           const me = JSON.parse(localStorage.getItem('me'))
-          const usersArr = Array.from(colyseusRoom.state.players.$items.values())
+          // const usersArr = Array.from(colyseusRoom.state.players.$items.values())
 
-          console.log(e)
+          // console.log(e)
 
-          console.log(usersArr)
+          // console.log(usersArr)
 
           if (velocity) {
             const message = {

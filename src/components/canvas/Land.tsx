@@ -27,7 +27,7 @@ function Land(props) {
 
     if (raycaster.intersectObjects(scene.children)[0]) {
       // alert(raycaster.intersectObjects(scene.children)[0].object.name)
-      console.log(raycaster.intersectObjects(scene.children).map((target) => target.object.parent.name))
+      // console.log(raycaster.intersectObjects(scene.children).map((target) => target.object.parent.name))
       const groundTarget = raycaster.intersectObjects(scene.children).find((target) => target.object.name === 'ground1')
 
       if (groundTarget) {

@@ -35,7 +35,7 @@ function ScreenModel(props) {
         console.log(message)
       })
 
-      console.log(Array.from(colyseusRoom.state.soccerScores.$items.values())[0].id)
+      // console.log(Array.from(colyseusRoom.state.soccerScores.$items.values())[0].id)
 
       setScore((prevState) => {
         return {

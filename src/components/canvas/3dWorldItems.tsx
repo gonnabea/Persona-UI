@@ -106,7 +106,7 @@ const WorldItems = () => {
       if (me) {
         const myClientId = me.colyseusSessionId
 
-        console.log(Array.from(colyseusRoom.state.players.$items.values()))
+        // console.log(Array.from(colyseusRoom.state.players.$items.values()))
 
         // 나의 정보를 제외하고 다른 유저의 정보를 State로 지정함
         setOtherUserList(
