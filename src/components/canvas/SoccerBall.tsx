@@ -227,15 +227,6 @@ function SoccerBall(props) {
     console.log(mesh.current.position)
   }, [])
 
-  useFrame(({ clock }) => {
-    const a = clock.getElapsedTime()
-
-    // console.log("Hey, I'm executing every frame!");
-    // console.log(a)
-
-    // ballModelRef.current.position.set([mesh.current.position.x, mesh.current.position.y, mesh.current.position.z])
-  })
-
   return (
     <Suspense fallback={null}>
       <primitive ref={ballModelRef} position={[0, 0, 1]} scale={0.3} rotation={props.rotation} object={glb.scene} />

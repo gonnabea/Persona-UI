@@ -163,7 +163,6 @@ const WorldItems = () => {
         {/* 다른 유저의 닉네임 출력 */}
         {/* TODO: 나중에 플레이어 컴포넌트가 통합된다면 플레이어 컴포넌트로 이동 */}
         {otherUserList.map((user) => {
-          console.log(user)
           const { username, positionX, positionY, positionZ, id } = user
 
           if (positionX && positionY && positionZ) {
