@@ -186,7 +186,7 @@ function Box1() {
                   onDoubleClick={(e) => {
                     e.stopPropagation()
                     if (isEditMode) {
-                      console.log(e)
+                      // console.log(e)
                       items.box_1[index].installed = false
                       items.box_1[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
@@ -195,7 +195,7 @@ function Box1() {
                       setInstallingModelName('box_1')
 
                       // setItems({ ...items, box_1: items.box_1 })
-                      console.log(items.box_1[index])
+                      // console.log(items.box_1[index])
                     }
                   }}
                   scale={[1, 1, 1]}

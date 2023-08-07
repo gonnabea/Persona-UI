@@ -185,7 +185,7 @@ function Camera1() {
                   onDoubleClick={(e) => {
                     e.stopPropagation()
                     if (isEditMode) {
-                      console.log(e)
+                      // console.log(e)
                       items.camera_1[index].installed = false
                       items.camera_1[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
@@ -194,7 +194,7 @@ function Camera1() {
                       setInstallingModelName('camera_1')
 
                       // setItems({ ...items, camera_1: items.camera_1 })
-                      console.log(items.camera_1[index])
+                      // console.log(items.camera_1[index])
                     }
                   }}
                   scale={[1, 1, 1]}

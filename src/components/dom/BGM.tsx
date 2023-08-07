@@ -7,7 +7,7 @@ const BGM = ({ bgmUrl = '/sounds/bgm/raon_raul.mp3' }) => {
   const togglePlay = () => {
     if (play === true) {
       setPlay(false)
-      console.log(audio)
+      // console.log(audio)
       audio.pause()
     } else {
       setPlay(true)

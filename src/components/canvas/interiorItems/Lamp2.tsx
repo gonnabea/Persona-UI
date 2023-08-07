@@ -187,7 +187,7 @@ function Lamp2() {
                   onDoubleClick={(e) => {
                     e.stopPropagation()
                     if (isEditMode) {
-                      console.log(e)
+                      // console.log(e)
                       items.lamp_2[index].installed = false
                       items.lamp_2[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
@@ -196,7 +196,7 @@ function Lamp2() {
                       setInstallingModelName('lamp_2')
 
                       // setItems({ ...items, lamp_2: items.lamp_2 })
-                      console.log(items.lamp_2[index])
+                      // console.log(items.lamp_2[index])
                     }
                   }}
                   scale={[1.5, 1.5, 1.5]}

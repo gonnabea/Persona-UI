@@ -188,7 +188,7 @@ function CoffeeTable1() {
                   onDoubleClick={(e) => {
                     e.stopPropagation()
                     if (isEditMode) {
-                      console.log(e)
+                      // console.log(e)
                       items.coffee_table_1[index].installed = false
                       items.coffee_table_1[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
@@ -197,7 +197,7 @@ function CoffeeTable1() {
                       setInstallingModelName('coffee_table_1')
 
                       // setItems({ ...items, coffee_table_1: items.coffee_table_1 })
-                      console.log(items.coffee_table_1[index])
+                      // console.log(items.coffee_table_1[index])
                     }
                   }}
                   scale={[1, 1, 1]}

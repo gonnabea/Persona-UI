@@ -24,7 +24,7 @@ const WallInstallPop = ({ itemName }) => {
     if (selectedItem) {
       selectedItem.scale.x = e.target.value
       forceUpdate(updateIndex + 1)
-      console.log(selectedItem)
+      // console.log(selectedItem)
     }
   }
 

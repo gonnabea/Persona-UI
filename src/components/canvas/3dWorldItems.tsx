@@ -106,8 +106,6 @@ const WorldItems = () => {
       if (me) {
         const myClientId = me.colyseusSessionId
 
-        console.log(Array.from(colyseusRoom.state.players.$items.values()))
-
         // 나의 정보를 제외하고 다른 유저의 정보를 State로 지정함
         setOtherUserList(
           Array.from(colyseusRoom.state.players.$items.values()).filter((user: User) => {
@@ -163,7 +161,6 @@ const WorldItems = () => {
         {/* 다른 유저의 닉네임 출력 */}
         {/* TODO: 나중에 플레이어 컴포넌트가 통합된다면 플레이어 컴포넌트로 이동 */}
         {otherUserList.map((user) => {
-          console.log(user)
           const { username, positionX, positionY, positionZ, id } = user
 
           if (positionX && positionY && positionZ) {

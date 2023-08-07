@@ -101,7 +101,7 @@ const Player2Character = () => {
     }
   }
 
-  setInterval(() => {
+  useFrame(() => {
     if (colyseusRoom) {
       const usersArr = Array.from(colyseusRoom.state.players.$items.values())
       const myColyseusId = colyseusRoom.sessionId
@@ -115,7 +115,7 @@ const Player2Character = () => {
       setMutantAnimationStatus()
       setLouiseAnimationStatus()
     }
-  }, 300)
+  })
 
   return (
     <>

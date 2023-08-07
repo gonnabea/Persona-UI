@@ -192,7 +192,7 @@ function WashingMachine1() {
                   onDoubleClick={(e) => {
                     e.stopPropagation()
                     if (isEditMode) {
-                      console.log(e)
+                      // console.log(e)
                       items.washing_machine_1[index].installed = false
                       items.washing_machine_1[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
@@ -201,7 +201,7 @@ function WashingMachine1() {
                       setInstallingModelName('washing_machine_1')
 
                       // setItems({ ...items, washing_machine_1: items.washing_machine_1 })
-                      console.log(items.washing_machine_1[index])
+                      // console.log(items.washing_machine_1[index])
                     }
                   }}
                   scale={[1, 1, 1]}

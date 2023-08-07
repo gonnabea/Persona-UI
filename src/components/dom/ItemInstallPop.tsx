@@ -77,7 +77,7 @@ const ItemInstallPop = ({ tranings, lights, electronics, beauties, writes, exter
                 key={key}
                 onClick={() => {
                   setSelectedCategory(category)
-                  console.log(category)
+                  // console.log(category)
                   if (category === '건축') setIsExteriorInstalling(true)
                   else setIsExteriorInstalling(false)
                 }}

@@ -185,7 +185,7 @@ export default function Page(pageProps) {
       // store에 해당 player 상태 객체 추가.
       const newColyseusPlayer = message
       setColyseusPlayers([...colyseusPlayers, newColyseusPlayer])
-      console.log(colyseusPlayers)
+      // console.log(colyseusPlayers)
       if (colyseusRoom) {
         const newPlayersNumber = colyseusPlayers.length
         setCurrentPlayersNumber(newPlayersNumber)

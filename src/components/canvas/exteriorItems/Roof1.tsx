@@ -207,7 +207,7 @@ function Roof1() {
                       setInstallingModelName('roof_1')
 
                       // setItems({ ...items, roof_1: items.roof_1 })
-                      console.log(items.roof_1[index])
+                      // console.log(items.roof_1[index])
                     }
                   }}
                   scale={[

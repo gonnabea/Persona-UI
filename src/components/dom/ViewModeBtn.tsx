@@ -19,7 +19,7 @@ const ViewModeBtn = () => {
       setViewMode(0)
     }
 
-    console.log(viewMode)
+    // console.log(viewMode)
   }
 
   useEffect(() => {}, [])

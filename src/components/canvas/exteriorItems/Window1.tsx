@@ -236,11 +236,11 @@ function Window1() {
                       setInstallingModelName('window_1')
 
                       // setItems({ ...items, window_1: items.window_1 })
-                      console.log(items.window_1[index])
+                      // console.log(items.window_1[index])
                     }
 
                     if (!isEditMode) {
-                      console.log(animationActionArr[index])
+                      // console.log(animationActionArr[index])
                       const [isDoorOpened, setIsDoorOpened] = isDoorOpenedArr[index]
                       if (isDoorOpened === true) {
                         // 오른쪽 창문 닫기 애니메이션 재생

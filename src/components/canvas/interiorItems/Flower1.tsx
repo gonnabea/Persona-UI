@@ -185,7 +185,7 @@ function Flower1() {
                   onDoubleClick={(e) => {
                     e.stopPropagation()
                     if (isEditMode) {
-                      console.log(e)
+                      // console.log(e)
                       items.flower_1[index].installed = false
                       items.flower_1[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
@@ -194,7 +194,7 @@ function Flower1() {
                       setInstallingModelName('flower_1')
 
                       // setItems({ ...items, flower_1: items.flower_1 })
-                      console.log(items.flower_1[index])
+                      // console.log(items.flower_1[index])
                     }
                   }}
                   scale={[2, 2, 2]}

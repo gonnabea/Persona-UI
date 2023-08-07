@@ -44,6 +44,8 @@ function Wall(props) {
 
   const [selectedExteriorItem, setSelectedExteriorItem] = useRecoilState(selectedExteriorItemState)
 
+  console.log(wallTexture)
+
   const useBoxTest = useBox(() => ({
     mass: 1,
   }))
@@ -156,6 +158,12 @@ function Wall(props) {
       }
     }
   }, [landClickPos])
+
+  useFrame(({ clock }) => {
+    const a = clock.getElapsedTime()
+    // console.log("Hey, I'm executing every frame!");
+    // console.log(a)
+  })
 
   return (
     <>

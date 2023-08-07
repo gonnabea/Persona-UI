@@ -188,7 +188,7 @@ function Sofa1() {
                   onDoubleClick={(e) => {
                     e.stopPropagation()
                     if (isEditMode) {
-                      console.log(e)
+                      // console.log(e)
                       items.sofa_1[index].installed = false
                       items.sofa_1[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
@@ -197,7 +197,7 @@ function Sofa1() {
                       setInstallingModelName('sofa_1')
 
                       // setItems({ ...items, sofa_1: items.sofa_1 })
-                      console.log(items.sofa_1[index])
+                      // console.log(items.sofa_1[index])
                     }
                   }}
                   scale={[1, 1, 1]}

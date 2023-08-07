@@ -191,7 +191,7 @@ function KitchenChair1() {
                   onDoubleClick={(e) => {
                     e.stopPropagation()
                     if (isEditMode) {
-                      console.log(e)
+                      // console.log(e)
                       items.kitchen_chair_1[index].installed = false
                       items.kitchen_chair_1[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
@@ -200,7 +200,7 @@ function KitchenChair1() {
                       setInstallingModelName('kitchen_chair_1')
 
                       // setItems({ ...items, kitchen_chair_1: items.kitchen_chair_1 })
-                      console.log(items.kitchen_chair_1[index])
+                      // console.log(items.kitchen_chair_1[index])
                     }
                   }}
                   scale={[1, 1, 1]}

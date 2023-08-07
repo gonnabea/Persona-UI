@@ -195,7 +195,7 @@ function Bed1() {
                       setInstallingModelName('bed_1')
 
                       // setItems({ ...items, bed_1: items.bed_1 })
-                      console.log(items.bed_1[index])
+                      // console.log(items.bed_1[index])
                     }
                   }}
                   scale={[1, 1, 1]}

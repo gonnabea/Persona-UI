@@ -191,7 +191,7 @@ function MicrowaveOven1() {
                   onDoubleClick={(e) => {
                     e.stopPropagation()
                     if (isEditMode) {
-                      console.log(e)
+                      // console.log(e)
                       items.microwave_oven_1[index].installed = false
                       items.microwave_oven_1[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
@@ -200,7 +200,7 @@ function MicrowaveOven1() {
                       setInstallingModelName('microwave_oven_1')
 
                       // setItems({ ...items, microwave_oven_1: items.microwave_oven_1 })
-                      console.log(items.microwave_oven_1[index])
+                      // console.log(items.microwave_oven_1[index])
                     }
                   }}
                   scale={[1, 1, 1]}

@@ -192,7 +192,7 @@ function TrainingItem1() {
                   onDoubleClick={(e) => {
                     e.stopPropagation()
                     if (isEditMode) {
-                      console.log(e)
+                      // console.log(e)
                       items.training_item_1[index].installed = false
                       items.training_item_1[index].installing = true
                       // window.addEventListener('mousemove', (e) => findMousePosition(e))
@@ -201,7 +201,7 @@ function TrainingItem1() {
                       setInstallingModelName('training_item_1')
 
                       // setItems({ ...items, training_item_1: items.training_item_1 })
-                      console.log(items.training_item_1[index])
+                      // console.log(items.training_item_1[index])
                     }
                   }}
                   scale={[3, 3, 3]}
