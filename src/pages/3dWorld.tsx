@@ -356,7 +356,7 @@ export default function Page(pageProps) {
               <img
                 className='rounded-lg'
                 alt='training_item_1'
-                src='/models/interior_items/images/training_item_001.png'
+                src='/models/interior_items/item_img/training_item_001.jpg'
                 style={{ width: 100, height: 100 }}
               />
               <span>training_item_1</span>
@@ -378,7 +378,7 @@ export default function Page(pageProps) {
               <img
                 className='rounded-lg'
                 alt='training_item_2'
-                src='/models/interior_items/images/training_item_002.png'
+                src='/models/interior_items/item_img/training_item_002.jpg'
                 style={{ width: 100, height: 100 }}
               />
               <span>training_item_2</span>
@@ -401,7 +401,11 @@ export default function Page(pageProps) {
               }}
               style={{ border: installingModelName === 'lamp_2' ? 'solid 4px #9C7FEF' : '' }}
               className='flex flex-col items-center p-2 bg-white rounded-lg cursor-pointer'>
-              <img alt='lamp_2' src='/models/interior_items/images/lamp_002.png' style={{ width: 100, height: 100 }} />
+              <img
+                alt='lamp_2'
+                src='/models/interior_items/item_img/lamp_002.jpg'
+                style={{ width: 100, height: 100 }}
+              />
               <span>lamp_2</span>
             </div>
           </>
@@ -427,7 +431,7 @@ export default function Page(pageProps) {
                 src='/models/interior_items/images/flower_001.png'
                 style={{ width: 100, height: 100 }}
               />
-              <span>box1</span>
+              <span>flower_1</span>
             </div>
           </>
         }
@@ -446,7 +450,7 @@ export default function Page(pageProps) {
                   setInstallingModelName('tv_1')
                 }
               }}>
-              <img alt='tv_1' src='/models/interior_items/images/tv_wall_001.png' style={{ width: 100, height: 100 }} />
+              <img alt='tv_1' src='/models/interior_items/item_img/tv_001.jpg' style={{ width: 100, height: 100 }} />
               <span>tv_1</span>
             </div>
             <div
@@ -486,7 +490,7 @@ export default function Page(pageProps) {
               }}>
               <img
                 alt='fridge_1'
-                src='/models/interior_items/images/fridge_001.png'
+                src='/models/interior_items/item_img/fridge_001.jpg'
                 style={{ width: 100, height: 100 }}
               />
               <span>fridge_1</span>
@@ -532,7 +536,7 @@ export default function Page(pageProps) {
               }}>
               <img
                 alt='washing_machine_1'
-                src='/models/interior_items/images/washing_machine_001.png'
+                src='/models/interior_items/item_img/washing_machine_001.jpg'
                 style={{ width: 100, height: 100 }}
               />
               <span>washing_machine_1</span>
@@ -555,7 +559,7 @@ export default function Page(pageProps) {
                   setInstallingModelName('bed_1')
                 }
               }}>
-              <img alt='bed_1' src='/models/interior_items/images/bed_001.png' style={{ width: 100, height: 100 }} />
+              <img alt='bed_1' src='/models/interior_items/item_img/bed_001.jpg' style={{ width: 100, height: 100 }} />
               <span>bed_1</span>
             </div>
 
@@ -573,7 +577,11 @@ export default function Page(pageProps) {
                   setInstallingModelName('sofa_1')
                 }
               }}>
-              <img alt='sofa_1' src='/models/interior_items/images/sofa_001.png' style={{ width: 100, height: 100 }} />
+              <img
+                alt='sofa_1'
+                src='/models/interior_items/item_img/sofa_001.jpg'
+                style={{ width: 100, height: 100 }}
+              />
               <span>sofa_1</span>
             </div>
 
@@ -591,7 +599,7 @@ export default function Page(pageProps) {
                   setInstallingModelName('box_1')
                 }
               }}>
-              <img alt='box_1' src='/models/interior_items/images/box_001.png' style={{ width: 100, height: 100 }} />
+              <img alt='box_1' src='/models/interior_items/item_img/box_001.jpg' style={{ width: 100, height: 100 }} />
               <span>box_1</span>
             </div>
             <div
@@ -610,7 +618,7 @@ export default function Page(pageProps) {
               }}>
               <img
                 alt='coffee_table_1'
-                src='/models/interior_items/images/coffee_table_001.png'
+                src='/models/interior_items/item_img/coffee_table_001.jpg'
                 style={{ width: 100, height: 100 }}
               />
               <span>coffee_table_1</span>
@@ -631,7 +639,7 @@ export default function Page(pageProps) {
               }}>
               <img
                 alt='kitchen_chair_1'
-                src='/models/interior_items/images/kitchen_chair_001.png'
+                src='/models/interior_items/item_img/kitchen_chair_001.jpg'
                 style={{ width: 100, height: 100 }}
               />
               <span>kitchen_chair_1</span>
@@ -651,7 +659,7 @@ export default function Page(pageProps) {
                   setInstallingModelName('door_1')
                 }
               }}>
-              <img src='/models/exterior_items/images/door_1.png' style={{ width: 100, height: 100 }} />
+              <img src='/models/exterior_items/images/door_001.jpg' style={{ width: 100, height: 100 }} />
               <span>door_1</span>
             </div>
             <div
@@ -682,7 +690,7 @@ export default function Page(pageProps) {
                   setInstallingModelName('window_1')
                 }
               }}>
-              <img src='/models/exterior_items/images/window_1.png' style={{ width: 100, height: 100 }} />
+              <img src='/models/exterior_items/images/window_001.jpg' style={{ width: 100, height: 100 }} />
               <span>window_1</span>
             </div>
           </>
