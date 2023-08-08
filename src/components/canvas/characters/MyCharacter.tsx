@@ -408,7 +408,7 @@ export function MyCharacter(props: propTypes) {
           positionX={positionX}
           positionY={positionY + 2.5}
           positionZ={positionZ}
-          username={me?.data.username}
+          username={me?.data?.username}
           text={myChat?.chatMessage}
         />
       ) : (
