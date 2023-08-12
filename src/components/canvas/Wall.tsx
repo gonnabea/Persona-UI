@@ -205,10 +205,6 @@ function Wall(props) {
                   onPointerOver={() => {
                     document.body.style.cursor = 'pointer'
                     // boxColliders[index].api.position.set(cloned.position.x, cloned.position.y, cloned.position.z)
-
-                    boxColliders[index].mesh.current.position.setX(cloned.position.x)
-                    boxColliders[index].mesh.current.position.setY(cloned.position.y)
-                    boxColliders[index].mesh.current.position.setZ(cloned.position.z)
                   }}
                   onPointerOut={() => {
                     document.body.style.cursor = 'default'
@@ -224,11 +220,10 @@ function Wall(props) {
                       boxColliders[index].mesh.current.position.setX(1000)
                       boxColliders[index].mesh.current.position.setY(1000)
                       boxColliders[index].mesh.current.position.setZ(1000)
-                      console.log(clonedArr[index])
+
                       boxColliders[index].api.position.set(1000, 1000, 1000)
 
                       setRemovedArr([...removedArr, { collider: boxColliders[index], model: cloned }])
-                      console.log(removedArr)
                     }
                   }}
                   onClick={(e) => {

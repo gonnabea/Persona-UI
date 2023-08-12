@@ -5,6 +5,7 @@ import { landClickIndexState } from '@/recoil/landClickIndex/atom'
 import { landClickPosState } from '@/recoil/landClickPos/atom'
 import { selectedItemState } from '@/recoil/selectedItem/atom'
 import { clone } from '@/utils/SkeletonUtils'
+import { useBox } from '@react-three/cannon'
 import { Html, useAnimations, useGLTF } from '@react-three/drei'
 import { useLoader, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef, useState, useMemo } from 'react'
@@ -33,15 +34,32 @@ function Door1() {
 
   const clonedArr = []
 
+  const boxColliders = []
+
   const animationActionArr = []
 
   const doorRefArr = []
 
   const isDoorOpenedArr = []
 
+  const [removedArr, setRemovedArr] = useState([])
+
   for (let i = 0; i < 10; i++) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const cloned = useMemo(() => clone(glb.scene), [scene])
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [mesh, api] = useBox(() => ({
+      mass: 1,
+      type: 'Static',
+      rotation: [0, 0, 0],
+      position: [0, 0, 0],
+      args: [1.7, 6, 0.1],
+
+      onCollide: (e) => {
+        // console.log(e)
+      },
+    }))
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const doorRef = useRef()
@@ -57,6 +75,8 @@ function Door1() {
     animationActionArr.push(doorActions)
 
     clonedArr.push(cloned)
+
+    boxColliders.push({ mesh: mesh, api })
 
     // console.log(cloned)
 
@@ -95,7 +115,7 @@ function Door1() {
 
           // if(items.door_1.installing === true)
 
-          setInstallingPos([mousePosition.x + 1, mousePosition.y, mousePosition.z + 1])
+          setInstallingPos([mousePosition.x, mousePosition.y, mousePosition.z])
 
           // setLandClickPos(clickedPosition)
         }
@@ -124,7 +144,7 @@ function Door1() {
           const installingModel = clonedArr[installingModelStateIndex]
 
           if (installingModelState && installingModelState.installed === false) {
-            installingModelState.position = [mousePosition.x + 1, mousePosition.y, mousePosition.z + 1]
+            installingModelState.position = [mousePosition.x, mousePosition.y, mousePosition.z]
 
             installingModelState.installed = true
             installingModelState.installing = false
@@ -160,6 +180,27 @@ function Door1() {
     }
   }, [])
 
+  // 수정모드 전환 시 문을 위한 콜라이더 배치
+  useEffect(() => {
+    clonedArr.forEach((cloned, index) => {
+      const [isDoorOpened, setIsDoorOpened] = isDoorOpenedArr[index]
+
+      if (isDoorOpened === false) {
+        forceUpdate(updateIndex + 1)
+        boxColliders[index].mesh.current.position.setX(cloned.position.x)
+        boxColliders[index].mesh.current.position.setY(cloned.position.y)
+        boxColliders[index].mesh.current.position.setZ(cloned.position.z)
+
+        boxColliders[index].api.position.set(
+          cloned.rotation.y === 0 ? cloned.position.x + 1 : cloned.position.x,
+          cloned.position.y,
+          cloned.rotation.y === 0 ? cloned.position.z : cloned.position.z - 1,
+        )
+        boxColliders[index].api.rotation.set(cloned.rotation.x, cloned.rotation.y, cloned.rotation.z)
+      }
+    })
+  }, [isEditMode])
+
   //   useEffect(() => {
   //     console.log(items.door_1)
   //     console.log(glb.scene)
@@ -189,6 +230,7 @@ function Door1() {
             <>
               <Suspense key={index} fallback={null}>
                 <primitive
+                  key={index}
                   ref={doorRefArr[index]}
                   onPointerOver={() => {
                     document.body.style.cursor = 'pointer'
@@ -199,19 +241,31 @@ function Door1() {
                   onClick={(e) => {
                     e.stopPropagation()
                   }}
-                  // 수정 모드에서 가구 마우스 오른쪽 클릭 시 가구 제거
                   onContextMenu={(e) => {
                     e.stopPropagation()
+                    // 수정 모드에서 가구 마우스 오른쪽 클릭 시 가구 제거
                     if (isEditMode) {
                       // e.stopPropagation()
+                      door_1_scene.position.set(1000, 1000, 1000)
+
+                      boxColliders[index].mesh.current.position.setX(1000)
+                      boxColliders[index].mesh.current.position.setY(1000)
+                      boxColliders[index].mesh.current.position.setZ(1000)
+
+                      boxColliders[index].api.position.set(1000, 1000, 1000)
                       items.door_1[index].installed = false
                       items.door_1[index].installing = false
+
+                      console.log(boxColliders[index].api)
+
+                      setRemovedArr([...removedArr, { collider: boxColliders[index], model: door_1_scene }])
+
                       forceUpdate(updateIndex + 1)
                     }
                   }}
-                  // 수정 모드에서 마우스 왼쪽 더블 클릭 시 배치했던 가구 재배치
                   onDoubleClick={(e) => {
                     e.stopPropagation()
+                    // 수정 모드에서 마우스 왼쪽 더블 클릭 시 배치했던 가구 재배치
                     if (isEditMode) {
                       console.log(e)
                       items.door_1[index].installed = false
@@ -221,6 +275,12 @@ function Door1() {
 
                       setInstallingModelName('door_1')
 
+                      boxColliders[index].mesh.current.position.setX(1000)
+                      boxColliders[index].mesh.current.position.setY(1000)
+                      boxColliders[index].mesh.current.position.setZ(1000)
+
+                      boxColliders[index].api.position.set(1000, 1000, 1000)
+
                       // setItems({ ...items, door_1: items.door_1 })
                       console.log(items.door_1[index])
                     }
@@ -229,6 +289,8 @@ function Door1() {
                       console.log(animationActionArr[index].door_open01)
                       const [isDoorOpened, setIsDoorOpened] = isDoorOpenedArr[index]
                       if (isDoorOpened === true) {
+                        // forceUpdate(updateIndex + 1)
+
                         // 문 닫기 애니메이션
                         animationActionArr[index].door_open01.stop()
 
@@ -238,6 +300,27 @@ function Door1() {
                         setIsDoorOpened(false)
                         animationActionArr[index].door_close.clampWhenFinished = true
                         animationActionArr[index].door_close.reset()
+
+                        // 문 닫을 떄 콜라이더 재배치
+
+                        boxColliders[index].api.position.set(
+                          door_1_scene.rotation.y === 0 ? door_1_scene.position.x + 1 : door_1_scene.position.x,
+                          door_1_scene.position.y,
+                          door_1_scene.rotation.y === 0 ? door_1_scene.position.z : door_1_scene.position.z - 1,
+                        )
+
+                        boxColliders[index].api.rotation.set(
+                          door_1_scene.rotation.x,
+                          door_1_scene.rotation.y,
+                          door_1_scene.rotation.z,
+                        )
+                        // boxColliders[index].mesh.current.position.setX(door_1_scene.position.x + 1)
+                        // boxColliders[index].mesh.current.position.setY(door_1_scene.position.y)
+                        // boxColliders[index].mesh.current.position.setZ(door_1_scene.position.z)
+
+                        // boxColliders[index].mesh.current.rotation.setX(door_1_scene.rotation.x)
+                        // boxColliders[index].mesh.current.rotation.setY(door_1_scene.rotation.y)
+                        // boxColliders[index].mesh.current.rotation.setZ(door_1_scene.rotation.z)
                       }
 
                       if (isDoorOpened === false) {
@@ -250,6 +333,12 @@ function Door1() {
                         setIsDoorOpened(true)
                         animationActionArr[index].door_open01.clampWhenFinished = true
                         animationActionArr[index].door_open01.reset()
+
+                        boxColliders[index].mesh.current.position.setX(1000)
+                        boxColliders[index].mesh.current.position.setY(1000)
+                        boxColliders[index].mesh.current.position.setZ(1000)
+
+                        boxColliders[index].api.position.set(1000, 1000, 1000)
                       }
                     }
                   }}
@@ -259,6 +348,14 @@ function Door1() {
                   object={door_1_scene}
                 />
               </Suspense>
+              {/* <mesh ref={boxColliders[index].mesh} visible={true}>
+                <boxGeometry
+                  // args={clonedArr[index]}
+
+                  args={[1.7, 6, 0.1]}
+                />
+                <meshStandardMaterial color='orange' visible={true} />
+              </mesh> */}
               {/*  */}(
               {selectedItem && clonedArr[index] === selectedItem ? (
                 <>
@@ -277,7 +374,7 @@ function Door1() {
                         e.stopPropagation()
                         items.door_1[index].rotation = [
                           items.door_1[index].rotation[0],
-                          items.door_1[index].rotation[1] + Math.PI / 2,
+                          items.door_1[index].rotation[1] === 0 ? Math.PI / 2 : 0,
                           items.door_1[index].rotation[2],
                         ]
                         forceUpdate(updateIndex + 1)
