@@ -1,3 +1,4 @@
+import { updateIndexState } from '@/recoil/forceUpdate/atom'
 import { installingModelNameState } from '@/recoil/intallingModelName/atom'
 import { isEditModeState } from '@/recoil/isEditMode/atom'
 import { isExteriorInstallingState } from '@/recoil/isExteriorInstalling/atom'
@@ -32,6 +33,8 @@ function Roof1() {
 
   const raycaster = useThree((state) => state.raycaster)
   const scene = useThree((state) => state.scene)
+
+  const [globalUpdateIndex, globalForceUpdate] = useRecoilState(updateIndexState)
 
   const clonedArr = []
 
@@ -140,6 +143,11 @@ function Roof1() {
     }
   }, [])
 
+  useEffect(() => {
+    console.log('지붕 업데이트')
+    forceUpdate(updateIndex + 1)
+  }, [globalUpdateIndex])
+
   //   useEffect(() => {
   //     console.log(items.roof_1)
   //     console.log(glb.scene)
@@ -218,19 +226,20 @@ function Roof1() {
                   position={items.roof_1[index]?.installing == true ? installingPos : items.roof_1[index]?.position}
                   rotation={items.roof_1[index]?.rotation}
                   object={roof_1_scene}
+                  roofIndex={index}
                 />
               </Suspense>
               {/*  */}(
               {selectedItem && clonedArr[index] === selectedItem ? (
                 <>
                   {/* 높이 위로 올리는 버튼 */}
-                  <Html
+                  {/* <Html
                     position={
                       items.roof_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] + 3, installingPos[2]]
+                        ? [installingPos[0] - 1, installingPos[1] + 4, installingPos[2]]
                         : [
-                            items.roof_1[index].position[0],
-                            items.roof_1[index].position[1] + 3,
+                            items.roof_1[index].position[0] - 1,
+                            items.roof_1[index].position[1] + 4,
                             items.roof_1[index].position[2],
                           ]
                     }>
@@ -255,14 +264,14 @@ function Roof1() {
                       }}>
                       ⬆️
                     </button>
-                  </Html>{' '}
+                  </Html>{' '} */}
                   {/* 높이 아래로 내리는 버튼 */}
-                  <Html
+                  {/* <Html
                     position={
                       items.roof_1[index].installing == true
-                        ? [installingPos[0], installingPos[1] - 3, installingPos[2]]
+                        ? [installingPos[0] - 1, installingPos[1] - 3, installingPos[2]]
                         : [
-                            items.roof_1[index].position[0],
+                            items.roof_1[index].position[0] - 1,
                             items.roof_1[index].position[1] - 3,
                             items.roof_1[index].position[2],
                           ]
@@ -288,7 +297,7 @@ function Roof1() {
                       }}>
                       ⬇️
                     </button>
-                  </Html>
+                  </Html> */}
                   {/* 모델 회전 버튼 */}
                   {/* <Html
                     position={
@@ -325,10 +334,10 @@ function Roof1() {
                     </button>
                   </Html> */}
                   {/* 가로 크기 키우기 버튼 */}
-                  <Html
+                  {/* <Html
                     position={
                       items.roof_1[index].installing == true
-                        ? [installingPos[0] + 3, installingPos[1], installingPos[2]]
+                        ? [installingPos[0] + 5, installingPos[1], installingPos[2]]
                         : [
                             items.roof_1[index].position[0] + 3 + items.roof_1[index].scale[0],
                             items.roof_1[index].position[1],
@@ -356,12 +365,12 @@ function Roof1() {
                       }}>
                       ➕
                     </button>
-                  </Html>
+                  </Html> */}
                   {/* 세로 크기 키우기 버튼 */}
-                  <Html
+                  {/* <Html
                     position={
                       items.roof_1[index].installing == true
-                        ? [installingPos[0], installingPos[1], installingPos[2] + 3]
+                        ? [installingPos[0] + 3, installingPos[1], installingPos[2] + 3]
                         : [
                             items.roof_1[index].position[0],
                             items.roof_1[index].position[1],
@@ -389,14 +398,14 @@ function Roof1() {
                       }}>
                       ➕
                     </button>
-                  </Html>
+                  </Html> */}
                   {/* 가로 크기 축소 버튼 */}
-                  <Html
+                  {/* <Html
                     position={
                       items.roof_1[index].installing == true
-                        ? [installingPos[0] - 3, installingPos[1], installingPos[2]]
+                        ? [installingPos[0] + 3, installingPos[1], installingPos[2]]
                         : [
-                            items.roof_1[index].position[0] - 3 - items.roof_1[index].scale[0],
+                            items.roof_1[index].position[0] + 3,
                             items.roof_1[index].position[1],
                             items.roof_1[index].position[2],
                           ]
@@ -422,9 +431,9 @@ function Roof1() {
                       }}>
                       ➖
                     </button>
-                  </Html>
+                  </Html> */}
                   {/* 세로 크기 축소 버튼 */}
-                  <Html
+                  {/* <Html
                     position={
                       items.roof_1[index].installing == true
                         ? [installingPos[0], installingPos[1], installingPos[2] - 3]
@@ -455,7 +464,7 @@ function Roof1() {
                       }}>
                       ➖
                     </button>
-                  </Html>
+                  </Html> */}
                 </>
               ) : null}
               ) :

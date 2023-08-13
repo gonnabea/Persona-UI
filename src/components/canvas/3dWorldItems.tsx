@@ -47,6 +47,7 @@ import WashingMachine1 from './interiorItems/WashingMachine1'
 import Camera1 from './interiorItems/Camera1'
 import Floor from './Floor'
 import { TransformControls } from 'three-stdlib'
+import RoofInstallUI from '../dom/RoofInstallUI'
 
 type User = {
   character: string
@@ -223,7 +224,7 @@ const WorldItems = () => {
 
         <ScreenModel />
 
-        {/* 투명 벽 */}
+        {/* 설치 아이템들 */}
         <Door1 />
         <Roof1 />
         <Floor1 />

@@ -46,6 +46,7 @@ import { createPortal } from 'react-dom'
 import { installingModelNameState } from '@/recoil/intallingModelName/atom'
 import ViewModeBtn from '@/components/dom/ViewModeBtn'
 import { isEditModeState } from '@/recoil/isEditMode/atom'
+import RoofInstallUI from '@/components/dom/RoofInstallUI'
 
 // Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
@@ -697,6 +698,7 @@ export default function Page(pageProps) {
         }
       />
       {/* <Door1 /> */}
+      <RoofInstallUI />
       <Chat isMobile={pageProps.isMobile} />
       {/* 모바일 조이스틱 */}
       {pageProps.isMobile ? <JoyStickWithPortal /> : ''}
