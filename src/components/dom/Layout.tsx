@@ -1,9 +1,12 @@
 import { useRef, forwardRef, useImperativeHandle, HTMLAttributes, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { twMerge } from 'tailwind-merge'
+import { useRecoilValue } from 'recoil'
+import { isWorldLoadedState } from '@/recoil/isWorldLoaded/atom'
 
 const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement>, ref) => {
   const canvasFixedPaths = ['/3dWorld']
+  const isWorldLoaded = useRecoilValue(isWorldLoadedState)
   const localRef = useRef()
   const router = useRouter()
 
@@ -41,9 +44,7 @@ const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement
       {...props}
       ref={localRef}
       className={twMerge(
-        `h-full text-[14px] lg:text-[16px] relative ${
-          canvasFixedPaths.includes(router.pathname) ? 'fixed top-0 left-0 right-0 bottom-0' : ''
-        }`,
+        `h-full text-[14px] lg:text-[16px] relative ${isWorldLoaded ? 'fixed top-0 left-0 right-0 bottom-0' : ''}`,
       )}>
       {children}
     </div>

@@ -17,7 +17,7 @@ import Player2Character from './characters/worldCharacters/Player2'
 import Player3Character from './characters/worldCharacters/Player3'
 import Player4Character from './characters/worldCharacters/Player4'
 import { Suspense, useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { colyseusRoomState } from '@/recoil/colyseusRoom/atom'
 import Wall from './Wall'
 import SoccerTrophy from './SoccerTrophy'
@@ -49,6 +49,8 @@ import Floor from './Floor'
 import { TransformControls } from 'three-stdlib'
 import RoofInstallUI from '../dom/RoofInstallUI'
 
+import { isWorldLoadedState } from '@/recoil/isWorldLoaded/atom'
+
 type User = {
   character: string
   email: string
@@ -67,6 +69,13 @@ interface Chat extends User {
 
 const Loader = () => {
   const { active, progress, errors, item, loaded, total } = useProgress()
+  const [_, setIsWorldLoaded] = useRecoilState(isWorldLoadedState)
+
+  useEffect(() => {
+    if (progress === 100) {
+      setIsWorldLoaded(true)
+    }
+  }, [progress, setIsWorldLoaded])
 
   return (
     <Html center className='fixed w-screen h-screen z-[999999]'>
@@ -98,6 +107,7 @@ const WorldItems = () => {
   const [otherUserList, setOtherUserList] = useState<User[]>([])
   const [chatList, setChatList] = useState<{ [key: string]: Chat }>({})
   const colyseusRoom = useRecoilValue(colyseusRoomState)
+  const [_, setIsWorldLoaded] = useRecoilState(isWorldLoadedState)
 
   useEffect(() => {
     // move 이벤트
@@ -157,6 +167,13 @@ const WorldItems = () => {
       })
     })
   }, [colyseusRoom])
+
+  // unmount 시 로딩 상태 초기화
+  useEffect(() => {
+    return () => {
+      setIsWorldLoaded(false)
+    }
+  }, [setIsWorldLoaded])
 
   return (
     <>
