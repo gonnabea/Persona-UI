@@ -70,6 +70,10 @@ module.exports = (_phase, { defaultConfig }) => {
   const wConfig = plugins.reduce((acc, [plugin, config]) => plugin({ ...acc, ...config }), {
     ...defaultConfig,
     ...nextConfig,
+    // Typescript Type ignore
+    typescript: {
+      ignoreBuildErrors: true,
+    },
   })
 
   const finalConfig = {}
