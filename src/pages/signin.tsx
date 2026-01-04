@@ -144,8 +144,13 @@ const SignIn = () => {
                 로그인
               </Button>
               <Link href='/signup'>
-                <Button color='secondary' className='w-full'>
+                <Button color='secondary' className='w-full mb-[20px]'>
                   Persona 가입
+                </Button>
+              </Link>
+              <Link href='/backtest'>
+                <Button color='secondary' className='w-full'>
+                  *Stock Lab
                 </Button>
               </Link>
             </form>

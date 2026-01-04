@@ -19,6 +19,7 @@ const Layout = forwardRef(({ children, ...props }: HTMLAttributes<HTMLDivElement
       '/404',
       '/resetPassword',
       '/resetPassword/set',
+      '/backtest'
     ]
 
     if (authState?.data?.isGuest) {
